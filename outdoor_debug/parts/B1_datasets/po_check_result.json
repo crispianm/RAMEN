@@ -1,0 +1,37 @@
+{
+ "dtypes": [
+  "uint16"
+ ],
+ "n_scenes_sampled": 117,
+ "mean_zero_frac": 0.13420517939814813,
+ "frac_frames_zero_gt5pct": 0.525,
+ "frames_with_65535": 0.0,
+ "max_depth_m_over_sample": 83.16166687011719,
+ "p99_of_frame_max": 83.02433776855469,
+ "scenes_with_zero_gt20pct": [
+  "cnb_dlab_0225_ego1",
+  "ani9_new_f",
+  "ani11_new_f",
+  "scene_d78_0318_3rd",
+  "ani17_new_f",
+  "scene_d78_0318_ego1",
+  "animal_s",
+  "animal1_s_",
+  "character2_",
+  "ani3_new_f",
+  "character0",
+  "character3_f",
+  "animal",
+  "cab_e1_3rd",
+  "r7_new_f",
+  "character6",
+  "ani15_new_f",
+  "ani8_new_f",
+  "animal1_",
+  "character1"
+ ],
+ "zero_pixels_in_top_third_share_(frames_with_>2%zero)": [
+  101,
+  0.7835181833686419
+ ]
+}

@@ -1,0 +1,529 @@
+ckpt,key,shape,max_abs_diff,rel_l2_change
+c3_s45,head.motion_modules.0.temporal_transformer.norm.weight,"(192,)",0.016105055809020996,0.006482312630817175
+c3_s45,head.motion_modules.0.temporal_transformer.norm.bias,"(192,)",0.006555225234478712,0.15419857570051176
+c3_s45,head.motion_modules.0.temporal_transformer.proj_in.weight,"(192, 192)",0.027392785996198654,0.13405125493228606
+c3_s45,head.motion_modules.0.temporal_transformer.proj_in.bias,"(192,)",0.005981035530567169,0.05559341861633975
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(192, 192)",0.041327230632305145,0.15449347810628997
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(192, 192)",0.03845738619565964,0.14470033955889053
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(192, 192)",0.027975335717201233,0.11741061469703301
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(192, 192)",0.028909260407090187,0.13385266280863473
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(192,)",0.005202899686992168,0.0520904026135513
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(192, 192)",0.0497211292386055,0.15790235267986857
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(192, 192)",0.040174394845962524,0.15132966179756427
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(192, 192)",0.021994180977344513,0.10974389037842515
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(192, 192)",0.02445691078901291,0.12458206801550324
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(192,)",0.0059102317318320274,0.05416697521788562
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.weight,"(192,)",0.01922607421875,0.006308917819051056
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.bias,"(192,)",0.008663482964038849,0.13826079546985662
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.weight,"(192,)",0.01579141616821289,0.005806950502809056
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.bias,"(192,)",0.00865667313337326,0.12927023738704965
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(1536, 192)",0.039206165820360184,0.15460869331778715
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(1536,)",0.015286445617675781,0.08647267307740465
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(192, 768)",0.04165494441986084,0.1803226401486278
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(192,)",0.005527054890990257,0.11160673406041473
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(192,)",0.02080988883972168,0.005937149428553327
+c3_s45,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(192,)",0.006195669993758202,0.08160210802745432
+c3_s45,head.motion_modules.0.temporal_transformer.proj_out.weight,"(192, 192)",0.0272961612790823,0.19240230327540667
+c3_s45,head.motion_modules.0.temporal_transformer.proj_out.bias,"(192,)",0.009689243510365486,0.2572685723020636
+c3_s45,head.motion_modules.1.temporal_transformer.norm.weight,"(384,)",0.016200482845306396,0.004575250841564033
+c3_s45,head.motion_modules.1.temporal_transformer.norm.bias,"(384,)",0.0071242740377783775,0.16035858476081838
+c3_s45,head.motion_modules.1.temporal_transformer.proj_in.weight,"(384, 384)",0.02079479768872261,0.12720269150510402
+c3_s45,head.motion_modules.1.temporal_transformer.proj_in.bias,"(384,)",0.008565470576286316,0.08445213199726803
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(384, 384)",0.03210621327161789,0.1805338115297452
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(384, 384)",0.03401150554418564,0.17741033985903393
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(384, 384)",0.02096361480653286,0.11980930349062754
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(384, 384)",0.021827474236488342,0.12762965179583347
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(384,)",0.005554594099521637,0.061407982970963615
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(384, 384)",0.03269607201218605,0.17534927496938096
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(384, 384)",0.03590986132621765,0.17224384449888305
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(384, 384)",0.02337556704878807,0.12017643609178584
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(384, 384)",0.02169916406273842,0.1367375538102229
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(384,)",0.0070341601967811584,0.07237712367785228
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.weight,"(384,)",0.01218867301940918,0.004729435379565168
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.bias,"(384,)",0.014359325170516968,0.11992759141520921
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.weight,"(384,)",0.015188395977020264,0.004371167407901403
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.bias,"(384,)",0.01269395649433136,0.10905589411570438
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(3072, 384)",0.03937344253063202,0.18628127458497548
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(3072,)",0.014550276100635529,0.11037728246435652
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(384, 1536)",0.04640352353453636,0.2068617066677325
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(384,)",0.006878755986690521,0.09236524886519
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(384,)",0.016929030418395996,0.005112889711332469
+c3_s45,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(384,)",0.009099289774894714,0.09944902368246497
+c3_s45,head.motion_modules.1.temporal_transformer.proj_out.weight,"(384, 384)",0.026261067017912865,0.18640018466305872
+c3_s45,head.motion_modules.1.temporal_transformer.proj_out.bias,"(384,)",0.010434060357511044,0.16245329391086896
+c3_s45,head.motion_modules.2.temporal_transformer.norm.weight,"(64,)",0.025363385677337646,0.009472626793173188
+c3_s45,head.motion_modules.2.temporal_transformer.norm.bias,"(64,)",0.007077239453792572,0.18640600935622445
+c3_s45,head.motion_modules.2.temporal_transformer.proj_in.weight,"(64, 64)",0.041565243154764175,0.09663138000775086
+c3_s45,head.motion_modules.2.temporal_transformer.proj_in.bias,"(64,)",0.009309396147727966,0.05718541629134763
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.053793519735336304,0.12782119460968264
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.0436641201376915,0.12891145781420435
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.02669639140367508,0.07209466486007357
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.02687695622444153,0.0739102143995546
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.006249882280826569,0.041452526074536866
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.03943536430597305,0.11401329297083598
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.04591285437345505,0.11945636284146803
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.02443944290280342,0.07835766857382742
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.0239848755300045,0.07687107138214101
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.009108461439609528,0.054223688388446205
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.031981825828552246,0.007693340275775329
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.005927983205765486,0.20603877460308098
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.017640650272369385,0.0058408986129280015
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.006691591814160347,0.21645587862731214
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.04602812975645065,0.09494802904293989
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.022769981995224953,0.08179626223364937
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.046395666897296906,0.12707748116136103
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.012254849076271057,0.0911451143784158
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.02161562442779541,0.006376104011172385
+c3_s45,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.009412859566509724,0.11095461136986119
+c3_s45,head.motion_modules.2.temporal_transformer.proj_out.weight,"(64, 64)",0.033536795526742935,0.15792694677015331
+c3_s45,head.motion_modules.2.temporal_transformer.proj_out.bias,"(64,)",0.01133662462234497,0.2050234809731162
+c3_s45,head.motion_modules.3.temporal_transformer.norm.weight,"(64,)",0.02641218900680542,0.008002724612990687
+c3_s45,head.motion_modules.3.temporal_transformer.norm.bias,"(64,)",0.014607999473810196,0.1992584831514531
+c3_s45,head.motion_modules.3.temporal_transformer.proj_in.weight,"(64, 64)",0.03922069072723389,0.10154270503287825
+c3_s45,head.motion_modules.3.temporal_transformer.proj_in.bias,"(64,)",0.01496894657611847,0.05667923668129618
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.11416995525360107,0.1286170472674891
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.11227309703826904,0.1346344216132397
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.025465920567512512,0.08142354329799502
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.029897436499595642,0.07550653234638488
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.010205455124378204,0.04872534697214746
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.06319017708301544,0.13789728354960581
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.06919896602630615,0.14921089732770093
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.027651049196720123,0.07556979867348437
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.025825515389442444,0.06655877377662726
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.009645380079746246,0.05777562381034107
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.03199326992034912,0.00901083854416113
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.004954379051923752,0.17564140323707764
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.021500706672668457,0.005641316973492413
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.007589760236442089,0.303949944786256
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.05993865430355072,0.08661673455057628
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.026402994990348816,0.07662192773611401
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.0423886775970459,0.11299644645485615
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.010145775973796844,0.15658958042191756
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.015876293182373047,0.006546577006826332
+c3_s45,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.01237740833312273,0.1680259101981068
+c3_s45,head.motion_modules.3.temporal_transformer.proj_out.weight,"(64, 64)",0.058637216687202454,0.1743735846899234
+c3_s45,head.motion_modules.3.temporal_transformer.proj_out.bias,"(64,)",0.014371272176504135,0.22948039845904014
+c3_s45,head.projects.0.weight,"(48, 384, 1, 1)",0.05173371732234955,0.18014721285773103
+c3_s45,head.projects.0.bias,"(48,)",0.0036022718995809555,0.05419948354707138
+c3_s45,head.projects.1.weight,"(96, 384, 1, 1)",0.05176006630063057,0.20111950516427052
+c3_s45,head.projects.1.bias,"(96,)",0.007563531398773193,0.10987780108984363
+c3_s45,head.projects.2.weight,"(192, 384, 1, 1)",0.0333910807967186,0.17100121872861476
+c3_s45,head.projects.2.bias,"(192,)",0.004362739622592926,0.05636330820648005
+c3_s45,head.projects.3.weight,"(384, 384, 1, 1)",0.030500218272209167,0.16117347806880303
+c3_s45,head.projects.3.bias,"(384,)",0.0068459827452898026,0.05419188292612919
+c3_s45,head.resize_layers.0.weight,"(48, 48, 4, 4)",0.03056139126420021,0.14854751640650518
+c3_s45,head.resize_layers.0.bias,"(48,)",0.011819910258054733,0.06801773345685212
+c3_s45,head.resize_layers.1.weight,"(96, 96, 2, 2)",0.029027746990323067,0.15628873822128644
+c3_s45,head.resize_layers.1.bias,"(96,)",0.005787392146885395,0.0659570165132179
+c3_s45,head.resize_layers.3.weight,"(384, 384, 3, 3)",0.028125513345003128,0.2101083313003205
+c3_s45,head.resize_layers.3.bias,"(384,)",0.009052678942680359,0.05581218284153728
+c3_s45,head.scratch.layer1_rn.weight,"(64, 48, 3, 3)",0.02949194610118866,0.138962852706443
+c3_s45,head.scratch.layer2_rn.weight,"(64, 96, 3, 3)",0.02667129971086979,0.16060633925672094
+c3_s45,head.scratch.layer3_rn.weight,"(64, 192, 3, 3)",0.033236268907785416,0.2076075998168051
+c3_s45,head.scratch.layer4_rn.weight,"(64, 384, 3, 3)",0.02287016622722149,0.1764965216712885
+c3_s45,head.scratch.refinenet1.out_conv.weight,"(64, 64, 1, 1)",0.03358173370361328,0.06608280459504358
+c3_s45,head.scratch.refinenet1.out_conv.bias,"(64,)",0.018489554524421692,0.11318470480512732
+c3_s45,head.scratch.refinenet1.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.04159402847290039,0.11664959313432773
+c3_s45,head.scratch.refinenet1.resConfUnit1.conv1.bias,"(64,)",0.0192732997238636,0.09991737656420349
+c3_s45,head.scratch.refinenet1.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.04440813511610031,0.15008806534257815
+c3_s45,head.scratch.refinenet1.resConfUnit1.conv2.bias,"(64,)",0.015892237424850464,0.10807009837186897
+c3_s45,head.scratch.refinenet1.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.0673946887254715,0.17701622864477726
+c3_s45,head.scratch.refinenet1.resConfUnit2.conv1.bias,"(64,)",0.01637471467256546,0.08338253487884971
+c3_s45,head.scratch.refinenet1.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.07413731515407562,0.1637257916175858
+c3_s45,head.scratch.refinenet1.resConfUnit2.conv2.bias,"(64,)",0.017646867781877518,0.14871397884727364
+c3_s45,head.scratch.refinenet2.out_conv.weight,"(64, 64, 1, 1)",0.026066359132528305,0.07193982829468032
+c3_s45,head.scratch.refinenet2.out_conv.bias,"(64,)",0.015892237424850464,0.07959019549196317
+c3_s45,head.scratch.refinenet2.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.034442268311977386,0.1269734094010557
+c3_s45,head.scratch.refinenet2.resConfUnit1.conv1.bias,"(64,)",0.011531472206115723,0.09549227727366005
+c3_s45,head.scratch.refinenet2.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.03444765880703926,0.1250379737066277
+c3_s45,head.scratch.refinenet2.resConfUnit1.conv2.bias,"(64,)",0.01543306652456522,0.10055933527666487
+c3_s45,head.scratch.refinenet2.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.07078603655099869,0.17415179349478965
+c3_s45,head.scratch.refinenet2.resConfUnit2.conv1.bias,"(64,)",0.010426938533782959,0.05520083111361222
+c3_s45,head.scratch.refinenet2.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.04630482941865921,0.1609290828784439
+c3_s45,head.scratch.refinenet2.resConfUnit2.conv2.bias,"(64,)",0.015833161771297455,0.12885186591189488
+c3_s45,head.scratch.refinenet3.out_conv.weight,"(64, 64, 1, 1)",0.023411519825458527,0.08517733247904732
+c3_s45,head.scratch.refinenet3.out_conv.bias,"(64,)",0.016983095556497574,0.08893367735819013
+c3_s45,head.scratch.refinenet3.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.029720555990934372,0.14239719962724173
+c3_s45,head.scratch.refinenet3.resConfUnit1.conv1.bias,"(64,)",0.009312361478805542,0.06552407552036989
+c3_s45,head.scratch.refinenet3.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.03652574121952057,0.14364019678466233
+c3_s45,head.scratch.refinenet3.resConfUnit1.conv2.bias,"(64,)",0.013839438557624817,0.0677528840820399
+c3_s45,head.scratch.refinenet3.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.04579491913318634,0.16000214427338227
+c3_s45,head.scratch.refinenet3.resConfUnit2.conv1.bias,"(64,)",0.01371467113494873,0.06947238024269986
+c3_s45,head.scratch.refinenet3.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.03823896497488022,0.17177921158227347
+c3_s45,head.scratch.refinenet3.resConfUnit2.conv2.bias,"(64,)",0.016056731343269348,0.09100965286648253
+c3_s45,head.scratch.refinenet4.out_conv.weight,"(64, 64, 1, 1)",0.023142103105783463,0.08229410789935557
+c3_s45,head.scratch.refinenet4.out_conv.bias,"(64,)",0.014093227684497833,0.05462959714494802
+c3_s45,head.scratch.refinenet4.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.0,0.0
+c3_s45,head.scratch.refinenet4.resConfUnit1.conv1.bias,"(64,)",0.0,0.0
+c3_s45,head.scratch.refinenet4.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.0,0.0
+c3_s45,head.scratch.refinenet4.resConfUnit1.conv2.bias,"(64,)",0.0,0.0
+c3_s45,head.scratch.refinenet4.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.03847673162817955,0.16288352486223814
+c3_s45,head.scratch.refinenet4.resConfUnit2.conv1.bias,"(64,)",0.009146942757070065,0.044510245638126014
+c3_s45,head.scratch.refinenet4.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.032464753836393356,0.16616765691216287
+c3_s45,head.scratch.refinenet4.resConfUnit2.conv2.bias,"(64,)",0.011497125029563904,0.06069163157578037
+c3_s45,head.scratch.output_conv1.weight,"(32, 64, 3, 3)",0.029354441910982132,0.14426410661263872
+c3_s45,head.scratch.output_conv1.bias,"(32,)",0.020450100302696228,0.10879194080047938
+c3_s45,head.scratch.output_conv2.0.weight,"(32, 32, 3, 3)",0.06362299621105194,0.20011585663861456
+c3_s45,head.scratch.output_conv2.0.bias,"(32,)",0.03391699120402336,0.1398700729140907
+c3_s45,head.scratch.output_conv2.2.weight,"(1, 32, 1, 1)",0.039347127079963684,0.14104288421249223
+c3_s45,head.scratch.output_conv2.2.bias,"(1,)",0.02538369596004486,0.12707278182917595
+ramen_n46,head.motion_modules.0.temporal_transformer.norm.weight,"(192,)",0.01726055145263672,0.006430696838072612
+ramen_n46,head.motion_modules.0.temporal_transformer.norm.bias,"(192,)",0.006031272932887077,0.1664975321882408
+ramen_n46,head.motion_modules.0.temporal_transformer.proj_in.weight,"(192, 192)",0.02809952199459076,0.1345113892845003
+ramen_n46,head.motion_modules.0.temporal_transformer.proj_in.bias,"(192,)",0.007079647853970528,0.05591376219138886
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(192, 192)",0.03879038989543915,0.15976376862894506
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(192, 192)",0.03735930472612381,0.15392037078144025
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(192, 192)",0.02782595157623291,0.11439470903018997
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(192, 192)",0.023843450471758842,0.13163766217320305
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(192,)",0.00551619753241539,0.050805179399894866
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(192, 192)",0.05705459415912628,0.160663302276837
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(192, 192)",0.04030745103955269,0.15742554140731563
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(192, 192)",0.02263086475431919,0.10818453080927395
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(192, 192)",0.02334791049361229,0.12389490594723389
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(192,)",0.0051084160804748535,0.05344022250558632
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.weight,"(192,)",0.017771244049072266,0.0056683784650203625
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.bias,"(192,)",0.008893445134162903,0.13168793012321103
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.weight,"(192,)",0.023669719696044922,0.005677110752657432
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.bias,"(192,)",0.009874999523162842,0.1213236523004848
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(1536, 192)",0.04629603773355484,0.15609141998822493
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(1536,)",0.014112642034888268,0.0877587644250923
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(192, 768)",0.044734977185726166,0.1789713329103544
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(192,)",0.007104162126779556,0.12204772055526028
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(192,)",0.016032695770263672,0.005458768903137737
+ramen_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(192,)",0.005987010896205902,0.08615706757829392
+ramen_n46,head.motion_modules.0.temporal_transformer.proj_out.weight,"(192, 192)",0.02679496258497238,0.19341986634865693
+ramen_n46,head.motion_modules.0.temporal_transformer.proj_out.bias,"(192,)",0.009263906627893448,0.2795855474664656
+ramen_n46,head.motion_modules.1.temporal_transformer.norm.weight,"(384,)",0.019392669200897217,0.005083697354682121
+ramen_n46,head.motion_modules.1.temporal_transformer.norm.bias,"(384,)",0.009067932143807411,0.1437708844590106
+ramen_n46,head.motion_modules.1.temporal_transformer.proj_in.weight,"(384, 384)",0.025686822831630707,0.12644632611327472
+ramen_n46,head.motion_modules.1.temporal_transformer.proj_in.bias,"(384,)",0.0075731296092271805,0.08058032734449601
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(384, 384)",0.03296519070863724,0.18490546578721787
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(384, 384)",0.03396366536617279,0.1799367296968874
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(384, 384)",0.020786426961421967,0.11755157191754934
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(384, 384)",0.020211897790431976,0.1252969288616328
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(384,)",0.00579376146197319,0.06183768744455014
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(384, 384)",0.03454803675413132,0.1795242096119974
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(384, 384)",0.0340367928147316,0.17216496725384772
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(384, 384)",0.019006721675395966,0.11598539896742806
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(384, 384)",0.022788595408201218,0.13712868054658053
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(384,)",0.006149064749479294,0.07789224964420037
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.weight,"(384,)",0.013638913631439209,0.0043343353568696865
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.bias,"(384,)",0.012803785502910614,0.10668018021456681
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.weight,"(384,)",0.01798844337463379,0.004370593687717774
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.bias,"(384,)",0.013066954910755157,0.10894629254844236
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(3072, 384)",0.04704112559556961,0.19457232119373974
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(3072,)",0.019294442608952522,0.11145473088385033
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(384, 1536)",0.056708984076976776,0.21759795022986952
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(384,)",0.00646442174911499,0.08468809871148719
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(384,)",0.016118764877319336,0.005321952632379243
+ramen_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(384,)",0.00990331918001175,0.11268941683937246
+ramen_n46,head.motion_modules.1.temporal_transformer.proj_out.weight,"(384, 384)",0.03526885062456131,0.18811613951104275
+ramen_n46,head.motion_modules.1.temporal_transformer.proj_out.bias,"(384,)",0.008895831182599068,0.1510241849882296
+ramen_n46,head.motion_modules.2.temporal_transformer.norm.weight,"(64,)",0.02442765235900879,0.008402220738295342
+ramen_n46,head.motion_modules.2.temporal_transformer.norm.bias,"(64,)",0.005462901666760445,0.14446368440171958
+ramen_n46,head.motion_modules.2.temporal_transformer.proj_in.weight,"(64, 64)",0.037780724465847015,0.08689545247637243
+ramen_n46,head.motion_modules.2.temporal_transformer.proj_in.bias,"(64,)",0.006576207932084799,0.038974202388777864
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.07332655042409897,0.13684894850989357
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.04850524663925171,0.1302490047469676
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.032507605850696564,0.06898883431953005
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.03164778649806976,0.07062998536439485
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.005969420075416565,0.03056098235326303
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.036578692495822906,0.10612473921558431
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.04382063448429108,0.11500920994068146
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.025868218392133713,0.07077672802228904
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.025535237044095993,0.0752158874585885
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.005849018692970276,0.034421398529238326
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.030530691146850586,0.007373136692080282
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.007338491268455982,0.18214794848829682
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.014426827430725098,0.005448440054039877
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.00653435941785574,0.1341079289076649
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.053996492177248,0.10076666660000455
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.025659354403614998,0.08523459411978268
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.050511933863162994,0.13650773190157392
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.011836662888526917,0.09111276081871549
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.024639129638671875,0.007788623400048938
+ramen_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.011065945960581303,0.12058187797988969
+ramen_n46,head.motion_modules.2.temporal_transformer.proj_out.weight,"(64, 64)",0.033466048538684845,0.15746278795102617
+ramen_n46,head.motion_modules.2.temporal_transformer.proj_out.bias,"(64,)",0.012102741748094559,0.2078872569979848
+ramen_n46,head.motion_modules.3.temporal_transformer.norm.weight,"(64,)",0.025069713592529297,0.00843979951063742
+ramen_n46,head.motion_modules.3.temporal_transformer.norm.bias,"(64,)",0.012480095028877258,0.17221421774854057
+ramen_n46,head.motion_modules.3.temporal_transformer.proj_in.weight,"(64, 64)",0.034731678664684296,0.09900985842449042
+ramen_n46,head.motion_modules.3.temporal_transformer.proj_in.bias,"(64,)",0.014759659767150879,0.05472547544387729
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.11052453517913818,0.1264557687339407
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.10325992107391357,0.13859648199505345
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.027066677808761597,0.07719141496434516
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.032627739012241364,0.07399354524399206
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.008402585983276367,0.04254352187243432
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.06854090094566345,0.1480970966607584
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.08104002475738525,0.15758235124883896
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.027620436623692513,0.078761311206418
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.023921526968479156,0.06808867895644366
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.011904560029506683,0.06270585680368611
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.025987625122070312,0.00854950065096524
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.005190778989344835,0.1613072933407461
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.022479772567749023,0.00560183587604329
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.006597272120416164,0.277865814086168
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.05179443210363388,0.08339325185183623
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.02513299137353897,0.07201323934353361
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.034388959407806396,0.104985234365459
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.009112998843193054,0.14826723869634162
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.014439582824707031,0.006182581449182069
+ramen_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.010897894389927387,0.15385995633967023
+ramen_n46,head.motion_modules.3.temporal_transformer.proj_out.weight,"(64, 64)",0.05465853214263916,0.1749115831566091
+ramen_n46,head.motion_modules.3.temporal_transformer.proj_out.bias,"(64,)",0.01451804582029581,0.24236845761562717
+ramen_n46,head.projects.0.weight,"(48, 384, 1, 1)",0.04996790736913681,0.17606496510867153
+ramen_n46,head.projects.0.bias,"(48,)",0.003034159541130066,0.043972254332970334
+ramen_n46,head.projects.1.weight,"(96, 384, 1, 1)",0.043826665729284286,0.20625629384371824
+ramen_n46,head.projects.1.bias,"(96,)",0.007485274225473404,0.10695248535719312
+ramen_n46,head.projects.2.weight,"(192, 384, 1, 1)",0.03303532302379608,0.17505689217583695
+ramen_n46,head.projects.2.bias,"(192,)",0.004437852650880814,0.05137173435710773
+ramen_n46,head.projects.3.weight,"(384, 384, 1, 1)",0.03008209727704525,0.17015193503178358
+ramen_n46,head.projects.3.bias,"(384,)",0.00964410975575447,0.05730166107100763
+ramen_n46,head.resize_layers.0.weight,"(48, 48, 4, 4)",0.03475723788142204,0.14044642072592864
+ramen_n46,head.resize_layers.0.bias,"(48,)",0.013967975974082947,0.07245995436147543
+ramen_n46,head.resize_layers.1.weight,"(96, 96, 2, 2)",0.03119444102048874,0.1569237363218379
+ramen_n46,head.resize_layers.1.bias,"(96,)",0.006197579205036163,0.06448830205800939
+ramen_n46,head.resize_layers.3.weight,"(384, 384, 3, 3)",0.027997318655252457,0.21115399219833605
+ramen_n46,head.resize_layers.3.bias,"(384,)",0.008744653314352036,0.05194247678057912
+ramen_n46,head.scratch.layer1_rn.weight,"(64, 48, 3, 3)",0.03183312714099884,0.1432570273864107
+ramen_n46,head.scratch.layer2_rn.weight,"(64, 96, 3, 3)",0.029188260436058044,0.16472011743848375
+ramen_n46,head.scratch.layer3_rn.weight,"(64, 192, 3, 3)",0.028842352330684662,0.21189980887490437
+ramen_n46,head.scratch.layer4_rn.weight,"(64, 384, 3, 3)",0.02385013736784458,0.18092105493270785
+ramen_n46,head.scratch.refinenet1.out_conv.weight,"(64, 64, 1, 1)",0.027026768773794174,0.06521122773562392
+ramen_n46,head.scratch.refinenet1.out_conv.bias,"(64,)",0.017116203904151917,0.1026614752353784
+ramen_n46,head.scratch.refinenet1.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.04466666281223297,0.1155005635591397
+ramen_n46,head.scratch.refinenet1.resConfUnit1.conv1.bias,"(64,)",0.012234574183821678,0.08857886420663211
+ramen_n46,head.scratch.refinenet1.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.041280388832092285,0.15069355045989538
+ramen_n46,head.scratch.refinenet1.resConfUnit1.conv2.bias,"(64,)",0.014453113079071045,0.10202624376882875
+ramen_n46,head.scratch.refinenet1.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.09830038249492645,0.17298877641305999
+ramen_n46,head.scratch.refinenet1.resConfUnit2.conv1.bias,"(64,)",0.014422498643398285,0.07895924696289822
+ramen_n46,head.scratch.refinenet1.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.07684430480003357,0.16316089941470888
+ramen_n46,head.scratch.refinenet1.resConfUnit2.conv2.bias,"(64,)",0.01699177548289299,0.1376550676898152
+ramen_n46,head.scratch.refinenet2.out_conv.weight,"(64, 64, 1, 1)",0.02757120132446289,0.071756371584027
+ramen_n46,head.scratch.refinenet2.out_conv.bias,"(64,)",0.014453113079071045,0.07513904395059887
+ramen_n46,head.scratch.refinenet2.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.035580702126026154,0.12730135529424735
+ramen_n46,head.scratch.refinenet2.resConfUnit1.conv1.bias,"(64,)",0.013703346252441406,0.09830326355096906
+ramen_n46,head.scratch.refinenet2.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.03857952356338501,0.12783684636403844
+ramen_n46,head.scratch.refinenet2.resConfUnit1.conv2.bias,"(64,)",0.015587854199111462,0.09444947621330421
+ramen_n46,head.scratch.refinenet2.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.0637059435248375,0.17534157914768472
+ramen_n46,head.scratch.refinenet2.resConfUnit2.conv1.bias,"(64,)",0.010579757392406464,0.059031881235003296
+ramen_n46,head.scratch.refinenet2.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.0522710457444191,0.16118329618010763
+ramen_n46,head.scratch.refinenet2.resConfUnit2.conv2.bias,"(64,)",0.014251422137022018,0.11836367430511537
+ramen_n46,head.scratch.refinenet3.out_conv.weight,"(64, 64, 1, 1)",0.02627483755350113,0.08511327217329011
+ramen_n46,head.scratch.refinenet3.out_conv.bias,"(64,)",0.01509956642985344,0.08283935817377513
+ramen_n46,head.scratch.refinenet3.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.03208698704838753,0.13539110131956109
+ramen_n46,head.scratch.refinenet3.resConfUnit1.conv1.bias,"(64,)",0.007280673831701279,0.060245831111392825
+ramen_n46,head.scratch.refinenet3.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.037628937512636185,0.14499515024938167
+ramen_n46,head.scratch.refinenet3.resConfUnit1.conv2.bias,"(64,)",0.015154369175434113,0.06368893097396451
+ramen_n46,head.scratch.refinenet3.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.03843754157423973,0.15730881211364142
+ramen_n46,head.scratch.refinenet3.resConfUnit2.conv1.bias,"(64,)",0.01418597437441349,0.07120093312184995
+ramen_n46,head.scratch.refinenet3.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.0357285775244236,0.17853727694413754
+ramen_n46,head.scratch.refinenet3.resConfUnit2.conv2.bias,"(64,)",0.014011397957801819,0.08280786195422914
+ramen_n46,head.scratch.refinenet4.out_conv.weight,"(64, 64, 1, 1)",0.02111344039440155,0.08253559954134504
+ramen_n46,head.scratch.refinenet4.out_conv.bias,"(64,)",0.012156978249549866,0.049409097529850496
+ramen_n46,head.scratch.refinenet4.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.0,0.0
+ramen_n46,head.scratch.refinenet4.resConfUnit1.conv1.bias,"(64,)",0.0,0.0
+ramen_n46,head.scratch.refinenet4.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.0,0.0
+ramen_n46,head.scratch.refinenet4.resConfUnit1.conv2.bias,"(64,)",0.0,0.0
+ramen_n46,head.scratch.refinenet4.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.046673357486724854,0.1621935091680454
+ramen_n46,head.scratch.refinenet4.resConfUnit2.conv1.bias,"(64,)",0.00939977541565895,0.046865471495161834
+ramen_n46,head.scratch.refinenet4.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.029548857361078262,0.16649075861745719
+ramen_n46,head.scratch.refinenet4.resConfUnit2.conv2.bias,"(64,)",0.010606691241264343,0.04989664026831453
+ramen_n46,head.scratch.output_conv1.weight,"(32, 64, 3, 3)",0.027448557317256927,0.14537201710262146
+ramen_n46,head.scratch.output_conv1.bias,"(32,)",0.0187598317861557,0.10168781354647419
+ramen_n46,head.scratch.output_conv2.0.weight,"(32, 32, 3, 3)",0.07807067036628723,0.20655923464510598
+ramen_n46,head.scratch.output_conv2.0.bias,"(32,)",0.0345844067633152,0.13347009077567437
+ramen_n46,head.scratch.output_conv2.2.weight,"(1, 32, 1, 1)",0.03336671367287636,0.11746138925862991
+ramen_n46,head.scratch.output_conv2.2.bias,"(1,)",0.022444382309913635,0.11235834612294303
+ft_n46,head.projects.0.weight,"(48, 384, 1, 1)",0.05383491888642311,0.18724846006573212
+ft_n46,head.projects.0.bias,"(48,)",0.0035491609014570713,0.054169328038730015
+ft_n46,head.projects.1.weight,"(96, 384, 1, 1)",0.044028542935848236,0.20689954076461
+ft_n46,head.projects.1.bias,"(96,)",0.0065146880224347115,0.10097140709196202
+ft_n46,head.projects.2.weight,"(192, 384, 1, 1)",0.03367627412080765,0.17542041713658083
+ft_n46,head.projects.2.bias,"(192,)",0.0044181086122989655,0.05095866371835135
+ft_n46,head.projects.3.weight,"(384, 384, 1, 1)",0.03180953860282898,0.1715073796197182
+ft_n46,head.projects.3.bias,"(384,)",0.009669892489910126,0.0547932865159469
+ft_n46,head.resize_layers.0.weight,"(48, 48, 4, 4)",0.029781322926282883,0.14552747480046596
+ft_n46,head.resize_layers.0.bias,"(48,)",0.013871103525161743,0.0756177023550064
+ft_n46,head.resize_layers.1.weight,"(96, 96, 2, 2)",0.026851864531636238,0.15749579564447339
+ft_n46,head.resize_layers.1.bias,"(96,)",0.006471902132034302,0.06007884675734963
+ft_n46,head.resize_layers.3.weight,"(384, 384, 3, 3)",0.031031670048832893,0.2111244503586063
+ft_n46,head.resize_layers.3.bias,"(384,)",0.00825134664773941,0.05308389380250678
+ft_n46,head.scratch.layer1_rn.weight,"(64, 48, 3, 3)",0.032072000205516815,0.14667855221542664
+ft_n46,head.scratch.layer2_rn.weight,"(64, 96, 3, 3)",0.0324467308819294,0.16438446527074063
+ft_n46,head.scratch.layer3_rn.weight,"(64, 192, 3, 3)",0.030224952846765518,0.21108984837436992
+ft_n46,head.scratch.layer4_rn.weight,"(64, 384, 3, 3)",0.024100037291646004,0.1786689031223472
+ft_n46,head.scratch.refinenet1.out_conv.weight,"(64, 64, 1, 1)",0.02850494161248207,0.06615425162141624
+ft_n46,head.scratch.refinenet1.out_conv.bias,"(64,)",0.017508521676063538,0.1089660777487305
+ft_n46,head.scratch.refinenet1.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.04367486387491226,0.1194511785952086
+ft_n46,head.scratch.refinenet1.resConfUnit1.conv1.bias,"(64,)",0.012920903041958809,0.09265963561836334
+ft_n46,head.scratch.refinenet1.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.04125875234603882,0.15270658816038069
+ft_n46,head.scratch.refinenet1.resConfUnit1.conv2.bias,"(64,)",0.014930486679077148,0.10840197118593096
+ft_n46,head.scratch.refinenet1.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.10198819637298584,0.17386098684691895
+ft_n46,head.scratch.refinenet1.resConfUnit2.conv1.bias,"(64,)",0.015200071036815643,0.08026087376970274
+ft_n46,head.scratch.refinenet1.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.07378865778446198,0.1640279701955676
+ft_n46,head.scratch.refinenet1.resConfUnit2.conv2.bias,"(64,)",0.018068399280309677,0.1453980532710017
+ft_n46,head.scratch.refinenet2.out_conv.weight,"(64, 64, 1, 1)",0.0258024912327528,0.07162117050020282
+ft_n46,head.scratch.refinenet2.out_conv.bias,"(64,)",0.014930486679077148,0.07983450134190243
+ft_n46,head.scratch.refinenet2.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.03797921538352966,0.12746403443689341
+ft_n46,head.scratch.refinenet2.resConfUnit1.conv1.bias,"(64,)",0.013456568121910095,0.09754189789487254
+ft_n46,head.scratch.refinenet2.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.03504868224263191,0.1269002785322992
+ft_n46,head.scratch.refinenet2.resConfUnit1.conv2.bias,"(64,)",0.011698995716869831,0.09615492152655343
+ft_n46,head.scratch.refinenet2.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.06260383129119873,0.17328093863464425
+ft_n46,head.scratch.refinenet2.resConfUnit2.conv1.bias,"(64,)",0.011600784957408905,0.06096517285789627
+ft_n46,head.scratch.refinenet2.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.0491047203540802,0.16140986149885272
+ft_n46,head.scratch.refinenet2.resConfUnit2.conv2.bias,"(64,)",0.014529094099998474,0.12451360558379257
+ft_n46,head.scratch.refinenet3.out_conv.weight,"(64, 64, 1, 1)",0.025430187582969666,0.08291891909948654
+ft_n46,head.scratch.refinenet3.out_conv.bias,"(64,)",0.016272645443677902,0.08658593569018694
+ft_n46,head.scratch.refinenet3.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.033960238099098206,0.13590799787482788
+ft_n46,head.scratch.refinenet3.resConfUnit1.conv1.bias,"(64,)",0.008531332015991211,0.06062351424931828
+ft_n46,head.scratch.refinenet3.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.04067729786038399,0.1439739842292358
+ft_n46,head.scratch.refinenet3.resConfUnit1.conv2.bias,"(64,)",0.014007072895765305,0.06565826574369882
+ft_n46,head.scratch.refinenet3.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.03814736753702164,0.1565341522154205
+ft_n46,head.scratch.refinenet3.resConfUnit2.conv1.bias,"(64,)",0.011461831629276276,0.06779604158255359
+ft_n46,head.scratch.refinenet3.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.033010631799697876,0.17772496508517036
+ft_n46,head.scratch.refinenet3.resConfUnit2.conv2.bias,"(64,)",0.014019981026649475,0.08539667078153547
+ft_n46,head.scratch.refinenet4.out_conv.weight,"(64, 64, 1, 1)",0.02156619168817997,0.08095935488689009
+ft_n46,head.scratch.refinenet4.out_conv.bias,"(64,)",0.012801378965377808,0.04968477287769717
+ft_n46,head.scratch.refinenet4.resConfUnit1.conv1.weight,"(64, 64, 3, 3)",0.0,0.0
+ft_n46,head.scratch.refinenet4.resConfUnit1.conv1.bias,"(64,)",0.0,0.0
+ft_n46,head.scratch.refinenet4.resConfUnit1.conv2.weight,"(64, 64, 3, 3)",0.0,0.0
+ft_n46,head.scratch.refinenet4.resConfUnit1.conv2.bias,"(64,)",0.0,0.0
+ft_n46,head.scratch.refinenet4.resConfUnit2.conv1.weight,"(64, 64, 3, 3)",0.03762821853160858,0.16372722064492304
+ft_n46,head.scratch.refinenet4.resConfUnit2.conv1.bias,"(64,)",0.009363153018057346,0.04744730331654756
+ft_n46,head.scratch.refinenet4.resConfUnit2.conv2.weight,"(64, 64, 3, 3)",0.029399845749139786,0.16824516237746046
+ft_n46,head.scratch.refinenet4.resConfUnit2.conv2.bias,"(64,)",0.011198803782463074,0.05069810707277919
+ft_n46,head.scratch.output_conv1.weight,"(32, 64, 3, 3)",0.027724385261535645,0.14655106202269239
+ft_n46,head.scratch.output_conv1.bias,"(32,)",0.019719421863555908,0.10580274241433174
+ft_n46,head.scratch.output_conv2.0.weight,"(32, 32, 3, 3)",0.07828968018293381,0.2093398590403327
+ft_n46,head.scratch.output_conv2.0.bias,"(32,)",0.034671951085329056,0.14345542275220952
+ft_n46,head.scratch.output_conv2.2.weight,"(1, 32, 1, 1)",0.03149709105491638,0.11728378607107165
+ft_n46,head.scratch.output_conv2.2.bias,"(1,)",0.024491682648658752,0.12260729291515383
+ft_n46,head.motion_modules.0.temporal_transformer.norm.weight,"(192,)",0.016285836696624756,0.006570195900508044
+ft_n46,head.motion_modules.0.temporal_transformer.norm.bias,"(192,)",0.006318900268524885,0.14448028018145842
+ft_n46,head.motion_modules.0.temporal_transformer.proj_in.weight,"(192, 192)",0.030553419142961502,0.13702398377676744
+ft_n46,head.motion_modules.0.temporal_transformer.proj_in.bias,"(192,)",0.005642548203468323,0.05380452280757638
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(192, 192)",0.037509988993406296,0.16015009439388306
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(192, 192)",0.036756567656993866,0.1567352593421979
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(192, 192)",0.02719971537590027,0.1167143239332267
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(192, 192)",0.02379532903432846,0.13351702626221723
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(192,)",0.0055204834789037704,0.04670025918655529
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(192, 192)",0.05767296254634857,0.16323808124338055
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(192, 192)",0.04040784016251564,0.15887526163467589
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(192, 192)",0.023700051009655,0.10967151801076135
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(192, 192)",0.024435952305793762,0.12656631309790073
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(192,)",0.005563085898756981,0.052369151414180894
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 192)",0.0,0.0
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.weight,"(192,)",0.017334699630737305,0.005874942871262781
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.0.bias,"(192,)",0.009373031556606293,0.13845933228561036
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.weight,"(192,)",0.025016486644744873,0.005628807042640033
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.norms.1.bias,"(192,)",0.010247975587844849,0.12022267260786354
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(1536, 192)",0.04578518122434616,0.15888280559727747
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(1536,)",0.013973727822303772,0.08831195143368473
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(192, 768)",0.038615357130765915,0.18217368368719275
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(192,)",0.004275482147932053,0.0589241837678203
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(192,)",0.01760411262512207,0.005675866975030959
+ft_n46,head.motion_modules.0.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(192,)",0.00688636489212513,0.08741213695159616
+ft_n46,head.motion_modules.0.temporal_transformer.proj_out.weight,"(192, 192)",0.027819808572530746,0.19402426491260738
+ft_n46,head.motion_modules.0.temporal_transformer.proj_out.bias,"(192,)",0.008628854528069496,0.195842090820234
+ft_n46,head.motion_modules.1.temporal_transformer.norm.weight,"(384,)",0.02087301015853882,0.005043562482579098
+ft_n46,head.motion_modules.1.temporal_transformer.norm.bias,"(384,)",0.007726582232862711,0.12446188512890403
+ft_n46,head.motion_modules.1.temporal_transformer.proj_in.weight,"(384, 384)",0.02488958090543747,0.127009860214067
+ft_n46,head.motion_modules.1.temporal_transformer.proj_in.bias,"(384,)",0.0076131671667099,0.07232224174712962
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(384, 384)",0.03143216669559479,0.18757544578825755
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(384, 384)",0.035972848534584045,0.1837727777881574
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(384, 384)",0.020494144409894943,0.11805124691566718
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(384, 384)",0.02205067314207554,0.12613097322580746
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(384,)",0.006215561181306839,0.06087231772463909
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(384, 384)",0.03635304048657417,0.18370790275943763
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(384, 384)",0.03482874855399132,0.1760020486112216
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(384, 384)",0.018238814547657967,0.11739834288165929
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(384, 384)",0.020888594910502434,0.13841643831066416
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(384,)",0.006162508390843868,0.0768685104983171
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 384)",0.0,0.0
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.weight,"(384,)",0.01473003625869751,0.004371063569287396
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.0.bias,"(384,)",0.01282404363155365,0.10981113767631052
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.weight,"(384,)",0.01663684844970703,0.00446001555207059
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.norms.1.bias,"(384,)",0.012316621840000153,0.10787003077887809
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(3072, 384)",0.04643537849187851,0.19601417311235228
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(3072,)",0.018738016486167908,0.11329795666146746
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(384, 1536)",0.0521404892206192,0.2195412910046616
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(384,)",0.008249581791460514,0.07181840776462077
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(384,)",0.017215847969055176,0.005347048593517039
+ft_n46,head.motion_modules.1.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(384,)",0.010460995137691498,0.11057704732284206
+ft_n46,head.motion_modules.1.temporal_transformer.proj_out.weight,"(384, 384)",0.03635510057210922,0.18416677095150985
+ft_n46,head.motion_modules.1.temporal_transformer.proj_out.bias,"(384,)",0.00974448211491108,0.14402613148820223
+ft_n46,head.motion_modules.2.temporal_transformer.norm.weight,"(64,)",0.024719178676605225,0.009006957584369445
+ft_n46,head.motion_modules.2.temporal_transformer.norm.bias,"(64,)",0.004313580691814423,0.135198484851419
+ft_n46,head.motion_modules.2.temporal_transformer.proj_in.weight,"(64, 64)",0.039354145526885986,0.09122128826233454
+ft_n46,head.motion_modules.2.temporal_transformer.proj_in.bias,"(64,)",0.006963502150028944,0.04087772230796513
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.06813153624534607,0.13821309235925136
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.048457980155944824,0.13183034935160512
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.03243701905012131,0.07004610448941276
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.03546576201915741,0.07281424942004529
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.006588272750377655,0.03357908171664831
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.03908010199666023,0.10843680083293633
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.04490456357598305,0.11856190302454689
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.025560609996318817,0.07140323603640114
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.024521291255950928,0.07709106234015542
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.006697110831737518,0.0360000718844282
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.0326075553894043,0.007456048971920622
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.008086266927421093,0.19772251582379874
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.016350626945495605,0.00577355561039281
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.004798873793333769,0.12708567567385612
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.05190528184175491,0.10343925990210313
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.02629241533577442,0.09019753181986939
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.048768505454063416,0.14285264556914123
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.009738273918628693,0.09285812803046357
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.026701688766479492,0.008336910823817338
+ft_n46,head.motion_modules.2.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.010203788988292217,0.1265333502873558
+ft_n46,head.motion_modules.2.temporal_transformer.proj_out.weight,"(64, 64)",0.035289548337459564,0.15896029943851328
+ft_n46,head.motion_modules.2.temporal_transformer.proj_out.bias,"(64,)",0.014006966724991798,0.20417047035324354
+ft_n46,head.motion_modules.3.temporal_transformer.norm.weight,"(64,)",0.027102410793304443,0.008890265013909252
+ft_n46,head.motion_modules.3.temporal_transformer.norm.bias,"(64,)",0.01107829064130783,0.16705108677271754
+ft_n46,head.motion_modules.3.temporal_transformer.proj_in.weight,"(64, 64)",0.03326789662241936,0.10104364943748627
+ft_n46,head.motion_modules.3.temporal_transformer.proj_in.bias,"(64,)",0.014404907822608948,0.054320294895762476
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_q.weight,"(64, 64)",0.10947299003601074,0.12494842945713161
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_k.weight,"(64, 64)",0.10224014520645142,0.1365800095432057
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_v.weight,"(64, 64)",0.027929995208978653,0.078791723986848
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.weight,"(64, 64)",0.0347902812063694,0.07379086682720085
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.to_out.0.bias,"(64,)",0.00680406391620636,0.038798368033725744
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.0.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_q.weight,"(64, 64)",0.07098263502120972,0.14549526895146114
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_k.weight,"(64, 64)",0.07105391472578049,0.1579139604053626
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_v.weight,"(64, 64)",0.029140256345272064,0.07666853924201843
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.weight,"(64, 64)",0.02402646094560623,0.06597959411318105
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.to_out.0.bias,"(64,)",0.011271655559539795,0.05535473883702879
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.attention_blocks.1.pos_encoder.pe,"(1, 32, 64)",0.0,0.0
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.weight,"(64,)",0.02278459072113037,0.00858332425048812
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.0.bias,"(64,)",0.004880002699792385,0.14424425880914418
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.weight,"(64,)",0.017915725708007812,0.005453575517468577
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.norms.1.bias,"(64,)",0.0067687309347093105,0.2312645711716515
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.weight,"(512, 64)",0.0508929044008255,0.08307350794389105
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.0.proj.bias,"(512,)",0.025716319680213928,0.07122396203406599
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.weight,"(64, 256)",0.034694455564022064,0.10438360995542828
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff.net.2.bias,"(64,)",0.00865061767399311,0.1495496997187492
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.weight,"(64,)",0.015471220016479492,0.006096554483785105
+ft_n46,head.motion_modules.3.temporal_transformer.transformer_blocks.0.ff_norm.bias,"(64,)",0.009752277284860611,0.1496463162630354
+ft_n46,head.motion_modules.3.temporal_transformer.proj_out.weight,"(64, 64)",0.06504824757575989,0.18095545374331976
+ft_n46,head.motion_modules.3.temporal_transformer.proj_out.bias,"(64,)",0.011677969247102737,0.24773420512168862

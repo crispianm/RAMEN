@@ -1,0 +1,122 @@
+{
+ "Downtown": {
+  "file": "Downtown/Data_easy/P004/depth_lcam_front/000743_lcam_front_depth.png",
+  "pct_lt80": 84.85,
+  "pct_80_655": 15.15,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 0.0,
+  "p50_p99_max": [
+   15.9,
+   353.5,
+   441.2
+  ]
+ },
+ "AmusementPark": {
+  "file": "AmusementPark/Data_easy/P001/depth_lcam_front/000917_lcam_front_depth.png",
+  "pct_lt80": 80.97,
+  "pct_80_655": 19.03,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 0.0,
+  "p50_p99_max": [
+   17.2,
+   366.0,
+   395.8
+  ]
+ },
+ "GreatMarsh": {
+  "file": "GreatMarsh/Data_easy/P003/depth_lcam_front/007274_lcam_front_depth.png",
+  "pct_lt80": 67.51,
+  "pct_80_655": 2.93,
+  "pct_655_1e4": 29.56,
+  "pct_gt1e4": 0.0,
+  "p50_p99_max": [
+   14.0,
+   9336.0,
+   9776.0
+  ]
+ },
+ "ModernCityDowntown": {
+  "file": "ModernCityDowntown/Data_easy/P008/depth_lcam_front/000059_lcam_front_depth.png",
+  "pct_lt80": 63.67,
+  "pct_80_655": 2.19,
+  "pct_655_1e4": 0.37,
+  "pct_gt1e4": 33.77,
+  "p50_p99_max": [
+   50.9,
+   15904.0,
+   16296.0
+  ]
+ },
+ "AmericanDiner": {
+  "file": "AmericanDiner/Data_easy/P000/depth_lcam_front/000098_lcam_front_depth.png",
+  "pct_lt80": 100.0,
+  "pct_80_655": 0.0,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 0.0,
+  "p50_p99_max": [
+   2.0,
+   4.3,
+   4.6
+  ]
+ },
+ "ForestEnv": {
+  "file": "ForestEnv/Data_easy/P000/depth_lcam_front/002373_lcam_front_depth.png",
+  "pct_lt80": 91.88,
+  "pct_80_655": 3.28,
+  "pct_655_1e4": 0.08,
+  "pct_gt1e4": 4.76,
+  "p50_p99_max": [
+   11.9,
+   12928.0,
+   15176.0
+  ]
+ },
+ "Hospital": {
+  "file": "Hospital/Data_easy/P009/depth_lcam_front/000324_lcam_front_depth.png",
+  "pct_lt80": 100.0,
+  "pct_80_655": 0.0,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 0.0,
+  "p50_p99_max": [
+   3.0,
+   16.1,
+   19.2
+  ]
+ },
+ "HongKong": {
+  "file": "HongKong/Data_easy/P000/depth_lcam_front/000385_lcam_front_depth.png",
+  "pct_lt80": 99.78,
+  "pct_80_655": 0.0,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 0.22,
+  "p50_p99_max": [
+   1.9,
+   8.8,
+   65504.0
+  ]
+ },
+ "Rome": {
+  "file": "Rome/Data_easy/P004/depth_lcam_front/001284_lcam_front_depth.png",
+  "pct_lt80": 93.95,
+  "pct_80_655": 0.0,
+  "pct_655_1e4": 0.0,
+  "pct_gt1e4": 6.05,
+  "p50_p99_max": [
+   0.8,
+   14376.0,
+   15496.0
+  ]
+ },
+ "NordicHarbor": {
+  "file": "NordicHarbor/Data_easy/P007/depth_lcam_front/001936_lcam_front_depth.png",
+  "pct_lt80": 87.38,
+  "pct_80_655": 1.06,
+  "pct_655_1e4": 0.5,
+  "pct_gt1e4": 11.05,
+  "p50_p99_max": [
+   7.7,
+   13920.0,
+   16072.0
+  ]
+ }
+}

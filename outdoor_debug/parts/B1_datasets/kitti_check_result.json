@@ -1,0 +1,39 @@
+{
+ "frames": 300,
+ "png_dtypes": [
+  "uint16"
+ ],
+ "max_depth_m": 90.42578125,
+ "frames_with_max_gt80": 0.5233333333333333,
+ "p999_valid": 76.25,
+ "mean_zero_frac": 0.8436531340036716,
+ "mean_valid_frac": 0.1563468659963284,
+ "min_valid_pts": 7281,
+ "p5_valid_pts": 30293.15,
+ "rowdecile_valid_frac": [
+  0.0,
+  0.0,
+  0.001,
+  0.061,
+  0.231,
+  0.273,
+  0.294,
+  0.281,
+  0.25,
+  0.172
+ ],
+ "frac_pixels_gt80_in_raw": 3.996335721012946e-05,
+ "resize_to": [
+  1708,
+  518
+ ],
+ "crop_fraction_of_width": 0.30327868852459017,
+ "nearest_up_dup_factor": 1.9284823531643713,
+ "val_quantisation_step_m": 0.00390625,
+ "nn_vs_centre_aligned_src_offset_px_mean_min_max(dest px)": [
+  0.498666666666665,
+  -0.19066666666666668,
+  1.1879999999999866
+ ],
+ "cv2_nearest_equals_floor_mapping": true
+}

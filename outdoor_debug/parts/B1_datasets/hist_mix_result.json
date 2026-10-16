@@ -1,0 +1,134 @@
+{
+ "tartanair": {
+  "frames": 48,
+  "f_valid": 0.9351436292194014,
+  "f_sky": 0.06483152519590743,
+  "f_invalid": 2.4845584691144537e-05,
+  "valid_gt80": 0.0954881220727168,
+  "valid_gt200": 0.07218210942649639,
+  "valid_gt655": 0.041176642991985125,
+  "pct": [
+   0.89599609375,
+   6.203125,
+   8464.0
+  ],
+  "max": 9992.0,
+  "silog_ceiling": 655,
+  "metric_sup": 1,
+  "mass": 310000,
+  "f_valid_pixels_in_SiLog": 0.9588229418715067
+ },
+ "vkitti": {
+  "frames": 48,
+  "f_valid": 0.8192732945990668,
+  "f_sky": 0.1807267054009332,
+  "f_invalid": 0.0,
+  "valid_gt80": 0.08791140681848617,
+  "valid_gt200": 0.01679493299436034,
+  "valid_gt655": 0.0,
+  "pct": [
+   5.300000190734863,
+   15.949999809265137,
+   241.6999969482422
+  ],
+  "max": 654.9199829101562,
+  "silog_ceiling": 655,
+  "metric_sup": 1,
+  "mass": 40000,
+  "f_valid_pixels_in_SiLog": 1.0
+ },
+ "pointodyssey": {
+  "frames": 48,
+  "f_valid": 0.8875963232261495,
+  "f_sky": 0.0,
+  "f_invalid": 0.11240367677385052,
+  "valid_gt80": 9.604750520104239e-05,
+  "valid_gt200": 0.0,
+  "valid_gt655": 0.0,
+  "pct": [
+   0.3356984853744507,
+   3.2806897163391113,
+   31.326772689819336
+  ],
+  "max": 81.6662826538086,
+  "silog_ceiling": 655,
+  "metric_sup": 1,
+  "mass": 99999,
+  "f_valid_pixels_in_SiLog": 1.0
+ },
+ "irs": {
+  "frames": 48,
+  "f_valid": 0.9549450943635307,
+  "f_sky": 0.0,
+  "f_invalid": 0.04505490563646934,
+  "valid_gt80": 0.0,
+  "valid_gt200": 0.0,
+  "valid_gt655": 0.0,
+  "pct": [
+   0.25549211621284484,
+   2.142831563949585,
+   15.795481033325018
+  ],
+  "max": 79.9995346069336,
+  "silog_ceiling": null,
+  "metric_sup": 1,
+  "mass": 100000,
+  "f_valid_pixels_in_SiLog": 1.0
+ },
+ "spring": {
+  "frames": 48,
+  "f_valid": 0.886002711895569,
+  "f_sky": 0.0,
+  "f_invalid": 0.11399728810443097,
+  "valid_gt80": 0.0,
+  "valid_gt200": 0.0,
+  "valid_gt655": 0.0,
+  "pct": [
+   0.5248776078224182,
+   10.186715126037598,
+   63.36693572998047
+  ],
+  "max": 79.99313354492188,
+  "silog_ceiling": null,
+  "metric_sup": 0,
+  "mass": 4843,
+  "f_valid_pixels_in_SiLog": 1.0
+ },
+ "kitti_raw": {
+  "frames": 48,
+  "f_valid": 0.1822313384813385,
+  "f_sky": 0.0,
+  "f_invalid": 0.8177686615186616,
+  "valid_gt80": 0.0,
+  "valid_gt200": 0.0,
+  "valid_gt655": 0.0,
+  "pct": [
+   6.03125,
+   12.12109375,
+   65.25
+  ],
+  "max": 79.99609375,
+  "silog_ceiling": null,
+  "metric_sup": 1,
+  "mass": 299397,
+  "f_valid_pixels_in_SiLog": 1.0
+ },
+ "_mixture_note": "pixel share of the metric (SiLog-supervised) pixels by source and distance, weights = sampling_mass x valid frac (nyu/scannet++ omitted: indoor, not on disk)",
+ "_mixture": {
+  "tartanair": {
+   "share_of_valid_pixels": 0.5163059066067903
+  },
+  "vkitti": {
+   "share_of_valid_pixels": 0.058365454268865864
+  },
+  "pointodyssey": {
+   "share_of_valid_pixels": 0.1580804748072347
+  },
+  "irs": {
+   "share_of_valid_pixels": 0.17007695906171408
+  },
+  "kitti_raw": {
+   "share_of_valid_pixels": 0.09717120525539497
+  }
+ }
+}

@@ -1,0 +1,50 @@
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+xFormers not available
+xFormers not available
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+released metric-VDA-S keys: 351
+===== C3_seed45 top-level keys: ['cfg', 'epoch', 'step', 'micro', 'best', 'metrics', 'optimizer', 'ema', 'rng', 'trainable', 'trainable_ema']
+ cfg.model arch/metric/init/ckpt/freeze_depth_head/shared_temporal/vda_lora_rank: vda True released /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth False True None
+ cfg.loss metric_depth_clamp: [0.1, 100000.0] data.max_depth 80.0 model has max_depth keys: ['freeze_depth_head', 'st_depth_input']
+xFormers not available
+xFormers not available
+ trainable_ema: n_src=340 n_dst=340 missing=0 unexpected=0 shape_mismatch=0 [] []
+ trainable: n_src=340 n_dst=340 missing=0 unexpected=0 shape_mismatch=0 [] []
+ model.state_dict n= 517  covered-by-ckpt modules; module names: ['temp2', 'gate', 'block2', 'gate2', 'motion_modules', 'depth_head']
+   trainable_ema key prefixes: ['block2', 'depth_head', 'gate', 'gate2', 'motion_modules', 'temp2']
+   trainable key prefixes: ['block2', 'depth_head', 'gate', 'gate2', 'motion_modules', 'temp2']
+ vs released: 164/351 tensors changed; encoder tensors changed: 0 (LoRA merged? lora_rank=None); keys in core not in released: []; released not in core: []
+   head.scratch.output_conv2.0.weight maxabs delta 0.06362299621105194 ckpt bias/abs mean 0.033671751618385315
+   head.scratch.output_conv2.2.weight maxabs delta 0.039347127079963684 ckpt bias/abs mean 0.08035095781087875
+   head.scratch.output_conv2.2.bias maxabs delta 0.02538369596004486 ckpt bias/abs mean 0.22514083981513977
+   output_conv2.2.bias ckpt: [0.22514083981513977]  released: [0.1997571438550949]
+===== RAMEN_n46 top-level keys: ['cfg', 'epoch', 'step', 'micro', 'best', 'metrics', 'optimizer', 'ema', 'rng', 'trainable', 'trainable_ema']
+ cfg.model arch/metric/init/ckpt/freeze_depth_head/shared_temporal/vda_lora_rank: vda True released /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth False True None
+ cfg.loss metric_depth_clamp: [0.1, 100000.0] data.max_depth 80.0 model has max_depth keys: ['freeze_depth_head', 'st_depth_input']
+ trainable_ema: n_src=340 n_dst=340 missing=0 unexpected=0 shape_mismatch=0 [] []
+ trainable: n_src=340 n_dst=340 missing=0 unexpected=0 shape_mismatch=0 [] []
+ model.state_dict n= 517  covered-by-ckpt modules; module names: ['temp2', 'gate', 'block2', 'gate2', 'motion_modules', 'depth_head']
+   trainable_ema key prefixes: ['block2', 'depth_head', 'gate', 'gate2', 'motion_modules', 'temp2']
+   trainable key prefixes: ['block2', 'depth_head', 'gate', 'gate2', 'motion_modules', 'temp2']
+ vs released: 164/351 tensors changed; encoder tensors changed: 0 (LoRA merged? lora_rank=None); keys in core not in released: []; released not in core: []
+   head.scratch.output_conv2.0.weight maxabs delta 0.07807067036628723 ckpt bias/abs mean 0.033934567123651505
+   head.scratch.output_conv2.2.weight maxabs delta 0.03336671367287636 ckpt bias/abs mean 0.08251822739839554
+   head.scratch.output_conv2.2.bias maxabs delta 0.022444382309913635 ckpt bias/abs mean 0.22220152616500854
+   output_conv2.2.bias ckpt: [0.22220152616500854]  released: [0.1997571438550949]
+===== FT_n46 top-level keys: ['cfg', 'epoch', 'step', 'micro', 'best', 'metrics', 'optimizer', 'ema', 'rng', 'trainable', 'trainable_ema']
+ cfg.model arch/metric/init/ckpt/freeze_depth_head/shared_temporal/vda_lora_rank: vda True released /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth False None None
+ cfg.loss metric_depth_clamp: [0.1, 100000.0] data.max_depth 80.0 model has max_depth keys: ['freeze_depth_head']
+ trainable_ema: n_src=176 n_dst=176 missing=0 unexpected=0 shape_mismatch=0 [] []
+ trainable: n_src=176 n_dst=176 missing=0 unexpected=0 shape_mismatch=0 [] []
+ model.state_dict n= 353  covered-by-ckpt modules; module names: ['head']
+   trainable_ema key prefixes: ['head']
+   trainable key prefixes: ['head']
+ vs released: 164/351 tensors changed; encoder tensors changed: 0 (LoRA merged? lora_rank=None); keys in core not in released: []; released not in core: []
+   head.scratch.output_conv2.0.weight maxabs delta 0.07828968018293381 ckpt bias/abs mean 0.033945485949516296
+   head.scratch.output_conv2.2.weight maxabs delta 0.03149709105491638 ckpt bias/abs mean 0.08231818675994873
+   head.scratch.output_conv2.2.bias maxabs delta 0.024491682648658752 ckpt bias/abs mean 0.22424882650375366
+   output_conv2.2.bias ckpt: [0.22424882650375366]  released: [0.1997571438550949]

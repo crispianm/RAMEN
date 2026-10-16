@@ -1,0 +1,43 @@
+== T1 Metric-VDA head tail: Conv1x1 -> ReLU (DPT output_conv2[3]) -> F.relu (VideoDepthAnything.forward) ==
+ depth    1 m: pre-act z=1 -> out 1.0000 (representable: True)
+ depth    5 m: pre-act z=5 -> out 5.0000 (representable: True)
+ depth   10 m: pre-act z=10 -> out 10.0000 (representable: True)
+ depth   30 m: pre-act z=30 -> out 30.0000 (representable: True)
+ depth   80 m: pre-act z=80 -> out 80.0000 (representable: True)
+ depth  200 m: pre-act z=200 -> out 200.0000 (representable: True)
+ depth  600 m: pre-act z=600 -> out 600.0000 (representable: True)
+ negative pre-acts -> 0 exactly, gradient 0: [0.0, 0.0, 1.0] (z=0 has 0 grad too)
+== T2 bf16 quantisation of the head output (VideoDepthAnything head casts `out.to(ori_type)`; ori_type=bf16 under train.py autocast) ==
+    1.012 m -> bf16 1.0156  rel.err +0.3285%  (spacing at this magnitude 0.0078 m)
+    5.061 m -> bf16 5.0625  rel.err +0.0198%  (spacing at this magnitude 0.0312 m)
+   10.123 m -> bf16 10.1250  rel.err +0.0198%  (spacing at this magnitude 0.0625 m)
+   30.369 m -> bf16 30.3750  rel.err +0.0198%  (spacing at this magnitude 0.1250 m)
+   80.984 m -> bf16 81.0000  rel.err +0.0198%  (spacing at this magnitude 0.5000 m)
+  202.460 m -> bf16 202.0000  rel.err -0.2272%  (spacing at this magnitude 1.0000 m)
+  607.380 m -> bf16 608.0000  rel.err +0.1021%  (spacing at this magnitude 4.0000 m)
+== T3 DA-V2 sigmoid x max_depth head (dav2_net head='sigmoid', max_depth 80) ==
+    1 m: z=-4.369 ok, d(out)/dz=0.9875
+    5 m: z=-2.708 ok, d(out)/dz=4.6875
+   10 m: z=-1.946 ok, d(out)/dz=8.7500
+   30 m: z=-0.511 ok, d(out)/dz=18.7500
+   80 m: NOT representable (output < 80.0 m; fp32 sigmoid saturates to exactly 80.0 m at z>=~17, with ~0 gradient)
+  200 m: NOT representable (output < 80.0 m; fp32 sigmoid saturates to exactly 80.0 m at z>=~17, with ~0 gradient)
+  600 m: NOT representable (output < 80.0 m; fp32 sigmoid saturates to exactly 80.0 m at z>=~17, with ~0 gradient)
+ saturation check: 80*sigmoid(17)=80.0, grad=0.000e+00
+== T4 training-loss gradient of predicted depth (train.py _vda_disp with metric_depth_clamp [0.1,1e5] and the SiLog clamp) ==
+ pred=      0.0: pd=1/clamp -> 10, d pd/d pred=+0.000e+00, d(logerr^2)/d pred=+0.000e+00
+ pred=     0.05: pd=1/clamp -> 10, d pd/d pred=+0.000e+00, d(logerr^2)/d pred=+0.000e+00
+ pred=      0.1: pd=1/clamp -> 10, d pd/d pred=-1.000e+02, d(logerr^2)/d pred=-1.141e+02
+ pred=      1.0: pd=1/clamp -> 1, d pd/d pred=-1.000e+00, d(logerr^2)/d pred=-6.802e+00
+ pred=     30.0: pd=1/clamp -> 0.0333333, d pd/d pred=-1.111e-03, d(logerr^2)/d pred=-0.000e+00
+ pred=   1000.0: pd=1/clamp -> 0.001, d pd/d pred=-1.000e-06, d(logerr^2)/d pred=+7.013e-03
+ pred= 100000.0: pd=1/clamp -> 1e-05, d pd/d pred=-1.000e-10, d(logerr^2)/d pred=+1.622e-04
+ pred= 200000.0: pd=1/clamp -> 1e-05, d pd/d pred=+0.000e+00, d(logerr^2)/d pred=+0.000e+00
+ -> pred <0.1 m or >1e5 m: ZERO gradient from the SSI-disparity and SiLog losses (and ReLU zero-grad for z<=0).
+== T5 reciprocal handling ==
+ train._vda_disp floor 1e-3 (no clamp cfg): [999.9999389648438, 999.9999389648438, 999.9999389648438, 2.0] | with metric_depth_clamp(0.1,1e5): [10.0, 10.0, 10.0, 2.0]
+ train.evaluate / bench_joint.score_clip floor 1e-3: pred 0 m -> disparity 999.9999389648438 (vs a 30 m pixel: 0.0333)
+ GT sky 655 m -> disparity 0.00153; 1e5 m -> 1.0e-05; train gt disparity floor 1e-3 m => max disparity 1000
+== T6 resize scale: bilinear align_corners=True on constant/step fields ==
+ const 600 -> unique [600.0, 600.0000610351562]
+ step 2|600 m upsampled: values at the edge: [2.0, 2.0, 26.4, 136.2, 246.1, 355.9, 465.8, 575.6, 600.0, 600.0] (flying-pixel depths between the two; metric scale of each plateau unchanged)

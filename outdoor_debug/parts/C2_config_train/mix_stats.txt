@@ -1,0 +1,30 @@
+sampling: mass | total mass 1109686
+source                 mass_share  sim_share(10k draws, 4 ranks)  clips  expected_repeats_over_12k_steps(192k clips)
+tartanair              0.2794      0.2808                        9781     5.48
+vkitti                 0.0360      0.0354                        1280     5.41
+pointodyssey:train     0.0786      0.0747                        7204     2.09
+pointodyssey:val       0.0115      0.0123                        1059     2.09
+irs                    0.0901      0.0901                        3191     5.42
+spring                 0.0044      0.0048                         134     6.25
+kitti_raw              0.2698      0.2754                        1277    40.57
+nyu_train              0.1535      0.1499                        1307    22.54
+scannetpp_train        0.0767      0.0766                       54585     0.27
+epoch length per rank (num_samples) = 19954 -> optimizer steps/epoch (bs1,accum4) = 4988 ; 12000 steps = 2.41 epochs
+seed streams per rank: [46250, 46251, 46252, 46253] (x1000 scheme: global seeds [46000, 46001, 46002, 46003] )
+
+Expected fractions of ALL pixels of a sampled batch (only sources with measured values; IRS/spring/NYU/ScanNet++ treated as 0 far, 0 sky):
+  valid          40.53%
+  sky-labelled   2.95%
+  valid >=30 m   5.70%
+  valid >=80 m   2.85%
+  valid >=200 m  1.96%
+clip share of sources that carry a sky label (TA+VKITTI): 31.5%
+clip share of sources with NO sky label (PO, IRS, spring, KITTI, NYU, ScanNet++): 68.5%
+indoor-only sources (IRS+NYU+ScanNet++): 32.0%
+definitely-outdoor sources (KITTI+VKITTI): 30.6%
+TartanAir outdoor-labelled envs (75.5% of frames): 21.1% of clips; TA indoor-labelled 6.8%
+metric-supervised (SiLog) clip share: 99.6% (everything but Spring)
+metric-supervised OUTDOOR clip share (KITTI+VKITTI+TA outdoor envs; PO unknown): 51.7%
+SiLog-eligible px >=80 m: TA (valid>=80 minus >=655) 5.13% of TA px; VKITTI 7.33% of VKITTI px
+mix share of valid >=80 m px by source: {'vkitti': 0.264, 'pointodyssey:train': 0.001, 'pointodyssey:val': 0.0, 'kitti_raw': 0.0, 'tartanair': 2.59}
+mix share of sky px by source: {'vkitti': 0.583, 'pointodyssey:train': 0.0, 'pointodyssey:val': 0.0, 'kitti_raw': 0.0, 'tartanair': 2.369}

@@ -1,0 +1,145 @@
+config,scenario,term,loss_value,bin,n_px,mean_abs_grad_per_m,mean_abs_grad_wrt_log_pred,sum_abs_grad
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,<10m,896,5.9588946896838024e-05,0.00042817185749299824,0.05339169502258301
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,10-30m,2016,1.003203033178579e-05,0.00017449984443373978,0.020224573090672493
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,30-80m,1568,8.649051892462012e-07,3.567889507394284e-05,0.0013561713276430964
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,150-400m(far valid),3584,2.2969395274685667e-07,5.493784192367457e-05,0.0008232231484726071
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),VDA,0.06562801450490952,sky,4480,2.289729472693125e-08,1.4997729522292502e-05,0.00010257987742079422
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,<10m,896,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,10-30m,2016,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,30-80m,1568,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,150-400m(far valid),3584,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",perfect(sky=655),SiLog,9.98377799987793e-07,sky,4480,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,<10m,896,3.9725953683955595e-05,0.0004281718283891678,0.035594455897808075
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,10-30m,2016,6.688017037959071e-06,0.0001744998007779941,0.013483041897416115
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,30-80m,1568,5.76603099489148e-07,3.567887324607e-05,0.0009041136363521218
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,150-400m(far valid),3584,1.5312920709220634e-07,5.4937820095801726e-05,0.0005488150636665523
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,VDA,0.06562783569097519,sky,4480,1.5264857822216982e-08,1.4997724065324292e-05,6.838656554464251e-05
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,<10m,896,9.359317118651234e-06,8.768685074755922e-05,0.008385947905480862
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,10-30m,2016,3.2286293389915954e-06,8.76868434716016e-05,0.006508916616439819
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,30-80m,1568,1.349306899101066e-06,8.768683619564399e-05,0.0021157131996005774
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,150-400m(far valid),3584,2.50955878300374e-07,8.768685074755922e-05,0.0008994258241727948
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x1.5,SiLog,0.2867071405053139,sky,4480,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,<10m,896,0.00011917789379367605,0.00042817185749299824,0.10678339004516602
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,10-30m,2016,2.006406066357158e-05,0.00017449984443373978,0.040449146181344986
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,30-80m,1568,1.7298103784924024e-06,3.567889507394284e-05,0.002712342655286193
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,150-400m(far valid),3584,4.5938790549371333e-07,5.493784192367457e-05,0.0016464462969452143
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,VDA,0.06562801450490952,sky,4480,4.57945894538625e-08,1.4997729522292502e-05,0.00020515975484158844
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,<10m,896,2.8077949536964297e-05,8.768685074755922e-05,0.02515784278512001
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,10-30m,2016,9.685887562227435e-06,8.768685074755922e-05,0.019526749849319458
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,30-80m,1568,4.047921720484737e-06,8.768686529947445e-05,0.006347141228616238
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,150-400m(far valid),3584,7.528676064794126e-07,8.768685802351683e-05,0.0026982775889337063
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",scale x0.5,SiLog,0.4901290312409401,sky,4480,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,<10m,896,0.000125337130157277,0.000819539010990411,0.11230206489562988
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,10-30m,2016,2.5872986952890642e-05,0.00044068763963878155,0.05215994268655777
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,30-80m,1568,2.102757434840896e-06,7.44387143640779e-05,0.0032971235923469067
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,150-400m(far valid),3584,8.312785126918243e-08,1.9589222574722953e-05,0.0002979302080348134
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),VDA,0.8180002570152283,sky,4480,4.432001787790796e-06,0.0001772801042534411,0.01985536888241768
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,<10m,896,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,10-30m,2016,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,30-80m,1568,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,150-400m(far valid),3584,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",sky_pred=40m (valid perfect),SiLog,1.0132789611816406e-06,sky,4480,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,<10m,896,7.533533789683133e-05,0.0005044629797339439,0.06750046461820602
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,10-30m,2016,1.1416648703743704e-05,0.00022034086578059942,0.023015962913632393
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,30-80m,1568,8.848867764754687e-06,0.0003838681150227785,0.013875025324523449
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,150-400m(far valid),3584,1.147702846537868e-06,0.00011477027146611363,0.004113366827368736
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,VDA,0.3241637945175171,sky,4480,5.58779277071153e-07,5.587793202721514e-05,0.0025033310521394014
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,<10m,896,7.150203146011336e-06,4.465987512958236e-05,0.006406581960618496
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,10-30m,2016,2.466563728376059e-06,4.465987512958236e-05,0.0049725924618542194
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,30-80m,1568,1.030824932968244e-06,4.465987876756117e-05,0.0016163334948942065
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,150-400m(far valid),3584,1.5630955658707535e-06,0.00015630954294465482,0.005602134391665459
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)",head saturates at 100m,SiLog,0.5404534935951233,sky,4480,0.0,0.0,0.0
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,<10m,896,6.671418668702245e-05,0.0004735752590931952,0.05977591127157211
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,10-30m,2016,1.2348887139523868e-05,0.00021267629927024245,0.024895356968045235
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,30-80m,1568,4.617410922946874e-06,0.00020705448696389794,0.007240100298076868
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,150-400m(far valid),3584,1.3138582062310888e-06,0.00014580180868506432,0.004708867985755205
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",VDA,0.16009816527366638,sky,4480,1.3621599848079313e-08,8.922146662371233e-06,6.1024766182526946e-05
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,<10m,896,7.504149380110903e-06,4.687060209107585e-05,0.006723717786371708
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,10-30m,2016,2.5886629373417236e-06,4.6870613005012274e-05,0.0052187442779541016
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,30-80m,1568,1.0818524742717273e-06,4.6870613005012274e-05,0.0016963446978479624
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,80-150m,0,nan,nan,nan
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,150-400m(far valid),3584,1.4084863551033777e-06,0.0001640471164137125,0.005048015154898167
+"effective(C3/FT: sky_vda_zero_disparity=true, silog w=1 lam=.5)","far valid x0.5, rest perfect",SiLog,0.4075322449207306,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,<10m,896,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,10-30m,2016,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,30-80m,1568,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,150-400m(far valid),3584,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),VDA,0.0,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,<10m,896,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,10-30m,2016,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,30-80m,1568,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,150-400m(far valid),3584,0.0,0.0,0.0
+sky_vda_zero_disparity=false,perfect(sky=655),SiLog,9.999999974752427e-07,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,<10m,896,0.00011125102173537016,0.001087551354430616,0.09968091547489166
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,10-30m,2016,1.851900560723152e-05,0.0004904462257400155,0.03733431547880173
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,30-80m,1568,4.523082225205144e-06,0.00027332783793099225,0.0070921932347118855
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,150-400m(far valid),3584,2.577202735665196e-07,8.496073132846504e-05,0.0009236694313585758
+sky_vda_zero_disparity=false,scale x1.5,VDA,1.9021375408101449e-07,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,<10m,896,9.359317118651234e-06,8.768685074755922e-05,0.008385947905480862
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,10-30m,2016,3.2286293389915954e-06,8.768685802351683e-05,0.006508916616439819
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,30-80m,1568,1.349306899101066e-06,8.768683619564399e-05,0.0021157131996005774
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,150-400m(far valid),3584,2.50955878300374e-07,8.768685074755922e-05,0.0008994258241727948
+sky_vda_zero_disparity=false,scale x1.5,SiLog,0.2867071216549135,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,<10m,896,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,10-30m,2016,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,30-80m,1568,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,150-400m(far valid),3584,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,VDA,0.0,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,<10m,896,2.8077949536964297e-05,8.768685074755922e-05,0.02515784278512001
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,10-30m,2016,9.685887562227435e-06,8.76868434716016e-05,0.019526749849319458
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,30-80m,1568,4.047921720484737e-06,8.768686529947445e-05,0.006347141228616238
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,150-400m(far valid),3584,7.528676064794126e-07,8.768685802351683e-05,0.0026982775889337063
+sky_vda_zero_disparity=false,scale x0.5,SiLog,0.4901290237903595,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,<10m,896,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,10-30m,2016,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,30-80m,1568,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,150-400m(far valid),3584,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),VDA,0.0,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,<10m,896,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,10-30m,2016,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,30-80m,1568,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,150-400m(far valid),3584,0.0,0.0,0.0
+sky_vda_zero_disparity=false,sky_pred=40m (valid perfect),SiLog,9.999999974752427e-07,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,<10m,896,9.867986955214292e-05,0.0006160262273624539,0.0884171649813652
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,10-30m,2016,1.8832861314876936e-05,0.0003645343240350485,0.037967048585414886
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,30-80m,1568,8.560147762182169e-06,0.0003719574015121907,0.013422311283648014
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,150-400m(far valid),3584,1.5668550759073696e-06,0.0001566855498822406,0.005615608766674995
+sky_vda_zero_disparity=false,head saturates at 100m,VDA,0.1837272346019745,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,<10m,896,7.150203146011336e-06,4.465987512958236e-05,0.006406581960618496
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,10-30m,2016,2.466563728376059e-06,4.465987512958236e-05,0.0049725924618542194
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,30-80m,1568,1.030824932968244e-06,4.465987876756117e-05,0.0016163334948942065
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,150-400m(far valid),3584,1.5630955658707535e-06,0.00015630954294465482,0.005602134391665459
+sky_vda_zero_disparity=false,head saturates at 100m,SiLog,0.5404534637928009,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,<10m,896,0.00011469538731034845,0.0006938559818081558,0.10276706516742706
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,10-30m,2016,2.251228033856023e-05,0.0004040618077851832,0.04538475722074509
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,30-80m,1568,7.591941539430991e-06,0.00033108628122135997,0.011904164217412472
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,150-400m(far valid),3584,7.664116878913774e-07,8.409699512412772e-05,0.002746819518506527
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",VDA,0.11880888044834137,sky,4480,0.0,0.0,0.0
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,<10m,896,7.504148470616201e-06,4.687060572905466e-05,0.006723716855049133
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,10-30m,2016,2.5886629373417236e-06,4.6870613005012274e-05,0.0052187442779541016
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,30-80m,1568,1.0818524742717273e-06,4.6870613005012274e-05,0.0016963446978479624
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,80-150m,0,nan,nan,nan
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,150-400m(far valid),3584,1.4084863551033777e-06,0.0001640471164137125,0.005048015154898167
+sky_vda_zero_disparity=false,"far valid x0.5, rest perfect",SiLog,0.407532200217247,sky,4480,0.0,0.0,0.0

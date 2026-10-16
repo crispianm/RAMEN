@@ -1,0 +1,37 @@
+{
+ "sources": [
+  "tartanair",
+  "vkitti",
+  "pointodyssey_train",
+  "pointodyssey_val",
+  "irs",
+  "spring",
+  "kitti_raw"
+ ],
+ "dropped": [
+  "nyu_train",
+  "scannetpp_train"
+ ],
+ "sampling_mass_local": {
+  "tartanair": 310000.0,
+  "vkitti": 40000.0,
+  "pointodyssey_train": 87206.0,
+  "pointodyssey_val": 12794.0,
+  "irs": 100000.0,
+  "spring": 4843.0,
+  "kitti_raw": 299397.0
+ },
+ "batches": 20,
+ "bs": 4,
+ "frames": 8,
+ "models": {
+  "released": "released Metric-VDA-S (FT arch, vda_init=released, no trained weights)",
+  "FT_n46": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt step 12000 trainable_ema",
+  "RAMEN_n46": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt step 12000 trainable_ema",
+  "C3_s45": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt step 12000 trainable_ema"
+ },
+ "seed": 45,
+ "workers": 2,
+ "sgd_lr": 0.01,
+ "step_norm": 0.3
+}

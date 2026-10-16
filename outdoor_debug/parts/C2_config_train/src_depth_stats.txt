@@ -1,0 +1,8 @@
+vkitti (cap655)        files=  42520 sampled=150 valid%=83.83 sky%=16.17 validfar>=30m%=24.59 >=80m%=7.33 >=200m%=1.02 invalid(not valid,not sky)%=0.00  | of valid px: >=30m 29.33% >=80m 8.74%
+vkitti (cap80 old B)   files=  42520 sampled=150 valid%=78.45 sky%=14.80 validfar>=30m%=18.09 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=6.75  | of valid px: >=30m 23.05% >=80m 0.00%
+PO train (cap999)      files= 239022 sampled=150 valid%=85.90 sky%=0.00 validfar>=30m%=0.91 >=80m%=0.01 >=200m%=0.00 invalid(not valid,not sky)%=14.10  | of valid px: >=30m 1.06% >=80m 0.01%
+PO train (cap80?)      files= 239022 sampled=150 valid%=87.62 sky%=0.00 validfar>=30m%=1.25 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=12.38  | of valid px: >=30m 1.43% >=80m 0.00%
+PO val (cap999)        files=  34165 sampled=150 valid%=90.64 sky%=0.00 validfar>=30m%=0.27 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=9.36  | of valid px: >=30m 0.30% >=80m 0.00%
+PO val (cap80?)        files=  34165 sampled=150 valid%=90.50 sky%=0.00 validfar>=30m%=0.26 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=9.50  | of valid px: >=30m 0.29% >=80m 0.00%
+kitti GT (cap80)       files=  42949 sampled=150 valid%=15.37 sky%=0.00 validfar>=30m%=1.34 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=84.63  | of valid px: >=30m 8.74% >=80m 0.00%
+kitti GT (nocap)       files=  42949 sampled=150 valid%=16.58 sky%=0.00 validfar>=30m%=1.55 >=80m%=0.00 >=200m%=0.00 invalid(not valid,not sky)%=83.42  | of valid px: >=30m 9.34% >=80m 0.02%
