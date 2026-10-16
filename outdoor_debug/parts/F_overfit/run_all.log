@@ -1,0 +1,224 @@
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 651.97216796875, "sky_frac_ge400": 0.922076404094696, "sky_frac_ge200": 0.9823850989341736, "sky_pred_p10": 441.1189880371094, "far80_655_pred_med": 114.44747161865234, "far80_655_gt_med": 111.01000213623047, "far80_655_ratio_med": 0.9670178294181824, "far80_655_absrel": 0.18597909808158875, "far80_655_logbias": 0.029757484793663025, "near<30_pred_med": 13.301848411560059, "near<30_gt_med": 13.609999656677246, "near<30_ratio_med": 0.9754366278648376, "near<30_absrel": 0.0289885513484478, "near<30_logbias": -0.021857960149645805, "valid_all_pred_med": 19.13190460205078, "valid_all_gt_med": 19.520000457763672, "valid_all_ratio_med": 0.978931725025177, "valid_all_absrel": 0.06158273294568062, "valid_all_logbias": -0.00418389867991209}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[vkitti_nb1_base] step 25 loss 0.1835 vda 0.1190 silog 0.0644 gn_h 5.82 gn_m 2.12 | sky_med 579 far_ratio 0.927 near_ratio 1.008 (11s) mem 7.8G
+[vkitti_nb1_base] step 50 loss 0.1521 vda 0.0926 silog 0.0595 gn_h 5.91 gn_m 1.58 | sky_med 743 far_ratio 0.959 near_ratio 0.994 (23s) mem 7.8G
+[vkitti_nb1_base] step 75 loss 0.1480 vda 0.0945 silog 0.0535 gn_h 4.28 gn_m 1.22 | sky_med 845 far_ratio 0.982 near_ratio 0.991 (40s) mem 7.8G
+[vkitti_nb1_base] step 100 loss 0.1376 vda 0.0872 silog 0.0505 gn_h 3.6 gn_m 1.05 | sky_med 908 far_ratio 0.959 near_ratio 1.002 (50s) mem 7.8G
+[vkitti_nb1_base] step 125 loss 0.1304 vda 0.0807 silog 0.0497 gn_h 3.65 gn_m 1.13 | sky_med 955 far_ratio 0.964 near_ratio 1.008 (59s) mem 7.8G
+[vkitti_nb1_base] step 150 loss 0.1448 vda 0.0867 silog 0.0580 gn_h 6.11 gn_m 1.45 | sky_med 1048 far_ratio 0.926 near_ratio 1.014 (69s) mem 7.8G
+[vkitti_nb1_base] step 175 loss 0.1331 vda 0.0835 silog 0.0496 gn_h 3.31 gn_m 1.03 | sky_med 1079 far_ratio 1.018 near_ratio 1.005 (79s) mem 7.8G
+[vkitti_nb1_base] step 200 loss 0.1329 vda 0.0841 silog 0.0488 gn_h 4.47 gn_m 1.09 | sky_med 1075 far_ratio 0.928 near_ratio 1.011 (88s) mem 7.8G
+[vkitti_nb1_base] step 225 loss 0.1359 vda 0.0861 silog 0.0498 gn_h 4.1 gn_m 1.18 | sky_med 1131 far_ratio 1.064 near_ratio 1.021 (103s) mem 7.8G
+[vkitti_nb1_base] step 250 loss 0.1214 vda 0.0748 silog 0.0466 gn_h 2.3 gn_m 0.584 | sky_med 1199 far_ratio 0.985 near_ratio 1.000 (118s) mem 7.8G
+[vkitti_nb1_base] step 275 loss 0.1240 vda 0.0775 silog 0.0464 gn_h 3.87 gn_m 0.851 | sky_med 1328 far_ratio 1.007 near_ratio 1.012 (127s) mem 7.8G
+[vkitti_nb1_base] step 300 loss 0.1203 vda 0.0749 silog 0.0455 gn_h 2.91 gn_m 0.653 | sky_med 1335 far_ratio 0.970 near_ratio 1.005 (137s) mem 7.8G
+DONE vkitti_nb1_base 137.74835658073425
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 651.97216796875, "sky_frac_ge400": 0.922076404094696, "sky_frac_ge200": 0.9823850989341736, "sky_pred_p10": 441.1189880371094, "far80_655_pred_med": 114.44747161865234, "far80_655_gt_med": 111.01000213623047, "far80_655_ratio_med": 0.9670178294181824, "far80_655_absrel": 0.18597909808158875, "far80_655_logbias": 0.029757484793663025, "near<30_pred_med": 13.301848411560059, "near<30_gt_med": 13.609999656677246, "near<30_ratio_med": 0.9754366278648376, "near<30_absrel": 0.0289885513484478, "near<30_logbias": -0.021857960149645805, "valid_all_pred_med": 19.13190460205078, "valid_all_gt_med": 19.520000457763672, "valid_all_ratio_med": 0.978931725025177, "valid_all_absrel": 0.06158273294568062, "valid_all_logbias": -0.00418389867991209}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[vkitti_nb1_hinge] step 25 loss 0.1646 vda 0.1005 silog 0.0602 gn_h 4.63 gn_m 1.31 | sky_med 646 far_ratio 0.929 near_ratio 0.975 (11s) mem 7.8G
+[vkitti_nb1_hinge] step 50 loss 0.1547 vda 0.0957 silog 0.0554 gn_h 5.12 gn_m 1.44 | sky_med 824 far_ratio 0.927 near_ratio 0.984 (20s) mem 7.8G
+[vkitti_nb1_hinge] step 75 loss 0.1647 vda 0.0969 silog 0.0646 gn_h 6.45 gn_m 1.64 | sky_med 885 far_ratio 1.011 near_ratio 0.998 (29s) mem 7.8G
+[vkitti_nb1_hinge] step 100 loss 0.1404 vda 0.0847 silog 0.0523 gn_h 3.42 gn_m 1.01 | sky_med 914 far_ratio 0.906 near_ratio 0.996 (39s) mem 7.8G
+[vkitti_nb1_hinge] step 125 loss 0.1373 vda 0.0797 silog 0.0543 gn_h 4.25 gn_m 1.04 | sky_med 926 far_ratio 0.946 near_ratio 0.990 (48s) mem 7.8G
+[vkitti_nb1_hinge] step 150 loss 0.1502 vda 0.0862 silog 0.0608 gn_h 4.02 gn_m 1.15 | sky_med 941 far_ratio 0.955 near_ratio 0.972 (58s) mem 7.8G
+[vkitti_nb1_hinge] step 175 loss 0.1364 vda 0.0802 silog 0.0530 gn_h 4.64 gn_m 0.902 | sky_med 1028 far_ratio 1.040 near_ratio 1.000 (67s) mem 7.8G
+[vkitti_nb1_hinge] step 200 loss 0.1341 vda 0.0798 silog 0.0507 gn_h 4.55 gn_m 1.21 | sky_med 1117 far_ratio 0.955 near_ratio 1.016 (77s) mem 7.8G
+[vkitti_nb1_hinge] step 225 loss 0.1461 vda 0.0935 silog 0.0492 gn_h 4.15 gn_m 1.11 | sky_med 1156 far_ratio 0.950 near_ratio 0.992 (86s) mem 7.8G
+[vkitti_nb1_hinge] step 250 loss 0.1337 vda 0.0799 silog 0.0505 gn_h 4.78 gn_m 1.04 | sky_med 1176 far_ratio 0.991 near_ratio 1.009 (95s) mem 7.8G
+[vkitti_nb1_hinge] step 275 loss 0.1230 vda 0.0720 silog 0.0476 gn_h 2.68 gn_m 0.686 | sky_med 1224 far_ratio 1.016 near_ratio 0.983 (105s) mem 7.8G
+[vkitti_nb1_hinge] step 300 loss 0.1259 vda 0.0754 silog 0.0470 gn_h 2.11 gn_m 0.597 | sky_med 1281 far_ratio 0.979 near_ratio 1.024 (114s) mem 7.8G
+DONE vkitti_nb1_hinge 115.23096013069153
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 647.0879516601562, "sky_frac_ge400": 0.9008417725563049, "sky_frac_ge200": 0.9721453785896301, "sky_pred_p10": 401.76849365234375, "far80_655_pred_med": 121.37792205810547, "far80_655_gt_med": 121.2300033569336, "far80_655_ratio_med": 0.9838681817054749, "far80_655_absrel": 0.17077785730361938, "far80_655_logbias": -0.002457843627780676, "near<30_pred_med": 10.904252052307129, "near<30_gt_med": 11.15999984741211, "near<30_ratio_med": 0.9845812320709229, "near<30_absrel": 0.0468246154487133, "near<30_logbias": -0.006834306288510561, "valid_all_pred_med": 18.893115997314453, "valid_all_gt_med": 18.8799991607666, "valid_all_ratio_med": 0.9852883219718933, "valid_all_absrel": 0.09469576925039291, "valid_all_logbias": 0.0014181769220158458}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[vkitti_nb10_base] step 25 loss 0.4304 vda 0.2223 silog 0.2081 gn_h 8.11 gn_m 2.28 | sky_med 522 far_ratio 1.179 near_ratio 0.979 (21s) mem 7.8G
+[vkitti_nb10_base] step 50 loss 0.3526 vda 0.1247 silog 0.2279 gn_h 11.7 gn_m 2.29 | sky_med 495 far_ratio 1.229 near_ratio 1.067 (36s) mem 7.8G
+[vkitti_nb10_base] step 75 loss 0.3110 vda 0.1589 silog 0.1521 gn_h 9.12 gn_m 1.83 | sky_med 550 far_ratio 1.028 near_ratio 1.008 (51s) mem 7.8G
+[vkitti_nb10_base] step 100 loss 0.1715 vda 0.0848 silog 0.0867 gn_h 4.9 gn_m 0.944 | sky_med 520 far_ratio 0.940 near_ratio 0.992 (65s) mem 7.8G
+[vkitti_nb10_base] step 125 loss 0.1999 vda 0.1003 silog 0.0995 gn_h 6.18 gn_m 1.13 | sky_med 550 far_ratio 0.819 near_ratio 1.034 (80s) mem 7.8G
+[vkitti_nb10_base] step 150 loss 0.1781 vda 0.0878 silog 0.0903 gn_h 4.48 gn_m 1.2 | sky_med 512 far_ratio 0.952 near_ratio 1.054 (95s) mem 7.8G
+[vkitti_nb10_base] step 175 loss 0.1887 vda 0.1094 silog 0.0793 gn_h 4.74 gn_m 0.922 | sky_med 536 far_ratio 0.836 near_ratio 1.032 (110s) mem 7.8G
+[vkitti_nb10_base] step 200 loss 0.1785 vda 0.0984 silog 0.0801 gn_h 3.55 gn_m 0.988 | sky_med 525 far_ratio 0.901 near_ratio 1.028 (124s) mem 7.8G
+[vkitti_nb10_base] step 225 loss 0.1679 vda 0.0911 silog 0.0768 gn_h 5.48 gn_m 0.868 | sky_med 566 far_ratio 1.038 near_ratio 1.035 (139s) mem 7.8G
+[vkitti_nb10_base] step 250 loss 0.1768 vda 0.1091 silog 0.0677 gn_h 3.87 gn_m 1.14 | sky_med 536 far_ratio 0.868 near_ratio 1.081 (154s) mem 7.8G
+[vkitti_nb10_base] step 275 loss 0.1951 vda 0.1022 silog 0.0929 gn_h 4.27 gn_m 0.888 | sky_med 598 far_ratio 1.174 near_ratio 1.017 (169s) mem 7.8G
+[vkitti_nb10_base] step 300 loss 0.2202 vda 0.1139 silog 0.1063 gn_h 6.78 gn_m 1.26 | sky_med 569 far_ratio 0.961 near_ratio 0.931 (183s) mem 7.8G
+[vkitti_nb10_base] step 325 loss 0.2738 vda 0.1404 silog 0.1334 gn_h 8.99 gn_m 1.51 | sky_med 495 far_ratio 0.871 near_ratio 0.978 (198s) mem 7.8G
+[vkitti_nb10_base] step 350 loss 0.1991 vda 0.0818 silog 0.1173 gn_h 6.84 gn_m 1.72 | sky_med 544 far_ratio 0.881 near_ratio 0.983 (213s) mem 7.8G
+[vkitti_nb10_base] step 375 loss 0.2544 vda 0.1219 silog 0.1325 gn_h 6.68 gn_m 1.37 | sky_med 543 far_ratio 0.879 near_ratio 1.105 (228s) mem 7.8G
+[vkitti_nb10_base] step 400 loss 0.1989 vda 0.0919 silog 0.1070 gn_h 4.46 gn_m 1.06 | sky_med 552 far_ratio 0.855 near_ratio 0.986 (242s) mem 7.8G
+[vkitti_nb10_base] step 425 loss 0.1580 vda 0.0769 silog 0.0811 gn_h 4.79 gn_m 1.12 | sky_med 635 far_ratio 0.902 near_ratio 1.056 (257s) mem 7.8G
+[vkitti_nb10_base] step 450 loss 0.1810 vda 0.0827 silog 0.0983 gn_h 5.64 gn_m 1.32 | sky_med 566 far_ratio 0.931 near_ratio 1.058 (272s) mem 7.8G
+[vkitti_nb10_base] step 475 loss 0.1682 vda 0.0764 silog 0.0918 gn_h 5.09 gn_m 1.04 | sky_med 608 far_ratio 0.880 near_ratio 1.077 (287s) mem 7.8G
+[vkitti_nb10_base] step 500 loss 0.1721 vda 0.0891 silog 0.0829 gn_h 4.77 gn_m 0.956 | sky_med 560 far_ratio 0.938 near_ratio 1.025 (302s) mem 7.8G
+[vkitti_nb10_base] step 525 loss 0.1715 vda 0.0866 silog 0.0848 gn_h 6.84 gn_m 0.808 | sky_med 609 far_ratio 0.968 near_ratio 1.112 (316s) mem 7.8G
+[vkitti_nb10_base] step 550 loss 0.1761 vda 0.0873 silog 0.0887 gn_h 6.4 gn_m 0.879 | sky_med 594 far_ratio 1.015 near_ratio 1.071 (331s) mem 7.8G
+[vkitti_nb10_base] step 575 loss 0.2523 vda 0.1369 silog 0.1154 gn_h 7.12 gn_m 1.29 | sky_med 569 far_ratio 0.990 near_ratio 0.964 (346s) mem 7.8G
+[vkitti_nb10_base] step 600 loss 0.1674 vda 0.0790 silog 0.0884 gn_h 6.49 gn_m 0.857 | sky_med 556 far_ratio 1.102 near_ratio 0.978 (361s) mem 7.8G
+DONE vkitti_nb10_base 366.95425748825073
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 647.0879516601562, "sky_frac_ge400": 0.9008417725563049, "sky_frac_ge200": 0.9721453785896301, "sky_pred_p10": 401.76849365234375, "far80_655_pred_med": 121.37792205810547, "far80_655_gt_med": 121.2300033569336, "far80_655_ratio_med": 0.9838681817054749, "far80_655_absrel": 0.17077785730361938, "far80_655_logbias": -0.002457843627780676, "near<30_pred_med": 10.904252052307129, "near<30_gt_med": 11.15999984741211, "near<30_ratio_med": 0.9845812320709229, "near<30_absrel": 0.0468246154487133, "near<30_logbias": -0.006834306288510561, "valid_all_pred_med": 18.893115997314453, "valid_all_gt_med": 18.8799991607666, "valid_all_ratio_med": 0.9852883219718933, "valid_all_absrel": 0.09469576925039291, "valid_all_logbias": 0.0014181769220158458}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[vkitti_nb10_hinge] step 25 loss 0.4293 vda 0.2166 silog 0.2102 gn_h 7.77 gn_m 2.05 | sky_med 629 far_ratio 1.233 near_ratio 1.006 (21s) mem 7.8G
+[vkitti_nb10_hinge] step 50 loss 0.2703 vda 0.1196 silog 0.1493 gn_h 10.2 gn_m 1.61 | sky_med 571 far_ratio 0.967 near_ratio 1.023 (36s) mem 7.8G
+[vkitti_nb10_hinge] step 75 loss 0.1890 vda 0.0989 silog 0.0873 gn_h 4.56 gn_m 0.983 | sky_med 661 far_ratio 0.918 near_ratio 0.975 (51s) mem 7.8G
+[vkitti_nb10_hinge] step 100 loss 0.3297 vda 0.1861 silog 0.1419 gn_h 8.36 gn_m 1.59 | sky_med 505 far_ratio 0.884 near_ratio 0.987 (66s) mem 7.8G
+[vkitti_nb10_hinge] step 125 loss 0.2871 vda 0.1496 silog 0.1346 gn_h 9.07 gn_m 1.56 | sky_med 552 far_ratio 0.981 near_ratio 1.035 (81s) mem 7.8G
+[vkitti_nb10_hinge] step 150 loss 0.2499 vda 0.1240 silog 0.1245 gn_h 9.65 gn_m 1.54 | sky_med 595 far_ratio 1.075 near_ratio 1.020 (96s) mem 7.8G
+[vkitti_nb10_hinge] step 175 loss 0.2945 vda 0.1465 silog 0.1452 gn_h 10.3 gn_m 1.7 | sky_med 572 far_ratio 1.034 near_ratio 1.013 (111s) mem 7.8G
+[vkitti_nb10_hinge] step 200 loss 0.1807 vda 0.0846 silog 0.0948 gn_h 6.06 gn_m 1.5 | sky_med 595 far_ratio 1.119 near_ratio 1.054 (126s) mem 7.8G
+[vkitti_nb10_hinge] step 225 loss 0.1967 vda 0.1070 silog 0.0864 gn_h 6.15 gn_m 1.32 | sky_med 569 far_ratio 1.064 near_ratio 0.965 (141s) mem 7.8G
+[vkitti_nb10_hinge] step 250 loss 0.2147 vda 0.1161 silog 0.0967 gn_h 5.24 gn_m 1.01 | sky_med 550 far_ratio 0.973 near_ratio 0.948 (155s) mem 7.8G
+[vkitti_nb10_hinge] step 275 loss 0.2270 vda 0.1062 silog 0.1165 gn_h 7.16 gn_m 1.06 | sky_med 628 far_ratio 0.924 near_ratio 0.926 (170s) mem 7.8G
+[vkitti_nb10_hinge] step 300 loss 0.1945 vda 0.0981 silog 0.0946 gn_h 7.13 gn_m 1.59 | sky_med 590 far_ratio 0.922 near_ratio 1.028 (185s) mem 7.8G
+[vkitti_nb10_hinge] step 325 loss 0.2174 vda 0.1198 silog 0.0938 gn_h 5.75 gn_m 1.26 | sky_med 656 far_ratio 0.926 near_ratio 1.055 (200s) mem 7.8G
+[vkitti_nb10_hinge] step 350 loss 0.2201 vda 0.0952 silog 0.1230 gn_h 4.9 gn_m 1.21 | sky_med 684 far_ratio 0.910 near_ratio 1.054 (215s) mem 7.8G
+[vkitti_nb10_hinge] step 375 loss 0.1846 vda 0.0946 silog 0.0864 gn_h 5.19 gn_m 0.975 | sky_med 679 far_ratio 0.883 near_ratio 0.966 (230s) mem 7.8G
+[vkitti_nb10_hinge] step 400 loss 0.2178 vda 0.0969 silog 0.1194 gn_h 8.83 gn_m 1.8 | sky_med 589 far_ratio 0.956 near_ratio 0.948 (244s) mem 7.8G
+[vkitti_nb10_hinge] step 425 loss 0.1956 vda 0.1117 silog 0.0805 gn_h 5.26 gn_m 1.23 | sky_med 652 far_ratio 0.960 near_ratio 0.925 (259s) mem 7.8G
+[vkitti_nb10_hinge] step 450 loss 0.1711 vda 0.0796 silog 0.0903 gn_h 6.81 gn_m 0.97 | sky_med 681 far_ratio 1.080 near_ratio 0.999 (274s) mem 7.8G
+[vkitti_nb10_hinge] step 475 loss 0.2380 vda 0.1353 silog 0.0995 gn_h 7.07 gn_m 1.12 | sky_med 714 far_ratio 1.165 near_ratio 1.006 (289s) mem 7.8G
+[vkitti_nb10_hinge] step 500 loss 0.1656 vda 0.0762 silog 0.0880 gn_h 6.12 gn_m 0.895 | sky_med 756 far_ratio 1.060 near_ratio 1.034 (304s) mem 7.8G
+[vkitti_nb10_hinge] step 525 loss 0.1855 vda 0.0948 silog 0.0876 gn_h 6.74 gn_m 1.02 | sky_med 871 far_ratio 1.124 near_ratio 1.002 (319s) mem 7.8G
+[vkitti_nb10_hinge] step 550 loss 0.1617 vda 0.0817 silog 0.0788 gn_h 5.25 gn_m 1.12 | sky_med 792 far_ratio 1.066 near_ratio 0.989 (333s) mem 7.8G
+[vkitti_nb10_hinge] step 575 loss 0.1534 vda 0.0810 silog 0.0689 gn_h 4.66 gn_m 0.643 | sky_med 738 far_ratio 1.110 near_ratio 0.997 (348s) mem 7.8G
+[vkitti_nb10_hinge] step 600 loss 0.1780 vda 0.0808 silog 0.0955 gn_h 6.12 gn_m 1.39 | sky_med 758 far_ratio 1.056 near_ratio 1.062 (363s) mem 7.8G
+DONE vkitti_nb10_hinge 369.23664355278015
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 80.5809555053711, "sky_frac_ge400": 0.15262703597545624, "sky_frac_ge200": 0.23370464146137238, "sky_pred_p10": 52.40333938598633, "far80_655_pred_med": 18.05842399597168, "far80_655_gt_med": 127.0625, "far80_655_ratio_med": 0.14474275708198547, "far80_655_absrel": 0.862571120262146, "far80_655_logbias": -2.0181705951690674, "near<30_pred_med": 5.026519298553467, "near<30_gt_med": 10.34375, "near<30_ratio_med": 0.5015788674354553, "near<30_absrel": 0.5081714987754822, "near<30_logbias": -0.719886839389801, "valid_all_pred_med": 6.348830699920654, "valid_all_gt_med": 13.4453125, "valid_all_ratio_med": 0.4574677646160126, "valid_all_absrel": 0.600158154964447, "valid_all_logbias": -1.0383557081222534}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[tartanair_nb1_base] step 25 loss 0.1710 vda 0.0759 silog 0.0951 gn_h 2.96 gn_m 0.931 | sky_med 419 far_ratio 1.009 near_ratio 1.017 (11s) mem 7.7G
+[tartanair_nb1_base] step 50 loss 0.1361 vda 0.0577 silog 0.0784 gn_h 7.96 gn_m 1.85 | sky_med 817 far_ratio 1.035 near_ratio 1.055 (20s) mem 7.7G
+[tartanair_nb1_base] step 75 loss 0.0997 vda 0.0395 silog 0.0601 gn_h 3.35 gn_m 0.896 | sky_med 948 far_ratio 1.008 near_ratio 1.004 (29s) mem 7.7G
+[tartanair_nb1_base] step 100 loss 0.0844 vda 0.0320 silog 0.0524 gn_h 3.65 gn_m 0.781 | sky_med 1098 far_ratio 0.957 near_ratio 0.968 (39s) mem 7.7G
+[tartanair_nb1_base] step 125 loss 0.0890 vda 0.0401 silog 0.0489 gn_h 6.21 gn_m 1.32 | sky_med 1228 far_ratio 0.958 near_ratio 0.993 (48s) mem 7.7G
+[tartanair_nb1_base] step 150 loss 0.0790 vda 0.0290 silog 0.0500 gn_h 5.98 gn_m 1.16 | sky_med 1306 far_ratio 0.961 near_ratio 1.002 (58s) mem 7.7G
+[tartanair_nb1_base] step 175 loss 0.0750 vda 0.0266 silog 0.0484 gn_h 4.92 gn_m 0.981 | sky_med 1402 far_ratio 1.024 near_ratio 0.992 (67s) mem 7.7G
+[tartanair_nb1_base] step 200 loss 0.0802 vda 0.0344 silog 0.0458 gn_h 6.47 gn_m 1.22 | sky_med 1462 far_ratio 1.021 near_ratio 1.002 (76s) mem 7.7G
+[tartanair_nb1_base] step 225 loss 0.0759 vda 0.0326 silog 0.0433 gn_h 5.6 gn_m 1.1 | sky_med 1521 far_ratio 0.967 near_ratio 1.010 (86s) mem 7.7G
+[tartanair_nb1_base] step 250 loss 0.0732 vda 0.0271 silog 0.0461 gn_h 6.27 gn_m 1.18 | sky_med 1610 far_ratio 0.966 near_ratio 1.008 (95s) mem 7.7G
+[tartanair_nb1_base] step 275 loss 0.0667 vda 0.0235 silog 0.0431 gn_h 4.34 gn_m 0.881 | sky_med 1743 far_ratio 1.027 near_ratio 1.000 (105s) mem 7.7G
+[tartanair_nb1_base] step 300 loss 0.0778 vda 0.0347 silog 0.0431 gn_h 6.07 gn_m 1.13 | sky_med 1846 far_ratio 1.005 near_ratio 0.993 (114s) mem 7.7G
+DONE tartanair_nb1_base 114.93180394172668
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 80.5809555053711, "sky_frac_ge400": 0.15262703597545624, "sky_frac_ge200": 0.23370464146137238, "sky_pred_p10": 52.40333938598633, "far80_655_pred_med": 18.05842399597168, "far80_655_gt_med": 127.0625, "far80_655_ratio_med": 0.14474275708198547, "far80_655_absrel": 0.862571120262146, "far80_655_logbias": -2.0181705951690674, "near<30_pred_med": 5.026519298553467, "near<30_gt_med": 10.34375, "near<30_ratio_med": 0.5015788674354553, "near<30_absrel": 0.5081714987754822, "near<30_logbias": -0.719886839389801, "valid_all_pred_med": 6.348830699920654, "valid_all_gt_med": 13.4453125, "valid_all_ratio_med": 0.4574677646160126, "valid_all_absrel": 0.600158154964447, "valid_all_logbias": -1.0383557081222534}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[tartanair_nb1_hinge] step 25 loss 0.1525 vda 0.0581 silog 0.0942 gn_h 4.48 gn_m 1.33 | sky_med 632 far_ratio 1.045 near_ratio 1.030 (11s) mem 7.7G
+[tartanair_nb1_hinge] step 50 loss 0.1127 vda 0.0449 silog 0.0677 gn_h 4.84 gn_m 1.11 | sky_med 936 far_ratio 1.069 near_ratio 1.006 (20s) mem 7.7G
+[tartanair_nb1_hinge] step 75 loss 0.0927 vda 0.0372 silog 0.0553 gn_h 2.35 gn_m 0.526 | sky_med 1116 far_ratio 1.047 near_ratio 0.994 (30s) mem 7.7G
+[tartanair_nb1_hinge] step 100 loss 0.0920 vda 0.0369 silog 0.0550 gn_h 6.13 gn_m 1.29 | sky_med 1226 far_ratio 1.053 near_ratio 1.021 (39s) mem 7.7G
+[tartanair_nb1_hinge] step 125 loss 0.0886 vda 0.0379 silog 0.0506 gn_h 5.58 gn_m 1.34 | sky_med 1362 far_ratio 0.948 near_ratio 0.987 (49s) mem 7.7G
+[tartanair_nb1_hinge] step 150 loss 0.0921 vda 0.0383 silog 0.0538 gn_h 4.95 gn_m 0.91 | sky_med 1507 far_ratio 0.985 near_ratio 1.006 (58s) mem 7.7G
+[tartanair_nb1_hinge] step 175 loss 0.0945 vda 0.0422 silog 0.0521 gn_h 6.97 gn_m 1.24 | sky_med 1590 far_ratio 0.987 near_ratio 1.023 (67s) mem 7.7G
+[tartanair_nb1_hinge] step 200 loss 0.0784 vda 0.0306 silog 0.0477 gn_h 5.03 gn_m 0.987 | sky_med 1767 far_ratio 0.941 near_ratio 1.019 (77s) mem 7.7G
+[tartanair_nb1_hinge] step 225 loss 0.0678 vda 0.0240 silog 0.0437 gn_h 2.62 gn_m 0.495 | sky_med 1935 far_ratio 1.028 near_ratio 1.006 (86s) mem 7.7G
+[tartanair_nb1_hinge] step 250 loss 0.0697 vda 0.0260 silog 0.0436 gn_h 5.16 gn_m 1.03 | sky_med 2156 far_ratio 1.015 near_ratio 0.999 (96s) mem 7.7G
+[tartanair_nb1_hinge] step 275 loss 0.0709 vda 0.0294 silog 0.0414 gn_h 5.45 gn_m 1.08 | sky_med 2262 far_ratio 1.020 near_ratio 1.005 (105s) mem 7.7G
+[tartanair_nb1_hinge] step 300 loss 0.0690 vda 0.0282 silog 0.0408 gn_h 5.43 gn_m 0.93 | sky_med 2384 far_ratio 0.977 near_ratio 1.013 (115s) mem 7.7G
+DONE tartanair_nb1_hinge 115.61943030357361
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 269.9681396484375, "sky_frac_ge400": 0.3724481165409088, "sky_frac_ge200": 0.5829782485961914, "sky_pred_p10": 36.804073333740234, "far80_655_pred_med": 26.618297576904297, "far80_655_gt_med": 140.125, "far80_655_ratio_med": 0.17949898540973663, "far80_655_absrel": 0.7835280895233154, "far80_655_logbias": -1.6856496334075928, "near<30_pred_med": 6.954926013946533, "near<30_gt_med": 8.6328125, "near<30_ratio_med": 1.049534797668457, "near<30_absrel": 0.609017550945282, "near<30_logbias": -0.06499101966619492, "valid_all_pred_med": 9.067999839782715, "valid_all_gt_med": 15.2890625, "valid_all_ratio_med": 0.6727513670921326, "valid_all_absrel": 0.6321248412132263, "valid_all_logbias": -0.3905091881752014}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[tartanair_nb10_base] step 25 loss 1.3640 vda 1.0010 silog 0.3630 gn_h 4.48 gn_m 1.42 | sky_med 169 far_ratio 0.581 near_ratio 1.189 (21s) mem 7.8G
+[tartanair_nb10_base] step 50 loss 0.5062 vda 0.1938 silog 0.3124 gn_h 7.27 gn_m 3.2 | sky_med 108 far_ratio 0.343 near_ratio 0.932 (36s) mem 7.8G
+[tartanair_nb10_base] step 75 loss 1.3149 vda 0.9921 silog 0.3229 gn_h 6.35 gn_m 1.26 | sky_med 169 far_ratio 0.801 near_ratio 1.044 (50s) mem 7.8G
+[tartanair_nb10_base] step 100 loss 0.4932 vda 0.1743 silog 0.3190 gn_h 7.37 gn_m 2.93 | sky_med 138 far_ratio 0.511 near_ratio 1.076 (65s) mem 7.8G
+[tartanair_nb10_base] step 125 loss 1.2946 vda 0.9652 silog 0.3295 gn_h 3.12 gn_m 0.669 | sky_med 193 far_ratio 0.863 near_ratio 0.970 (80s) mem 7.8G
+[tartanair_nb10_base] step 150 loss 0.4476 vda 0.1646 silog 0.2831 gn_h 8.97 gn_m 2.76 | sky_med 210 far_ratio 0.859 near_ratio 1.083 (94s) mem 7.8G
+[tartanair_nb10_base] step 175 loss 1.2800 vda 0.9220 silog 0.3580 gn_h 5.58 gn_m 0.979 | sky_med 231 far_ratio 0.859 near_ratio 0.916 (109s) mem 7.8G
+[tartanair_nb10_base] step 200 loss 0.3737 vda 0.1834 silog 0.1903 gn_h 6.7 gn_m 1.88 | sky_med 174 far_ratio 0.866 near_ratio 1.006 (124s) mem 7.8G
+[tartanair_nb10_base] step 225 loss 1.2398 vda 0.9230 silog 0.3169 gn_h 2 gn_m 0.531 | sky_med 191 far_ratio 0.754 near_ratio 1.127 (139s) mem 7.8G
+[tartanair_nb10_base] step 250 loss 0.4198 vda 0.1437 silog 0.2762 gn_h 8.69 gn_m 3.17 | sky_med 176 far_ratio 0.779 near_ratio 1.075 (153s) mem 7.8G
+[tartanair_nb10_base] step 275 loss 1.2718 vda 0.9489 silog 0.3229 gn_h 5.18 gn_m 0.897 | sky_med 187 far_ratio 0.827 near_ratio 0.871 (168s) mem 7.8G
+[tartanair_nb10_base] step 300 loss 0.3651 vda 0.1825 silog 0.1826 gn_h 5.39 gn_m 1.45 | sky_med 173 far_ratio 0.635 near_ratio 0.973 (183s) mem 7.8G
+[tartanair_nb10_base] step 325 loss 1.2454 vda 0.9338 silog 0.3116 gn_h 2.51 gn_m 0.451 | sky_med 208 far_ratio 0.798 near_ratio 1.091 (198s) mem 7.8G
+[tartanair_nb10_base] step 350 loss 0.3237 vda 0.1400 silog 0.1837 gn_h 7.44 gn_m 1.86 | sky_med 257 far_ratio 1.010 near_ratio 1.044 (212s) mem 7.8G
+[tartanair_nb10_base] step 375 loss 1.2176 vda 0.9060 silog 0.3115 gn_h 2.57 gn_m 0.43 | sky_med 249 far_ratio 0.951 near_ratio 1.108 (227s) mem 7.8G
+[tartanair_nb10_base] step 400 loss 0.3572 vda 0.1575 silog 0.1998 gn_h 5.81 gn_m 1.52 | sky_med 306 far_ratio 1.379 near_ratio 1.027 (242s) mem 7.8G
+[tartanair_nb10_base] step 425 loss 1.2374 vda 0.9219 silog 0.3155 gn_h 2.58 gn_m 0.631 | sky_med 223 far_ratio 0.912 near_ratio 1.227 (257s) mem 7.8G
+[tartanair_nb10_base] step 450 loss 0.4205 vda 0.1442 silog 0.2763 gn_h 8.75 gn_m 2.72 | sky_med 255 far_ratio 1.106 near_ratio 1.239 (271s) mem 7.8G
+[tartanair_nb10_base] step 475 loss 1.2208 vda 0.9086 silog 0.3122 gn_h 3.45 gn_m 0.516 | sky_med 214 far_ratio 0.821 near_ratio 0.925 (286s) mem 7.8G
+[tartanair_nb10_base] step 500 loss 0.4198 vda 0.1713 silog 0.2485 gn_h 8.81 gn_m 2.31 | sky_med 300 far_ratio 1.218 near_ratio 1.092 (301s) mem 7.8G
+[tartanair_nb10_base] step 525 loss 1.2263 vda 0.9246 silog 0.3017 gn_h 2.81 gn_m 0.656 | sky_med 185 far_ratio 0.856 near_ratio 1.114 (316s) mem 7.8G
+[tartanair_nb10_base] step 550 loss 0.3154 vda 0.1251 silog 0.1903 gn_h 7.33 gn_m 2.13 | sky_med 156 far_ratio 0.713 near_ratio 1.097 (331s) mem 7.8G
+[tartanair_nb10_base] step 575 loss 1.2206 vda 0.9176 silog 0.3030 gn_h 3.76 gn_m 0.598 | sky_med 187 far_ratio 0.895 near_ratio 1.013 (345s) mem 7.8G
+[tartanair_nb10_base] step 600 loss 0.3507 vda 0.1785 silog 0.1722 gn_h 4.98 gn_m 1.26 | sky_med 174 far_ratio 0.625 near_ratio 0.966 (360s) mem 7.8G
+DONE tartanair_nb10_base 365.8810245990753
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+[params] total=29.04M trainable=6.98M (unfrozen_backbone=False)
+{'dpt_head': 2728513, 'motion_modules': 4250048}
+{"step": 0, "sky_pred_med": 269.9681396484375, "sky_frac_ge400": 0.3724481165409088, "sky_frac_ge200": 0.5829782485961914, "sky_pred_p10": 36.804073333740234, "far80_655_pred_med": 26.618297576904297, "far80_655_gt_med": 140.125, "far80_655_ratio_med": 0.17949898540973663, "far80_655_absrel": 0.7835280895233154, "far80_655_logbias": -1.6856496334075928, "near<30_pred_med": 6.954926013946533, "near<30_gt_med": 8.6328125, "near<30_ratio_med": 1.049534797668457, "near<30_absrel": 0.609017550945282, "near<30_logbias": -0.06499101966619492, "valid_all_pred_med": 9.067999839782715, "valid_all_gt_med": 15.2890625, "valid_all_ratio_med": 0.6727513670921326, "valid_all_absrel": 0.6321248412132263, "valid_all_logbias": -0.3905091881752014}
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  row = {'step': step, 'batch': (step - 1) % NB, 'total': float(loss), **{k: terms.get(k, float('nan')) for k in ('vda_total', 'vda_spatial', 'vda_tgm', 'silog', 'silog_mean_log_err', 'sky_hinge_weighted')},
+[tartanair_nb10_hinge] step 25 loss 1.3695 vda 0.9800 silog 0.3876 gn_h 5.93 gn_m 1.29 | sky_med 536 far_ratio 0.547 near_ratio 1.008 (21s) mem 7.8G
+[tartanair_nb10_hinge] step 50 loss 0.5672 vda 0.2101 silog 0.3305 gn_h 5.94 gn_m 2.16 | sky_med 465 far_ratio 0.356 near_ratio 0.889 (36s) mem 7.8G
+[tartanair_nb10_hinge] step 75 loss 1.3567 vda 0.9794 silog 0.3743 gn_h 6.03 gn_m 1.13 | sky_med 494 far_ratio 0.799 near_ratio 1.257 (50s) mem 7.8G
+[tartanair_nb10_hinge] step 100 loss 0.6268 vda 0.2121 silog 0.4068 gn_h 10.4 gn_m 4.3 | sky_med 479 far_ratio 0.796 near_ratio 0.860 (65s) mem 7.8G
+[tartanair_nb10_hinge] step 125 loss 1.3117 vda 0.9776 silog 0.3308 gn_h 3.29 gn_m 0.894 | sky_med 534 far_ratio 0.913 near_ratio 1.064 (80s) mem 7.8G
+[tartanair_nb10_hinge] step 150 loss 0.4912 vda 0.1945 silog 0.2920 gn_h 9.65 gn_m 3.22 | sky_med 534 far_ratio 0.632 near_ratio 0.864 (95s) mem 7.8G
+[tartanair_nb10_hinge] step 175 loss 1.3690 vda 1.0223 silog 0.3426 gn_h 4.19 gn_m 1.07 | sky_med 537 far_ratio 0.754 near_ratio 1.087 (109s) mem 7.8G
+[tartanair_nb10_hinge] step 200 loss 0.5068 vda 0.1784 silog 0.3245 gn_h 8.39 gn_m 2.85 | sky_med 450 far_ratio 0.848 near_ratio 0.798 (124s) mem 7.8G
+[tartanair_nb10_hinge] step 225 loss 1.3032 vda 0.9658 silog 0.3341 gn_h 3.34 gn_m 0.655 | sky_med 477 far_ratio 0.778 near_ratio 1.214 (139s) mem 7.8G
+[tartanair_nb10_hinge] step 250 loss 0.4802 vda 0.2235 silog 0.2553 gn_h 7.43 gn_m 2.36 | sky_med 531 far_ratio 1.083 near_ratio 0.991 (154s) mem 7.8G
+[tartanair_nb10_hinge] step 275 loss 1.3376 vda 1.0031 silog 0.3312 gn_h 5.55 gn_m 1.12 | sky_med 548 far_ratio 0.856 near_ratio 1.059 (168s) mem 7.8G
+[tartanair_nb10_hinge] step 300 loss 0.4089 vda 0.1869 silog 0.2215 gn_h 8.54 gn_m 2.65 | sky_med 571 far_ratio 1.194 near_ratio 0.975 (183s) mem 7.8G
+[tartanair_nb10_hinge] step 325 loss 1.2366 vda 0.9100 silog 0.3243 gn_h 4.11 gn_m 0.607 | sky_med 614 far_ratio 1.003 near_ratio 1.048 (198s) mem 7.8G
+[tartanair_nb10_hinge] step 350 loss 0.3960 vda 0.1711 silog 0.2211 gn_h 8.27 gn_m 2.6 | sky_med 540 far_ratio 0.704 near_ratio 1.088 (213s) mem 7.8G
+[tartanair_nb10_hinge] step 375 loss 1.2700 vda 0.9449 silog 0.3225 gn_h 2.96 gn_m 0.521 | sky_med 489 far_ratio 1.025 near_ratio 1.073 (227s) mem 7.8G
+[tartanair_nb10_hinge] step 400 loss 0.4768 vda 0.1583 silog 0.3139 gn_h 9.11 gn_m 3.12 | sky_med 489 far_ratio 0.790 near_ratio 0.874 (242s) mem 7.8G
+[tartanair_nb10_hinge] step 425 loss 1.2576 vda 0.9267 silog 0.3285 gn_h 5.9 gn_m 0.894 | sky_med 515 far_ratio 0.985 near_ratio 1.018 (257s) mem 7.8G
+[tartanair_nb10_hinge] step 450 loss 0.4639 vda 0.2071 silog 0.2514 gn_h 4.81 gn_m 1.45 | sky_med 486 far_ratio 0.595 near_ratio 1.046 (272s) mem 7.8G
+[tartanair_nb10_hinge] step 475 loss 1.2916 vda 0.9518 silog 0.3376 gn_h 5.43 gn_m 0.993 | sky_med 545 far_ratio 1.059 near_ratio 0.969 (287s) mem 7.8G
+[tartanair_nb10_hinge] step 500 loss 0.2723 vda 0.1268 silog 0.1420 gn_h 4.42 gn_m 1.17 | sky_med 455 far_ratio 0.635 near_ratio 1.016 (301s) mem 7.8G
+[tartanair_nb10_hinge] step 525 loss 1.2621 vda 0.9326 silog 0.3260 gn_h 3.4 gn_m 0.535 | sky_med 435 far_ratio 0.771 near_ratio 0.897 (316s) mem 7.8G
+[tartanair_nb10_hinge] step 550 loss 0.3386 vda 0.1707 silog 0.1667 gn_h 7.78 gn_m 1.97 | sky_med 495 far_ratio 1.040 near_ratio 1.037 (331s) mem 7.8G
+[tartanair_nb10_hinge] step 575 loss 1.2228 vda 0.9117 silog 0.3086 gn_h 2.33 gn_m 0.547 | sky_med 566 far_ratio 0.848 near_ratio 1.023 (346s) mem 7.8G
+[tartanair_nb10_hinge] step 600 loss 0.3256 vda 0.1453 silog 0.1788 gn_h 7.84 gn_m 2.36 | sky_med 505 far_ratio 0.766 near_ratio 1.031 (361s) mem 7.8G
+DONE tartanair_nb10_hinge 366.7330484390259

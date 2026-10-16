@@ -5,4 +5,4 @@ Root: /mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/
 - B2_transforms_masks/: per-source before/after panels, 140-frame sky-overlay contact sheet, ta_sky_encoding_probe.jpg
 - D_baseline/: sbs_* (4 outdoor + 2 indoor clips: RGB|GT|4 models|sky mask), pred_vs_gt_outdoor.png, kitti0023_f109_{llb3,b0s0}_{linear,log}.png, kitti_sky_perframe_box.png, horse_f25_log.png
 - E_gradients/: class_gradient_share.png (full size + run.log)
-- F_overfit/: (pending)
+- F_overfit/: curves_*.png, panel_<tag>.jpg, full-size panels and raw predictions
