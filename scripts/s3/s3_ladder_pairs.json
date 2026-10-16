@@ -1,0 +1,23 @@
+{
+ "stages": {
+  "none": "",
+  "agf0.2t0.06": "+agf0.2t0.06"
+ },
+ "pairs": [
+  {
+   "seed": 46,
+   "num": "ours-_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_c3_n46_step12000",
+   "den": "metric_vda_s_ft:_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_ft_n46_step12000"
+  },
+  {
+   "seed": 47,
+   "num": "ours-_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_c3_n47_step12000",
+   "den": "metric_vda_s_ft:_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_ft_n47_step12000"
+  },
+  {
+   "seed": 48,
+   "num": "ours-_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_c3_n48_step12000",
+   "den": "metric_vda_s_ft:_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_ft_n48_step12000"
+  }
+ ]
+}
