@@ -1,0 +1,31 @@
+{
+  "task": "VAL-01",
+  "dataset": "kitti",
+  "vda_repo_commit": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+  "checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/video_depth_anything_vits.pth",
+  "checkpoint_sha256": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
+  "manifest_path": "/mnt/DATA/DegradedDepth/RAMEN/results/vda_clean_repro/benchmark_data/kitti/kitti_video.json",
+  "manifest_sha256": "065d8188368ab58848ec166ed00307dc2a4bc63de5ee8d8b29855dbd966f9a3a",
+  "num_clips": 13,
+  "metrics": {
+    "abs_relative_difference": 0.09314893365323205,
+    "rmse_linear": 3.7032129247318823,
+    "delta1_acc": 0.9332543015480042
+  },
+  "kitti_self_consistency_check": {
+    "reference": {
+      "abs_rel": 0.0931,
+      "delta1": 0.9333
+    },
+    "measured": {
+      "abs_rel": 0.09314893365323205,
+      "delta1": 0.9332543015480042
+    },
+    "abs_rel_delta_pct": 0.052560314964610944,
+    "delta1_delta_points": -0.004569845199586808,
+    "abs_rel_result": "PASS",
+    "delta1_result": "PASS",
+    "overall": "PASS",
+    "tolerance": "within 3.0% relative AbsRel and 1.0 point delta1, against BENCH-01d/05b's as-run figure (upstream's own released script, unmodified)"
+  }
+}

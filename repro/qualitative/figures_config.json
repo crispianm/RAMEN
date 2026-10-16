@@ -1,0 +1,53 @@
+{
+  "eval_clone": "/mnt/DATA/DegradedDepth/claude_outputs/scratch/c3_diag_20261009/eval_clone",
+  "eval_commit": "368b5c53b37ebd22f5d44ce0c9d514122efc88da",
+  "results_root": "/mnt/DATA/DegradedDepth/results_v3",
+  "c3": {
+    "name": "RAMEN n46 (C3 recipe, seed 46, c3rep)",
+    "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt",
+    "ckpt_gh200": "/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt",
+    "sha256": "f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af",
+    "rows_dir": "c3rep_s12/ours-_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_c3_n46_step12000"
+  },
+  "FT_CHOICE": "B",
+  "ft": {
+    "A": {
+      "name": "FT seed 45 (pre-C3 recipe, synreal_r50_mvdas_ft)",
+      "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_v3/synreal/synreal_r50_mvdas_ft/step12000.pt",
+      "sha256": "37e5c07611e7ff7e82cf4c695a15954be8c0844a9d1d3fba71ef7ee7b117163b",
+      "rows_dir": "sr_s12/metric_vda_s_ft:_projects_b5dh_RAMEN_train_dn01_v3_synreal_r50_mvdas_ft_runs_dn01_v3_synreal_r50_mvdas_ft_step12000"
+    },
+    "B": {
+      "name": "FT n46 (C3 recipe, c3rep)",
+      "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt",
+      "ckpt_gh200": "/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt",
+      "sha256": "18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0",
+      "rows_dir": "c3rep_s12/metric_vda_s_ft:_projects_b5dh_RAMEN_train_dn01_c3rep_20261009_runs_dn01_c3rep_20261009_ft_n46_step12000",
+      "caption": "FT: C3 recipe, seed 46, from scratch (different seed/lineage from the seed-45 C3)"
+    }
+  },
+  "released": {
+    "name": "released Metric-VDA-S",
+    "spec": "metric_vda_s",
+    "weights_sha256_prefix": "3c28432b"
+  },
+  "tag": "agf0.2t0.06",
+  "datasets": [
+    "kitti",
+    "bonn",
+    "scannetpp",
+    "nyuv2",
+    "sintel_rgbfix"
+  ],
+  "failure_datasets": [
+    "bonn",
+    "scannetpp"
+  ],
+  "kitti_exclude_substr": "0047",
+  "cell": "llvar",
+  "teaser": {
+    "dataset": "bonn",
+    "cell": "st_llvar"
+  },
+  "out_qual": "/mnt/DATA/DegradedDepth/qualitative/12_c3_figures"
+}

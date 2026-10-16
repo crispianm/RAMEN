@@ -1,0 +1,8 @@
+extends: dn01_mf_a1_n45.yaml
+
+# DN-01 METRICFIX A1h: A1 with the DPT depth head + both output convs TRAINABLE (the literal VDA metric stage trained them; encoder frozen), at the SAME lr as the motion modules (training.head_lr_mult 1.0).
+model:
+  freeze_depth_head: false
+training:
+  head_lr_mult: 1.0
+  checkpoint_dir: runs/dn01_mf_a1h_n45

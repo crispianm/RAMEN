@@ -1,0 +1,31 @@
+{
+  "eval_clone": "/mnt/DATA/DegradedDepth/claude_outputs/scratch/c3_diag_20261009/eval_clone",
+  "eval_commit": "368b5c53b37ebd22f5d44ce0c9d514122efc88da",
+  "figures_package": "/mnt/DATA/DegradedDepth/claude_outputs/session_evidence/c3_figures_package_20261012",
+  "figures_render_script_sha256_prefix": "9dd2196930c7231f",
+  "c3": {
+    "name": "C3 seed 45 (bfix_C3_B step12000)",
+    "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt",
+    "ckpt_gh200": "/projects/b5dh/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt",
+    "sha256": "c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9"
+  },
+  "released": {
+    "name": "released Metric-VDA-S",
+    "spec": "metric_vda_s",
+    "weights_sha256_prefix": "3c28432b"
+  },
+  "tag": "agf0.2t0.06",
+  "dataset": "bonn",
+  "clip": "rgbd_bonn_balloon_tracking",
+  "cell": "st_llb3",
+  "split": "dev",
+  "slice_rule": {
+    "x0_px_at_width_640": 430,
+    "x0_fraction_of_width": 0.671875,
+    "source": "paper_cvpr2027/figures/make_figures.py::fig_teaser (x0 = 430 of a 640-wide panel, 'chair seat edge and table edge'), sha256 prefix 2d4c18506c0ed678",
+    "what": "y-t slice of the relative depth-change maps |D_t - D_{t-1}| / D_t at column round(0.671875 * panel_width), all rows, frames t=1..N-1; same colour map and range as the change panels (inferno, 0-3 % of depth)"
+  },
+  "label": "same clip as the previous cover; not selected by the figures clip rule",
+  "out_qual": "/mnt/DATA/DegradedDepth/qualitative/13_status_cover",
+  "scope": "status page only, not for the paper"
+}

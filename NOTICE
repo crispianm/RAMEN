@@ -1,0 +1,14 @@
+RAMEN -- Stable Metric Video Depth in Low Light
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This project includes vendored third-party code, each directory with its own LICENSE and NOTICE:
+
+  vendor/vda_eval/       Video Depth Anything temporal alignment error script (unmodified)
+                         https://github.com/DepthAnything/Video-Depth-Anything -- Apache-2.0
+  vendor/pocketdvdnet/   PocketDVDNet model file (unmodified), https://github.com/crispianm/PocketDVDNet
+                         -- GPL-3.0 (see vendor/pocketdvdnet/LICENSE). The restorer used by RAMEN
+                         (models/restoration.py, models/shared_temporal.py) imports it.
+
+RAMEN also loads, at run time and from a path you provide, the Video-Depth-Anything code base and the
+Depth Anything V2 / Depth Anything AC weights; these are not redistributed here and keep their upstream
+licences.

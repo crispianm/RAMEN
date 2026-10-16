@@ -1,0 +1,148 @@
+extends: ramen_relative_base.yaml
+
+# VAL-01 (filed 2026-08-27, user directive relayed via Fable): reproduce Video-Depth-
+# Anything-Small's own training recipe -- official architecture (models/vda_net.py,
+# vendored video_depth_anything.video_depth.VideoDepthAnything, pinned commit
+# 4f5ae23172ba60fd7bc11ef671cca678842c7072), official losses, the four public synthetic
+# datasets VDA trains on -- to validate this repo's training pipeline (data loading, loss
+# implementation, optimizer, checkpointing) independent of any RAMEN-specific module.
+# No degradation, no RAMEN temporal/LoRA/frontend/profile modules.
+#
+# PASS CRITERION (user-confirmed via Fable, 2026-08-27): within 5% relative AbsRel of
+# Table 1's "VDA-S (Ours-Syn)" row, per video benchmark. Numbers below are the raw
+# `pdftotext -layout` line from the actual downloaded arXiv 2501.12375v3 PDF (page 6),
+# cross-checked independently by this session, Fable and Opus -- not a paraphrase:
+#
+#   VDA-S (Ours-Syn)  0.089 0.937  0.124 0.839  0.081 0.955  0.087 0.953  0.326 0.596
+#   VDA-S (Ours)      0.086 0.942  0.110 0.876  0.083 0.950  0.077 0.959  0.339 0.584
+#                     KITTI          Scannet        Bonn           NYUv2          Sintel
+#                     (AbsRel / delta1 per dataset)
+#
+# "VDA-S (Ours)" (the release we can download and hash-verify) is scored alongside at
+# every eval as a second, always-recorded reference -- not the pass/fail target.
+#
+# DECLARED CAVEAT (not hidden): the paper's supplementary states "-Syn" models are
+# "trained using synthetic videos and unlabeled images in a single stage" -- i.e. -Syn
+# ALSO uses the paper's 0.62M unlabeled-image distillation stream, just not the 0.18M
+# wild binocular frames "Ours" adds on top. VAL-01 omits the image stream entirely
+# (clean-video-only, per the user's own scope) -- Table 6's video-vs-video+image ablation
+# suggests roughly a 2% effect on video benchmarks from that stream, so a miss against
+# -Syn could be this gap rather than a pipeline defect. Both rows are recorded at every
+# eval regardless, so the comparison stays informative either way this resolves.
+#
+# LOSS: computed by VDA's own loss/loss.py::VideoDepthLoss @4f5ae23 (Fable's ruling,
+# 2026-08-27) -- NOT this file's hand-rolled SSI/TGM, which diverges from the real
+# composition in ways structural enough that weight-matching alone cannot fix: VDA's
+# spatial (SSI) term is PER-FRAME (median/MAD-normalised, untrimmed -- trim=0.0, not
+# TrimmedProcrustesLoss's own unused standalone default of 0.2), while a SEPARATE
+# per-clip least-squares scale+shift feeds a single-scale TemporalGradientMatchingLoss at
+# weight stable_scale=10 (Eq. 4's alpha). loss.loss_mode: "vda" below reuses their code
+# directly (train.py's compute_loss, _compute_loss_vda) with VideoDepthLoss(alpha=0.5,
+# scales=4, trim=0.0, stable_scale=10) -- alpha here is the internal spatial-gradient
+# weight, matching gradient_weight; ssi_weight/tgm_weight are read as the same alpha/
+# stable_scale construction args for auditability. load_config hard-fails for arch="vda"
+# unless loss_mode="vda" and sky_zero_disparity=false (VDA's own loss has no sky concept --
+# sky pixels are simply excluded from mask, not force-supervised at disparity 0 the way
+# RAMEN's own sky_zero_disparity convention does for other archs).
+#
+# UNPUBLISHED, DECLARED AS OUR OWN CHOICES (not from the paper -- Opus's audit,
+# 2026-08-27): total optimizer steps, warmup_steps, weight_decay, and EMA (paper mentions
+# none, treated as absent). max_steps=20000 is a declared ~60-GPU-hour budget at a
+# projected rate, not derived from anything published -- Fable's decision, 2026-08-27, to
+# skip a separate GH200 throughput-measurement job (stuck queuing on a heavily-loaded
+# Isambard partition) and let the real run measure itself instead: train.py logs
+# per-optimizer-step wall time + peak memory to <checkpoint_dir>/throughput.jsonl every 20
+# steps. Revise max_steps from the logged rate after the first 500 real steps, and journal
+# the revision, before any eval from this run is read as meaningful.
+
+model:
+  arch: vda
+  vda_repo: /projects/b5dh/repos/Video-Depth-Anything   # commit 4f5ae23172ba60fd7bc11ef671cca678842c7072
+  vda_encoder: vits
+  metric: false                        # relative variant first -- Fable's ordering ruling
+  vda_init: da_v2
+  # sha256 715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378, verified
+  # against HuggingFace's X-Linked-ETag for depth-anything/Depth-Anything-V2-Small
+  da_v2_checkpoint_path: /projects/b5dh/DaBiT/weights/depth_anything_v2_vits.pth
+  # released VDA-S, scored alongside every eval -- sha256
+  # 13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609, verified against
+  # HuggingFace's X-Linked-ETag for depth-anything/Video-Depth-Anything-Small
+  vda_checkpoint_path: /projects/b5dh/D3/checkpoints/video_depth_anything_vits.pth
+  device: cuda
+
+data:
+  sources:
+    - {type: tartanair, root: /projects/b5dh/data/train/tartanair, resize_mode: vda}
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone], resize_mode: vda}
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda}
+    - {type: pointodyssey, root: /projects/b5dh/data/train/point_odyssey/train, resize_mode: vda}
+  val_sources:
+    - {type: tartanair, root: /projects/b5dh/data/train/tartanair, resize_mode: vda}
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone], resize_mode: vda}
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda}
+    - {type: pointodyssey, root: /projects/b5dh/data/train/point_odyssey/val, resize_mode: vda}
+  # CORRECTED 2026-08-27 (Opus, verified against the paper's supplementary, verbatim:
+  # "we employ a uniform sampler to ensure that each dataset contributes equally during
+  # training"): VDA uses EQUAL per-dataset sampling, the opposite of an earlier draft's
+  # sampling='proportional'. Inherits ramen_relative_base.yaml's uniform_sampler: true
+  # unchanged -- no override needed here. (data.sampling='proportional', added to
+  # train.py for an earlier, incorrect reading of the recipe, is left in place as a
+  # generically-tested but unused option -- explicitly NOT part of the VDA recipe and
+  # must not be enabled for this config.)
+  num_frames: 32                       # VDA's own clip length (paper, confirmed: "window size of 32")
+  image_size: [518, 518]
+  clip_stride: 32                      # non-overlapping clips, matching the base's stride==num_frames convention
+  frame_stride: 1
+  max_depth: 80.0
+  max_clips_per_video: null            # no RAMEN-screening cap here; sampling is equal per source anyway
+  seed: 42
+  degrade: false                       # VAL-01 is clean-data-only -- explicit user directive
+  degrade_mode: full                   # inert while degrade=false; left declared for clarity
+  val_degrade_severity: null
+  num_workers: 8
+  val_batch_size: 1
+  val_clips_per_source: 20
+
+training:
+  # UNPUBLISHED (declared, not the paper's): total_steps, warmup_steps, weight_decay, no
+  # EMA. max_steps=20000 is a declared ~60-GPU-hour budget at a projected rate (Fable,
+  # 2026-08-27) -- do not cite it as VDA's own schedule; revise from
+  # <checkpoint_dir>/throughput.jsonl's logged rate after the first 500 real steps.
+  max_epochs: 1000
+  max_steps: 20000
+  batch_size: 1                        # 1 clip (32 frames) per GPU micro-batch -- VDA's own recipe, 1x32 x grad_accum 16 = 512 frames/optimizer step
+  grad_accum: 16                       # if this OOMs on the GH200, the clip must split into two 16-frame micro-batches (accum 32) -- but TGM needs the full 32-frame clip in one forward, so that split is NOT free; escalate rather than silently truncating TGM's temporal window
+  learning_rate: 1.0e-4                # paper's own base LR
+  weight_decay: 0.0                    # declared choice (unpublished) -- paper states none
+  warmup_steps: 500                    # declared choice (unpublished)
+  lr_decay_steps: 20000
+  grad_clip: 1.0
+  precision: bf16
+  ema_decay: 0.0                       # no EMA -- paper does not mention one; treated as absent, not unspecified
+  renorm_lr_scale: 1.0                 # no RAMEN renorm branch in this arch
+  severity_warmup_steps: 0             # no degradation curriculum -- clean-only
+  severity_max_cap: 0.0
+  val_every_steps: 2000                # Fable's declared cadence: every 2000 optimizer steps + final
+  checkpoint_every_steps: 500          # cheap (no-eval) resumability point -- makes a Slurm TIMEOUT harmless with exact-resume
+  val_max_batches: 80
+  causal_training: masked
+  checkpoint_dir: runs/val01_vda_s_relative
+
+loss:
+  loss_mode: vda                       # REQUIRED for arch=vda -- see header comment; reuses loss/loss.py::VideoDepthLoss @4f5ae23
+  # No separate ssi_weight here: VideoDepthLoss's own composition adds its spatial (SSI)
+  # term with an implicit coefficient of 1.0 (Eq. 4's beta) -- there is no config knob for
+  # it because VDA's own code doesn't expose one.
+  tgm_weight: 10.0                     # -> VideoDepthLoss(stable_scale=10.0) -- Eq. 4's alpha
+  gradient_weight: 0.5                 # -> VideoDepthLoss(alpha=0.5) -- the spatial-gradient weight INSIDE their SSI term
+  ssi_scales: 4                        # -> VideoDepthLoss(scales=4)
+  ssi_trim: 0.0                        # -> VideoDepthLoss(trim=0.0) -- NOT TrimmedProcrustesLoss's own unused 0.2 default
+  silog_weight: 0.0
+  metric_weight: 0.0
+  distill_weight: 0.0                  # RAMEN's Depth Pro clean-teacher distillation -- unused, not VDA's own recipe
+  consistency_weight: 0.0
+  gram_weight: 0.0
+  profile_weight: 0.0
+  frontend_weight: 0.0
+  enh_weight: 0.0
+  sky_zero_disparity: false            # REQUIRED for arch=vda -- see header comment

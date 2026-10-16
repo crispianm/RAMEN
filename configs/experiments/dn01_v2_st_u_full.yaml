@@ -1,0 +1,10 @@
+extends: dn01_st_u_full.yaml
+
+# DN-01 2x2 v2 (fixed low-light recipe): dn01_st_u_full.yaml with the v2 recipe changes only (exposure-equivariant
+# lowlight target; blur-only share restored to C's 20%). The pre-declared rule is in dn01_v2_st_f_full.yaml's header.
+data:
+  blur_only_prob: 0.5
+  lowlight:
+    target: exposed
+training:
+  checkpoint_dir: runs/dn01_v2_st_u_full

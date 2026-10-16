@@ -1,0 +1,1019 @@
+# configs/paper_results.yaml  (schema: repro/SCHEMA.md v1).  FROZEN (this commit)
+# The freeze is the git commit that contains this file: generate_results.py refuses a config whose header carries the draft marker / lacks the FROZEN mark, or that is untracked / modified vs HEAD,
+# and MANIFEST.json records the commit (git.commit) and this file's sha256. Any later edit is a new commit and needs a new Auditor token.
+# Every value cites a source (see configs/paper_results_README.md for the source table). Nothing here is invented:
+#   TODO = not available / not derivable from released provenance; reason is given inline.
+# Scorer: bench_joint.py @368b5c53 vendored unchanged. Driver of all released bench/night/fnoise reads: scripts/dn01_headline.py
+#   (bench: --temporal --split all --allow-test, cells llvar,llvarf + st_llvar,st_llb3; night: dn01_heldout_eval nuscenes_night_test real, split test; fnoise: dn01_bvi_fnoise)
+#   [RUN_MANIFEST.json argv + scripts/dn01_headline.py plan()]. short_side=378 in every released bench JSON (field short_side).
+schema_version: 1
+
+scorer_commit: 368b5c53b37ebd22f5d44ce0c9d514122efc88da
+tag_backend: reference                       # reference = numpy TAG of every released number; fast = device TAG (exploratory, cross-host tolerances; --tag-backend fast)
+vendored:                                    # byte-identical wrapper scripts OUTSIDE the scorer (repro/vendored/VENDORED.json is the checked copy)
+  bench_overrides.py: {sha256: c5add7ec29609892c3df148c56b37fc50317a7ba512a32b50911d17c78e951c3, commit: 0c6d07b}
+  fidelity_init_score.py: {sha256: 4771146762149c65a3aebc051c264dd54138dcea2cfe531255a12e116056564c, commit: null, source: claude_outputs/session_evidence/fidelity_package_20261012 (AUD-FIDELITY-20261012)}
+
+tag: {alpha: 0.2, tau: 0.06, token: agf0.2t0.06}      # scripts/dn01_headline.py TAG = "agf0.2t0.06"; RUN_MANIFEST "spec" of every +TAG row
+smoke:                                       # (commit I') merged over repro/config.py DEFAULT_SMOKE by smoke_cfg; models, datasets and cells are overridden (since I3; overhead/arms/qual_min stay default). Used by the gate items tab:casc_gate (S0), tab:noise (S3 ladder gate) and tab:pf_gate (S2, commit I2).
+  models: [casc_fdvd_ft_n46, casc_fdvd_ft_n46_tag, casc_pock_ft_n46, casc_pock_ft_n46_tag, ramen_n46, ramen_n46_tag, ft_n46, ft_n46_tag, dav2_ft_n46, dav2_ft_n46_tag, daac_ft_n46, daac_ft_n46_tag]   # (commit I3) = I' cascade models U the n46 pair of tab:noise; (commit I2) + the 4 per-frame FT models of tab:pf_gate
+  datasets: [kitti]                                    # (commit I3) DEV smoke = KITTI only (both gate items, tab:casc_gate and tab:noise, are kitti-only)
+  cells: [llvar, st_llvar, b0s0, llb3x1, llb3x16, st_llb3x1]   # (commit I3) = default cells U the tab:noise gate cells; llb3kappa1 / st_llb3kappa1 are dropped from tab:noise
+
+host_paths:
+  DATA_ROOT: /mnt/DATA/DegradedDepth                  # DOCUMENTED DEFAULT (the 4090 workstation). All paths below are relative to this unless absolute (or 'repo:<rel>' = inside the clone).
+  # Local resolution (4090 / any non-GH200 host): env DATA_ROOT / --data-root > DATA_ROOT above.
+  bvi_root: data/test/BVI-RLV/BVI-Lowlight-videos     # default for --bvi-root (resolved like every other path key)
+  # GH200 (Isambard) resolution is an EXPLICIT per-key map: no single DATA_ROOT works there. Key = the path string exactly as written in this config; value = absolute Isambard path.
+  # Source: claude_outputs/scratch/paper_repro/isambard_layout/layout_table.tsv (read-only layout check 2026-10-14; every checkpoint/weights file and clip list there has sha256 == this config).
+  # On a GH200 a relative path key that is neither mapped nor listed in gh200_local_only is REFUSED (never silently resolved to a local path); a null value is refused too. --data-root / env DATA_ROOT
+  # still override everything (local style). Not in the map by design (hardcoded by the scorer on Isambard, all present per the layout table): kitti/bonn/ScanNet++/NYUv2/Sintel frames,
+  #   nuScenes frames (/projects/b5dh/data/test/nuscenes), night TEST projections (/projects/b5dh/data/nuscenes_night_manifest/nuscenes_night_test_v1_projections).
+  gh200:
+    checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt: /projects/b5dh/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt
+    checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt
+    checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt
+    checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n48/step12000.pt: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n48/step12000.pt
+    checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt
+    claude_outputs/scratch/paper_repro/train_pf/dav2a_n46/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt: /projects/b5dh/RAMEN_train_pf_20261015/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt     # (commit I2) TRAIN output AUD-FTONLY-TRAIN-20261015 (Auditor Add.22)
+    claude_outputs/scratch/paper_repro/train_pf/daacm_n46/runs/dn01_c3rep_pf_daacm_n46/step12000.pt: /projects/b5dh/RAMEN_train_pf_20261015/runs/dn01_c3rep_pf_daacm_n46/step12000.pt
+    RAMEN/checkpoints/metric_video_depth_anything_vits.pth: /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth
+    RAMEN/checkpoints/metric_video_depth_anything_vitl.pth: /projects/b5dh/benchmark/weights/metric_video_depth_anything_vitl.pth
+    RAMEN/checkpoints/depth_anything_v2_vits.pth: /projects/b5dh/benchmark/weights/depth_anything_v2_vits.pth
+    RAMEN_aaai/baselines_ckpt/depth_anything_ac/checkpoints/depth_anything_AC_vits.pth: /projects/b5dh/benchmark/weights/depth_anything_AC_vits.pth
+    RAMEN_aaai/results/dn01_st_recal/recal_full/temp2_distilled.pt: /projects/b5dh/RAMEN_train_dn01_st_recal/runs/recal_full/temp2_distilled.pt
+    data/TEST/kitti_rgbfix/kitti_video.json: /projects/b5dh/data/test/benchmarks/kitti_rgbfix/kitti_video.json
+    RAMEN/results/vda_clean_repro/benchmark_data/bonn/bonn_video.json: /projects/b5dh/dn01_eval_data/bonn_video.json
+    data/TEST/scannetpp_eval/scannetpp_video.json: /projects/b5dh/data/test/benchmarks/scannetpp_eval/scannetpp_video.json
+    data/TEST/nyuv2_video/nyuv2_video_500.json: /projects/b5dh/data/test/benchmarks/nyuv2_video/nyuv2_video_500.json
+    data/TEST/sintel/sintel_video.json: /projects/b5dh/data/test/benchmarks/sintel/sintel_video.json
+    data/test/BVI-RLV/BVI-Lowlight-videos: /projects/b5dh/data/train/bvi_rlv/BVI-Lowlight-videos
+    results_v3/syn_s12: /projects/b5dh/RAMEN_v3_results/syn_s12
+    results_v3/c3rep_s12: /projects/b5dh/RAMEN_v3_results/c3rep_s12
+  gh200_local_only:                                   # verify references / inputs that stay on the local host (4090 workstation); not on Isambard
+    - claude_outputs/scratch/paper_repro/latency_ladder/session_2      # tab:latency verify reference (4090-only item)
+    - qualitative/12b_ramen_figures                                    # fig:teaser / fig:qual verify reference (released figures)
+    - claude_outputs/reports/P1_READ_20261012/P1_TABLE.md              # tab:p1 by-hand verify reference (released 4090 read; compare with --verify on the local host)
+    - efficiency_primary.txt                                           # tab:latency_eff condition file (4090-only, conditional)
+
+models:
+  ramen_s45:
+    label: "RAMEN (seed 45, 12k)"
+    spec: "ours:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt
+      sha256: c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9    # sha256sum (local) == results_v3/bfix_s12/*/RUN_MANIFEST.json ckpt_sha256
+      download_url: TODO(user)
+    weights: {metric_vda_s: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33}   # base weights, syn_s12 bench JSON weights field
+  ramen_s45_tag:
+    label: "RAMEN (seed 45) + TAG"
+    spec: "ours:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt, sha256: c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9, download_url: TODO(user)}
+  ramen_n46:
+    label: "RAMEN seed 46 (from scratch)"
+    spec: "ours:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt
+      sha256: f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af
+      download_url: TODO(user)
+  ramen_n46_tag:
+    label: "RAMEN seed 46 + TAG"
+    spec: "ours:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt, sha256: f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af, download_url: TODO(user)}
+  ramen_n47:
+    label: "RAMEN seed 47 (from scratch)"
+    spec: "ours:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt
+      sha256: 2ee98b7ee25bd6d5f044ea1f6bb7854d1a0c978488be52d4c87d305a5df6a54c
+      download_url: TODO(user)
+  ramen_n47_tag:
+    label: "RAMEN seed 47 + TAG"
+    spec: "ours:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt, sha256: 2ee98b7ee25bd6d5f044ea1f6bb7854d1a0c978488be52d4c87d305a5df6a54c, download_url: TODO(user)}
+  ramen_n48:
+    label: "RAMEN seed 48 (from scratch)"
+    spec: "ours:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n48/step12000.pt
+      sha256: bf053bd38fdb97d55228fceb737fc2d6353cca26d9ab13338c6d9dd3df95da12
+      download_url: TODO(user)
+  ramen_n48_tag:
+    label: "RAMEN seed 48 + TAG"
+    spec: "ours:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n48/step12000.pt, sha256: bf053bd38fdb97d55228fceb737fc2d6353cca26d9ab13338c6d9dd3df95da12, download_url: TODO(user)}
+  ft_n46:
+    label: "Metric-VDA-S fine-tuned (seed 46)"
+    spec: "metric_vda_s_ft:{ckpt}"                    # RUN_MANIFEST spec of c3rep_s12 FT rows
+    tag: false
+    ckpt:
+      path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt
+      sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0
+      download_url: TODO(user)
+  ft_n46_tag:
+    label: "Metric-VDA-S FT (seed 46) + TAG"
+    spec: "metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt, sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0, download_url: TODO(user)}
+  ft_n47:
+    label: "Metric-VDA-S fine-tuned (seed 47)"
+    spec: "metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt:
+      # TODO MISSING LOCALLY: only ft_n46 was pulled (EVIDENCE_INVENTORY s0). Isambard source: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt
+      path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt   # Isambard path (Manager ruling 10-13: FT n47/n48 live on Isambard; 4090 smoke uses n46 only)
+      sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465    # from results_v3/c3rep_s12 RUN_MANIFEST ckpt_sha256 (not re-hashed: file absent)
+      download_url: TODO(user)
+  ft_n47_tag:
+    label: "Metric-VDA-S FT (seed 47) + TAG"
+    spec: "metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt, sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465, download_url: TODO(user)}
+  ft_n48:
+    label: "Metric-VDA-S fine-tuned (seed 48)"
+    spec: "metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt:
+      # TODO MISSING LOCALLY (same as ft_n47). Isambard: .../dn01_c3rep_20261009_ft_n48/step12000.pt
+      path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt
+      sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0    # RUN_MANIFEST ckpt_sha256, not re-hashed
+      download_url: TODO(user)
+  ft_n48_tag:
+    label: "Metric-VDA-S FT (seed 48) + TAG"
+    spec: "metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt, sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0, download_url: TODO(user)}
+  metric_vda_s:
+    label: "Metric-VDA-S (released)"
+    spec: "metric_vda_s"
+    tag: false
+    ckpt:
+      path: RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+      sha256: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33
+      download: "huggingface:depth-anything/Metric-Video-Depth-Anything-Small/metric_video_depth_anything_vits.pth"   # provenance/dn01_f3/baselines.json l.11; provenance/inventory/val01_metric_checkpoint_provenance_20260827.json
+  metric_vda_s_tag:
+    label: "Metric-VDA-S + TAG"
+    spec: "metric_vda_s"
+    tag: true
+    ckpt: {path: RAMEN/checkpoints/metric_video_depth_anything_vits.pth, sha256: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33, download: "huggingface:depth-anything/Metric-Video-Depth-Anything-Small/metric_video_depth_anything_vits.pth"}
+  metric_vda_l:
+    label: "Metric-VDA-L (reference)"
+    spec: "metric_vda_l"
+    tag: false
+    ckpt:
+      path: RAMEN/checkpoints/metric_video_depth_anything_vitl.pth
+      sha256: 24eba25342e7ee0f054be25da6a852ebd7cfa40cd6bf41a353ecb6abfe24e620    # local sha256sum == syn_s12 metric_vda_l bench JSON weights.sha256
+      download: "huggingface:depth-anything/Metric-Video-Depth-Anything-Large/metric_video_depth_anything_vitl.pth"   # provenance/dn01_f3/submit_f3.sh l.100
+  dav2_s:
+    label: "Depth Anything V2-S (per-frame)"
+    spec: "dav2_s"
+    tag: false
+    ckpt:
+      path: RAMEN/checkpoints/depth_anything_v2_vits.pth
+      sha256: 715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378
+      download: "huggingface:depth-anything/Depth-Anything-V2-Small/depth_anything_v2_vits.pth"     # provenance/inventory/val01_vda_net_da_v2_reproduction_20260827.json
+  daac:
+    label: "Depth Anything AC"
+    spec: "daac"
+    tag: false
+    ckpt:
+      path: RAMEN_aaai/baselines_ckpt/depth_anything_ac/checkpoints/depth_anything_AC_vits.pth
+      sha256: d5c802e195c59e68d92877c2fd5664973e929cf8981e7a4f107a55fe74abf7f6
+      download_url: TODO(user)
+  fastdvdnet_blind_mvda_s:
+    label: "FastDVDnet (blind) -> Metric-VDA-S"
+    spec: "fastdvdnet_blind+metric_vda_s"
+    tag: false
+    weights:                                          # syn_s12 bench JSON `weights` field
+      fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949   # competition/fastdvdnet/model_clipped_noise.pth (local sha256sum matches)
+      metric_vda_s: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33
+  pocketdvdnet_mvda_s:
+    label: "PocketDVDNet -> Metric-VDA-S"
+    spec: "pocketdvdnet+metric_vda_s"
+    tag: false
+    weights:
+      pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f   # RAMEN/checkpoints/pocketdvdnet_v1.0.pt (local sha256sum matches)
+      metric_vda_s: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33
+  # ---------------- per-frame baselines fine-tuned with the c3rep recipe (commit I2, S2; TRAIN token AUD-FTONLY-TRAIN-20261015, Auditor Add.22: step12000 only, ONE seed n46) ----------------
+  # dav2a = DA-V2-S, metres head, initialised from the released RELATIVE DA-V2-S weights; daacm = DA-AC, metric head, initialised from the released DA-AC weights. Both: DINOv2 frozen, DPT head trained (2,728,513 params), TGM loss active, no temporal module.
+  # Spec grammar bench_joint.PERFRAME_FT (`dav2_s_ft:<ckpt>` / `daac_ft:<ckpt>`); metric nets => flicker and abs_rel_unaligned are defined.
+  dav2_ft_n46:
+    label: "DAv2-S fine-tuned (seed 46)"
+    spec: "dav2_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: claude_outputs/scratch/paper_repro/train_pf/dav2a_n46/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt, sha256: e5cbf7ca420741aa39001ad7ed658a8666cd0892558901418f1f22776404b876, download_url: TODO(user)}
+  dav2_ft_n46_tag:
+    label: "DAv2-S FT (seed 46) + TAG"
+    spec: "dav2_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: claude_outputs/scratch/paper_repro/train_pf/dav2a_n46/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt, sha256: e5cbf7ca420741aa39001ad7ed658a8666cd0892558901418f1f22776404b876, download_url: TODO(user)}
+  daac_ft_n46:
+    label: "DA-AC fine-tuned (seed 46)"
+    spec: "daac_ft:{ckpt}"
+    tag: false
+    ckpt: {path: claude_outputs/scratch/paper_repro/train_pf/daacm_n46/runs/dn01_c3rep_pf_daacm_n46/step12000.pt, sha256: 665b59ff0ad824861394970fd792d5c1a54f712ad019abd3d3458857a4261fb0, download_url: TODO(user)}
+  daac_ft_n46_tag:
+    label: "DA-AC FT (seed 46) + TAG"
+    spec: "daac_ft:{ckpt}"
+    tag: true
+    ckpt: {path: claude_outputs/scratch/paper_repro/train_pf/daacm_n46/runs/dn01_c3rep_pf_daacm_n46/step12000.pt, sha256: 665b59ff0ad824861394970fd792d5c1a54f712ad019abd3d3458857a4261fb0, download_url: TODO(user)}
+  # ---------------- cascades -> fine-tuned Metric-VDA-S (commit I; Addendum 38a: the released Metric-VDA-S behind FastDVDnet / PocketDVDNet is replaced by FT n46-48; restorers frozen, 3 seeds) ----------------
+  # spec grammar [restorer+]ft:<ckpt>[+TAG] (bench_joint split_spec / FT_VDA); precedent results_v3/casc_s6 (older step6000 FT). Restorer weight shas are the layout-table ones (informational; the scorer resolves the files in its clone).
+  casc_fdvd_ft_n46:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 46)"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt, sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_fdvd_ft_n46_tag:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 46) + TAG"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt, sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_fdvd_ft_n47:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 47)"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt, sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_fdvd_ft_n47_tag:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 47) + TAG"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt, sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_fdvd_ft_n48:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 48)"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt, sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_fdvd_ft_n48_tag:
+    label: "FastDVDnet (blind) -> Metric-VDA-S FT (seed 48) + TAG"
+    spec: "fastdvdnet_blind+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt, sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0, download_url: TODO(user)}
+    weights: {fastdvdnet_model_clipped_noise: 8118974ac7defaa5037f73caf87e0cb53efcfa49ae77d55c05ab187f59e55949}
+  casc_pock_ft_n46:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 46)"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt, sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  casc_pock_ft_n46_tag:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 46) + TAG"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt, sha256: 18c9d8caeab1ab88d52b92782e307bcb8d82897e8a8017aed172f06c26af92a0, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  casc_pock_ft_n47:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 47)"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt, sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  casc_pock_ft_n47_tag:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 47) + TAG"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n47/step12000.pt, sha256: ec38c3179cb63349d5642ffae0dc8acecf79ca4ed7525e9dd6a5735eb62cc465, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  casc_pock_ft_n48:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 48)"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: false
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt, sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  casc_pock_ft_n48_tag:
+    label: "PocketDVDNet -> Metric-VDA-S FT (seed 48) + TAG"
+    spec: "pocketdvdnet+metric_vda_s_ft:{ckpt}"
+    tag: true
+    ckpt: {path: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n48/step12000.pt, sha256: d769e513c6e8995c53f021bf0335a4d040005e7bcadbef1bf8c6d4c3acd63ee0, download_url: TODO(user)}
+    weights: {pocketdvdnet: 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f}
+  restorer_temp2_init:
+    label: "Restorer at initialisation (distilled temp2)"
+    # Scored by the VENDORED, byte-identical repro/vendored/fidelity_init_score.py (--mode init), see `vendored:` below. spec is a label only (never passed to bench_joint).
+    spec: "fidelity_init:temp2_distilled"
+    runner: fidelity_init
+    tag: false
+    ckpt:
+      path: RAMEN_aaai/results/dn01_st_recal/recal_full/temp2_distilled.pt
+      sha256: 96d35f08ecd5c988387e502bbd0ad85875539cafd9e329448ad5c76804916c4b    # run_fidelity.sh TEMP2_SHA (path exists check: see README)
+      download_url: TODO(user)
+
+datasets:
+  kitti:
+    n_clips: 13
+    clip_list: data/TEST/kitti_rgbfix/kitti_video.json          # VDA-format manifest = clip list (bench_joint PATHS kitti_manifest)
+    clip_list_sha256: 7024ba29f3f0cb1e68e99bcc44ed5fc3cc1810085f4097dc7b427dd2c7f92e56   # sha256sum (me) == result JSON manifest_sha256
+    manifest_sha256: 7024ba29f3f0cb1e68e99bcc44ed5fc3cc1810085f4097dc7b427dd2c7f92e56
+    llvar_draws_sha256: f31055b2cf9e583bdaca92557d040e4353eef12c672d02d299c60d426a3f4460   # sha256sum RAMEN/.../provenance/dn01_v3/llvar_draws_kitti.json == result JSON
+  kitti_minus_0047:
+    n_clips: 12
+    derive_from: {base: kitti, drop: "2011_10_03_drive_0047_sync"}      # scripts/dn01_headline.py DERIVED
+  bonn:
+    n_clips: 26
+    clip_list: RAMEN/results/vda_clean_repro/benchmark_data/bonn/bonn_video.json
+    clip_list_sha256: e773e6fe789154fa3751b8a09c2cdad7b48972ad4c08a9f9eccff8c67224f292
+    manifest_sha256: e773e6fe789154fa3751b8a09c2cdad7b48972ad4c08a9f9eccff8c67224f292
+    llvar_draws_sha256: 9056f13e8a9f384612bf6555ac1c98267f08bdb88dbf0345300c8395ba219b0e
+  scannetpp:
+    n_clips: 62
+    clip_list: data/TEST/scannetpp_eval/scannetpp_video.json
+    clip_list_sha256: 72a1783a3e64d737c81ffa69ccf51857888eae097e9ede2e729ed38df70e6138
+    manifest_sha256: 72a1783a3e64d737c81ffa69ccf51857888eae097e9ede2e729ed38df70e6138
+    llvar_draws_sha256: ad7ba35e9cef01bd9458fb5cd65dca04c2609675a7092248934bd8b4c75daff7
+  nyuv2:
+    n_clips: 8
+    clip_list: data/TEST/nyuv2_video/nyuv2_video_500.json
+    clip_list_sha256: 4a0548111ef116eb4be3b61c5a11f4a02b1aa02853364f54d1b17cc501a18461
+    manifest_sha256: 4a0548111ef116eb4be3b61c5a11f4a02b1aa02853364f54d1b17cc501a18461   # verified == syn_s12 metric_vda_s nyuv2 llvar JSON manifest_sha256
+    llvar_draws_sha256: a8b6fde3747135876cf766bb79e89aa8aa03402e8fd4e754cf9dea6c24fd6860
+  sintel_rgbfix:
+    n_clips: 23
+    clip_list: data/TEST/sintel/sintel_video.json
+    clip_list_sha256: 983bdf26208bf8285700e1dfb0dd45353c5cd697442bf70c1e1d6d0d09c358f2
+    manifest_sha256: 983bdf26208bf8285700e1dfb0dd45353c5cd697442bf70c1e1d6d0d09c358f2   # verified == syn_s12 metric_vda_s sintel_rgbfix llvar JSON manifest_sha256
+    llvar_draws_sha256: 6f6094629a19cde9425e25ad8cd41f72de8548132e525b2a4551c2481d0fbc9e
+  nuscenes_night_test:
+    n_clips: 84
+    clip_list: repo:provenance/dn01_nuscenes_night_test/nuscenes_night_test_v1.json
+    clip_list_sha256: 0937374a4457bb778a1c872f486954b460755a911050df305177a309676792e6    # == RUN_MANIFEST nuscenes_night_test.manifest_sha256
+    manifest_sha256: 0937374a4457bb778a1c872f486954b460755a911050df305177a309676792e6
+  bvi_rlv_test:
+    n_clips: 13                                       # 13 TEST scenes / 22 sequences (EVIDENCE_INVENTORY 3b)
+    clip_list: repo:provenance/dn01_fnoise/registration.json          # clip-list sha 8a093838...; per-file shas of every scored frame are computed at run time (needs --bvi-root) and recorded in MANIFEST.bvi
+    clip_list_sha256: 8a09383883c060a2450555f8300e10e17adec0182c143341bf1079992f3578b8
+    # BVI frames: data/test/BVI-RLV/BVI-Lowlight-videos (passed as --bvi-root). No manifest_sha256 exists in the fnoise JSON: identity = clip-list sha 8a093838 + per-file shas (MANIFEST.bvi), accepted by the Auditor (R1 ruling 6).
+
+items:
+  # ---------------- main tables, FT-ONLY comparison (commit I, Addendum 38/38a; Auditor AUD-FTONLY-S0) ----------------
+  # Rows: RAMEN n46-48 vs seed-matched Metric-VDA-S FT n46-48, raw and +TAG, each as a per-seed row AND as an UNWEIGHTED 3-seed mean row (seed_mean). Released Metric-VDA-S / VDA-L / DAv2-S / DA-AC / DepthCrafter are
+  # REMOVED from every comparison item (their model ids stay registered only for items that are not comparisons: tab:p1, tab:latency, fig:*, init statements). No unit in these items is new: they share the
+  # J1 (tab:rep) / J5 (tab:rep_night) units; kitti_minus_0047 is derived from kitti per-clip exactly as in J2/J3. The seed-45 rows (ramen_s45) are gone from the main tables.
+  # The superseded released-VDA forms of tab:dynamic/static/dynamic_night/static_diag/clean (J2/J3/J4/J8) stay valid only as released archives; their configs are in the commit paper-repro-H (a1493364).
+  tab:dynamic:
+    kind: bench
+    title: "Dynamic low-light (llvar): RAMEN n46-48 vs seed-matched fine-tuned Metric-VDA-S n46-48, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, tof_native, psnr_native, ssim_native]   # as the released-VDA form (fields in video_macro)
+    aggregation: {per_dataset: macro}
+    seed_mean: &seed_means
+      - {name: "RAMEN (3-seed mean)", members: [ramen_n46, ramen_n47, ramen_n48]}
+      - {name: "RAMEN + TAG (3-seed mean)", members: [ramen_n46_tag, ramen_n47_tag, ramen_n48_tag]}
+      - {name: "Metric-VDA-S FT (3-seed mean)", members: [ft_n46, ft_n47, ft_n48]}
+      - {name: "Metric-VDA-S FT + TAG (3-seed mean)", members: [ft_n46_tag, ft_n47_tag, ft_n48_tag]}
+    seeds: {degradation: "llvar: same pinned draws as every other table (llvar_draws_<ds>.json); training seeds 46/47/48 (from scratch, 12k), RAMEN seed n matched to FT seed n"}
+    reference: results_v3/c3rep_s12          # released GH200 read of the same checkpoints (kitti_minus_0047 derived as in the released reads)
+    label: "exposed exploratory; one host (GH200), scorer 368b5c53; 3-seed mean = unweighted mean of the three per-seed dataset values; the comparator is the fine-tuned Metric-VDA-S of the same seed (initialised from the released Metric-VDA-S weights, same data and recipe), not the released model"
+  tab:dynamic_night:
+    kind: night
+    title: "nuScenes-night real low light (dynamic table, last column): RAMEN n46-48 vs seed-matched FT n46-48, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned]       # no PSNR/tOF/flicker for real frames
+    aggregation: {per_dataset: macro}
+    seed_mean: *seed_means
+    seeds: {degradation: "none (real frames)"}
+    reference: results_v3/c3rep_s12
+    label: "exposed exploratory; real night driving; 3-seed mean = unweighted mean of the three per-seed values"
+  tab:static:
+    kind: bench
+    title: "Static low-light (st_llvar): RAMEN n46-48 vs seed-matched FT n46-48, 3-seed means"
+    paper_ref: "tab:static"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: true                           # = tab:rep (same unit key, so these items add NO new unit); the temporal flag only adds tae/tof fields, the static columns below are unchanged by it
+    metrics: [flicker, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, abs_rel_static]
+    aggregation: {per_dataset: macro}
+    seed_mean: *seed_means
+    seeds: {degradation: "st_llvar: ONE repeated middle frame x64, per-frame noise and gain jitter (kappa x U[0.5,1.5], EV +-0.15), blur llb3; noise_seed(ds,key,'st_llvar') [bench_joint.py]"}
+    reference: results_v3/c3rep_s12
+    label: "exposed exploratory; 3-seed mean = unweighted mean of the three per-seed dataset values; comparator = seed-matched fine-tuned Metric-VDA-S. Must read CURRENT aggregation (static-bench 82eb6b2 is a DIFFERENT protocol, not used)"
+
+  # ---------------- pre-declared NEW items ----------------
+  tab:clean:
+    kind: bench
+    host: gh200                              # Addendum 30: all numbers from the GH200
+    previous_host: "4090"                    # informational (planner delta vs freeze draft v1)
+    title: "Clean-frame check (b0s0), development clips: RAMEN (seed 45) next to Metric-VDA-S FT (seed 46), DESCRIPTIVE"
+    paper_ref: "tab:clean"
+    models: [ramen_s45, ramen_s45_tag, ft_n46]                  # released Metric-VDA-S REMOVED (Add.38a); RAMEN row = seed 45 (caption says so); ft_n46 labelled "Metric-VDA-S FT (seed 46)"
+    datasets: [kitti, bonn, scannetpp]                          # DEV: KITTI 7 / Bonn 13 / ScanNet++ 31 clips
+    cells: [b0s0]                            # bench_joint CELLS[0] = blur 0 x AWGN 0 (no degradation, no draws)
+    split: dev
+    temporal: true                           # TAE (gtvalid) + tOF
+    metrics: [abs_rel_aligned, abs_rel_unaligned, delta1_aligned, tae_gtvalid, tof]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "none (b0s0 = no blur, no noise)"}
+    reference: null                          # no released clean read exists: regenerate-only, no --verify
+    # NO `reading:` block. The pre-declared non-inferiority verdict (Auditor R1 ruling 4) was against the RELEASED Metric-VDA-S; the FT n46 clean values were already known (J8) when the reference
+    # was changed to ft_n46, so a verdict against FT would not be pre-declared. Auditor AUD-FTONLY-S0 item 4 (option 1): the table is DESCRIPTIVE, no verdict column and no verdict sentence.
+    label: "development clips (seen during development); GH200; regenerate-only; DESCRIPTIVE: no verdict, no pass/fail sentence (the comparator was chosen after its values were known). RAMEN = seed 45; comparator row 'Metric-VDA-S FT (seed 46)' (a different seed)"
+  tab:static_diag:
+    kind: bench
+    host: gh200                              # = the host of tab:static, so each st_llvar unit is scored ONCE on ONE host (units shared with tab:static)
+    title: "Alignment-invariant static flicker diagnostic eps_d: RAMEN n46-48 vs seed-matched FT n46-48 (same units as tab:static)"
+    paper_ref: "tab:static_diag"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: true                           # = tab:static / tab:rep (shared units)
+    metrics: [eps_d, flicker]                # eps_d = per-clip-affine aligned depth-error frame difference over Omega (bench_joint.py @368b5c53)
+    aggregation: {per_dataset: macro}
+    seed_mean: *seed_means
+    seeds: {degradation: "same units as tab:static (dedupes with it)"}
+    reference: results_v3/c3rep_s12
+    reading:                                 # eps_d sign rule (Auditor R1 ruling 5), RE-DECLARED for the FT-only rows (Auditor AUD-FTONLY-S0 item 4: mechanical, descriptive, post hoc)
+      kind: eps_d_every_dataset
+      metric: eps_d
+      disclosure: "eps_d is a diagnostic chosen after the main results, and this reading was re-declared for the fine-tuned-comparator rows after their eps_d values were already available (J1); it is descriptive and post hoc, not pre-registered. Never the paper's flicker metric. A pair statement reads 'X flickers more than Y by the alignment-invariant diagnostic eps_d' only if X's eps_d exceeds Y's on every dataset shown; otherwise 'mixed'. The paper uses the rows of the 3-seed means (the per-seed pairs are listed for completeness)."
+    label: "exposed exploratory; descriptive and post hoc. 'X flickers more than Y' only if X's eps_d exceeds Y's on every dataset shown, stated 'by the alignment-invariant diagnostic eps_d'; otherwise 'mixed'. eps_d is a diagnostic chosen after the main results; comparator = seed-matched fine-tuned Metric-VDA-S."
+
+  # ---------------- replication, fidelity, P1, latency ----------------
+  tab:rep:
+    kind: bench
+    title: "Three-seed replication: RAMEN (n46-48) vs seed-matched FT, llvar + st_llvar"
+    paper_ref: "tab:rep"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [kitti, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar, st_llvar]
+    split: all
+    temporal: true
+    metrics: [abs_rel_aligned, abs_rel_unaligned, delta1_aligned, tae_gtvalid, flicker]   # rep_rule_outcome.csv columns (REPLICATION_READ_20261011); rule: RAMEN+TAG vs seed-matched FT raw (primary), raw-vs-raw and TAG-vs-TAG are extensions
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as main tables; training seeds 46/47/48 (from scratch, 12k)"}
+    reference: results_v3/c3rep_s12          # released GH200 read; regenerated on the GH200: same-host tolerances (Auditor R3)
+    label: "exposed exploratory. Pre-declared verdict counts stay as released (Auditor R2); regenerated table values shown only if all 30 per-seed rule outcomes are identical to the released ones (Auditor R2)"
+    # TODO: ft_n47/ft_n48 checkpoints are not local; those units cannot run until pulled.
+  tab:rep_night:
+    kind: night
+    title: "REP: nuScenes-night"
+    paper_ref: "tab:rep"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [abs_rel_aligned, abs_rel_unaligned, delta1_aligned, tae_gtvalid]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "none (real)"}
+    reference: results_v3/c3rep_s12
+    label: "exposed exploratory"
+  tab:rep_fnoise:
+    kind: fnoise
+    title: "REP: BVI-RLV F_noise (no GT), reported separately"
+    paper_ref: "tab:rep"
+    models: [ramen_n46, ramen_n47, ramen_n48, ft_n46, ft_n47, ft_n48]
+    datasets: [bvi_rlv_test]
+    cells: [fnoise]
+    split: test
+    temporal: false
+    metrics: [f_noise, f_noise_all]        # macro keys verified in bfix_s12 fnoise JSON
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "none (registered real low/normal-light pairs, provenance/dn01_fnoise/registration.json)"}
+    reference: results_v3/c3rep_s12
+    label: "exposed exploratory"
+  tab:fid:
+    kind: bench
+    title: "Restored-frame fidelity: PSNR/SSIM (native exposure), llvar"
+    paper_ref: "tab:fid"
+    models: [ramen_n46, ramen_n47, ramen_n48, fastdvdnet_blind_mvda_s, pocketdvdnet_mvda_s, restorer_temp2_init]
+    datasets: [kitti, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true                           # tof_native is disclosed in the released fid table (fid_tof.tex)
+    metrics: [psnr_native, ssim_native, tof_native, psnr_input_native, ssim_input_native]
+    aggregation:
+      per_dataset: macro
+    seed_mean: [{name: "RAMEN (3-seed mean)", members: [ramen_n46, ramen_n47, ramen_n48]}]    # FIDELITY_READ 'C3 mean' = unweighted mean over n46-48 per dataset
+    seeds: {degradation: "llvar draws pinned (identical across arms, asserted in FIDELITY_READ)"}
+    reference: {default: results_v3/c3rep_s12, by_model: {fastdvdnet_blind_mvda_s: results_v3/syn_s12, pocketdvdnet_mvda_s: results_v3/syn_s12}}   # INIT row has no bench-layout reference (FIDELITY_READ.json); released psnr values: claude_outputs/reports/FIDELITY_INIT_ARM_20261012/FIDELITY_READ.json (sha 6a2cb347adc9728f)
+    label: "exposed exploratory; Auditor-released rule PASS 5/5 (Add. 10-12); TODO restorer_temp2_init row requires fidelity_init_score.py (fidelity_package_20261012), a wrapper outside the vendored scorer: Auditor must approve its inclusion; INIT arm was scored on the 4090, others GH200"
+  # cascade items: RAW and +TAG are separate items so the +TAG half can be dropped (not run, 'TAG not run' noted) if the gate smoke shows the chain TAG does not work; run both in ONE invocation (--only) when it does, so raw+TAG share a scoring pass.
+  tab:casc:
+    kind: bench
+    title: "Dynamic (llvar): FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48, casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, tof_native, psnr_native, ssim_native, flicker, abs_rel_static, eps_d]   # psnr/ssim/tof_native on llvar = restorer-only: must equal the J2/J6 cascade rows (free determinism check)
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT (3-seed mean)", members: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT (3-seed mean)", members: [casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package)"
+  tab:casc_static:
+    kind: bench
+    title: "Static (st_llvar, temporal: false, as tab:static): FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48, casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: false                          # R1 precedent (tab:static / tab:static_diag in J3): flicker/abs_rel_static/eps_d run on static cells regardless; --temporal only adds TAE/tOF
+    metrics: [flicker, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, abs_rel_static, eps_d]
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT (3-seed mean)", members: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT (3-seed mean)", members: [casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package)"
+  tab:casc_tag:
+    kind: bench
+    title: "Dynamic (llvar): FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48 + TAG, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag, casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, tof_native, psnr_native, ssim_native, flicker, abs_rel_static, eps_d]   # psnr/ssim/tof_native on llvar = restorer-only: must equal the J2/J6 cascade rows (free determinism check)
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package); +TAG chain run only if the gate smoke shows the TAG chain works"
+  tab:casc_tag_static:
+    kind: bench
+    title: "Static (st_llvar, temporal: false, as tab:static): FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48 + TAG, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag, casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: false                          # R1 precedent (tab:static / tab:static_diag in J3): flicker/abs_rel_static/eps_d run on static cells regardless; --temporal only adds TAE/tOF
+    metrics: [flicker, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, abs_rel_static, eps_d]
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package); +TAG chain run only if the gate smoke shows the TAG chain works"
+  tab:casc_night:
+    kind: night
+    title: "nuScenes-night: FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48, casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned]
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT (3-seed mean)", members: [casc_fdvd_ft_n46, casc_fdvd_ft_n47, casc_fdvd_ft_n48]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT (3-seed mean)", members: [casc_pock_ft_n46, casc_pock_ft_n47, casc_pock_ft_n48]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package)"
+  tab:casc_night_tag:
+    kind: night
+    title: "nuScenes-night: FastDVDnet / PocketDVDNet cascades onto Metric-VDA-S FT n46-48 + TAG, 3-seed means"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag, casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned]
+    aggregation: {per_dataset: macro}
+    seed_mean:
+      - {name: "FastDVDnet (blind) -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_fdvd_ft_n46_tag, casc_fdvd_ft_n47_tag, casc_fdvd_ft_n48_tag]}
+      - {name: "PocketDVDNet -> Metric-VDA-S FT + TAG (3-seed mean)", members: [casc_pock_ft_n46_tag, casc_pock_ft_n47_tag, casc_pock_ft_n48_tag]}
+    seeds: {degradation: "same pinned draws as every other table; restorers frozen, depth head = FT seed n46/47/48"}
+    reference: null                          # no released read of these cascades exists; the J2/J6 restorer-only metrics are the free cross-check (tools in S0_I)
+    label: "exposed exploratory; new units (C1/C2, Auditor AUD-FTONLY-S0 package); +TAG chain run only if the gate smoke shows the TAG chain works"
+  tab:casc_gate:                             # S0 gate smoke (commit I'); run ONLY as `--smoke --host any --only tab:casc_gate` (DEV, 1 clip): plumbing, never quoted
+    kind: bench
+    title: "S0 gate smoke (plumbing only, never quoted): cascade -> FT n46, raw + TAG"
+    paper_ref: "tab:dynamic"
+    models: [casc_fdvd_ft_n46, casc_fdvd_ft_n46_tag, casc_pock_ft_n46, casc_pock_ft_n46_tag]
+    datasets: [kitti]
+    cells: [llvar, st_llvar]
+    split: dev
+    temporal: true
+    metrics: [abs_rel_aligned, abs_rel_unaligned, psnr_native, ssim_native, tae_gtvalid, tof_native, flicker]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws"}
+    reference: null
+    label: "gate smoke, DEV, 1 clip, plumbing only"
+  # ---------------- Step 3: noise ladder with the fine-tuned comparator (Auditor S3 conditions: levels/cells/stages/datasets = the paper's current released-VDA ladder, FT substituted, nothing added or dropped) ----------------
+  # Declaration: S0_I/STEP3_LADDER_DECLARATION.md. G (= RAMEN+TAG / seed-matched FT+TAG per seed, mean and min/max over the 3 ratios) is computed OUTSIDE the generator from this item's per-seed rows (never from seed_mean rows: mean of values != mean of ratios).
+  tab:noise:
+    kind: bench
+    host: gh200
+    title: "Noise ladder: RAMEN n46-48 vs seed-matched FT n46-48, DEV (KITTI 7 + Bonn 13 clips)"
+    paper_ref: "tab:noise"
+    models: [ramen_n46, ramen_n46_tag, ramen_n47, ramen_n47_tag, ramen_n48, ramen_n48_tag, ft_n46, ft_n46_tag, ft_n47, ft_n47_tag, ft_n48, ft_n48_tag]
+    datasets: [kitti, bonn]
+    cells: [llb3x1, llb3x2, llb3x4, llb3x8, llb3x16, st_llb3x1, st_llb3x2, st_llb3x4, st_llb3x8, st_llb3x16]   # commit I3: llb3kappa1 / st_llb3kappa1 dropped (never printed by the paper; Auditor AUD-FTONLY Addendum 7)
+    split: dev
+    temporal: true                           # tae/tof on moving cells; static cells carry flicker (+tof), as in the released ladder JSONs
+    metrics: [abs_rel_aligned, abs_rel_unaligned, flicker, tae, tae_gtvalid]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "llb3 exposure EV -1.68, blur 3 px, kappa = 0.186*k (k 1,2,4,8,16; llb3kappa1: kappa 1.0); per-clip seed = base cell name llb3 / st_llb3 (bench_joint.py LADDER_CELLS / STATIC_LADDER_CELLS)"}
+    reference: null                          # no released read of FT/RAMEN at the ladder: regenerate-only
+    est_gpu_min_per_unit: {kitti: 5.2, bonn: 8.0}      # DRY estimate only
+    label: "development clips; GH200; regenerate-only; DEV only (no TEST unit). G = RAMEN+TAG / seed-matched FT+TAG per seed n46-48, computed outside the generator"
+  # ---------------- S2: DAv2-S FT / DA-AC FT n46 (commit I2; Auditor AUD-FTONLY-S2). NEW items only: no existing item is edited. Raw and +TAG are separate items (as tab:casc / tab:casc_tag) so a raw-only fallback exists; run them in ONE --only invocation so raw+TAG share one scoring pass. ----------------
+  tab:pf_gate:                               # S2 gate smoke (commit I2); run ONLY as `--smoke --host any --only tab:pf_gate` (DEV, 1 clip): plumbing, never quoted
+    kind: bench
+    title: "S2 gate smoke (plumbing only, never quoted): DAv2-S FT / DA-AC FT n46, raw + TAG"
+    paper_ref: "tab:dynamic"
+    models: [dav2_ft_n46, dav2_ft_n46_tag, daac_ft_n46, daac_ft_n46_tag]
+    datasets: [kitti]
+    cells: [llvar, st_llvar]
+    split: dev
+    temporal: true
+    metrics: [abs_rel_aligned, abs_rel_unaligned, tae_gtvalid, tof_native, flicker]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws"}
+    reference: null
+    label: "gate smoke, DEV, 1 clip, plumbing only"
+  tab:pf_static:
+    kind: bench
+    title: "Static low-light (st_llvar): DAv2-S FT and DA-AC FT, seed 46 (one seed)"
+    paper_ref: "tab:static"
+    models: [dav2_ft_n46, daac_ft_n46]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: false                           # non-temporal static units (R1 J3 / I' split B precedent): the flag only adds tae/tof fields; flicker and delta1 are unaffected
+    metrics: [flicker, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, abs_rel_static]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_static_tag:
+    kind: bench
+    title: "Static low-light (st_llvar): DAv2-S FT and DA-AC FT + TAG, seed 46 (one seed)"
+    paper_ref: "tab:static"
+    models: [dav2_ft_n46_tag, daac_ft_n46_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [st_llvar]
+    split: all
+    temporal: false
+    metrics: [flicker, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, abs_rel_static]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_dynamic:
+    kind: bench
+    title: "Dynamic low-light (llvar): DAv2-S FT and DA-AC FT, seed 46 (one seed)"
+    paper_ref: "tab:dynamic"
+    models: [dav2_ft_n46, daac_ft_n46]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, tof_native]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_dynamic_tag:
+    kind: bench
+    title: "Dynamic low-light (llvar): DAv2-S FT and DA-AC FT + TAG, seed 46 (one seed)"
+    paper_ref: "tab:dynamic"
+    models: [dav2_ft_n46_tag, daac_ft_n46_tag]
+    datasets: [kitti, kitti_minus_0047, bonn, scannetpp, nyuv2, sintel_rgbfix]
+    cells: [llvar]
+    split: all
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned, tof_native]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_night:
+    kind: night
+    title: "nuScenes-night real low light: DAv2-S FT and DA-AC FT, seed 46 (one seed)"
+    paper_ref: "tab:dynamic"
+    models: [dav2_ft_n46, daac_ft_n46]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_night_tag:
+    kind: night
+    title: "nuScenes-night real low light: DAv2-S FT and DA-AC FT + TAG, seed 46 (one seed)"
+    paper_ref: "tab:dynamic"
+    models: [dav2_ft_n46_tag, daac_ft_n46_tag]
+    datasets: [nuscenes_night_test]
+    cells: [real]
+    split: test
+    temporal: true
+    metrics: [tae_gtvalid, abs_rel_unaligned, abs_rel_aligned, delta1_aligned]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:pf_fnoise:
+    kind: fnoise
+    title: "BVI-RLV F_noise (no GT): DAv2-S FT and DA-AC FT, seed 46 (one seed)"
+    paper_ref: "tab:rep"
+    models: [dav2_ft_n46, daac_ft_n46]
+    datasets: [bvi_rlv_test]
+    cells: [fnoise]
+    split: test
+    temporal: false
+    metrics: [f_noise, f_noise_all]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws as tab:static / tab:dynamic (llvar_draws_<ds>.json; st_llvar noise_seed(ds,key,'st_llvar')); one training seed n46"}
+    reference: null                          # no released read exists: regenerate-only, no --verify
+    label: "exposed exploratory; ONE seed (n46): single-seed rows (Add.38b), the footnote is required verbatim at release; GH200, scorer 368b5c53; regenerate-only (no released read exists); initialised from the released relative-depth weights, head converted to metric by the same SiLog recipe, per-frame (no temporal module), TGM loss active, 2.73M trainable params"
+  tab:p1:
+    kind: bench
+    previous_host: "4090"
+    title: "P1 coupling ablation (eval-time override), single checkpoint"
+    paper_ref: "tab:p1"
+    models: [ramen_s45, ramen_s45_tag]
+    verify_class: cross_host                 # Auditor Addendum B: regenerated on the GH200, verified vs P1_READ_20261012 (a 4090 read) with the cross-host R3 tolerances
+    override_script: bench_overrides         # vendored repro/vendored/bench_overrides.py (commit 0c6d07b), unchanged; one unit per arm
+    arms: {full: {coupling: 1.0, stage2: 1.0}, coup0: {coupling: 0.0, stage2: 1.0}, st2off: {coupling: 1.0, stage2: 0.0}}
+    host: gh200                              # Addendum 30: all numbers from the GH200 (the released P1 read is a 4090 read: --verify uses the cross-host class)
+    datasets: [kitti, bonn, scannetpp]
+    cells: [llvar, st_llvar]
+    split: dev                               # released P1 read is DEV, 4090, raw and tag variants
+    temporal: true
+    metrics: [abs_rel_aligned, abs_rel_unaligned, delta1_aligned, tae_gtvalid, flicker, sky_ge80, sky_med, sky_nearer_than_scene_p95]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "same pinned draws"}
+    reference: null                          # no bench-layout reference exists for the released P1 read: declared BY HAND (below), like the INIT row of tab:fid
+    by_hand_reference:                       # Auditor Addendum C: released P1 read (4090), sha-pinned (P1_READ_20261012/SHA256SUMS); --verify writes tab_p1_vs_released_crosshost.csv (cross-host R3 tolerances + printed-rounding)
+      file: claude_outputs/reports/P1_READ_20261012/P1_TABLE.md
+      sha256: a46e02c3a3aee51184a2335edfbc3b44e6e6ffb382b5073f2f889a50fd381666
+      compare: p1_table
+    label: "descriptive, DEV only, single checkpoint, no significance claim. Regenerated on the GH200 (Addendum 30). Arms via the vendored eval-time override wrapper (raw and +TAG are separate specs run with --grid none, equivalent to the released --grid variants). Released numbers: claude_outputs/reports/P1_READ_20261012/P1_TABLE.md (sha a46e02c3a3aee51184a2335edfbc3b44e6e6ffb382b5073f2f889a50fd381666); the released read was on the 4090 (cross-host tolerances for --verify)."
+  tab:latency:
+    kind: latency
+    host: "4090"
+    title: "Latency, RTX 4090, 518x518, 32-frame window, fp16, median of 30 timed passes after 5 warm-up (single-session ladder harness, stack S0)"
+    paper_ref: "tab:latency"
+    models: [ramen_s45, metric_vda_s]        # checkpoint pins (the ladder asserts the RAMEN sha itself); the rows below are the released session_2 S0 rows
+    harness:                                 # repro/efficiency/latency/run_ladder.py (committed ladder, harness copy >= c524643) via ladder_samples.py, which only adds the per-pass samples
+      runner: ladder
+      stack: S0                              # the pinned/accuracy-path stack
+      script: repro/efficiency/latency/ladder_samples.py
+      min_commit: c524643
+      protocol: "C3_LATENCY_4090_20261012: 518x518, 32-frame window, fp16 autocast, 5 warm-up, 30 timed passes; window 1 /32 and window 2 /22 on the 54-frame input; compile time separate; idle card"
+      warmup: 5
+      iters: 30
+      samples: 30                            # ALL 30 per-pass samples are stored per row (rows[].samples), 6 x 30 for the Metric-VDA-S bracket row
+      rows: [mvda_bracket, ramen_raw, ramen_tag_v3_agf0.2t0.06, ramen_tag_v3_agf0.5t0.12, ramen_tag_numpy_agf0.2t0.06, ramen_tag_numpy_agf0.5t0.12]   # exactly the released session_2 S0 rows (mvda_bracket = Metric-VDA-S, upper median of the six bracket runs)
+    host_slots:                              # Addendum 30: space for the MacBook; NOT measured, no run authorised (there is NO executor for host mac: such a unit is skipped and the table shows 'not measured')
+      mac: {label: "MacBook (Apple silicon)", value: "not measured", authorised: false}
+    datasets: []
+    cells: []
+    split: dev
+    temporal: false
+    metrics: [per_frame_ms_p50, per_frame_ms_p95, window_ms_p50, ms_per_new_frame_w2_p50]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "none (random-tensor timing, generator seed 0)"}
+    est_gpu_min_per_unit: {"-": 12}          # heuristic (session_2 S0: 11 timed items + harness cross-check); not a measurement
+    reference: claude_outputs/scratch/paper_repro/latency_ladder/session_2      # released ladder session (AUD-FASTTAG-C a39e83f5; LADDER_SUMMARY.json sha 4ef3c30f); --verify flags > 10%, never fails
+    label: "one RTX 4090, one idle-card session; descriptive. Ratios only within the stack, vs the same-stack Metric-VDA-S bracket. TAG-V3 rows time the fused device TAG on a torch.rand probe (labelled in the row JSON); numpy rows are single-thread CPU upper bounds. Flag if >10% from the released session_2 (R3)."
+  tab:latency_eff:
+    kind: latency
+    host: "4090"
+    title: "Efficiency PRIMARY latency, RTX 4090 (conditional item)"
+    paper_ref: "tab:latency_eff"
+    condition:                               # PRE-DECLARED: included iff this file exists (the Auditor's release of the PRIMARY); independent of any output of this run
+      file: efficiency_primary.txt           # under DATA_ROOT, or the path in $RAMEN_EFFICIENCY_PRIMARY. First non-comment word = the released PRIMARY ladder stack (X, S1, S2, S3 or S4)
+      note: "efficiency PRIMARY not released by the Auditor yet"
+    models: [ramen_s45, metric_vda_s]
+    harness:
+      runner: ladder
+      stack_from_file: true
+      script: repro/efficiency/latency/ladder_samples.py
+      min_commit: c524643
+      protocol: "same protocol as tab:latency; stack = the released PRIMARY named in efficiency_primary.txt"
+      warmup: 5
+      iters: 30
+      samples: 30
+      rows: [mvda_bracket, ramen_raw, ramen_tag_v3_agf0.2t0.06, ramen_tag_v3_agf0.5t0.12]
+    host_slots:                              # Addendum 30: space for the MacBook; NOT measured, no run authorised (there is NO executor for host mac: such a unit is skipped and the table shows 'not measured')
+      mac: {label: "MacBook (Apple silicon)", value: "not measured", authorised: false}
+    datasets: []
+    cells: []
+    split: dev
+    temporal: false
+    metrics: [per_frame_ms_p50, per_frame_ms_p95, window_ms_p50, ms_per_new_frame_w2_p50]
+    aggregation: {per_dataset: macro}
+    seeds: {degradation: "none (random-tensor timing, generator seed 0)"}
+    est_gpu_min_per_unit: {"-": 15}
+    reference: null                          # no released reference for the PRIMARY ladder rows beyond the Auditor's own release; regenerate-only
+    label: "efficiency PRIMARY (stack named in efficiency_primary.txt); one RTX 4090; descriptive; paired with accuracy only via the Auditor-released bridge. Never mixed with GH200 rows."
+
+  # ---------------- qualitative ----------------
+  fig:teaser:
+    kind: qualitative
+    host: gh200                              # Addendum 30: renders are GPU inference, run on the GH200; released qualitative/12b_ramen_figures stays the verify reference
+    label: "candidate (unreleased): GH200 regeneration; needs a new Auditor release before it replaces qualitative/12b_ramen_figures, which stays the verify reference"
+    reference: qualitative/12b_ramen_figures
+    paper_ref: "fig:teaser"
+    models: [ft_n46, ramen_n46_tag]          # Ifig: released Metric-VDA-S -> FT n46; RAMEN seed 45 -> RAMEN n46 (+TAG). Panels: input | (GT) | FT | RAMEN+TAG | change FT | change RAMEN+TAG
+    params:
+      selection: claude_outputs/session_evidence/c3_figures_package_20261012/CLIP_SELECTION.json     # sha256 206598653a07a927a5c9b7cec98d9dbf6cf44ead6ab9464fa4d8e7a0d5163788
+      renderer: claude_outputs/session_evidence/c3_figures_package_20261012/render_c3_figures.py       # sha256 40321cfbbfac940dcf5f929a1518f649c3679cb041e2b658091bb4c06db49076
+      figures_config: claude_outputs/session_evidence/c3_figures_package_20261012/figures_config.json  # sha256 19ccd30d65a38d8d31083d5af63c165b2947e16d7365e71bab25bed4a7d30f9a
+      item: 99                                # teaser = Bonn rgbd_bonn_placing_obstructing_box, cell st_llvar, DEV (CLIP_RULE R6)
+      versions: [noGT, withGT]                # Ifig: ONE inference pass writes TWO versions: teaser_noGT_* and teaser_withGT_* (GT = sensor GT as-is, invalid masked, same metric colour scale; coverage % in the withGT sidecar)
+      depth_display: "abs_gt,v1_log_p2p98,v2_disparity_p2p98"   # Ifig3: ONE inference pass writes three display versions: abs_gt (Ifig rule, names teaser_<version>_*), v1 (teaser_v1_<version>_*), v2 (teaser_v2_<version>_*)
+      display_disclosure: "v1/v2 outputs only: depth colours are relative per panel (display normalisation chosen for communication, not accuracy); abs_gt outputs keep the shared GT-percentile metric scale"
+      outputs: [teaser_noGT_still.png, teaser_noGT_still.pdf, teaser_noGT.gif, teaser_noGT.mp4, teaser_withGT_still.png, teaser_withGT_still.pdf, teaser_withGT.gif, teaser_withGT.mp4,
+                teaser_v1_noGT_still.png, teaser_v1_noGT_still.pdf, teaser_v1_noGT.gif, teaser_v1_noGT.mp4, teaser_v1_withGT_still.png, teaser_v1_withGT_still.pdf, teaser_v1_withGT.gif, teaser_v1_withGT.mp4,
+                teaser_v2_noGT_still.png, teaser_v2_noGT_still.pdf, teaser_v2_noGT.gif, teaser_v2_noGT.mp4, teaser_v2_withGT_still.png, teaser_v2_withGT_still.pdf, teaser_v2_withGT.gif, teaser_v2_withGT.mp4,
+                teaser_meanchange.csv, teaser_meanchange.pdf, teaser_meanchange.png]   # file names are teaser_[v1_|v2_]<version>_bonn_rgbd_bonn_placing_obstructing_box*; per version one sidecar .json + _depth.npz; teaser_meanchange_bonn_rgbd_bonn_placing_obstructing_box.{csv,pdf,png} (FT n46 vs RAMEN n46 + TAG per-frame mean change)
+      split: dev
+  # ---- Ifig4: candidate teasers on many clips (user 10-15: at least 20 different possible teasers; log display, with GT where GT exists). Candidates only; the released fig:teaser above is unchanged.
+  fig:teaser_many_dev:
+    kind: qualitative
+    host: gh200
+    label: "candidate teasers: 20 DEV clips, static low-light cell (st_llvar), GH200; display normalisation is relative per panel (communication, not accuracy)"
+    reference: null
+    paper_ref: "fig:teaser (candidates)"
+    models: [ft_n46, ramen_n46_tag]
+    params:
+      cumulative_still: true                  # Ifig6 (user standing rule): still change panels are CUMULATIVE (sum over t=8..63, shared pooled-p99 inferno scale); GIF/MP4 stay per pair
+      dump_all_depth: true                    # Ifig6: also archive the full per-frame depth of every clip (teaser_alldepth_*.npz)
+      depth_display: "v1_log_p2p98"           # user 10-15: log scale (blue = near)
+      display_disclosure: "depth colours are relative, normalised per panel for display (not metric, not comparable across panels); the change maps share one scale"
+      versions: [withGT]
+      split: dev
+      clips:
+        - {dataset: bonn, clip: rgbd_bonn_placing_obstructing_box}
+        - {dataset: bonn, clip: rgbd_bonn_balloon_tracking2}
+        - {dataset: bonn, clip: rgbd_bonn_crowd}
+        - {dataset: bonn, clip: rgbd_bonn_static_close_far}
+        - {dataset: bonn, clip: rgbd_bonn_kidnapping_box2}
+        - {dataset: kitti, clip: 2011_09_26_drive_0113_sync}
+        - {dataset: kitti, clip: 2011_09_26_drive_0095_sync}
+        - {dataset: kitti, clip: 2011_09_26_drive_0023_sync}
+        - {dataset: kitti, clip: 2011_09_26_drive_0005_sync}
+        - {dataset: scannetpp, clip: f3d64c30f8}
+        - {dataset: scannetpp, clip: 40aec5fffa}
+        - {dataset: scannetpp, clip: 05993dba6f}
+        - {dataset: nyuv2, clip: kitchen_0003}
+        - {dataset: nyuv2, clip: classroom_0001a}
+        - {dataset: nyuv2, clip: basement_0001a}
+        - {dataset: sintel_rgbfix, clip: ambush_2}
+        - {dataset: sintel_rgbfix, clip: cave_4}
+        - {dataset: sintel_rgbfix, clip: bamboo_1}
+        - {dataset: scannet_rgbfix, clip: scene0000_00}
+        - {dataset: scannet_rgbfix, clip: scene0004_00}
+  fig:teaser_many_test:
+    kind: qualitative
+    host: gh200
+    label: "candidate teasers: 5 TEST clips, EXPOSED EXPLORATORY (qualitative only, no numbers); needs --allow-test and RAMEN_AUDITOR_TOKEN"
+    reference: null
+    paper_ref: "fig:teaser (candidates)"
+    models: [ft_n46, ramen_n46_tag]
+    params:
+      cumulative_still: true                  # Ifig6 (user standing rule): still change panels are CUMULATIVE (sum over t=8..63, shared pooled-p99 inferno scale); GIF/MP4 stay per pair
+      dump_all_depth: true                    # Ifig6: also archive the full per-frame depth of every clip (teaser_alldepth_*.npz)
+      depth_display: "v1_log_p2p98"
+      display_disclosure: "depth colours are relative, normalised per panel for display (not metric, not comparable across panels); TEST clips: exposed exploratory"
+      versions: [withGT]
+      split: test
+      clips:
+        - {dataset: bonn, clip: rgbd_bonn_person_tracking2}
+        - {dataset: kitti, clip: 2011_09_30_drive_0016_sync}
+        - {dataset: sintel_rgbfix, clip: market_6}
+        - {dataset: nyuv2, clip: cafe_0001a}
+        - {dataset: scannetpp, clip: 09c1414f1b}
+  fig:teaser_many_real:
+    kind: qualitative
+    host: gh200
+    label: "candidate teasers: real low-light footage, NO ground truth, NO synthetic degradation (horse, BBC Springwatch R&D, BVI-RLV holdout); qualitative only"
+    reference: null
+    paper_ref: "fig:teaser (candidates)"
+    models: [ft_n46, ramen_n46_tag]
+    params:
+      cumulative_still: true                  # Ifig6 (user standing rule): still change panels are CUMULATIVE (sum over t=8..63, shared pooled-p99 inferno scale); GIF/MP4 stay per pair
+      dump_all_depth: true                    # Ifig6: also archive the full per-frame depth of every clip (teaser_alldepth_*.npz)
+      dump_frames: true                       # Ifig7: also archive the degraded input frames and RAMEN's restored frames, lossless uint8 (teaser_frames_*.npz), for in-the-wild figures
+      depth_display: "v1_log_p2p98"
+      display_disclosure: "depth colours are relative, normalised per panel for display (not metric); real footage: change maps contain true scene motion as well as noise flicker"
+      versions: [noGT]
+      split: real
+      clips:                                 # Ifig6: 64-frame (horse 51) windows staged from the footage (rule: middle 64 frames of the stated range / of the sequence; provenance.json per clip; staged copies on Isambard under dir_gh200)
+        - {name: horse, dir_gh200: /projects/b5dh/data/teaser_real_20261015/horse, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/horse, start: 0, n: 51}
+        - {name: bbc_badger_focus_noise_test_03, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_badger_focus_noise_test_03, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_badger_focus_noise_test_03, start: 0, n: 64}
+        - {name: bbc_badger_noise_sample_test_2, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_badger_noise_sample_test_2, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_badger_noise_sample_test_2, start: 0, n: 64}
+        - {name: bbc_woodpool_noise_test_02, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_woodpool_noise_test_02, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_woodpool_noise_test_02, start: 0, n: 64}
+        - {name: bbc_leo_noise_sample_2, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_leo_noise_sample_2, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_leo_noise_sample_2, start: 0, n: 64}
+        - {name: bbc_wood_pool_rain_gv, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_wood_pool_rain_gv, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_wood_pool_rain_gv, start: 0, n: 64}
+        - {name: bbc_bats_noise_sample, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_bats_noise_sample, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_bats_noise_sample, start: 0, n: 64}
+        - {name: bbc_woodpool_noise_test, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bbc_woodpool_noise_test, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bbc_woodpool_noise_test, start: 0, n: 64}
+        - {name: bvi_S05_bunnies_low10, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bvi_S05_bunnies_low10, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bvi_S05_bunnies_low10, start: 0, n: 64}
+        - {name: bvi_S35_Bunny_low20, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bvi_S35_Bunny_low20, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bvi_S35_Bunny_low20, start: 0, n: 64}
+        - {name: bvi_S15_flowers_low10, dir_gh200: /projects/b5dh/data/teaser_real_20261015/bvi_S15_flowers_low10, dir_local: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/ft_only_scoping/teaser_real_stage/bvi_S15_flowers_low10, start: 0, n: 64}
+  # ---- Ifig8: long-video qualitative data (user 10-15: VDA Fig. 5 analogue, 500-frame videos). DATA only (one npz per clip); the figure is rendered from it by the redesign template (render_P_long.py).
+  fig:long_video:
+    kind: qualitative
+    host: gh200
+    label: "candidate (unreleased): 500-frame DEV clips, dynamic low-light cell llvar (the scored rows' per-clip severity + noise stream), GH200; qualitative only, no numbers"
+    reference: null
+    paper_ref: "fig:long (candidate)"
+    models: [ft_n46, ramen_n46, ramen_n46_tag]       # registry models; the per-frame FT baselines are added through params.models / params.model_pins (not registry models yet: no checkpoint exists)
+    params:
+      cell: llvar                                    # fixed in the renderer (bench_joint.llvar_draw / llvar_noise_seed / degrade_llvar of the (dataset, clip) key); listed for the record
+      split: dev
+      models: [ft, c3_raw, c3_tag, dav2_ft, daac_ft]  # Ifig9: 5-model run (pins below resolved; TRAIN records AUD-FTONLY-TRAIN-20261015). Earlier note: renderer keys. 5-model run: [ft, c3_raw, c3_tag, dav2_ft, daac_ft] AFTER model_pins below are resolved (the renderer ASSERTS on a PLACEHOLDER for a requested model)
+      model_pins:                                    # Ifig9: resolved TRAIN checkpoints (step12000 only; formerly PLACEHOLDERS) (dn01_c3rep_pf_dav2a_n46 / dn01_c3rep_pf_daacm_n46, step12000; B_plan PLAN.md section B); spec forms dav2_s_ft:<ckpt> / daac_ft:<ckpt> (bench_joint.PERFRAME_FT)
+        dav2_ft: {ckpt: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/train_pf/dav2a_n46/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt, ckpt_gh200: /projects/b5dh/RAMEN_train_pf_20261015/runs/dn01_c3rep_pf_dav2a_n46/step12000.pt, sha256: e5cbf7ca420741aa39001ad7ed658a8666cd0892558901418f1f22776404b876}
+        daac_ft: {ckpt: /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/train_pf/daacm_n46/runs/dn01_c3rep_pf_daacm_n46/step12000.pt, ckpt_gh200: /projects/b5dh/RAMEN_train_pf_20261015/runs/dn01_c3rep_pf_daacm_n46/step12000.pt, sha256: 665b59ff0ad824861394970fd792d5c1a54f712ad019abd3d3458857a4261fb0}
+      clips:                                         # all DEV (membership asserted on the benchmark manifest); n = 500 frames, stride 1
+        - dataset: bonn
+          clip: rgbd_bonn_placing_obstructing_box    # R4 Bonn median clip = the teaser clip; frames 30..529 of the raw scene (the first 110 are the scored clip)
+          start: 0                                   # Ifig10 fix: the committed Bonn manifest ALREADY holds exactly the 500 frames raw 30..529 (built with start 30); slicing [start, start+n) of the manifest entry needs start 0 (Ifig9 had 30 -> 470 frames, the job aborted on the length assert)
+          n: 500
+          manifest: {local: "repo:long_video/bonn_video_long500.json", gh200: "repo:long_video/bonn_video_long500.json", sha256: 0b59af158777d94672318dacecd4c6870c9569f2cc8d5d47f975dce8b0f2092e}
+          root: {gh200: /projects/b5dh/data/test/benchmarks/bonn}    # the tree that holds the FULL scenes (the default dn01_eval_data/bonn holds only the 110 scored frames)
+        - dataset: scannet_rgbfix
+          clip: scene0009_00                         # lower median of the 50 DEV scenes by RAMEN n46 raw abs_rel_aligned on llvar (90-frame stride-3 rows; the 500-frame clip is NOT the scored clip)
+          start: 0
+          n: 500
+          manifest: {local: /mnt/DATA/DegradedDepth/data/TEST/scannet/scannet_video_rgbfix_500.json, gh200: /projects/b5dh/data/test/benchmarks/scannet/scannet_video_rgbfix_500.json, sha256: d6d167d76fbaa45ee7a554364b5d8bf68b337094ab2e549959b52cbd06f8bc1f}
+        - dataset: nyuv2
+          clip: study_0002                           # R4 NYUv2 median clip; the benchmark manifest already holds 500 frames
+          start: 0
+          n: 500
+  fig:teaser_depthdump:                      # Ifig5: preview support (user 10-15): full per-frame depth of the teaser clip for CPU re-rendering of alternative change maps (NOT a paper item)
+    kind: qualitative
+    host: gh200
+    label: "support dump: full per-frame float32 metre depth of FT n46 / RAMEN n46 + TAG on the teaser clip (same inference as fig:teaser); not a figure"
+    reference: null
+    paper_ref: "none (preview support)"
+    models: [ft_n46, ramen_n46_tag]
+    params:
+      split: dev
+  fig:qual:
+    kind: qualitative
+    host: gh200                              # Addendum 30: renders are GPU inference, run on the GH200; released qualitative/12b_ramen_figures stays the verify reference
+    label: "candidate (unreleased): GH200 regeneration; needs a new Auditor release before it replaces qualitative/12b_ramen_figures, which stays the verify reference"
+    reference: qualitative/12b_ramen_figures        # released figures; --verify compares the SHA256SUMS name list (bytes of stills/GIFs reported, not required)
+    smoke_params: {items: [0]}                      # cheapest smoke setting: one clip
+    paper_ref: "fig:qual"
+    models: [ft_n46, ramen_n46, ramen_n46_tag]       # Ifig: released panel dropped (FT n46 already present); RAMEN seed 45 -> n46
+    params:
+      selection: claude_outputs/session_evidence/c3_figures_package_20261012/CLIP_SELECTION.json
+      renderer: claude_outputs/session_evidence/c3_figures_package_20261012/render_c3_figures.py
+      figures_config: claude_outputs/session_evidence/c3_figures_package_20261012/figures_config.json
+      items: [0, 1, 2, 3, 4, 5]               # medians KITTI/Bonn/ScanNet++/NYUv2/Sintel_rgbfix + failure case (ScanNet++ 40aec5fffa); DEV only; FT panel = c3rep ft_n46 (seed 46, different lineage; caption in caption_note_ftn46.md)
+      split: dev
+      # TODO: the relabel C3->RAMEN package is relabel_20261012/ (pixel/GIF checks by Auditor); pre-written pins reference scorer clone eval_clone, not this worktree
+  fig:flicker_curve:
+    kind: qualitative
+    host: gh200                              # Addendum 30: renders are GPU inference, run on the GH200; released qualitative/12b_ramen_figures stays the verify reference
+    paper_ref: "fig:flicker_curve"
+    models: [ft_n46, ramen_n46, ramen_n46_tag]      # Ifig: same models as fig:qual (released curve retired; RAMEN seed 45 -> n46); writes flicker_curve.json/.png/.pdf
+    params:
+      # PRE-DECLARED definition (Auditor R1 ruling 9), DEV only, descriptive, labelled "development clips":
+      #   per frame t = 8..63 on each static DEV clip of CLIP_SELECTION.json (cell st_llvar, 64 frames):
+      #   c_t = mean over GT-valid pixels of |D_t - D_{t-1}| / Dbar,  Dbar = temporal-mean depth per pixel over frames 7..63  (the per-frame decomposition of the scorer's static flicker)
+      definition: "c_t = mean_{GT-valid px} |D_t - D_{t-1}| / mean_{t'=7..63} D_{t'},  t = 8..63"
+      t_first: 8
+      t_last: 63
+      selection: repro/qualitative/CLIP_SELECTION.json
+      cell: st_llvar
+      label: "development clips; descriptive"
+      split: dev

@@ -1,0 +1,65 @@
+{
+ "method": "dhash 16x16 (256 bit) of grayscale RGB; Hamming distance, test -> nearest train frame",
+ "n_test": 654,
+ "n_train": 47584,
+ "n_train_scene_dirs": 280,
+ "near_dup_threshold_bits": 25,
+ "min_distance_bits": 39,
+ "p5_distance_bits": 57.0,
+ "median_distance_bits": 72.0,
+ "n_test_with_near_dup_train": 0,
+ "closest_pairs": [
+  {
+   "test": "val-000000/val/official/00525.h5",
+   "train": "train-000001/train/bedroom_0017/00976.h5",
+   "bits": 39
+  },
+  {
+   "test": "val-000000/val/official/00351.h5",
+   "train": "train-000002/train/bedroom_0104/00551.h5",
+   "bits": 46
+  },
+  {
+   "test": "val-000000/val/official/01175.h5",
+   "train": "train-000002/train/bedroom_0074/00391.h5",
+   "bits": 47
+  },
+  {
+   "test": "val-000000/val/official/00804.h5",
+   "train": "train-000005/train/dining_room_0034/00646.h5",
+   "bits": 48
+  },
+  {
+   "test": "val-000000/val/official/00559.h5",
+   "train": "train-000000/train/bedroom_0016/01431.h5",
+   "bits": 48
+  },
+  {
+   "test": "val-000000/val/official/00650.h5",
+   "train": "train-000000/train/bathroom_0024/00341.h5",
+   "bits": 49
+  },
+  {
+   "test": "val-000000/val/official/00361.h5",
+   "train": "train-000001/train/bedroom_0062/00366.h5",
+   "bits": 49
+  },
+  {
+   "test": "val-000000/val/official/00221.h5",
+   "train": "train-000001/train/bedroom_0021/00676.h5",
+   "bits": 50
+  },
+  {
+   "test": "val-000000/val/official/00513.h5",
+   "train": "train-000004/train/dining_room_0010/00491.h5",
+   "bits": 50
+  },
+  {
+   "test": "val-000000/val/official/00018.h5",
+   "train": "train-000002/train/bedroom_0104/00631.h5",
+   "bits": 50
+  }
+ ],
+ "train_list_sha256": "172836e9d155c1c6db9508b206b70cfe93471851aa7e304a0a22097daddb44a9",
+ "test_list_sha256": "7bcc3a6c0490ee82fb728ff4ff4c8809540327207bdb7f6a7aafdee09e71b45b"
+}

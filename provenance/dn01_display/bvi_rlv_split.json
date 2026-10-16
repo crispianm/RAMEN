@@ -1,0 +1,61 @@
+{
+ "dataset": "/mnt/DATA/DegradedDepth/data/test/BVI-RLV/BVI-Lowlight-videos",
+ "levels": [
+  10,
+  20
+ ],
+ "rule": "TEST = figure scenes + sorted index % 4 == 3",
+ "figure_scenes": [
+  "S09_kitchen",
+  "S18_books1",
+  "S21_mario1"
+ ],
+ "test": [
+  "S04_colour_sticks",
+  "S08_soft_toys",
+  "S09_kitchen",
+  "S12_woods",
+  "S16_faces1",
+  "S18_books1",
+  "S20_books3",
+  "S21_mario1",
+  "S24_figures1",
+  "S28_cloths2",
+  "S32_mix4",
+  "S36_Eeyore",
+  "S40_Books5"
+ ],
+ "fit": [
+  "S01_colour_chart",
+  "S02_animals1",
+  "S03_animals2",
+  "S05_bunnies",
+  "S06_lego",
+  "S07_hats",
+  "S10_messy_toy",
+  "S11_gift_wrap",
+  "S13_wires",
+  "S14_colour_balls",
+  "S15_flowers",
+  "S17_faces2",
+  "S19_books2",
+  "S22_mario2",
+  "S23_messy_wires",
+  "S25_figures2",
+  "S26_cameras",
+  "S27_cloths1",
+  "S29_mix1",
+  "S30_mix2",
+  "S31_mix3",
+  "S33_mix5",
+  "S34_mix6",
+  "S35_Bunny",
+  "S37_Mario3",
+  "S38_Mario4",
+  "S39_Books4"
+ ],
+ "caveats": [
+  "single camera (BVI-RLV: one Sony camera with its in-camera tone curve)",
+  "the lowlight kappa (0.186) was calibrated on ALL BVI-RLV scenes' noise level (provenance/dn01_lowlight_calibration/): TEST is not untouched for noise"
+ ]
+}

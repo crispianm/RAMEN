@@ -1,0 +1,73 @@
+{
+ "cell_spec": {
+  "blur_px": 3.0,
+  "ev_range": [
+   -3.0,
+   -0.5
+  ],
+  "isp_noise": "data.elvis_noise.degrade_clip_lowlight, ELVIS bank median profile, as llb3 (ll_cfg); exposure, blur, noise per draw",
+  "kappa_base": 0.186,
+  "kappa_mults": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "llvarf_ev_jitter": 0.15,
+  "llvarf_kappa_mult": [
+   0.5,
+   1.5
+  ],
+  "seed": "noise_seed(dataset, key, 'llvar|draw'); noise stream noise_seed(dataset, key, '<cell>|noise')"
+ },
+ "dataset": "nyuv2",
+ "draws": {
+  "basement_0001a": {
+   "blur": 3.0,
+   "ev": -2.0326209052681694,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "bookstore_0001a": {
+   "blur": 3.0,
+   "ev": -2.932477942872249,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "cafe_0001a": {
+   "blur": 3.0,
+   "ev": -1.9368178223756336,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "classroom_0001a": {
+   "blur": 3.0,
+   "ev": -2.4091023020440616,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "kitchen_0003": {
+   "blur": 3.0,
+   "ev": -1.4784090638230813,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "office_0004": {
+   "blur": 3.0,
+   "ev": -2.101459054750905,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "playroom_0002": {
+   "blur": 3.0,
+   "ev": -2.133685859858059,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "study_0002": {
+   "blur": 3.0,
+   "ev": -0.6500968442073045,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  }
+ }
+}

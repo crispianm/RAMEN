@@ -1,0 +1,120 @@
+extends: val01_vda_s_relative.yaml
+
+# DN-01 Phase D0 (2026-09-23): METRIC VDA-S reproduced with our own code, clean input.
+# The metric twin of VAL-01 (val01_vda_s_relative.yaml, reproduced relative VDA-S within 5%).
+# Question: does our metric path work at all? Supersedes the never-run draft
+# val01_vda_s_metric.yaml, whose init choice the sources below contradict.
+#
+# ======================= VDA's METRIC RECIPE, FROM PRIMARY SOURCES =======================
+# Paper (arXiv 2501.12375 v1-v3) has no metric-training section. What exists:
+# 1. DATASETS: Virtual KITTI + IRS.
+#    - README @4f5ae23 (line 126): "--metric: use metric depth models trained on Virtual KITTI
+#      and IRS datasets".
+#    - PR #48 (merged 2025-04-25, 82ab9cd) metric_depth/README.md: "We fine-tune our pre-trained
+#      model on Virtual KITTI and IRS datasets for metric depth estimation."
+#    - Which VKITTI variants: SILENT -> clone only (VAL-01's choice).
+# 2. INIT: the pre-trained RELATIVE VDA, with the encoder frozen. Not DA-V2-Metric.
+#    - Source: PR #48 quote above ("fine-tune our pre-trained model").
+#    - Weight forensics, 2026-09-23 on CPU:
+#      * The released Metric-VDA-S `pretrained.*` is bit-identical (max|d| = 0) to relative
+#        DA-V2-S (sha 715fade1...) and to released VDA-S (sha 13379300...).
+#      * It differs from DA-V2-Metric-VKITTI-S (sha 9203e538...) by max|d| = 0.122.
+#      * Non-temporal head, relative-L2 distance from Metric-VDA-S: 0.32 to VDA-S, 0.51 to
+#        DA-V2-S, 1.19 to DA-V2-metric-VKITTI.
+#      * motion_modules: 0.125 from VDA-S.
+#      * Artifact: provenance/inventory/dn01_d_metric_vda_s_lineage_20260923.json.
+#    - Our own-code twin: DA-V2-S -> VAL-01 (ours, relative) -> this run (metric fine-tune).
+#      So init_from = VAL-01 step20000. The frozen encoder is relative DA-V2-S, same as VAL-01.
+# 3. ARCHITECTURE / OUTPUT: identical to relative VDA. The final ReLU emits raw metres, with no
+#    max_depth scaling.
+#    - VDA @4f5ae23: video_depth.py:67 F.relu; dpt.py:120-123 Conv-ReLU-Conv-ReLU.
+#      metric=True only turns off the cross-window scale/shift stitch (video_depth.py:135).
+#    - DA-V2 metric instead ends in Sigmoid * max_depth (Depth-Anything-V2 @a561b84
+#      metric_depth/depth_anything_v2/dpt.py:113,183).
+#    - So DA-V2-Metric weights are NOT an identity init inside VDA. Measured on 4 real KITTI
+#      frames: DA-V2-metric AbsRel 0.085 vs the same weights in VDANet(metric) 0.9997, output
+#      0-6.1 vs 5.6-79.8 m. See provenance/inventory/dn01_d_dav2_metric_init_identity_20260923.json.
+#    - VDANet.predicts_disparity = False, so train.py treats pred as metric depth.
+# 4. LOSS: SILENT. VDA's loss/ ships only the relative VideoDepthLoss, and the README only
+#    says "training loss is in loss/".
+#    - Declared choice (VAL-01-consistent):
+#      VideoDepthLoss(alpha=.5, scales=4, trim=0, stable_scale=10) on 1/depth, unchanged,
+#      so TGM stays.
+#      + metric_silog_weight * SiLog on native depth: DA-V2's own metric loss
+#        (metric_depth/util/loss.py SiLogLoss, lambd=0.5).
+#    - Why SiLog is needed: VideoDepthLoss is scale/shift-free, so something must pin metres.
+#    - Weight 1.0 is unpublished (our choice).
+#    - Alternative (the old draft): loss_mode custom + metric_weight L1 on inverse depth.
+# 5. MAX DEPTH: VDA's metric model has none.
+#    - GT validity as built: IRS uses d < data.max_depth = 80 m
+#      (data/vda_semantics_dataset.py:190); IRS depth = 48 / disparity
+#      (data/irs_dataset.py _IRS_FB).
+#    - VKITTI is NOT capped: VDASemanticsVKITTIDataset masks only the 655 m sky sentinel
+#      (vda_semantics_dataset.py:144). So 80-655 m far geometry enters the SiLog term. That was
+#      harmless for VAL-01 (scale-free loss) but not here.
+#    - OUR CHOICE (Manager, 2026-09-23): cap VKITTI at 80 m via the source key
+#      `vkitti_max_depth: 80`. It drops d >= 80 m from `mask` only; depth, frames and sky are
+#      untouched, and the key defaults to absent, so relative runs are unchanged.
+#      Grounds:
+#      * DA-V2 metric caps VKITTI at 80 (metric_depth/dist_train.sh: "max_depth=20 # 80 for
+#        virtual kitti", plus Sigmoid*80).
+#      * Released Metric-VDA-S output on KITTI tops out at ~81 m (1.9-81.3 m, models/vda_net.py
+#        docstring).
+# 6. RELEASED Metric-Video-Depth-Anything-Small exists.
+#    - HF depth-anything/Metric-Video-Depth-Anything-Small, released 2025-08-28.
+#    - sha256 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33, identical on
+#      crispwork and Isambard.
+#    - README delta1: KITTI 0.877, NYUv2 0.850; Scannet TAE 1.48.
+# 7. METRIC EVAL: VDA's benchmark/eval/eval.py has no metric branch (it always fits scale+shift
+#    on disparity). No median-scale protocol is published, so the metric figure is UNALIGNED.
+# 8. Steps / LR / schedule / batch for the metric stage: SILENT, so VAL-01's are used unchanged.
+#
+# =================== PASS RULE (pre-declared 2026-09-23, before any result) ===================
+# - Metric: UNALIGNED AbsRel, i.e. scripts/val01_eval_vda.py --ramen-checkpoint --metric
+#   --unaligned, with no scale or shift fit.
+# - Benchmarks: KITTI and Bonn, on the same manifests as VAL-01, scored on crispwork.
+# - Reference: released Metric-VDA-S (sha above), scored in the same harness at the same
+#   commit, beside our rows. The 2026-08-27 values were KITTI 0.2832, Bonn 0.2358; that
+#   artifact is from an older harness commit, so re-score it.
+# - Checkpoint bracket: step19500 and step20000.
+# - Verdict (one-sided: beating the released model is fine):
+#   * PASS: both bracket checkpoints have AbsRel <= 1.05x released, on BOTH KITTI and Bonn.
+#   * MIXED: exactly one bracket checkpoint meets that on both sets. Within the noise floor;
+#     report it, do not call it a pass.
+#   * FAIL: otherwise.
+# - Also reported, not gating:
+#   * aligned AbsRel / delta1 (VDA's eval_depthcrafter)
+#   * unaligned delta1
+#   * the per-clip alignment scale median (--alignment-stats; about 1.0 means scale is right)
+#   * the VAL-01 step20000 init row (relative, so its unaligned numbers are meaningless: a
+#     sanity floor only)
+# - Harness caveat: this harness gives released Metric-VDA-S KITTI unaligned delta1 0.505,
+#   against the README's 0.877. The protocols differ (crop, resolution); comparisons are only
+#   ever made inside one harness.
+
+model:
+  metric: true
+  # Our relative VDA-S, VAL-01 job 6155634, step 20000 (the VAL-01 PASS checkpoint).
+  # It carries trainable == trainable_ema (ema_decay 0) and 176 head tensors.
+  # sha256 50dc74eb145859a15082f01e7a8bb76554cbebec7537304cfb0360c95352092b (Isambard, 2026-09-23;
+  # matches provenance/relay_manifests/val01_eval_cycle_step20000_checkpoints_sha256_20260828.json).
+  init_from: /projects/b5dh/RAMEN/runs/val01_vda_s_relative_snapshots/step20000.pt
+  # da_v2_checkpoint_path is inherited: relative DA-V2-S (sha 715fade1...), the frozen encoder.
+  vda_checkpoint_path: /projects/b5dh/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth
+
+data:
+  sources:
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone], resize_mode: vda, vkitti_max_depth: 80}
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda}
+  val_sources:
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone], resize_mode: vda, vkitti_max_depth: 80}
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda}
+
+loss:
+  loss_mode: vda               # VideoDepthLoss on 1/depth, exactly as VAL-01
+  metric_silog_weight: 1.0     # + DA-V2 SiLog(lambd=0.5) on native depth; pins absolute scale
+  metric_silog_lambda: 0.5
+
+training:
+  checkpoint_at_steps: [2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 19500, 20000]
+  checkpoint_dir: runs/dn01_d0_metric_clean

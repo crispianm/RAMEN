@@ -1,0 +1,13 @@
+extends: dn01_diag_fr_ctrl.yaml
+
+# DN-01 final-v2 diagnostic CONTROL "C-LL" (Manager 2026-09-26): C's recipe (PocketDVDNet v1.0 fine-tuned ALONE, the
+# matched cascade restorer; scored as pocketdvdnet:<C-LL>+metric_vda_s) on the NEW training mix: 50/50 per clip between
+# the old awgn_blur and the BVI-RLV-calibrated 'lowlight' mode (provenance/dn01_lowlight_calibration/: kappa 0.186,
+# EV U[-3.0, -0.7]). The pre-declared rule for the whole 2x2 + controls is in dn01_st_f_full.yaml's header.
+data:
+  degrade_mode: [awgn_blur, lowlight]
+  lowlight:
+    ev: [-3.0, -0.7]
+    kappa: 0.186
+training:
+  checkpoint_dir: runs/dn01_ll_ctrl

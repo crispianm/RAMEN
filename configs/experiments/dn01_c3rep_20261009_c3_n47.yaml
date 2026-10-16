@@ -1,0 +1,13 @@
+extends: dn01_v3_bfix_C3_B.yaml
+data:
+  seed: 47
+training:
+  resume_from: null
+  seed_scheme: x1000
+  max_steps: 12000
+  lr_decay_steps: 12000
+  checkpoint_at_steps:
+  - 6000
+  - 8000
+  - 12000
+  checkpoint_dir: runs/dn01_c3rep_20261009_c3_n47

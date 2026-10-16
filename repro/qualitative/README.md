@@ -1,0 +1,15 @@
+# repro/qualitative (vendored, not run here: GPU)
+Sources: render_c3_figures.py, CLIP_SELECTION.json, CLIP_RULE.md, figures_config.json <- claude_outputs/session_evidence/c3_figures_package_20261012; render_cover.py, cover_config.json <- livestatus_cover_package_20261012;
+perframe_core.py <- supervisor_page_20261013/scratch; render_supervisor.py <- supervisor_page_20261013.
+Diffs vs source (all others byte-identical):
+- render_c3_figures.py: panel label strings lines 163,199 "C3" -> "RAMEN" (only code diff; sha 40321cfb... -> 9dd21969...).
+- render_cover.py: +1 line `CFG["figures_package"] = str(HERE)` (import path). cover_config.json: figures_render_script_sha256_prefix updated to the vendored script's.
+- render_supervisor.py: ROOT = $RAMEN_QUAL_OUT or script dir; figures_config/CLIP_SELECTION/sys.path now resolve to this folder (4 path lines).
+Entry points in __init__.py: render_fig_teaser, render_fig_qual, render_fig_flicker_curve (cfg_entry, out_dir) -> PNG/JSON + GIF + H.264 MP4. figures_config.json eval_clone still points to a clean 368b5c53 clone (scripts assert clean tree).
+
+Commit Ifig (user decisions relayed by the Manager) - fig:teaser / fig:qual / fig:flicker_curve are FT n46 / RAMEN n46 only:
+- The released Metric-VDA-S panel / column / curve is REMOVED from all three figures (render_c3_figures.py, render_flicker_curve.py: `specs` and panel lists; yaml `models:`). The FT panel stays (FT n46, sha 18c9d8ca...); the RAMEN panel is RAMEN n46 (figures_config.json `c3` -> c3rep c3_n46, sha f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af, Isambard /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt) instead of seed 45. Same clips, frames, cells, noise seeds and TAG states (FT raw; RAMEN raw and + TAG); CLIP_SELECTION.json / CLIP_RULE.md byte-identical (their text still says "C3 seed 45" for the median ranking; the selection is unchanged and not re-run).
+- fig:teaser writes TWO versions from one inference pass (teaser clip = CLIP_RULE R6: Bonn rgbd_bonn_placing_obstructing_box, st_llvar): `teaser_noGT_*` = input | Metric-VDA-S FT | RAMEN + TAG | Change: FT | Change: RAMEN + TAG; `teaser_withGT_*` = the same plus a `Ground truth` panel after the input: the clip's sensor GT as loaded by bench_joint.load_gt (same crop/factor as the scorer), no densification or interpolation, invalid pixels masked grey, drawn on the SAME log-turbo metric colour scale as the predictions (GT 2nd-98th percentile of the still frame). Titles are short and number-free (asserted); the withGT sidecar JSON records the GT coverage (`gt_coverage.valid_pct`).
+- Each still is also written as a PDF (raster in PDF, same pixels as the PNG; `--panel-h` / yaml params.panel_h raises the resolution); fig:flicker_curve also writes flicker_curve.pdf (vector). The renderer's provenance field `released_weights` is replaced by `base_weights` (hashes of the weights each pipeline loaded).
+- The paper-side CSV (make_figures.py `released_mean_change_pct` column) is not produced here.
+

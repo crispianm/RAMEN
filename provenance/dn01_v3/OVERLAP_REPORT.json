@@ -1,0 +1,699 @@
+{
+ "near_dup_threshold_bits": 25,
+ "per_source_frames": 400,
+ "ids": {
+  "kitti_raw_vs_kitti_13val": {
+   "train_drives": 138,
+   "test_drives": 13,
+   "shared": [],
+   "ok": true
+  },
+  "vkitti_scene_replicas_of_kitti_drives": {
+   "mapping": {
+    "Scene01": {
+     "kitti_drive": "2011_09_26_drive_0009_sync",
+     "in_vda_13_val": false
+    },
+    "Scene20": {
+     "kitti_drive": "2011_10_03_drive_0047_sync",
+     "in_vda_13_val": true
+    }
+   },
+   "disclosed_overlap_with_headline_kitti": [
+    "Scene20"
+   ],
+   "note": "VKITTI Scene20 is a synthetic replica of KITTI drive 2011_10_03_drive_0047 (in VDA's 13 val drives): DISCLOSED; the KITTI-minus-0047 row is the clean comparison. Scene01 replicates drive 0009 (not a VDA val drive; Eigen/KITTI-C pool)."
+  },
+  "nyu_train_vs_nyu_video_test": {
+   "video_test_scenes": [
+    "basement_0001a",
+    "bookstore_0001a",
+    "cafe_0001a",
+    "classroom_0001a",
+    "kitchen_0003",
+    "office_0004",
+    "playroom_0002",
+    "study_0002"
+   ],
+   "in_hf_train_shards_before_exclusion": [
+    "basement_0001a",
+    "cafe_0001a",
+    "kitchen_0003",
+    "office_0004",
+    "playroom_0002"
+   ],
+   "excluded_room_variants": [
+    "basement_0001a",
+    "basement_0001b",
+    "basement_0001c",
+    "cafe_0001a",
+    "cafe_0001b",
+    "cafe_0001c",
+    "kitchen_0003",
+    "office_0004",
+    "playroom_0002"
+   ],
+   "shared_after_exclusion": [],
+   "ok": true
+  },
+  "scannetpp_train_vs_eval": {
+   "train_scenes": [
+    "02455b3d20",
+    "0529d56cce",
+    "06a3d79b68",
+    "154c3e10d9",
+    "18fd041970",
+    "1be2c31cac",
+    "21532e059d",
+    "285efbc7cf",
+    "29b607c6d5",
+    "2a1a3afad9",
+    "2e67a32314",
+    "3a161a857d",
+    "3e6ceea56c",
+    "47eb87b5bb",
+    "497588b572",
+    "4ef75031e3",
+    "5371eff4f9",
+    "54bca9597e",
+    "569f99f881",
+    "68739bdf1f",
+    "6ebe30292e",
+    "6f12492455",
+    "728daff2a3",
+    "7dfdff1b7d",
+    "7ffc86edf4",
+    "954633ea01",
+    "9663292843",
+    "9f7641ce94",
+    "a24858e51e",
+    "a897272241",
+    "aa6e508f0c",
+    "ab252b28c0",
+    "accad58571",
+    "b09b119466",
+    "ba414a3e6f",
+    "be2e10f16a",
+    "be6205d016",
+    "be66c57b92",
+    "cc49215f67",
+    "cd2994fcc1",
+    "cd88899edb",
+    "d070e22e3b",
+    "d662592b54",
+    "da8043d54e",
+    "dffce1cf9a",
+    "e6afbe3753",
+    "ea15f3457c",
+    "eeddfe67f5",
+    "f7a60ba2a2",
+    "f94c225e84"
+   ],
+   "eval_scenes": 62,
+   "shared": [],
+   "ok": true
+  },
+  "nuscenes": {
+   "train_sources_with_nuscenes": [],
+   "night_test_scenes": 84,
+   "ok": true,
+   "note": "no v3 train source reads nuScenes (WP15: the official-train night pool == the 84 TEST scenes; v1.0-test night == F2)"
+  },
+  "kitti_21_train_drives_vs_nonheadline_sets": {
+   "note": "21 train drives are ALSO in data/TEST/kitti_raw_val_drives (Eigen DEV pool); INCLUDED in training by the Manager's decision (runs/WP6/RUNLOG.md)",
+   "n": 21,
+   "drives": [
+    "2011_09_26_drive_0009_sync",
+    "2011_09_26_drive_0027_sync",
+    "2011_09_26_drive_0029_sync",
+    "2011_09_26_drive_0046_sync",
+    "2011_09_26_drive_0048_sync",
+    "2011_09_26_drive_0052_sync",
+    "2011_09_26_drive_0056_sync",
+    "2011_09_26_drive_0059_sync",
+    "2011_09_26_drive_0064_sync",
+    "2011_09_26_drive_0084_sync",
+    "2011_09_26_drive_0086_sync",
+    "2011_09_26_drive_0093_sync",
+    "2011_09_26_drive_0096_sync",
+    "2011_09_26_drive_0101_sync",
+    "2011_09_26_drive_0106_sync",
+    "2011_09_26_drive_0117_sync",
+    "2011_09_28_drive_0002_sync",
+    "2011_09_29_drive_0071_sync",
+    "2011_09_30_drive_0018_sync",
+    "2011_09_30_drive_0027_sync",
+    "2011_10_03_drive_0027_sync"
+   ],
+   "in_old_eigen_dev_pool": [
+    "2011_09_26_drive_0009_sync",
+    "2011_09_26_drive_0027_sync",
+    "2011_09_26_drive_0029_sync",
+    "2011_09_26_drive_0046_sync",
+    "2011_09_26_drive_0048_sync",
+    "2011_09_26_drive_0052_sync",
+    "2011_09_26_drive_0056_sync",
+    "2011_09_26_drive_0059_sync",
+    "2011_09_26_drive_0064_sync",
+    "2011_09_26_drive_0084_sync",
+    "2011_09_26_drive_0086_sync",
+    "2011_09_26_drive_0093_sync",
+    "2011_09_26_drive_0096_sync",
+    "2011_09_26_drive_0101_sync",
+    "2011_09_26_drive_0106_sync",
+    "2011_09_26_drive_0117_sync",
+    "2011_09_28_drive_0002_sync",
+    "2011_09_29_drive_0071_sync",
+    "2011_09_30_drive_0018_sync",
+    "2011_09_30_drive_0027_sync",
+    "2011_10_03_drive_0027_sync"
+   ],
+   "in_kitti_c": [
+    "2011_09_26_drive_0009_sync",
+    "2011_09_26_drive_0027_sync",
+    "2011_09_26_drive_0029_sync",
+    "2011_09_26_drive_0046_sync",
+    "2011_09_26_drive_0048_sync",
+    "2011_09_26_drive_0052_sync",
+    "2011_09_26_drive_0056_sync",
+    "2011_09_26_drive_0059_sync",
+    "2011_09_26_drive_0064_sync",
+    "2011_09_26_drive_0084_sync",
+    "2011_09_26_drive_0086_sync",
+    "2011_09_26_drive_0093_sync",
+    "2011_09_26_drive_0096_sync",
+    "2011_09_26_drive_0101_sync",
+    "2011_09_26_drive_0106_sync",
+    "2011_09_26_drive_0117_sync",
+    "2011_09_28_drive_0002_sync",
+    "2011_09_29_drive_0071_sync",
+    "2011_09_30_drive_0018_sync",
+    "2011_09_30_drive_0027_sync",
+    "2011_10_03_drive_0027_sync"
+   ],
+   "kitti_c_drives": 28,
+   "in_vda_13_val": []
+  }
+ },
+ "content": {
+  "vkitti vs kitti_13val": {
+   "min_bits": 73,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "2011_10_03_drive_0047_sync"
+   ],
+   "n_train": 314,
+   "n_test": 128
+  },
+  "irs vs kitti_13val": {
+   "min_bits": 59,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Restaurant/SCLRestaurant001_Dark",
+    "2011_09_30_drive_0016_sync"
+   ],
+   "n_train": 400,
+   "n_test": 128
+  },
+  "tartanair vs kitti_13val": {
+   "min_bits": 66,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "BrushifyMoon/Data_easy/P002",
+    "2011_09_30_drive_0016_sync"
+   ],
+   "n_train": 400,
+   "n_test": 128
+  },
+  "point_odyssey vs kitti_13val": {
+   "min_bits": 80,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "val/scene_d78_ego2",
+    "2011_09_26_drive_0020_sync"
+   ],
+   "n_train": 400,
+   "n_test": 128
+  },
+  "spring vs kitti_13val": {
+   "min_bits": 81,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0007",
+    "2011_09_30_drive_0016_sync"
+   ],
+   "n_train": 143,
+   "n_test": 128
+  },
+  "kitti_raw vs kitti_13val": {
+   "min_bits": 66,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_26_drive_0032_sync",
+    "2011_09_30_drive_0016_sync"
+   ],
+   "n_train": 349,
+   "n_test": 128
+  },
+  "nyu_train vs kitti_13val": {
+   "min_bits": 63,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "living_room_0055",
+    "2011_10_03_drive_0047_sync"
+   ],
+   "n_train": 400,
+   "n_test": 128
+  },
+  "scannetpp_sem_test vs kitti_13val": {
+   "min_bits": 71,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "3a161a857d",
+    "2011_10_03_drive_0047_sync"
+   ],
+   "n_train": 150,
+   "n_test": 128
+  },
+  "vkitti vs bonn": {
+   "min_bits": 54,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "rgbd_bonn_moving_obstructing_box"
+   ],
+   "n_train": 314,
+   "n_test": 382
+  },
+  "irs vs bonn": {
+   "min_bits": 34,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Restaurant/SCLRestaurant001_Dark",
+    "rgbd_bonn_balloon_tracking2"
+   ],
+   "n_train": 400,
+   "n_test": 382
+  },
+  "tartanair vs bonn": {
+   "min_bits": 52,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "HongKong/Data_easy/P001",
+    "rgbd_bonn_placing_obstructing_box"
+   ],
+   "n_train": 400,
+   "n_test": 382
+  },
+  "point_odyssey vs bonn": {
+   "min_bits": 59,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "train/scene_carb_h_tables_ego1",
+    "rgbd_bonn_static"
+   ],
+   "n_train": 400,
+   "n_test": 382
+  },
+  "spring vs bonn": {
+   "min_bits": 59,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0007",
+    "rgbd_bonn_balloon_tracking2"
+   ],
+   "n_train": 143,
+   "n_test": 382
+  },
+  "kitti_raw vs bonn": {
+   "min_bits": 62,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_26_drive_0096_sync",
+    "rgbd_bonn_removing_obstructing_box"
+   ],
+   "n_train": 349,
+   "n_test": 382
+  },
+  "nyu_train vs bonn": {
+   "min_bits": 69,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "dining_room_0024",
+    "rgbd_bonn_crowd3"
+   ],
+   "n_train": 400,
+   "n_test": 382
+  },
+  "scannetpp_sem_test vs bonn": {
+   "min_bits": 60,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "eeddfe67f5",
+    "rgbd_bonn_placing_obstructing_box"
+   ],
+   "n_train": 150,
+   "n_test": 382
+  },
+  "vkitti vs nyuv2_654": {
+   "min_bits": 77,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene01",
+    "official"
+   ],
+   "n_train": 314,
+   "n_test": 327
+  },
+  "irs vs nyuv2_654": {
+   "min_bits": 57,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Office/OfficeMedley2_Dark",
+    "official"
+   ],
+   "n_train": 400,
+   "n_test": 327
+  },
+  "tartanair vs nyuv2_654": {
+   "min_bits": 63,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "JapaneseCity/Data_easy/P000",
+    "official"
+   ],
+   "n_train": 400,
+   "n_test": 327
+  },
+  "point_odyssey vs nyuv2_654": {
+   "min_bits": 74,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "train/kitchen_gfloor_ego1",
+    "official"
+   ],
+   "n_train": 400,
+   "n_test": 327
+  },
+  "spring vs nyuv2_654": {
+   "min_bits": 84,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0016",
+    "official"
+   ],
+   "n_train": 143,
+   "n_test": 327
+  },
+  "kitti_raw vs nyuv2_654": {
+   "min_bits": 80,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_26_drive_0106_sync",
+    "official"
+   ],
+   "n_train": 349,
+   "n_test": 327
+  },
+  "nyu_train vs nyuv2_654": {
+   "min_bits": 52,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "bedroom_0017",
+    "official"
+   ],
+   "n_train": 400,
+   "n_test": 327
+  },
+  "scannetpp_sem_test vs nyuv2_654": {
+   "min_bits": 62,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "cd88899edb",
+    "official"
+   ],
+   "n_train": 150,
+   "n_test": 327
+  },
+  "vkitti vs sintel": {
+   "min_bits": 86,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "temple_3"
+   ],
+   "n_train": 314,
+   "n_test": 108
+  },
+  "irs vs sintel": {
+   "min_bits": 67,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Restaurant/SCLRestaurant001_Dark",
+    "temple_3"
+   ],
+   "n_train": 400,
+   "n_test": 108
+  },
+  "tartanair vs sintel": {
+   "min_bits": 80,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "JapaneseCity/Data_easy/P000",
+    "ambush_7"
+   ],
+   "n_train": 400,
+   "n_test": 108
+  },
+  "point_odyssey vs sintel": {
+   "min_bits": 75,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "train/scene_recording_20210910_S05_S06_0_ego2",
+    "temple_3"
+   ],
+   "n_train": 400,
+   "n_test": 108
+  },
+  "spring vs sintel": {
+   "min_bits": 78,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0007",
+    "temple_3"
+   ],
+   "n_train": 143,
+   "n_test": 108
+  },
+  "kitti_raw vs sintel": {
+   "min_bits": 83,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_30_drive_0027_sync",
+    "temple_3"
+   ],
+   "n_train": 349,
+   "n_test": 108
+  },
+  "nyu_train vs sintel": {
+   "min_bits": 71,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "kitchen_0016",
+    "ambush_5"
+   ],
+   "n_train": 400,
+   "n_test": 108
+  },
+  "scannetpp_sem_test vs sintel": {
+   "min_bits": 79,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "d662592b54",
+    "temple_3"
+   ],
+   "n_train": 150,
+   "n_test": 108
+  },
+  "vkitti vs scannetpp_eval": {
+   "min_bits": 70,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "f717985ed7"
+   ],
+   "n_train": 314,
+   "n_test": 186
+  },
+  "irs vs scannetpp_eval": {
+   "min_bits": 54,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Home/RealisticRenderingNight",
+    "f717985ed7"
+   ],
+   "n_train": 400,
+   "n_test": 186
+  },
+  "tartanair vs scannetpp_eval": {
+   "min_bits": 58,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "BrushifyMoon/Data_easy/P002",
+    "f42fb2d539"
+   ],
+   "n_train": 400,
+   "n_test": 186
+  },
+  "point_odyssey vs scannetpp_eval": {
+   "min_bits": 64,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "train/scene_d78_0318_ego1",
+    "f3685d06a9"
+   ],
+   "n_train": 400,
+   "n_test": 186
+  },
+  "spring vs scannetpp_eval": {
+   "min_bits": 70,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0007",
+    "5ee7c22ba0"
+   ],
+   "n_train": 143,
+   "n_test": 186
+  },
+  "kitti_raw vs scannetpp_eval": {
+   "min_bits": 76,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_30_drive_0027_sync",
+    "f42fb2d539"
+   ],
+   "n_train": 349,
+   "n_test": 186
+  },
+  "nyu_train vs scannetpp_eval": {
+   "min_bits": 68,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "bathroom_0028",
+    "f3d64c30f8"
+   ],
+   "n_train": 400,
+   "n_test": 186
+  },
+  "scannetpp_sem_test vs scannetpp_eval": {
+   "min_bits": 56,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "d662592b54",
+    "f42fb2d539"
+   ],
+   "n_train": 150,
+   "n_test": 186
+  },
+  "vkitti vs nuscenes_night_test": {
+   "min_bits": 56,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "scene-1053"
+   ],
+   "n_train": 314,
+   "n_test": 400
+  },
+  "irs vs nuscenes_night_test": {
+   "min_bits": 49,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Restaurant/SCLRestaurant001_Dark",
+    "scene-1079"
+   ],
+   "n_train": 400,
+   "n_test": 400
+  },
+  "tartanair vs nuscenes_night_test": {
+   "min_bits": 56,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "HongKong/Data_easy/P001",
+    "scene-1102"
+   ],
+   "n_train": 400,
+   "n_test": 400
+  },
+  "point_odyssey vs nuscenes_night_test": {
+   "min_bits": 51,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "train/scene_d78_0318_ego1",
+    "scene-1086"
+   ],
+   "n_train": 400,
+   "n_test": 400
+  },
+  "spring vs nuscenes_night_test": {
+   "min_bits": 60,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "0016",
+    "scene-1079"
+   ],
+   "n_train": 143,
+   "n_test": 400
+  },
+  "kitti_raw vs nuscenes_night_test": {
+   "min_bits": 61,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "2011_09_26_drive_0027_sync",
+    "scene-1106"
+   ],
+   "n_train": 349,
+   "n_test": 400
+  },
+  "nyu_train vs nuscenes_night_test": {
+   "min_bits": 61,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "bedroom_0125a",
+    "scene-1044"
+   ],
+   "n_train": 400,
+   "n_test": 400
+  },
+  "scannetpp_sem_test vs nuscenes_night_test": {
+   "min_bits": 51,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "cd88899edb",
+    "scene-1074"
+   ],
+   "n_train": 150,
+   "n_test": 400
+  },
+  "vkitti Scene20 vs kitti drive 0047 (disclosed replica)": {
+   "min_bits": 73,
+   "n_pairs_le_near": 0,
+   "closest": [
+    "Scene20",
+    "2011_10_03_drive_0047_sync"
+   ],
+   "n_train": 80,
+   "n_test": 11
+  }
+ },
+ "absent_test_sets": {
+  "bvi_rlv": "BVI-Lowlight-videos.zip only (not extracted); no BVI source is in the v3 train mix (data/TRAIN/bvi_aom is not a v3 source)"
+ },
+ "summary": {
+  "id_checks_ok": true,
+  "content_cells": 49,
+  "cells_with_near_duplicates": [],
+  "global_min_bits": 34
+ }
+}

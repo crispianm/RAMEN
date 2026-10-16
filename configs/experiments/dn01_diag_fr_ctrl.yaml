@@ -1,0 +1,11 @@
+extends: dn01_diag_fr.yaml
+
+# DN-01 FR MATCHED CONTROL: the same PocketDVDNet init fine-tuned ALONE (training.frontend_only: restoration L1 on its
+# output, no depth forward or loss) on FR's exact data, degradations, steps, LR curve, GPU count and seed; scored as the
+# cascade pocketdvdnet:<this step4000.pt>+metric_vda_s (frozen released Metric-VDA-S). The pre-declared rule is in
+# dn01_diag_fr.yaml's header.
+model:
+  restoration_head: false
+training:
+  frontend_only: true
+  checkpoint_dir: runs/dn01_diag_fr_ctrl

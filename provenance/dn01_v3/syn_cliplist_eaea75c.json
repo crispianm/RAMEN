@@ -1,0 +1,38 @@
+{
+ "irs": {
+  "clip_stride": 32,
+  "clips": 3191,
+  "frame_stride": 1,
+  "sha256": "4ff1c9bbe48995d66c194332aff1e6f1d947c872e980f231be662c9ac7f42fdf"
+ },
+ "pointodyssey@train": {
+  "clip_stride": 32,
+  "clips": 7204,
+  "frame_stride": 1,
+  "sha256": "6c565a4c6895311967021873e5d19d0637aabea337088b2542ba3e149f856e2e"
+ },
+ "pointodyssey@val": {
+  "clip_stride": 32,
+  "clips": 1059,
+  "frame_stride": 1,
+  "sha256": "26b1b4ee2d0b6400abb64c40be022b57e07a5aac4d4fc3756f65026ac2692b31"
+ },
+ "spring": {
+  "clip_stride": 32,
+  "clips": 134,
+  "frame_stride": 1,
+  "sha256": "124498e66cbaddd6bae29c845f643ac5a1aa4a22101212993f11f954bb4588e3"
+ },
+ "tartanair": {
+  "clip_stride": 32,
+  "clips": 9781,
+  "frame_stride": 1,
+  "sha256": "bf3516bc0752673ae47ca6e4b8fc6e0d7d58052f133b388051dc70f5a7aab002"
+ },
+ "vkitti": {
+  "clip_stride": 32,
+  "clips": 1280,
+  "frame_stride": 1,
+  "sha256": "e3d6e06335c38955c03a4b95e43537692aaa89903ca7e273689f03b284329ab9"
+ }
+}

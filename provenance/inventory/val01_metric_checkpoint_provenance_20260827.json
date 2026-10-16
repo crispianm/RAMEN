@@ -1,0 +1,26 @@
+{
+  "task": "VAL-01",
+  "purpose": "Provenance for the released Metric-Video-Depth-Anything-Small checkpoint, verified against HuggingFace's own metadata directly (2026-08-27) -- same standard as val01_vda_s_relative.yaml's da_v2/vda_checkpoint_path comments, not a fresh download since byte-identical copies already exist on crispwork and Isambard (found and independently hashed 2026-08-27).",
+  "huggingface_repo": "depth-anything/Metric-Video-Depth-Anything-Small",
+  "huggingface_file": "metric_video_depth_anything_vits.pth",
+  "resolve_url": "https://huggingface.co/depth-anything/Metric-Video-Depth-Anything-Small/resolve/main/metric_video_depth_anything_vits.pth",
+  "x_repo_commit": "273d090f2ce17df50c2872d82c8322c45da5b4dd",
+  "x_linked_size_bytes": 116444063,
+  "x_linked_etag_sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
+  "local_copies": [
+    {
+      "host": "crispwork",
+      "path": "/home/wg19671/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
+      "sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
+      "matches_huggingface_x_linked_etag": true
+    },
+    {
+      "host": "isambard",
+      "path": "/projects/b5dh/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
+      "sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
+      "matches_huggingface_x_linked_etag": true
+    }
+  ],
+  "verification_method": "curl -sI on the HuggingFace resolve URL, reading the X-Linked-ETag response header directly -- same method already used for val01_vda_s_relative.yaml's checkpoint provenance comments -- cross-checked against sha256sum computed independently on both hosts (2026-08-27). Both local sha256 values and the HF X-Linked-ETag are identical.",
+  "verified_at": "2026-08-27"
+}

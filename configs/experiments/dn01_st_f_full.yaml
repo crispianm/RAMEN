@@ -1,0 +1,197 @@
+extends: dn01_ll_ctrl.yaml
+
+# DN-01 final-v2 diagnostic arm ST-F-full (shared-temporal, VDA FROZEN, full-width temp2, VDA-feature injection ON).
+# models/shared_temporal.py. Same data / steps / LR / GPUs / seed as C-LL; only the model differs.
+#
+# ======================= PRE-DECLARED RULE for the whole 2x2 + controls (written 2026-09-26, BEFORE the distillation
+# job, any arm job or any result; Auditor K34-K40, Manager D1/D2). One header for: ST-F-full (this file), ST-F-slim,
+# ST-U-full, ST-U-slim, the injection-OFF control (dn01_st_f_full_noinj) and C-LL (dn01_ll_ctrl). SINGLE SEED (42).
+# [Amendment A1 (9a-A1 below): + the SLIM injection-OFF control dn01_st_f_slim_noinj = 6 arms + C-LL.]
+#
+# 1. WHAT IS TESTED. The user's reframe (2026-09-26): jointly restore + estimate depth "SLIGHTLY better but mostly
+#    FASTER than a cascade"; depth ~ VDA-S is fine. ST = released Metric-VDA-S (depth; frozen in ST-F) + ONE PocketDVDNet
+#    temp2 block (full 16/32/64/32 or slim 8/16/32/16 width), NO temp1, on the raw (t-1, t, t+1) of the CLIP at full
+#    resolution (the full-res pixel path, K36(c)), + a ZERO-INIT 1x1 projection of the DETACHED refinenet1 features
+#    added after temp2's input block (none in injection-OFF). y = frame_t - residual; temp2 BN frozen (eval mode).
+#    K36(b): in ST-F and injection-OFF, VDA is frozen on the degraded input and its depth output is untouched, so depth
+#    == Metric-VDA-S EXACTLY (tested bit-exact) and the depth NI is TRIVIAL. The ST-F contribution is restoration from
+#    shared features + speed. ST-U (K37(a)): VDA's temporal-head `core.head.motion_modules` (and nothing else of VDA)
+#    are trainable, by the depth loss only; the restoration branch reads DETACHED features in every arm.
+#    The 2x2 runs with L3 OFF (loss.joint_temporal_weight 0). "SLIGHTLY BETTER" is NOT claimed from the 2x2: its gates
+#    are non-inferiority + speed; restoration / temporal deltas vs the best cascade are reported descriptively. The
+#    "better" claim is DEFERRED to final-v2's seeded L3 test (section 9).
+#
+# 2. RECIPE (all 6 arms; config-diff tests in tests/test_dn01_st.py, K39(e)). vkitti clone + IRS, 32-frame clips at
+#    518^2; degradation 50/50 per clip awgn_blur | lowlight (EV ~ U[-3.0, -0.7], kappa 0.186; the target is the
+#    normally exposed clean frame), clean_prob 0.2, blur_only_prob 0.25, seeded_noise; 4000 steps, 4 GPUs x grad_accum
+#    4, AdamW LR 1e-4 (one group), wd 0, warmup 500, bf16, per-group grad clip 1.0 (groups = the arm's trainable
+#    modules: temp2, proj[, motion_modules]), seed 42. Losses: restoration L1 (enh_weight 1) in every arm; ST-U also the
+#    VDA depth loss (ssi 1 + tgm 10 + gradient 0.5) reaching motion_modules only; in ST-F / injection-OFF the depth
+#    loss has no trainable path. nuScenes is in NO training mix. C-LL = C's recipe (Pocket v1.0 fine-tuned ALONE) on
+#    this mix, scored as pocketdvdnet:<C-LL step4000>+metric_vda_s.
+#
+# 3. INIT = DISTILLATION STAGE (K39(b), Manager D2). NOT YET RUN: this header precedes it. scripts/dn01_st_distill.py:
+#    teacher = the RELEASED PocketDVDNet v1.0 (sha256 78320cda...; neither C nor C-LL), as the cascades run it
+#    (PocketFrontEnd, 5-frame window, BN eval); student = temp2_block(width), RANDOM init for BOTH widths (same
+#    procedure, so width is the only difference), on the raw (t-1, t, t+1) triplet exactly as the ST model feeds it
+#    (tested: the student forward == SharedTemporalNet.restore_clip without injection); loss L1(student y, teacher y);
+#    data = C-LL's mix above (dn01_ll_ctrl.yaml), crops 252^2 after full-res degradation; AdamW 2e-4, wd 0, 6000 steps,
+#    seed 42; then BatchNorm RECALIBRATION (reset, cumulative average over 200 batches of the mix, no gradients) and BN
+#    frozen from then on. This is restoration-path COMPRESSION (a temp2-only student mimicking the full two-stage
+#    Pocket on the same DEGRADED input), NOT the clean-teacher feature distillation the user rejected on 2026-09-24: no
+#    clean-image teacher, no depth/feature targets. Full-width ST-F / ST-U / injection-OFF load distill_full, slim arms
+#    distill_slim; both .pt sha256 go into docs/DN01_JOB_LEDGER.md before any arm launches. Distillation fidelity
+#    (student vs teacher PSNR on 2 dev clips x {b3s25, llb3}) is reported descriptively.
+#
+# 3-A2. AMENDMENT A2 (2026-09-26, PRE-RESULT: no ST arm submitted; Manager + Auditor after the independent hunt
+#    session_briefs/distill_defect_20260926.md). DEFECT: the section-3 BN recalibration ran one clip per forward, so
+#    the stored statistics missed the mix's between-clip variance; the distilled FULL temp2 scored ~18 dB on clean
+#    frames in eval mode (step-0, b7a4506). The conv / affine weights are fine. FIX: scripts/dn01_st_distill.py
+#    --recal-mode mixed (forwards of 32 triplets drawn from a shuffled pool of 8 clips) re-estimates ONLY the BN
+#    buffers of the job-6883334 weights (--recal-from, sha-checked), on the TRAINING mix only (dn01_ll_ctrl.yaml's
+#    train loader; never dev / held- out clips), on Isambard (jobs/dn01_st_recal.sh), for BOTH widths (one procedure).
+#    The ST inits become runs/recal_{full,slim}/temp2_distilled.pt (new sha256s ledgered before any arm). PRE-LAUNCH
+#    GATE, thresholds fixed before it runs: (a) scripts/dn01_st_recal_gate.py, per width: eval-mode L1 to the teacher
+#    <= 1.10 x train-mode L1 on 60 fresh training-mix draws (seed 123); (b) provenance/dn01_st_step0/compare_st.py,
+#    step-0 restored PSNR of ST-F- full and ST-F-slim >= released Pocket - 1.0 dB on b0s0 and - 0.5 dB on llb3, Bonn
+#    and KITTI dev. Either gate failing blocks the arms. Descriptive, not a defect: both students trail the teacher at
+#    b3s25 (1.6-3.7 dB in the hunt; one stage on a raw triplet vs two stages over 5 frames).
+#
+# 4. BEFORE SUBMISSION (at the launch commit): (i) real-data step-0 on bench_joint dev, Bonn + KITTI x 2 clips x
+#    {b0s0, b3s25, llb3}: ST-F@0 depth == metric_vda_s bit-exact; ST-U@0 == ST-F@0 EXACT, depth and restoration (K37(c));
+#    injection-OFF@0 == ST-F@0 (zero-init projection); C-LL@0 == pocketdvdnet (released). Declared: ST's step-0
+#    restoration is the DISTILLED temp2, NOT the cascade's; its gap to Pocket v1.0 is reported. (ii) One train.py step
+#    each for ST-F-full and ST-U-slim on crispwork: optimizer set == trainable_modules, clip groups as in 2, VDA outside
+#    motion_modules and all BN running stats unchanged.
+#
+# 5. EVAL CELLS + SEEDS (K39(f); fixed before any scoring). bench_joint dev split (even-indexed clips; KITTI at short
+#    side 378, Bonn 518, max_len 110), `run --temporal`:
+#      PRIMARY b3s25 (Gaussian blur 3 px + AWGN 25/255) and llb3 (low light: EV -1.68 = the BVI-RLV median, kappa 0.186,
+#      the ELVIS bank's per-parameter median profile, + Gaussian blur 3 px); GUARD b0s0 (clean);
+#      DESCRIPTIVE ll (EV -1.68, no blur), b3s0, b1.5s0, llhard (EV -2.68 + blur 3).
+#    Seeds: bench_joint.noise_seed(dataset, clip, sigma) = sha256("<ds>|<clip>|awgn|<sigma>"); LL cells use the cell
+#    name in place of sigma (e.g. "...|awgn|llb3"); CPU generators, identical on every host. LL cells are BLIND: no
+#    restorer gets true values.
+#    Held-out (scripts/dn01_heldout_eval.py, benchmark.py's frozen iterators): nuScenes-night DEV (15 scenes, real, no
+#    clean GT; depth + TAE with the committed CAM_FRONT poses, --temporal), KITTI-C 522 (drives disjoint from bench_joint
+#    KITTI; clean, dark:3, gaussian_noise:3, defocus_blur:3; depth + descriptive PSNR/SSIM vs the clean split), NYU and
+#    ScanNet++ (first 10 scenes) at b0s0 + b3s25 (indoor guard). nuScenes-night TEST (84 scenes) is NOT scored.
+#
+# 6. METRICS (directions explicit). Depth: aligned AbsRel (LOWER better), delta1 (HIGHER better); the UNALIGNED
+#    AbsRel guard (LOWER). Restoration: PSNR, SSIM (HIGHER). Temporal: tOF of the restored video (LOWER; pinned RAFT
+#    raft_large C_T_SKHT_V2 sha256 ff5fadd5..., 12 updates, fp32) and TAE of depth (LOWER; VDA's eval_tae.py verbatim).
+#    Restoration / tOF gates rest on the SYNTHETIC KITTI + Bonn dev cells (nuScenes-night has no clean GT);
+#    nuScenes-night DEV separates ST-U from ST-F on depth / TAE only.
+#
+# 7. BEST CASCADE per (dataset, cell) (K39(c), fixed now). Gate candidates, each followed by the released Metric-VDA-S:
+#    C-LL (the fine-tuned matched restorer), released PocketDVDNet v1.0, FastDVDnet_blind. Streaming and clip-mode
+#    cascades compute the SAME function (tests/test_dn01_speed_probe.py: equal on interior frames), so one scored row
+#    covers both modes (scored in clip mode); they differ in latency only. BC_m = the BEST value of metric m over the
+#    candidates, per metric (max PSNR, max SSIM, min tOF) -- the strictest reading. Depth reference: plain Metric-VDA-S
+#    on the degraded input (MVDA). DECLARED DEVIATION from K39(c)'s "FastDVDnet[_blind]": the sigma-ORACLE FastDVDnet
+#    (true AWGN sigma as its noise map) is scored and reported in the same table but is NOT a gate candidate, because
+#    ST and every gate candidate are blind and on the LL cells the oracle has no sigma to receive. The Auditor rules.
+#    [Auditor ruling 2026-09-26: ACCEPTED; the row is labelled "sigma-oracle, not blind" in every table.]
+#
+# 8. GATES (per arm; ALL must hold). K = KITTI dev, B = Bonn dev.
+#    G1 restoration NI vs BC, at b3s25 AND llb3: K: PSNR >= BC - 0.3 dB and SSIM >= BC - 0.005; B: PSNR >= BC - 0.5 dB
+#       and SSIM >= BC - 0.010. Clean guard b0s0: PSNR >= BC - 0.5 dB on K and B.
+#    G2 temporal (restoration) vs BC, at b3s25 AND llb3: tOF <= BC_tOF x 1.05 (K), x 1.10 (B).
+#    G3 depth NI vs MVDA (lower AbsRel / higher delta1), with the UNALIGNED guard on the same cells and margin:
+#       aligned AbsRel <= m x MVDA, unaligned AbsRel <= m x MVDA's, delta1 >= MVDA - d:
+#       K dev (b0s0, b3s25, llb3) m 1.01; nuScenes-night DEV m 1.02; KITTI-C 522 (each of its 4 cells) m 1.02; d 0.005.
+#       (KITTI-C rationale: K34 used 1.01 on the MEAN of its 3 corruption cells; here each of the 4 cells is gated
+#       SEPARATELY, so each single-cell mean is noisier, and it takes nuScenes-night DEV's held-out margin 1.02.)
+#       B dev (b0s0, b3s25, llb3) m 1.05; NYU + ScanNet++ (b0s0, b3s25; the indoor guard) m 1.05; d 0.010.
+#       TAE <= m x MVDA's TAE (LOWER) on K dev and B dev (b3s25, llb3) and nuScenes-night DEV, same m.
+#       ST-F / injection-OFF: every depth row must EQUAL metric_vda_s's (G3 trivially holds); any difference stops the
+#       verdict as a bug (K36(b), K36(e)). ST-U: judged in full, incl. the HELD-OUT outdoor sets (K37(d)).
+#    G4 latency: faster than BOTH the streaming AND the clip-mode Pocket -> Metric-VDA-S cascade under the K36(a)
+#       protocol (the gate as set by the user after the measurement, section 10). Numbers = the K39(a) record (1998ac8):
+#       ST-full 7.309 / ST-slim 6.882 ms vs 8.437 / 11.069 -> both pass. ST-U's forward == ST-F's (tested, both widths),
+#       so the numbers cover ST-U.
+#    In-job reference rows: metric_vda_s and pocketdvdnet+metric_vda_s must re-score to their recorded values (K23
+#    bench_joint b3s25: Bonn 0.08855, KITTI 0.15123 aligned; K34 held-out: nuScenes-night 0.2041, provenance/
+#    dn01_heldout_k34/) or nothing is compared.
+#
+# 9a. ATTRIBUTION (Manager D1; carries the joint-vs-cascade claim). Injection-OFF IS ITSELF A CASCADE (Metric-VDA-S +
+#    an independent distilled temp2), and a FASTER one than ST-full: derived temp2 1.347 + Metric-VDA-S 5.746 = 7.093
+#    ms/frame (speed_probe_st.json, not a measurement of its own forward) vs ST-full 7.309. "Shared VDA features help"
+#    is claimed iff ST-F-full vs injection-OFF, at b3s25 AND llb3 on BOTH K and B dev: [PSNR >= OFF + 0.2 dB AND tOF <=
+#    OFF x 1.02] OR [tOF <= OFF x 0.95 AND PSNR >= OFF - 0.1 dB]. Measured at FULL width only (no slim OFF arm); if a
+#    slim arm is selected, the attribution is stated as measured at full width [superseded by A1]. Injection-OFF
+#    and C-LL are NEVER selectable. IF ATTRIBUTION FAILS: the ST result reads "a lighter distilled restorer next to
+#    a frozen VDA"; the speed claim holds only against the Pocket cascades as run, not against a same-width cascade;
+#    the selected arm is NOT launched to final-v2 automatically -- the verdict goes to the Manager / user.
+#    [Auditor 2026-09-26: the 7.093 ms is DERIVED; if the attribution is quoted with a speed, injection-OFF's own
+#    forward is timed under K36(a) first.]
+#
+# 9a-A1. AMENDMENT A1 = K41 (2026-09-26, user via Manager; PRE-RESULT: no arm has been submitted, distillation outputs
+#    not yet scored). ADD the SLIM injection-OFF control dn01_st_f_slim_noinj: ST-F-slim with st_inject false, same
+#    recipe and the same distilled slim init (one config difference, tested). The attribution clause above applies at
+#    BOTH widths, same thresholds: full = ST-F-full vs full-OFF, slim = ST-F-slim vs slim-OFF. S1-S3 are unchanged;
+#    the selected arm's attribution is the clause AT ITS WIDTH (ST-U arms use the ST-F-vs-OFF result of their width),
+#    and "if attribution fails" above applies to that width. Slim-OFF is NEVER selectable. Step-0 adds slim-OFF@0 ==
+#    ST-F-slim@0 exactly. Slim-OFF LATENCY is NOT derivable from recorded stages (the slim temp2 alone was never
+#    timed), so if quoted it is MEASURED, with full-OFF's, in the next K36(a) timing session. Budget 6 arms + C-LL.
+#
+# 9b. SELECTION (K39(d)). Selection data are DEV only (bench_joint dev, nuScenes-night DEV, and the gate sets KITTI-C
+#    522 / NYU / ScanNet++ subset, which thereby become selection-touched); nuScenes-night TEST stays untouched and is
+#    the final table's only untouched held-out evidence.
+#    S1 P = the arms among {ST-F-full, ST-F-slim, ST-U-full, ST-U-slim} passing G1-G4 (never the OFF controls, C-LL).
+#    S2 width: slim if any slim arm is in P (faster: 6.882 vs 7.309 ms), UNLESS a full arm in P beats the best slim arm
+#       in P by >= 0.5 dB PSNR at BOTH b3s25 and llb3 on K dev; then full.
+#    S3 at that width, if both are in P: ST-U iff on nuScenes-night DEV its aligned AbsRel <= 0.98 x ST-F's AND its TAE
+#       <= ST-F's; else ST-F (depth == released Metric-VDA-S). If only one is in P, it is selected.
+#    S4 NO ARM PASSES: no ST arm goes to final-v2; the verdict lists each arm's failing gates; the decision returns to
+#       the Manager / user; nothing is re-tuned on these results without a newly pre-declared arm.
+#    K42 (2026-09-26, USER: "I decide the final model. My verdict is final."; pre-result): S1-S4 are ADVISORY. The 2x2
+#       verdict reports each arm's gates + the rule's recommended arm; final-v2 is NOT submitted until the user picks.
+#       A pick against the recommendation is logged as "USER DECISION (rule recommended X)". Arm-level gates and the
+#       attribution clause still follow their pre-declared rules.
+#
+# 9c. L3 GRADIENT PATHS (K37(e); final-v2). L3 = mean over omega of tau*logsumexp(eps_D/tau, eps_R/tau) - tau*log 2
+#    (loss.joint_temporal_mode lse; eps_D in metric_disparity space). dL3/d eps_D = sigmoid((eps_D - eps_R)/tau),
+#    dL3/d eps_R = sigmoid((eps_R - eps_D)/tau). ST-F: eps_D has NO trainable path, so L3 reaches only temp2 + proj,
+#    through eps_R, each pixel weighted by sigmoid((eps_R - eps_D)/tau) -- the fixed depth flicker sets where restoration
+#    flicker is penalised; L3 cannot change depth or TAE. ST-U: additionally L3 reaches motion_modules ONLY through
+#    eps_D, weighted by sigmoid((eps_D - eps_R)/tau), i.e. by the restoration error; restoration never reaches VDA and
+#    depth never reaches temp2 (tested: test_gradient_routing_and_frozen_bn). The seeded L3 claim describes exactly this.
+#
+# 9d. FINAL-v2 SEEDED L3 TEST (K38(e); restated in the final-v2 configs before launch). The selected arm at 8000
+#    steps, seeds 42 / 43 / 44, L3 ON (lse) vs lam0 twins that differ ONLY in loss.joint_temporal_weight (same seeds,
+#    data order, init). The ramp must act within 8000 steps: joint_temporal_ramp [2000, 4000] (the inherited
+#    [8000, 10000] would leave L3 inert); lambda0 = 0.5 x L2 / L3 and tau0 = the median of max(eps_D, eps_R), both
+#    measured on the selected arm's step-4000 checkpoint over training batches and committed as a hashed artifact
+#    before launch (the Phase C rule). PRIMARY metric = tOF of the restored video (both ST-F and ST-U); TAE is
+#    SECONDARY and only for ST-U (for ST-F, L3 cannot move TAE). Datasets: K dev and B dev at b3s25 + llb3.
+#    CLAIM "L3 improves temporal consistency" iff on BOTH K and B, per cell: mean-over-seeds tOF(L3) <= 0.97 x
+#    mean tOF(lam0) AND all 3 seed pairs tOF(L3) < tOF(lam0), AND NI: mean PSNR(L3) >= mean PSNR(lam0) - 0.2 dB and
+#    mean SSIM >= - 0.005. ST-U's TAE claim: the same rule on TAE (K dev, B dev, nuScenes-night DEV), secondary.
+#    MATCHED CONTROL (K35; restated per Auditor 2026-09-26): C-LL x 3 seeds (42 / 43 / 44) at 8000 steps on the same
+#    mix, scored as pocketdvdnet:<C-LL>+metric_vda_s -- the final table's matched-cascade row, and G1 / G2's C-LL
+#    candidate at final-v2 is its per-seed mean.
+#
+# 10. SPEED CRITERION HISTORY (K40(1)). K36(a) (6fe6b71, declared before measuring) set the target >= 1.3x vs the
+#    STREAMING Pocket cascade (<= 6.49 ms). It was MISSED: ST-full 1.154x, ST-slim 1.226x (K39(a), 1998ac8). AFTER that
+#    result the user set the gate to "faster than both Pocket cascade modes" (G4). A > 1x ratio is therefore NOT the
+#    pre-declared target; the 1.3x target is reported as missed, descriptively, next to every speed claim.
+#    Also reported (descriptive): ratios vs the FastDVDnet(_blind) cascades, clip and streaming, from the K40 re-timing
+#    (K40, ONE run @167d841, provenance/dn01_speed_probe_fastdvd/results/speed_probe_fastdvd.json sha256 ffe231b3...,
+#    vda_s brackets 5.734 / 5.749): FastDVDnet -> Metric-VDA-S clip 14.527 / streaming 10.175 ms (blind 14.571 /
+#    10.211); ST-full 1.99x / 1.39x, ST-slim 2.11x / 1.48x vs FastDVDnet clip / streaming. The same session re-timed
+#    ST-full 7.315 / ST-slim 6.886 and the Pocket cascades 8.439 / 11.080 (the K39(a) record reproduces within 0.1%).
+#
+# 11. DESCRIPTIVE (not gating): llhard, ll, b3s0, b1.5s0; restoration and tOF deltas vs BC and vs C-LL; eps_r / eps_d /
+#    joint_p95; KITTI-C PSNR/SSIM restored vs input (real corruptions, single images: no tOF); depth vs the best
+#    cascade's depth; C-LL vs C; distillation fidelity; the sigma-oracle FastDVDnet row. Single seed throughout.
+model:
+  frontend: none
+  shared_temporal: true
+  st_width: full
+  st_inject: true
+  st_unfreeze_motion: false
+  st_temp2_init: /projects/b5dh/RAMEN_train_dn01_st_recal/runs/recal_full/temp2_distilled.pt
+training:
+  frontend_only: false
+  checkpoint_dir: runs/dn01_st_f_full

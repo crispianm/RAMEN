@@ -1,0 +1,12 @@
+extends: dn01_v2_st_u_full.yaml
+
+# DN-01 WS2 arm S: ST-U v2 + the K49 STATIC-CLIP regime ONLY (no L_rg, no unlabeled video, no path). 25% of the labelled
+# training clips become ONE still frame + its GT x32, every frame degraded independently (per-frame noise level x
+# U[0.5, 1.5]; lowlight: + EV jitter U[-0.15, +0.15] stops; the exposed target follows each frame's EV). Separates the
+# regime from the coupling. Rule: dn01_ws2_ars.yaml's header.
+data:
+  static_prob: 0.25
+  static_noise_mult: [0.5, 1.5]
+  static_ev_jitter: 0.15
+training:
+  checkpoint_dir: runs/dn01_ws2_s

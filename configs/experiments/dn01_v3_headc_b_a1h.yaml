@@ -1,0 +1,13 @@
+extends: dn01_mf_a1h_n45.yaml
+
+# DN-01 protocol v3 WP17: the design-(c) coupling ("ours framing B", c2 = the stronger restorer) PORTED onto the a1h base (a1h: metric Metric-VDA-S stage, DPT head + motion modules trainable, V2 temp2 restorer).
+# Keys (headc 4f1794d): st_inject false (required: depth reads the restored frames, so the injection of depth features into the restorer is off), st_depth_input restored (depth = vda(raw + g*(R - raw)), g a scalar zero-init
+# gate in its own optimizer group at gate_lr_scale x LR, R not detached), st_stage2_width wide2x (c2: a gated zero-init 2x-wide second restorer block). STEP 0 == the a1h base's depth bit for bit (g = 0).
+# Fixture for WP20's {syn,synreal}_B / _Benh0 (Benh0 = this + loss.enh_weight 0): they extend this file and add the shared v3 keys (12000 steps, llvar mix, ...). Not a launch config on its own (a1h's 4000 steps / VKITTI+IRS data).
+model:
+  st_inject: false
+  st_depth_input: restored
+  st_stage2_width: wide2x
+training:
+  gate_lr_scale: 10
+  checkpoint_dir: runs/dn01_v3_headc_b_a1h

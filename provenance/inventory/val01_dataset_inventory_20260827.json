@@ -1,0 +1,42 @@
+{
+  "task": "VAL-01",
+  "step": "step 4 -- dataset inventory",
+  "host": "b5dh.aip2.isambard",
+  "root": "/projects/b5dh/data/train",
+  "date": "2026-08-27",
+  "method": "bounded `find` over the raw directory tree (no Dataset-class construction -- avoids the login-node OOM that killed earlier attempts importing train.py/data's full corpus scan)",
+  "CORRECTION_2026-08-27": "The original vkitti count (21260) was a bug in the inventory `find` command: it counted frames across ALL 10 VKITTI variant subdirectories (clone/fog/morning/overcast/rain/sunset/15-deg-left/15-deg-right/30-deg-left/30-deg-right) combined, not `variants: [clone]` (the base config's own convention, and what VAL-01 uses -- the other variants are synthetic weather augmentations, arguably a form of distribution shift not part of 'clean' training data). Corrected below to the real clone-only count (447+233+270+339+837=2126 across the 5 scenes) before this was used in any real config -- caught by re-checking VKITTI's actual variant directory structure rather than assuming the original find command's scope. frame_counts.vkitti below means clone-only.",
+  "frame_counts": {
+    "tartanair": 897798,
+    "vkitti": 2126,
+    "irs": 103316,
+    "pointodyssey": 239022
+  },
+  "total_frames": 1242262,
+  "composition_pct": {
+    "tartanair": 72.28,
+    "vkitti": 0.17,
+    "irs": 8.32,
+    "pointodyssey": 19.24
+  },
+  "tartanair_version": "V2 (theairlabcmu/tartanair2 on HuggingFace; raw dirs use image_lcam_front/depth_lcam_front naming, V2's convention)",
+  "tartanair_trajectories": 561,
+  "tartanair_envs": 75,
+  "vkitti_scenes": ["Scene01", "Scene02", "Scene06", "Scene18", "Scene20"],
+  "irs_families": ["Home", "Office", "Restaurant", "Store"],
+  "pointodyssey_trajectories": 264,
+  "composition_mismatch_note": "Our corpus's composition (72/0.2/8/19% by frame count, clone-only VKITTI) diverges substantially from VDA's own published training mixture (~56/7/18/18%, from 0.31M/0.04M/0.1M/0.1M =~ 0.55M total, arXiv 2501.12375) -- far more TartanAir, far less VKITTI and IRS than VDA actually trained on (VKITTI's gap widens further once corrected to clone-only: our real VKITTI corpus is under 6% the size VDA's paper mixture implies). `data.sampling: \"proportional\"` (train.py) samples proportional to whatever frame_count is declared per source in the config, which defaults to matching THIS artifact's real on-disk counts, not VDA's paper ratios -- see provenance/plan_state.json's VAL-01 note for the open question this leaves for the VAL-01 configs.",
+  "checkpoints": {
+    "video_depth_anything_vits": {
+      "path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/video_depth_anything_vits.pth",
+      "sha256": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
+      "verified_via": "curl -I https://huggingface.co/depth-anything/Video-Depth-Anything-Small/resolve/main/video_depth_anything_vits.pth -- X-Linked-ETag matches exactly"
+    },
+    "metric_video_depth_anything_vits": {
+      "path": "/mnt/DATA/DegradedDepth/deprecated/FocusMamba/checkpoints/metric_video_depth_anything_vits.pth",
+      "sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
+      "verified_via": "curl -I https://huggingface.co/depth-anything/Metric-Video-Depth-Anything-Small/resolve/main/metric_video_depth_anything_vits.pth -- X-Linked-ETag matches exactly",
+      "note": "found under a 'deprecated' path -- the only copy on crispwork -- but content is byte-identical to the official release"
+    }
+  }
+}

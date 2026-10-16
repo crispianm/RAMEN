@@ -1,0 +1,3244 @@
+{
+ "vkitti": [
+  {
+   "Scene01_overcast": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/overcast/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene01/overcast/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene01_sunset": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene01/sunset/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene01/sunset/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene02_overcast": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/overcast/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene02/overcast/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene02_sunset": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene02/sunset/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene02/sunset/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene06_overcast": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/overcast/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene06/overcast/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene06_sunset": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene06/sunset/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene06/sunset/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene18_overcast": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/overcast/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene18/overcast/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene18_sunset": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene18/sunset/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene18/sunset/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene20_overcast": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/overcast/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene20/overcast/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  },
+  {
+   "Scene20_sunset": [
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00000.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00000.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00001.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00001.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00002.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00002.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00003.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00003.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00004.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00004.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00005.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00005.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00006.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00006.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00007.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00007.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00008.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00008.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00009.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00009.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00010.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00010.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00011.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00011.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00012.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00012.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00013.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00013.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00014.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00014.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00015.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00015.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00016.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00016.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00017.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00017.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00018.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00018.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00019.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00019.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00020.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00020.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00021.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00021.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00022.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00022.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00023.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00023.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00024.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00024.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00025.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00025.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00026.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00026.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00027.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00027.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00028.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00028.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00029.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00029.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00030.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00030.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00031.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00031.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00032.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00032.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00033.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00033.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00034.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00034.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00035.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00035.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00036.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00036.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00037.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00037.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00038.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00038.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00039.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00039.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00040.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00040.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00041.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00041.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00042.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00042.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00043.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00043.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00044.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00044.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00045.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00045.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00046.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00046.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00047.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00047.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00048.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00048.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00049.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00049.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00050.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00050.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00051.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00051.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00052.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00052.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00053.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00053.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00054.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00054.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00055.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00055.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00056.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00056.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00057.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00057.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00058.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00058.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00059.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00059.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00060.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00060.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00061.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00061.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00062.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00062.jpg"
+    },
+    {
+     "factor": 100,
+     "gt_depth": "Scene20/sunset/frames/depth/Camera_0/depth_00063.png",
+     "image": "Scene20/sunset/frames/rgb/Camera_0/rgb_00063.jpg"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+extends: dn01_diag_rf1.yaml
+
+# DN-01 DIAGNOSTIC arm FR (user's idea, K29; Manager GO 2026-09-24 ~13:30Z; user amendment: PocketDVDNet, not FastDVDnet;
+# NOT a final arm). The pretrained PocketDVDNet video denoiser (the user's ICASSP 2026 model, vendor/pocketdvdnet @
+# 46b6e9d, v1.0 weights sha256 78320cda...; blind, 5-frame window, 643,236 params) IN FRONT of the frozen released
+# Metric-VDA-S, trained END TO END: depth AND restoration gradients reach PocketDVDNet through the frozen encoder and
+# depth head; our zero-init h8+GN restoration head (rf1's) on the post-temporal refinenet1 features refines
+# PocketDVDNet's output (its rgb input is PocketDVDNet's restored frame, not the raw frame).
+# Design, stated before any FR job:
+# - Front-end is CLIP-level (models/restoration.py:PocketFrontEnd): each frame's t-2..t+2 neighbourhood is reflected at
+#   the clip ends; bench_joint applies it to the whole clip before VDA's 32-frame windowing, exactly as for the cascade.
+#   STEP 0 IS THE pocketdvdnet+metric_vda_s CASCADE: tests/test_dn01_fr.py (both outputs, bit-exact) and on real data,
+#   bench_joint Bonn+KITTI x b0s0/b3s25, 2 dev clips of 79-110 frames: every per-video metric identical
+#   (provenance/dn01_diag_fr/step0/, SHA256SUMS 02ac30df...).
+# - The released metric DEPTH HEAD IS FROZEN (model.freeze_depth_head), as is the encoder: both arms then share the
+#   exact released depth network, so FR vs the control isolates end-to-end training of the front-end (+ our head).
+#   (A trainable head would mix in head adaptation to the VKITTI+IRS mix, which cost Bonn 10-25% in the twins.)
+# - PocketDVDNet's BatchNorm stays in eval mode (running statistics frozen; weights train), in both arms.
+# - Recipe: rf1's (4 GPUs x grad_accum 4, 4000 steps, hold 0, ramp 500, LR 1e-4 for every trainable tensor, warmup
+#   500, data.seed 42 + seeded_noise) with data.blur_only_prob 0.25 (R2's knob) and init = released Metric-VDA-S (no
+#   VAL-01 init_from; the v3 prefix's clean hold existed to convert a relative head to metric, not needed here).
+# - Scorer paths: bench_joint ours: and dn01_eps_scale apply the front-end (tested == forward with a perturbed
+#   front-end); val01_eval_vda and dn01_eval_restoration/temporal REFUSE a front-end checkpoint (per-window loaders).
+# - Cost (4090 probe, T=8): FR 16.5 GiB / 0.31 s per iter (rf1 2.45 GiB / 0.079) -> ~65 GiB and ~4x rf1's time at
+#   32x518^2 (~4 h on 4 GPUs); the control 7.6 GiB / 0.18 s (~2.3x).
+# MATCHED CONTROL C = dn01_diag_fr_ctrl.yaml: the same PocketDVDNet init fine-tuned ALONE (restoration L1 on its output;
+# no depth forward) on the same data/degradations/steps/LR/GPU count/seed, scored as the cascade
+# pocketdvdnet:<C step4000.pt>+metric_vda_s (frozen released Metric-VDA-S; +vda_s rows descriptive).
+#
+# PRE-DECLARED RULE (written 2026-09-24T13:25Z, before any FR or control job was submitted and before any result of
+# either exists). Judged at step 4000, bench_joint dev (KITTI at 378), SINGLE SEED (42), FR vs C; degraded-first (K25),
+# both datasets (K26). FR PASSES iff Q1-Q4 all hold:
+#   Q1 depth (primary): b3s25 aligned AbsRel <= 0.95 x C on Bonn AND <= 0.99 x C on KITTI (per-dataset seed spread:
+#      Bonn 5-10%, KITTI ~1%; the PA margins).
+#   Q2 restoration (primary), on BOTH datasets: (a) b3s25 PSNR >= C + 0.3 dB AND SSIM >= C; (b) blur-only cells b3s0
+#      and b1.5s0: PSNR >= C + 0.3 dB (PSNR seed noise <= 0.05 dB).
+#   Q3 guards, both datasets: clean b0s0 aligned AbsRel <= 1.10 x C; b3s25 unaligned AbsRel <= 1.05 x C (Bonn),
+#      <= 1.01 x C (KITTI) (metric scale).
+#   Q4 predicted depth < 0.1 m fraction, mean < 1e-3 (eps-scale at step 4000).
+#   Latency (K29, user 2026-09-24): soft ceiling = the fastest quality-matched cascade, fastdvdnet+wiener_oracle+vda_s,
+#      re-measured in the FR session at 14.64 ms/frame (user's figure ~15.1). FR 11.57, C's cascade 11.15 ms/frame
+#      (provenance/dn01_latency_fr/, SHA256SUMS 42d2b7b3...; vda_s brackets 5.741-5.745). FR is under the ceiling.
+# Primary-descriptive (reported with every verdict, not gating): temporal consistency at b3s25, eps_r (restoration
+#   flicker) and joint_p95, FR vs C (the user's temporal-consistency hypothesis).
+# References (same harness, re-scored in-job): released Metric-VDA-S (K23; dev b3s25 aligned Bonn 0.08855 sha256
+#   6a02c4e0..., KITTI 0.15123 sha256 86b3b411...) and the untouched pocketdvdnet+metric_vda_s cascade (= both arms'
+#   step 0). Descriptive: b0s25, and the held-out disk-PSF cells d6s0/d6s25.
+# Single seed: a PASS makes FR a final-v2 CANDIDATE, not a claim; the verdict text carries the single-seed caveat.
+#
+# AMENDMENT 2026-09-24T13:29Z (the MANAGER's; written after FR/C were submitted at 13:28:37Z on the Auditor's OK, but
+# before any result: at 13:28:53Z all 7 FR/C jobs were PENDING, neither train clone had a runs/ directory and
+# bench_joint_diag_fr/ was empty). The PASS condition above is REPLACED; Q1-Q4 thresholds as written are the
+# "improvement" levels. Either joint gain alone is a genuine joint-training result, so:
+#   FR PASSES iff { [Q1 improvement AND Q2 non-inferior] OR [Q2 improvement AND Q1 non-inferior] } AND Q3 AND Q4.
+#   Q1 improvement: as Q1 above.  Q1 non-inferior: b3s25 aligned <= 1.05 x C (Bonn) AND <= 1.01 x C (KITTI).
+#   Q2 improvement: as Q2 (a) AND (b) above.  Q2 non-inferior: PSNR >= C - 0.3 dB AND SSIM >= C - 0.005 at b3s25,
+#      b3s0 and b1.5s0, on both datasets.
+#   The verdict states which branch passed (depth-side or restoration-side joint gain), with the single-seed caveat.
+#   Auditor conditions (accepted by the Manager; added 2026-09-24T13:29Z, still pre-result: all 7 FR/C jobs PENDING at 13:29:31Z):
+#   (a) WHOLE branch on BOTH datasets, no cross-mixing: PASS = [Q1-imp Bonn AND Q1-imp KITTI AND Q2-NI Bonn AND
+#       Q2-NI KITTI] OR [Q2-imp Bonn AND Q2-imp KITTI AND Q1-NI Bonn AND Q1-NI KITTI], AND Q3 AND Q4. Q1-imp on one
+#       dataset with Q2-imp on the other does NOT pass.
+#   (b) The verdict text states this OR structure (two routes to a single-seed pass) next to the single-seed caveat.
+model:
+  vda_init: released
+  vda_checkpoint_path: /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth
+  init_from: null
+  frontend: pocketdvdnet
+  freeze_depth_head: true
+data:
+  blur_only_prob: 0.25
+training:
+  checkpoint_dir: runs/dn01_diag_fr

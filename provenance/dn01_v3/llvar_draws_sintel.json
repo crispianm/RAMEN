@@ -1,0 +1,163 @@
+{
+ "cell_spec": {
+  "blur_px": 3.0,
+  "ev_range": [
+   -3.0,
+   -0.5
+  ],
+  "isp_noise": "data.elvis_noise.degrade_clip_lowlight, ELVIS bank median profile, as llb3 (ll_cfg); exposure, blur, noise per draw",
+  "kappa_base": 0.186,
+  "kappa_mults": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "llvarf_ev_jitter": 0.15,
+  "llvarf_kappa_mult": [
+   0.5,
+   1.5
+  ],
+  "seed": "noise_seed(dataset, key, 'llvar|draw'); noise stream noise_seed(dataset, key, '<cell>|noise')"
+ },
+ "dataset": "sintel",
+ "draws": {
+  "alley_1": {
+   "blur": 3.0,
+   "ev": -2.0467129560032102,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "alley_2": {
+   "blur": 3.0,
+   "ev": -1.5203973973952238,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "ambush_2": {
+   "blur": 3.0,
+   "ev": -1.7374042254646422,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "ambush_4": {
+   "blur": 3.0,
+   "ev": -1.8555384235262151,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "ambush_5": {
+   "blur": 3.0,
+   "ev": -1.8025547652112834,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "ambush_6": {
+   "blur": 3.0,
+   "ev": -1.9890879153882546,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "ambush_7": {
+   "blur": 3.0,
+   "ev": -1.1839389488369374,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "bamboo_1": {
+   "blur": 3.0,
+   "ev": -1.1116531056619579,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "bamboo_2": {
+   "blur": 3.0,
+   "ev": -2.6903934306289634,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "bandage_1": {
+   "blur": 3.0,
+   "ev": -2.8137197239872993,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "bandage_2": {
+   "blur": 3.0,
+   "ev": -2.7062614298515553,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "cave_2": {
+   "blur": 3.0,
+   "ev": -2.618701598347171,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "cave_4": {
+   "blur": 3.0,
+   "ev": -1.757572813753882,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "market_2": {
+   "blur": 3.0,
+   "ev": -1.559680797904978,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "market_5": {
+   "blur": 3.0,
+   "ev": -1.956757008139704,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "market_6": {
+   "blur": 3.0,
+   "ev": -1.4525525407282773,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "mountain_1": {
+   "blur": 3.0,
+   "ev": -1.8651967858654726,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "shaman_2": {
+   "blur": 3.0,
+   "ev": -2.862692856490875,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "shaman_3": {
+   "blur": 3.0,
+   "ev": -0.9383191522184786,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "sleeping_1": {
+   "blur": 3.0,
+   "ev": -1.762896455901036,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "sleeping_2": {
+   "blur": 3.0,
+   "ev": -2.0488852300748057,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "temple_2": {
+   "blur": 3.0,
+   "ev": -1.8278460736468825,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "temple_3": {
+   "blur": 3.0,
+   "ev": -2.479387898112466,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  }
+ }
+}

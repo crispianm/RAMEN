@@ -1,0 +1,92 @@
+model:
+  arch: d3
+  config_name: da3-small
+  # Pin the foundation weights on Isambard. Screening must not depend on a
+  # compute node having network access or a pre-populated Hugging Face cache.
+  checkpoint_path: /projects/b5dh/RAMEN/checkpoints/depth-anything-v3-small.safetensors
+  temporal_type: dyfn_attn_renorm
+  require_temporal_type: dyfn_attn_renorm
+  temporal_scales: [0, 1, 2, 3]
+  temporal_kernel: 3
+  temporal_hidden_dim: 64
+  temporal_gate_init: 0.1
+  use_temporal: true
+  use_frontend: true
+  frontend_type: deblur
+  use_profile: false
+  lora_rank: 32
+  lora_alpha: 32.0
+  per_frame_encode: true
+  strict_causal: true
+  device: cuda
+
+data:
+  sources:
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone]}
+    - {type: tartanair, root: /projects/b5dh/data/train/tartanair}
+    - {type: irs, root: /projects/b5dh/data/train/irs}
+    - {type: pointodyssey, root: /projects/b5dh/data/train/point_odyssey/train}
+    - {type: pseudo_gt, rgb_root: /projects/b5dh/data/train/bvi_aom/rgb, depth_root: /projects/b5dh/data/train/bvi_aom/depth}
+    - {type: pseudo_gt, rgb_root: /projects/b5dh/data/train/youtube_vos/rgb, depth_root: /projects/b5dh/data/train/youtube_vos/depth}
+  val_sources:
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone]}
+    - {type: tartanair, root: /projects/b5dh/data/train/tartanair}
+    - {type: irs, root: /projects/b5dh/data/train/irs}
+    - {type: pointodyssey, root: /projects/b5dh/data/train/point_odyssey/val}
+  uniform_sampler: true
+  val_clips_per_source: 20
+  num_frames: 8
+  image_size: [518, 518]
+  clip_stride: 8
+  frame_stride: 1
+  max_depth: 80.0
+  max_clips_per_video: 50
+  seed: 42
+  degrade: true
+  degrade_mode: full
+  val_degrade_severity: 1.0
+  num_workers: 8
+  val_batch_size: 1
+
+training:
+  max_epochs: 100
+  max_steps: 10000
+  batch_size: 1
+  grad_accum: 4
+  learning_rate: 5.0e-6
+  weight_decay: 0.01
+  warmup_steps: 200
+  lr_decay_steps: 400000
+  grad_clip: 1.0
+  precision: bf16
+  ema_decay: 0.9995
+  renorm_lr_scale: 100.0
+  severity_warmup_steps: 8000
+  severity_max_cap: 2.0
+  # Fable, 2026-08-26: relaxed from 500 after contention analysis showed validation
+  # passes (recurring every val_every_steps) amplified an 11-concurrent-job storage/
+  # node contention problem into real per-step throughput 4-8x below the printed
+  # rate, causing repeated --time=04:00:00 TIMEOUTs before 10k steps (see
+  # docs/LOOP_JOURNAL.md tick 30/31). checkpoint_every_steps keeps resumability at
+  # the old cadence without paying for a val pass every 500 steps -- a task that
+  # needs a dense val curve (e.g. EXPT-11) overrides val_every_steps itself.
+  val_every_steps: 1000
+  checkpoint_every_steps: 500
+  val_max_batches: 80
+  causal_training: masked
+  checkpoint_dir: runs/ramen_relative_base
+
+loss:
+  ssi_weight: 1.0
+  ssi_align: perclip
+  tgm_weight: 10.0
+  gradient_weight: 0.5
+  silog_weight: 0.0
+  metric_weight: 0.0
+  distill_weight: 0.0
+  consistency_weight: 0.0
+  gram_weight: 0.0
+  profile_weight: 0.0
+  frontend_weight: 0.0
+  enh_weight: 0.0
+  sky_zero_disparity: true

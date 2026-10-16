@@ -1,0 +1,175 @@
+{
+ "counts": {
+  "tartanair": {
+   "type": "tartanair",
+   "videos": 204,
+   "clips": 9781,
+   "unique_frames": 316017,
+   "max_depth": null,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "videos": 100,
+   "clips": 1280,
+   "unique_frames": 42520,
+   "max_depth": 80,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "pointodyssey:train": {
+   "type": "pointodyssey",
+   "videos": 129,
+   "clips": 7204,
+   "unique_frames": 232875,
+   "max_depth": null,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "pointodyssey:val": {
+   "type": "pointodyssey",
+   "videos": 15,
+   "clips": 1059,
+   "unique_frames": 34165,
+   "max_depth": null,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "irs": {
+   "type": "irs",
+   "videos": 77,
+   "clips": 3191,
+   "unique_frames": 103309,
+   "max_depth": null,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "spring": {
+   "type": "spring",
+   "videos": 33,
+   "clips": 134,
+   "unique_frames": 4843,
+   "max_depth": 80.0,
+   "sparse_gt": false,
+   "excluded": []
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "videos": 109,
+   "clips": 1277,
+   "unique_frames": 42194,
+   "max_depth": 80.0,
+   "sparse_gt": true,
+   "excluded": []
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "videos": 265,
+   "clips": 1307,
+   "unique_frames": 46022,
+   "max_depth": 10.0,
+   "sparse_gt": false,
+   "excluded": [
+    "basement_0001a",
+    "basement_0001b",
+    "basement_0001c",
+    "cafe_0001a",
+    "cafe_0001b",
+    "cafe_0001c",
+    "kitchen_0003",
+    "office_0004",
+    "playroom_0002"
+   ]
+  },
+  "scannetpp_train": {
+   "type": "scannetpp_train",
+   "videos": 190,
+   "clips": 54585,
+   "unique_frames": 1749541,
+   "max_depth": 10.0,
+   "sparse_gt": false,
+   "excluded": []
+  }
+ },
+ "variants": {
+  "natural": {
+   "tartanair": {
+    "mass": 310000,
+    "share": 0.4897
+   },
+   "vkitti": {
+    "mass": 40000,
+    "share": 0.0632
+   },
+   "pointodyssey:train": {
+    "mass": 87206,
+    "share": 0.1378
+   },
+   "pointodyssey:val": {
+    "mass": 12794,
+    "share": 0.0202
+   },
+   "irs": {
+    "mass": 100000,
+    "share": 0.158
+   },
+   "spring": {
+    "mass": 4843,
+    "share": 0.0077
+   },
+   "kitti_raw": {
+    "mass": 42194,
+    "share": 0.0667
+   },
+   "nyu_train": {
+    "mass": 24000,
+    "share": 0.0379
+   },
+   "scannetpp_train": {
+    "mass": 12000,
+    "share": 0.019
+   },
+   "real_share": 0.1235
+  },
+  "r50": {
+   "tartanair": {
+    "mass": 310000,
+    "share": 0.2794
+   },
+   "vkitti": {
+    "mass": 40000,
+    "share": 0.036
+   },
+   "pointodyssey:train": {
+    "mass": 87206,
+    "share": 0.0786
+   },
+   "pointodyssey:val": {
+    "mass": 12794,
+    "share": 0.0115
+   },
+   "irs": {
+    "mass": 100000,
+    "share": 0.0901
+   },
+   "spring": {
+    "mass": 4843,
+    "share": 0.0044
+   },
+   "kitti_raw": {
+    "mass": 299397,
+    "share": 0.2698
+   },
+   "nyu_train": {
+    "mass": 170297,
+    "share": 0.1535
+   },
+   "scannetpp_train": {
+    "mass": 85149,
+    "share": 0.0767
+   },
+   "real_share": 0.5
+  }
+ }
+}

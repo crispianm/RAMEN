@@ -1,0 +1,126 @@
+extends: dn01_ws2_s.yaml
+
+# DN-01 FINAL-V2 arm S, seed 43 (dn01_ws2_s with data.seed 43 ONLY). THIS FILE CARRIES THE PRE-DECLARED RULE FOR THE FINAL-V2 ARMS.
+# STATUS: DRAFT (R+D 2, 2026-09-28). NOT audited, NOTHING launched: the Auditor audits this header, then the Manager's GO.
+#
+# 0. DECISION AND WHY. K42 (user 2026-09-28, answered to the Manager: "BOTH IN PARALLEL"): (A) LOCK the paper story on the static-clip
+#    REGIME: the FINAL MODEL = S = the ST-U base (released Metric-VDA-S with its motion modules trained, plus the light PocketDVDNet
+#    temp2 restorer reading detached VDA features, ~7.3 ms) trained with the K49 static-clip regime. WS2 (verdict 2952048, single seed,
+#    advisory) found, vs the depth-only degraded fine-tune (the CONTROL): S real-data flicker (BVI-RLV TEST F_noise) ratio 0.9752,
+#    nuScenes-night DEV TAE 0.9680, synthetic static flicker -21%, all guards PASS; but no coupling idea (restoration-guided L_rg, the
+#    restorer -> depth path, L3) beat the fine-tune. The regime's gain is small and single-seed, so it needs SEEDS before it is a claim.
+#    Story (K45 claim-first, K48, K49): temporally consistent, accurate METRIC depth on REAL low-light driving video; a light restored
+#    frame comes with it; deblurring is a stated limitation. Rain is out (K50).
+#    MANAGER RULING (2026-09-28, pre-result; no TEST metric of any final-v2 model exists; supersedes the Manager's earlier same-day ruling, whose
+#    named-baseline conjunction is withdrawn). The Manager relays that the user decided the primary directly (logged by the Auditor as K54); R+D 2 has
+#    not seen first-hand what the user said and records it here as the Manager's ruling, not as a quotation. (1) ONE PRIMARY: S beats the released
+#    Metric-VDA-S on nuScenes-night TEST, EVERY S seed better on BOTH TAE and aligned AbsRel, with the guards G1-G3; that alone licenses the main
+#    sentence. (2) Each cascade (Pocket, FastDVDnet_blind, C-LL v2), DA-AC (aligned metrics only) and each smoothing kind (A7 non-domination, causal ema0.7
+#    and centred tmed5 SEPARATELY) gets its OWN reported sentence, never an AND over the baselines and never a gate of the primary. (3) S vs CONTROL
+#    (the static regime's increment) is SECONDARY: reported with a declared direction, never gating. (4) The touched / untouched status of every TEST
+#    cell is stated per cell (section 5(h)); the primary uses only nuScenes-night TEST.
+#    EXPECTATION (for the user, written before any final-v2 result): on WS2 DEV the ST-U family beat released MVDA by about -9% night aligned AbsRel and
+#    -13% TAE (single seed), so the ONE PRIMARY is the sentence most likely to hold, but it needs EVERY S seed to win both metrics on a scene set never
+#    scored. On WS2 DEV, S vs CONTROL was night aligned AbsRel 0.1869 vs 0.1855 (S slightly WORSE), night TAE 8.09 vs 8.35 (S better), F_noise ratio
+#    0.9752, single seed: complete separation at 3 v 3 needs all three S seeds below all three control seeds on BOTH night-TEST TAE and AbsRel, so the
+#    SECONDARY is likely NOT to separate unless seeds change the picture; it is reported either way. The cascade, DA-AC and smoothing sentences are
+#    each uncertain and independent.
+#
+# 1. ARMS, SEEDS, REUSE. Six trained models, all = dn01_v2_st_u_full's recipe (released Metric-VDA-S + the recal temp2 init 96d35f08;
+#    motion modules + temp2 + proj trainable; 4000 steps; 4 GPUs; bf16; the same non-annealing LR (cosine over 20000, 0.92x at step
+#    4000: disclosed, identical in every arm)) and differing ONLY as follows (tests/test_dn01_fv2.py):
+#      S        seeds 42 / 43 / 44: + the static-clip regime (data.static_prob 0.25, noise x U[0.5, 1.5], EV jitter +-0.15, WS2 section 2)
+#      CONTROL  seeds 42 / 43 / 44: the depth-only degraded fine-tune (no regime)
+#    The seed is data.seed: it varies the training-clip sampling, the per-clip degradation draws and the static coin; the model init is
+#    identical across seeds (released weights + the recal init + zero-init proj), so the seed spread is data-order + noise spread.
+#    REUSED (per WS2 condition (e), no re-run): S seed 42 = the WS2 arm dn01_ws2_s (Isambard train job 6917657 @2e673575, step4000.pt
+#    sha256 59d98861e16f2a08949db6b6b128c609febeec49b88693b5d2ca8b81956f93a8, step2000 3767de84...); CONTROL seed 42 = the v2 ST-U
+#    (job 6892107 @2ce123e, step4000 af9acc76f1715cfa7cd96c8e46b718bf4fb0f5a7d454fb1a493921720814b08f, step2000 67ada4f1...), both
+#    RE-SCORED in this header's chains (never their old rows). LINEAGE OF THE REUSE (Auditor, 2026-09-28): the two seed-42 arms were trained at DIFFERENT
+#    commits. S-42 @2e673575: the launch tree's training paths (train.py, data/, models/, vendor/, evaluation/) are byte-identical to it
+#    (tests/test_dn01_fv2.py pins them). CONTROL-42 @2ce123e: the launch tree DIFFERS from 2ce123e (train.py / data / models, +351 / -18), so the pin does
+#    not cover it; instead tests/test_dn01_fv2_equivalence.py exports the WHOLE 2ce123e tree (git archive) and runs the real train.train() in it and in the
+#    launch tree on the CONTROL recipe (no static regime, no L_rg; a fixed tiny CPU run, same seed, data and config) and requires the trained weights to be
+#    IDENTICAL tensor by tensor (passed 2026-09-28; it is run again at the launch commit). If either check fails, that seed-42 arm is RE-RUN at the
+#    launch commit. NEW trainings: S 43, S 44, CONTROL 43, CONTROL 44 (4 x 4 GPU, ~1.5 h each by sacct).
+#
+# 2. STATISTICS. 3 seeds per arm. With n = 3 vs 3 the exact one-sided permutation test has p = 1/20 = 0.05 ONLY under
+#    COMPLETE SEPARATION, so: "S beats CONTROL on a metric" iff max over the S seeds < min over the CONTROL seeds (lower is better; a
+#    tie is not a separation). "S beats a deterministic baseline Y" iff EVERY S seed is better than Y. No margins, no other test; the per-seed
+#    values, seed means and ratios are all reported. Everything is labelled with its n (3 seeds; the baselines are single models).
+#
+# 3. PHASE 1 -- DEV regime attribution (ADVISORY and SECONDARY: the regime's increment over the CONTROL is not the primary claim, section 0; it informs
+#    the wording and does not gate the TEST scoring, K42). After the 4 trainings,
+#    all six models (step4000) are re-scored on DEV: F_noise (BVI-RLV TEST, which is SELECTION-TOUCHED since WS2 A2), nuScenes-night DEV
+#    TAE and aligned AbsRel, KITTI / Bonn dev llb3 aligned AbsRel, and the synthetic static cells (st_llb3, st_llvar). PRIMARY (real)
+#    metrics: P1 = F_noise (WS2's c = 0.6957 branch), P3 = night DEV TAE. REGIME BEATS iff S separates from CONTROL on BOTH P1 and P3
+#    (section 2) AND the accuracy guard holds (mean S / mean CONTROL <= 1.10 on night DEV, KITTI llb3, Bonn llb3 aligned AbsRel).
+#    SECONDARY (reported, in-distribution for S): the static-cell flicker. A step2000 BRACKET (night DEV + F_noise only, all six
+#    models) is scored descriptively: the control's internal val drifted up between step 1500 (0.1290) and step 4000 (0.1374), so the
+#    bracket shows whether a result depends on the checkpoint; step4000 is the pre-declared final (no checkpoint selection).
+#    PASS sentence: "the static-clip regime improves real low-light depth consistency and TAE over the same depth fine-tune without it
+#    (3 seeds each, DEV)". FAIL: "the regime's DEV effect is not separable from seed noise".
+#
+# 4. PHASE 2 -- the ONCE-ONLY TEST CONFIRMATION (the paper's untouched real data). PREREQUISITES, committed and Auditor-audited BEFORE any
+#    TEST scoring: (P0) a night-TEST scorer: dn01_heldout_eval SETS['nuscenes_night_test'] (manifest nuscenes_night_test_v1, sha256
+#    0937374a..., 84 scenes on 5 logs, 3385 keyframes, PROJECTIONS.sha256 e1f6fc9a..., poses nuscenes_night_test_v1_poses.json), cell
+#    `real`, split `test`, refused without --allow-test, with tests (Joint R+D; it does not exist at this draft),
+#    BUILT AND TESTED WITHOUT computing any TEST metric (a smoke on DEV / synthetic data, and a lock test that the scorer refuses without --allow-test);
+#    the Auditor audits P0 and the TEST chain before any TEST job; (P1) submit_fv2_test.sh's one-shot lock. THE RULE OF ONCE: each (model, TEST cell) is scored ONE time; the first complete scoring is the result; a job that
+#    FAILS may be resubmitted with the identical command (logged in the ledger), never re-scored to change an outcome; no TEST number
+#    informs any choice. TEST rows: nuScenes-night TEST (real: aligned AbsRel + TAE; unaligned AbsRel for the metric models) and the
+#    bench_joint TEST split, KITTI + Bonn, cells llb3 / ll / b3s25 (b3s25 = an unrealistically strong stress test, K48; deblurring a stated
+#    limitation), --temporal, for: S x3, CONTROL x3, released Metric-VDA-S (MVDA), the cascades (Pocket v1.0 -> MVDA, FastDVDnet_blind
+#    -> MVDA, C-LL v2 -> MVDA), DA-AC (relative), MVDA + ema0.7 (causal) and MVDA + tmed5 (centred, 2-frame look-ahead), and the +ema0.7
+#    rows of S x3 and CONTROL x3 (night TEST only). Nothing is tuned on TEST (the smoothing family is the DEV-selected one).
+#    ONE PRIMARY (the paper's claim; Manager ruling, section 0): S vs the released Metric-VDA-S (MVDA) on nuScenes-night TEST. "S beats MVDA" iff EVERY
+#    S seed is strictly better than MVDA on BOTH TAE and aligned AbsRel (max over S seeds < MVDA, no margins). GUARDS (few, wide, vs CONTROL; they gate the
+#    primary licence only): G1 KITTI and Bonn llb3 TEST aligned AbsRel mean S / mean CONTROL <= 1.10; G2 restored PSNR (native) >= the input's at llb3,
+#    KITTI and Bonn, every S seed; G3 night-TEST unaligned AbsRel mean S / mean CONTROL <= 1.10 (the metric scale is not degenerate; WS2's void L_rg arms
+#    collapsed exactly there). The primary is nothing else: no other baseline, no bench_joint cell, no smoothing row enters it.
+#      PASS: "the final model (an ST-U trained on degraded data with static clips, 3 seeds) improves on the released Metric-VDA-S in accuracy and temporal
+#      consistency on untouched real low-light driving scenes (nuScenes-night TEST)". FAIL: the sentence is not licensed and the result is reported so.
+#    EACH OF THESE HAS ITS OWN REPORTED SENTENCE (K45; never an AND, never a gate of the primary): S vs Pocket v1.0 -> MVDA, vs FastDVDnet_blind -> MVDA,
+#    vs C-LL v2 -> MVDA, and vs DA-AC (relative: aligned metrics only): "every S seed is better on BOTH night-TEST TAE and aligned AbsRel"; and, SEPARATELY
+#    for each kind, A7 non-domination: S is NOT DOMINATED by MVDA + causal ema0.7 (usable live), and NOT DOMINATED by MVDA + centred tmed5 (2-frame
+#    look-ahead, offline; the paper must state it), iff for EVERY S seed NOT [TAE(Q) <= TAE(S seed) AND aligned AbsRel(Q) <= AbsRel(S seed), strict in at
+#    least one] on night TEST (WS2's axis F_noise is BVI-RLV TEST, selection-touched, so TAE stands in). "BEATS EVERY NAMED BASELINE" (the Auditor, K54)
+#    MAY be reported as a SEPARATE line: the AND of the primary (vs MVDA) and the 4 other sentences above, on night TEST only; it is never the primary and
+#    never gates anything (provenance/dn01_fv2/verdict.py: `beats_all_named`).
+#    SECONDARY (reported, never gating; declared direction: S lower than CONTROL): S vs CONTROL on night-TEST TAE and aligned AbsRel by complete separation
+#    (section 2: max S seed < min CONTROL seed on BOTH). If it separates: "the static-clip regime adds to the same degraded fine-tune (3 seeds)"; if not:
+#    "the regime is a training ingredient without a claimed effect beyond seed noise". REPORTED as well: the bench_joint TEST cells llb3 and ll (untouched)
+#    and b3s25 (touched), KITTI and Bonn, WITH PER-SEED VALUES AND MEANS (the Auditor, K54: a single beats bit is not enough at a reported cell) for S and
+#    for the every-seed comparison vs MVDA and each other baseline, each cell labelled with its status (section 5(h)); NEVER ANDed into any sentence or into
+#    `beats_all_named` above (evidence for this rule: on WS2 DEV, ST-U's KITTI llb3 / ll TAE was WORSE than MVDA's, 2.47 vs 2.33 and 2.55 vs 2.46 -- ANDing
+#    a synthetic cell in would sink every sentence on data the user placed below real data, K48); G1 (section 4) still uses the untouched llb3 TEST rows as
+#    the accuracy guard vs CONTROL. COMPLEMENTARITY (S + ema0.7 vs MVDA + ema0.7, every S seed better on both: "complementary to post-hoc causal smoothing";
+#    CONTROL + ema0.7 beside it); every-seed S vs MVDA + ema0.7 / tmed5 on night TEST (the stronger reading of A7). K48: headline = real + llb3.
+#
+# 5. DISCLOSURES. (a) nuScenes-night DEV and BVI-RLV TEST are selection-touched (WS2); the paper's confirmation is nuScenes-night TEST
+#    (never scored). (b) The fine-tuning data are VKITTI + IRS (synthetic) with the K49 degradation; nuScenes is in no training mix.
+#    (c) S = the static-clip regime ONLY: no L_rg, no unlabeled video, no restorer -> depth path (the WS2 S arm). (d) One recipe,
+#    one init, 3 seeds: the seed spread is data-order + noise. (e) The LR does not anneal within 4000 steps (identical everywhere).
+#    (f) DA-AC is relative: aligned metrics only. (g) The TEST claim is exploratory until the Auditor confirms the artifacts.
+#    (h) TOUCHED vs UNTOUCHED, PER CELL (the primary uses ONLY nuScenes-night TEST, never scored; everything below is reported). bench_joint TEST cells:
+#    llb3 and ll (KITTI, Bonn) have NO row in provenance/dn01_final_twins_bench (the 2026-09-23 scoring; TABLE_twins "split=test") and postdate it =
+#    untouched (this was checked against that directory only); b3s25 (and b0s0, b0s25, b1.5s0, b1.5s25, b3s0, not used here) were scored on 2026-09-23 for
+#    the baselines and the old final twins = touched. No ST model was scored on any bench_joint TEST cell and no selection for this line used one. The
+#    llb3 and ll cells are synthetic degradations of KITTI / Bonn and are worded as such. G1 uses the untouched llb3 TEST rows.
+#    (i) In the A7 gate TAE replaces F_noise (BVI-RLV TEST is selection-touched); the DEV regime attribution (section 3) still reports F_noise.
+#
+# 6. BEFORE SUBMISSION (at the launch commit; the Manager sequences the 4090). (i) STEP-0 exact equality (bench_joint dev, Bonn + KITTI
+#    x 2 clips x {b0s0, b3s25, llb3}, --temporal): the seed-43 / 44 S and CONTROL step-0 models equal ST-U @launch, which equals the
+#    committed 2ce123e rows (the WS2 step-0 relations S1 / S3 re-run at this commit). (ii) The config-diff + seed + training-code-pin
+#    tests and the CONTROL lineage equivalence test (section 1). (iii) The ledger entry; ONE GPU count (4) for every arm. Launch only after the Auditor's AUDIT OK + the Manager's GO.
+#    TEST scoring waits for (P0) and a second Auditor OK on the TEST chain.
+#
+# 7. CHAINS. PHASE 1 (provenance/dn01_fv2/submit_fv2.sh): 4 trainings; the six models' DEV scoring (afterok for the new ones); the
+#    step2000 bracket; the DEV verdict (provenance/dn01_fv2/verdict.py dev, afterany). PHASE 2 (submit_fv2_test.sh): the once-only
+#    TEST chain and provenance/dn01_fv2/verdict.py test. Both verdicts are ADVISORY (K42).
+#
+# 8. AMENDMENTS (each dated, each written before the result it concerns exists): none yet.
+data:
+  seed: 43
+training:
+  checkpoint_dir: runs/dn01_fv2_s_s43

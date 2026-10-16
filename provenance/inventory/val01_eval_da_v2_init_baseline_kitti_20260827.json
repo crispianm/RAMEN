@@ -1,0 +1,27 @@
+{
+  "task": "VAL-01",
+  "dataset": "kitti",
+  "vda_repo_commit": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+  "checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/val01_da_v2_init_vda_s_baseline.pth",
+  "checkpoint_sha256": "2321eb8ac8f5e0445d798d5fa32658f0a7e7050ea8066bd7ca0365b28faffd6c",
+  "manifest_path": "/mnt/DATA/DegradedDepth/RAMEN/results/vda_clean_repro/benchmark_data/kitti/kitti_video.json",
+  "manifest_sha256": "065d8188368ab58848ec166ed00307dc2a4bc63de5ee8d8b29855dbd966f9a3a",
+  "num_clips": 13,
+  "metrics": {
+    "abs_relative_difference": 0.12372421065900413,
+    "rmse_linear": 4.1777943816270255,
+    "delta1_acc": 0.8621751528519851
+  },
+  "checkpoint_content_verification": {
+    "purpose": "Opus's audit, 2026-08-27: a sha256 only proves the file wasn't corrupted in transit, not that its content satisfies the claimed DA-V2-init/zero-temporal properties. Re-runnable content check performed on crispwork.",
+    "pretrained_keys_checked": 175,
+    "pretrained_keys_matching_da_v2_exactly": 175,
+    "pretrained_mismatches": [],
+    "motion_modules_keys_total": 112,
+    "motion_modules_proj_out_keys_checked": 8,
+    "motion_modules_proj_out_nonzero": [],
+    "note": "Only proj_out (the final projection inside each TemporalModule's temporal_transformer, zeroed via motion_module.py's zero_module()) is required to be exactly zero -- that alone makes the residual output = hidden_states + residual collapse to residual regardless of everything upstream. The rest of each motion_module (attention, feedforward, positional encoding) has its own real (nonzero) random init, by design -- an earlier version of this check incorrectly asserted the WHOLE motion_modules subtree must be zero and reported FAIL; corrected to check only proj_out, which is the actual invariant the zero-init claim depends on.",
+    "verdict": "PASS"
+  },
+  "comparability_caveat": "This DA-V2-init baseline's KITTI AbsRel (0.1237) is numerically BETTER than the paper's DAv2-L figure (0.137, Table 2) despite DA-V2-S being the smaller model. This is NOT evidence DA-V2-S beats DAv2-L -- the two numbers are not comparable: this run scores only the 13 KITTI clips/manifest present on crispwork (from BENCH-01d's own subset, not the paper's full KITTI population) through this script's own alignment/crop path, while the paper's DAv2-L figure comes from their own full-population single-image protocol (Table 2, not the video Table 1). Do not quote these two numbers side by side as a model comparison."
+}

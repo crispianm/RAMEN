@@ -1,0 +1,52 @@
+{
+  "task": "VAL-01",
+  "purpose": "Determine empirically whether Metric-VDA-S's raw head output (as produced by THIS repo's own models/vda_net.py::VDANet.forward()) is depth-like or disparity-like -- pre-registered before running, per Fable/Opus's ruling.",
+  "checkpoint_path": "/home/wg19671/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
+  "checkpoint_sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
+  "pre_registration": {
+    "hypothesis_under_test": "models/vda_net.py's VDANet.forward() docstring assumption: metric=True's raw output is depth-like (metres), not disparity",
+    "if_depth_like": {
+      "correlation_with_gt_depth": "positive",
+      "correlation_with_gt_inverse_depth": "near zero or negative",
+      "unaligned_vs_aligned_abs_rel": "same neighbourhood, roughly within 2x of each other"
+    },
+    "if_disparity_like": {
+      "correlation_with_gt_depth": "near zero or negative",
+      "correlation_with_gt_inverse_depth": "positive",
+      "unaligned_vs_aligned_abs_rel": "unaligned an order of magnitude worse than aligned"
+    },
+    "context_only_not_a_units_measurement": "video_depth_anything/video_depth.py:135-136 (vendored, commit 4f5ae23172ba60fd7bc11ef671cca678842c7072): infer_video_depth()'s windowed-stitching loop sets scale,shift=1.0,0.0 for metric mode instead of computing one via compute_scale_and_shift (relative mode's own branch) -- suggestive upstream expects metric windows to already share one common absolute scale, but this proves windows AGREE with each other, not that the shared scale is metres specifically."
+  },
+  "measured": {
+    "video_key": "2011_09_28_drive_0037_sync",
+    "num_frames_in_clip": 79,
+    "correlation_with_gt_depth": 0.8869648750828153,
+    "correlation_with_gt_inverse_depth": -0.8257134528077101,
+    "single_clip_unaligned_metrics": {
+      "abs_rel": 0.2005072981119156,
+      "sq_rel": 1.3104041814804077,
+      "rmse": 7.048921585083008,
+      "rmse_log": 0.2842697203159332,
+      "si_log": 0.041789399409077665,
+      "delta1": 0.5803562998771667,
+      "delta2": 0.9277657270431519,
+      "delta3": 0.9664743542671204,
+      "si_log_pct": 20.442455676624974
+    },
+    "raw_output_range": {
+      "min": 1.9037069082260132,
+      "max": 81.31844329833984,
+      "mean": 11.192350387573242
+    },
+    "gt_depth_range": {
+      "min": 2.30078125,
+      "max": 79.9921875,
+      "mean": 14.386808518761697
+    }
+  },
+  "verdict": {
+    "matches_if_depth_like": true,
+    "matches_if_disparity_like": false,
+    "conclusion": "depth_like"
+  }
+}

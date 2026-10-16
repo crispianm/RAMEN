@@ -1,0 +1,8 @@
+extends: dn01_st_f_full.yaml
+
+# DN-01 final-v2 diagnostic arm ST-U-full: ST-F-full with VDA's temporal-head motion_modules TRAINABLE (depth loss only;
+# the restoration branch reads DETACHED features). Rule: dn01_st_f_full.yaml's header.
+model:
+  st_unfreeze_motion: true
+training:
+  checkpoint_dir: runs/dn01_st_u_full

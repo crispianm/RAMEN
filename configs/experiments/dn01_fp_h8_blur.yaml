@@ -1,0 +1,22 @@
+extends: dn01_final.yaml
+
+# DN-01 FINAL PREFIX fp_h8_blur (Manager/user 2026-09-23): the final recipe (head hidden 8,
+# degrade_mode awgn_blur) with L3 OFF, run to step 8000 only -- the shared prefix its resume twins
+# (dn01_ft_h8_blur_*.yaml) continue from. max_steps 8000 does not change the LR curve
+# (lr_decay_steps 20000 is inherited from VAL-01), so a twin resumed at 8000 with max_steps
+# 20000 follows the exact same schedule. step8000.pt feeds the eps-scale (lambda0/tau0).
+# 4-GPU DDP (NGPU=4, grad_accum 4 = the recipe's 16 clips/step); every twin must run at 4 GPUs too.
+
+model:
+  restoration_hidden: 8
+
+data:
+  degrade_mode: awgn_blur
+
+loss:
+  joint_temporal_weight: 0.0
+
+training:
+  grad_accum: 4
+  max_steps: 8000
+  checkpoint_dir: runs/dn01_fp_h8_blur

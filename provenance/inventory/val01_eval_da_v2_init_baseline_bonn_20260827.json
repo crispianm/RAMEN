@@ -1,0 +1,17 @@
+{
+  "task": "VAL-01",
+  "dataset": "bonn",
+  "vda_repo_commit": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+  "checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/val01_da_v2_init_vda_s_baseline.pth",
+  "checkpoint_sha256": "2321eb8ac8f5e0445d798d5fa32658f0a7e7050ea8066bd7ca0365b28faffd6c",
+  "manifest_path": "/mnt/DATA/DegradedDepth/RAMEN/results/vda_clean_repro/benchmark_data/bonn/bonn_video.json",
+  "manifest_sha256": "e773e6fe789154fa3751b8a09c2cdad7b48972ad4c08a9f9eccff8c67224f292",
+  "num_clips": 26,
+  "metrics": {
+    "abs_relative_difference": 0.08567588548105755,
+    "rmse_linear": 0.23553594062734803,
+    "delta1_acc": 0.9459005112831409
+  },
+  "manifest_provenance": "Same manifest as val01_eval_vda_s_released_bonn_20260827.json -- see its manifest_provenance field.",
+  "comparability_caveat": "Same caveat as val01_eval_vda_s_released_bonn_20260827.json: this uses all 26 available Bonn-RGBD scenes, not the paper's stated 10-scene subset (not recoverable from the code) -- meaningfully worse than the trained released VDA-S on this same population, as expected with zero temporal training, but not directly comparable to any published DA-V2 number."
+}

@@ -1,0 +1,16 @@
+Vendored third-party code
+=========================
+
+This directory (`pocketdvdnet/`) holds an UNMODIFIED copy of the PocketDVDNet model file, so the DN-01 FR arm
+(pretrained video denoiser in front of VDA-S) does not depend on a local checkout.
+
+Source:   PocketDVDNet (ICASSP 2026, arXiv 2601.16780) -- https://github.com/crispianm/PocketDVDNet
+Commit:   46b6e9d ("Modernize docs: rewrite README, add GPL-3.0 license and citation metadata")
+File:     models/pocketdvdnet.py -> pocketdvdnet.py (verbatim)
+License:  GPL-3.0 (LICENSE, copied verbatim)
+Weights:  NOT vendored (checkpoints stay external). v1.0 paper checkpoint `checkpoints/pocketdvdnet.pt`,
+          sha256 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f, copied to
+          crispwork /mnt/DATA/DegradedDepth/RAMEN/checkpoints/pocketdvdnet_v1.0.pt and
+          Isambard /projects/b5dh/benchmark/weights/pocketdvdnet_v1.0.pt.
+The published recipe equals PocketDVDNetRecipe's defaults (643,236 parameters).
+Before the repository goes public: GPL-3.0 compatibility and author anonymity must be reviewed.

@@ -1,0 +1,48 @@
+{
+  "task": "VAL-01",
+  "component": "models/vda_net.py, commit 43be246",
+  "purpose": "Required check per Fable/Opus's 2026-08-27 ruling: a freshly-built VDA-S initialised from DA-V2-S (encoder strict-load + head remap, temporal layers left at their own zero-init) must reproduce DA-V2-S's per-frame output exactly at step 0, since the temporal branch's zero-initialised proj_out makes its residual contribution exactly 0.",
+  "host": "crispwork",
+  "device": "cuda (RTX 4090)",
+  "env": "/home/wg19671/.venvs/focusmamba",
+  "checkpoints": {
+    "video_depth_anything_vits_sha256_reference_only": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
+    "depth_anything_v2_vits": {
+      "path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/depth_anything_v2_vits.pth",
+      "sha256": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378",
+      "verified_via": "curl -I https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth -- X-Linked-ETag matches exactly",
+      "note": "downloaded 2026-08-27, did not previously exist on crispwork"
+    }
+  },
+  "vendored_repos_used": {
+    "Video-Depth-Anything": "/mnt/DATA/DegradedDepth/competition/Video-Depth-Anything",
+    "Depth-Anything-V2": "/mnt/DATA/DegradedDepth/competition/Depth-Anything-V2"
+  },
+  "source_frame": "/mnt/DATA/DegradedDepth/RAMEN/results/vda_clean_repro/benchmark_data/kitti/2011_09_28_drive_0037_sync/rgb/0000000070.png (real KITTI frame, resized to 518x168, ImageNet-normalised, matching this wrapper's own forward())",
+  "init_key_check": "load_state_dict(strict=False) missing-key set == exactly the 176-64=112 head.motion_modules.* keys; zero unexpected keys -- matches Opus's verified 175/64/112 key-count audit exactly",
+  "results": {
+    "batch_size_matched_T1": {
+      "description": "VDA-S run with T=1 (matching DA-V2's own B=1 exactly), cudnn.deterministic=True",
+      "vda_vs_dav2_max_abs_diff": 0.0,
+      "vda_vs_dav2_max_rel_diff": 0.0,
+      "verdict": "EXACT bit-for-bit match -- the DA-V2 init logic (encoder load + head remap + untouched zero-init temporal) is correct."
+    },
+    "internal_cross_frame_consistency_T4": {
+      "description": "4 identical tiled frames run through VDA-S in one batch (T=4) -- checks the temporal branch does not leak information across frames at init",
+      "max_abs_spread_across_the_4_identical_frames": 0.0,
+      "verdict": "EXACT match across frames -- no cross-frame contamination from the zero-initialised temporal branch."
+    },
+    "batch_size_mismatched_T4_vs_dav2_B1": {
+      "description": "VDA-S at T=4 vs DA-V2 at B=1 -- DIFFERENT batch composition on GPU",
+      "vda_frame0_vs_dav2_max_abs_diff": 0.0008571147918701172,
+      "verdict": "Small nonzero difference -- confirmed (via the T1-vs-T1-repeat determinism check, 0.0 diff, and the T1-exact-match result above) to be ordinary GPU batch-size-dependent floating-point non-associativity (different cudnn/attention kernel selection for batch=4 vs batch=1), not a defect in the init logic. An earlier run with cudnn.benchmark left at its default (nondeterministic) setting showed a larger 0.0095 max-abs-diff at T=4 for the same reason -- resolved by setting cudnn.deterministic=True, and by the T1 test isolating the init logic from batch-size effects entirely."
+    },
+    "T4_repeat_determinism": {
+      "description": "Fable's tidiness request, 2026-08-27: the same T=4-batch forward run twice in a row, same process, same inputs -- completes the isolation alongside the T1-repeat check already covering the T=1 case.",
+      "max_abs_diff": 0.0,
+      "verdict": "EXACT match -- T=4 forward passes are themselves fully deterministic (cudnn.deterministic=True); the T4-vs-T1 discrepancy above is purely a batch-size effect, not run-to-run noise at either batch size."
+    }
+  },
+  "overall_verdict": "PASS -- the required reproduction check holds exactly when batch size is matched (the correct comparison for validating init correctness); the residual T>1 discrepancy is characterized and attributed to benign GPU batch-size floating-point effects, not a bug in models/vda_net.py.",
+  "caveat": "VAL-01 training itself will run at batch/clip sizes >1 and will therefore inherit this same benign batch-size-dependent floating-point variance -- irrelevant to the 5%-AbsRel reproduction target, which operates at a much coarser scale, but noted here so a future reader does not mistake normal GPU numerics for a regression."
+}

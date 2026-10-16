@@ -1,0 +1,27 @@
+extends: dn01_f1s_v2_f_n45.yaml
+
+# DN-01 METRICFIX A1: the VDA metric-stage replica (README: the released metric models were trained on Virtual KITTI + IRS only), DEGRADED (low-light) and K85-clean. Released Metric-VDA-S init, motion modules + temp2/proj
+# train, the depth head is FROZEN here (A1h trains it). Sources = VKITTI Scene02/06/18 (10 variants x 2 cams, no hold-out, exclude_eval_overlap) + IRS, equal sampling per source, SiLog on 100 % of clips, the 80 m TRAINING cap removed
+# (vkitti_max_depth 655.0 strict: the 655.35 sentinel stays masked; IRS max_depth 80 (unchanged: its far band is junk GT); loss.metric_depth_clamp [0.1, 1e5]); the evaluation cap stays 80 m. VDA spatial + gradient + TGM and the 0.1 sky hinge are unchanged.
+# vs V2 F n45 this changes: Scene01/20 dropped (K85), VKITTI clone/Camera_0 -> 10 variants x 2 cams (no hold-out), the cap, + the additive monitor / logging infra. DESCRIPTIVE contrast only (confounded).
+data:
+  sampling: equal
+  sources:
+    - {type: vkitti, root: /projects/b5dh/data/train/vkitti, variants: [clone, fog, morning, overcast, rain, sunset, 15-deg-left, 15-deg-right, 30-deg-left, 30-deg-right], cameras: [Camera_0, Camera_1], no_holdout: true, exclude_eval_overlap: true, resize_mode: vda, vkitti_max_depth: 655.0, metric_supervision: true}
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda, max_depth: 80.0, metric_supervision: true}
+  val_sources:
+    - {type: irs, root: /projects/b5dh/data/train/irs, resize_mode: vda}
+loss:
+  metric_depth_clamp: [0.1, 100000.0]
+  log_terms: true
+eval:
+  outdoor_monitor:
+    root: /projects/b5dh/data/train/vkitti
+    every_steps: 100
+    clips: 4
+    variants: [clone, overcast]
+    cameras: [Camera_0]
+    clean_too: true
+training:
+  checkpoint_at_steps: [100, 250, 500, 1000, 1500, 2000, 4000]
+  checkpoint_dir: runs/dn01_mf_a1_n45

@@ -1,0 +1,17 @@
+{
+  "task": "VAL-01",
+  "dataset": "bonn",
+  "vda_repo_commit": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+  "checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/video_depth_anything_vits.pth",
+  "checkpoint_sha256": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
+  "manifest_path": "/mnt/DATA/DegradedDepth/RAMEN/results/vda_clean_repro/benchmark_data/bonn/bonn_video.json",
+  "manifest_sha256": "e773e6fe789154fa3751b8a09c2cdad7b48972ad4c08a9f9eccff8c67224f292",
+  "num_clips": 26,
+  "metrics": {
+    "abs_relative_difference": 0.06261449795212773,
+    "rmse_linear": 0.20351806172799175,
+    "delta1_acc": 0.9683555100972836
+  },
+  "manifest_provenance": "Built by calling VDA's own benchmark/dataset_extract/eval_utils.py::gen_json directly (unmodified) against the raw Bonn-RGBD scenes at /mnt/DATA/DegradedDepth/data/TEST/bonn (26 rgbd_bonn_* scenes, all already 640x480 even-dimensioned so dataset_extract_bonn.py's own even_or_odd crop is a no-op) -- no file copying needed. start_id=30,end_id=140 (110 frames/scene), matching the extraction script's own 'like DepthCrafter' comment for bonn_video.json.",
+  "comparability_caveat": "This measurement uses ALL 26 Bonn-RGBD scenes present on crispwork. The paper states it used only 10 scenes from Bonn (Table 1's population); dataset_extract_bonn.py's own code does not filter by scene name (unlike NYUv2's 8 explicitly-named scenes), so the specific 10-scene subset the paper's reported number reflects is not recoverable from the code. This result numerically beats the paper's VDA-S (Ours) Bonn figure (0.083/0.950) -- NOT evidence of outperforming the paper; different population, not a fair comparison. Do not quote these two numbers side by side."
+}

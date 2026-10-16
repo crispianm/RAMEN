@@ -1,0 +1,29 @@
+extends: dn01_fp_h8_blur.yaml
+
+# DN-01 DIAGNOSTIC A/B (Manager-approved 2026-09-23; NOT a final arm): does feeding the restoration fuse raw
+# neighbouring frames (model.restoration_rgb_frames) close the restoration gap to the cascades? This file is
+# the 1-frame arm (the current head); dn01_diag_rf3.yaml is the 3-frame arm, identical otherwise. A 5-frame
+# arm was requested but DROPPED before launch: 4090 latency h8+GN+5f 6.59 ms/frame = +10.9% vs VDA-S 5.94
+# (> the +10% bar); h8+GN 6.37 (+7.2%), h8+GN+3f 6.46 (+8.8%), all one idle-checked session.
+# Recipe: the v3 fp_h8_blur prefix (metric + GroupNorm feat_norm + awgn_blur) at 4 GPUs, severity hold 0 and
+# a ramp over 500 steps (restoration signal from the start), 4000 steps, data.seed 42 + seeded_noise in BOTH arms.
+#
+# PRE-DECLARED PASS RULE (Manager ~21:30Z-announced; written here 2026-09-23T21:13Z, before any run or result):
+#   at step 4000, bench_joint dev split, the 3f arm vs this 1f arm:
+#     restored PSNR(3f) >= PSNR(1f) + 1.0 dB at b3s25 AND >= + 1.5 dB at b0s25, on BOTH Bonn and KITTI;
+#     aligned AbsRel(3f) at b3s25 <= AbsRel(1f) + 0.005 on both datasets;
+#     predicted depth < 0.1 m fraction ~ 0 (eps-scale at step 4000).
+#   b3s25 (blur + noise) is the primary reported cell (user: restoration target = blur AND noise).
+#   Step-1500 numbers are reported descriptively only.
+model:
+  restoration_rgb_frames: 1
+data:
+  seed: 42
+  seeded_noise: true
+training:
+  severity_hold_steps: 0
+  severity_warmup_start: 0.0
+  severity_warmup_steps: 500
+  max_steps: 4000
+  checkpoint_at_steps: [1500, 2000, 4000]
+  checkpoint_dir: runs/dn01_diag_rf1

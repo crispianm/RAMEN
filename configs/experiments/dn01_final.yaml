@@ -1,0 +1,103 @@
+extends: dn01_d0_metric_clean.yaml
+
+# DN-01 FINAL (DRAFT, 2026-09-23, NOT for launch): the D0 metric recipe (metric VDA-S, SiLog
+# scale term, VKITTI 80 m cap, init VAL-01 step20000) + A1's zero-init restoration head
+# (enh_weight 1.0) + A0/A1's AWGN noise schedule + the joint temporal loss L3.
+#
+# Every "# PLACEHOLDER" is a real provisional value (so the config loads, builds and is
+# tested) that a named verdict replaces before launch:
+#   restoration_hidden / restoration_fuse_scale  <- Phase B verdict (fastest passing head)
+#   joint_temporal_mode / _weight / _tau         <- Phase C verdict (mode), then lambda0/tau0 as below
+#   joint_temporal_depth_space                   <- D0 eps-scale (metric_disparity vs metric_depth)
+#   degrade_mode                                 <- the blur arm (worktree-dn01-blur): [awgn, <blur>]
+#
+# lambda0 / tau0: D0 has no restoration head, so its eps-scale run gives the eps_d scale in each
+# depth space (and so the space pick) but NOT L2 / eps_r. RECOMMENDED: the Phase C shared-prefix
+# mechanism -- run this config with joint_temporal_weight 0 to step 8000 (identical to the
+# final run up to the ramp), eps-scale its own step8000.pt (scripts/dn01_eps_scale.py), set
+# lambda0 = 0.5*L2/L3 and tau0 = median max(eps_d, eps_r) from it, then resume with L3 on.
+# DECIDED (Manager, 2026-09-23): the shared-prefix route above, with no A1 proxy. init_from =
+# VAL-01 step20000 (inherited, as D0), so D0 is the matched clean-metric control
+# (final = D0 + noise + head + L3). The prefix run starts once the Phase B verdict fixes the
+# head width; not before.
+#
+# AMENDMENT 2026-09-23T22:38Z (Manager; written before ANY final-twin result -- the twins were ~1 h into
+# training with no checkpoint scored):
+#   L3-METRIC CLAIM (applies only if extra seeds are run, pending the user). For the chosen head, lse
+#   and sum each get seeds s1 and s2 (same resume, data.seed varied). The claim holds only if every lse
+#   seed beats every sum seed on joint_p95_inwin at b3s25, KITTI AND Bonn, at step 20000 AND at 19500.
+#   lse vs lam0 is reported descriptively. Otherwise: "comparable to separable" in the metric recipe
+#   too. Why: the Auditor finds post-resume seed noise of ~5-10% AbsRel on Bonn depth, and the relative
+#   3-seed claim failed (provenance/dn01_phasec_scoring/VERDICT.txt sha256 33820fce...). Full text in the
+#   dn01_ft_*_cmode.yaml headers.
+#   F4 BASIS CORRECTION (not a rule change): the twins' F4 cites the pre-GroupNorm head sweep (h8 +4.77%).
+#   The basis is the GroupNorm session results/bench_joint_latency_fn/: h8+GN +7.3%, h16+GN +9.7% vs
+#   VDA-S 5.94 ms/frame (4090, idle-checked).
+
+model:
+  restoration_head: true
+  restoration_hidden: 32                  # PLACEHOLDER: Phase B verdict
+  restoration_fuse_scale: 1.0             # PLACEHOLDER: Phase B verdict
+  # AMENDMENT 2026-09-23T17:01Z (Manager; before ANY final-twin result -- no twin has run; the v2 prefixes
+  # failed the step-4000 gate). Root cause, demonstrated fail-before/pass-after: a metric depth head's
+  # refinenet1 features are ~12x a relative head's (T4, job 6823367: mean|x| 64 vs 5; D0 73 without any
+  # restoration head), swamping restore.fuse[0]'s rgb path (164x vs A1's 16x), so the restoration gradient
+  # was ~zero-mean and the head stayed at zero init. GroupNorm on those features before restore.feat fixes
+  # it: A/B at 4 GPUs, 1500 steps (jobs 6823660 none / 6823664 groupnorm): restore.fuse.2 max|w| 0.0041 vs
+  # 0.0605, Adam |m|/rms 0.0006 vs 0.199. 4090 latency h8 + groupnorm 6.38 ms/frame (+7.3% vs VDA-S 5.95).
+  # The 889ca12 keys (grad_clip_per_group, metric_depth_clamp) stay: harmless, but NOT the fix.
+  # Prefixes re-run as *_v3 from step 0; the same step-4000 gate precedes the twins.
+  # PRE-DECLARED TWIN-LAUNCH GATE (Manager, 2026-09-23T19:18Z, before ANY v3 step-8000 result exists).
+  # At step4000, C2 was marginal (+0.04..+0.31 dB at b3s25) because the severity ramp is only at ~0.33.
+  # So the gate is judged on each v3 prefix's step8000.pt, bench_joint dev split, and a prefix's 3 twins
+  # launch only if ALL hold AND its v3 eps-scale has landed:
+  #   C1 restore.fuse.2 max|w| still growing and Adam |m|/rms >~ 0.003;
+  #   C2 restored PSNR >= input + 2.0 dB at b0s25 AND >= input + 1.0 dB at b3s25, on BOTH Bonn and KITTI;
+  #   C3 predicted-depth < 0.1 m fraction ~ 0 (the v3 eps-scale's pred_below_0.1m_frac);
+  #   C4 no depth collapse vs metric_vda_s (dev b3s25 aligned AbsRel Bonn 0.0886 / KITTI 0.1512).
+  # A failing prefix is reported to the Manager and not launched.
+  restoration_feat_norm: groupnorm
+
+data:
+  degrade: true
+  degrade_mode: awgn                      # PLACEHOLDER: [awgn, <blur>] once the blur arm lands
+  clean_prob: 0.2
+
+loss:
+  enh_weight: 1.0
+  joint_temporal_mode: lse                # PLACEHOLDER: Phase C verdict
+  joint_temporal_weight: 0.25             # PLACEHOLDER: lambda0 from the step-8000 prefix eps-scale
+  joint_temporal_tau: 0.026               # PLACEHOLDER: tau0 from the step-8000 prefix eps-scale
+  joint_temporal_ramp: [8000, 10000]
+  # Space pick, PROVISIONAL on D0 step2000 (provenance/dn01_final_eps_d0_step2000/; confirm on
+  # 19500/20000, job 6814251): under AWGN eps_d mean/p99 = metric_disparity 0.030/0.25,
+  # disparity_affine 0.032/0.28, metric_depth 0.068/0.85, vs A1's eps_r 0.025/0.12. metric_depth's
+  # far-pixel tail (p99 7x eps_r; 1.2 on IRS) would route LSE gradient almost only to depth there.
+  # AMENDMENT 2026-09-23T14:30Z (Manager; written before ANY final-twin result -- the three h8_blur
+  # twins launched at 6dcf074 ran < 2 min and were cancelled unscored): in the metric eps spaces the
+  # predicted depth is clamped to the metric eval range [0.1, 80] m and pixels predicted < 0.1 m leave
+  # Omega (train.py::depth_flicker, METRIC_EPS_*). Cause: fp_h8_awgn step8000's metric_disparity eps_d
+  # mean was 7.56 (IRS 13.0, p99 1.55) from a < 1% tail of ~0 m predictions (disparity ~1000), giving a
+  # degenerate lambda0 0.004. Identical to the old definition when every prediction is in range.
+  # lambda0/tau0 of EVERY prefix are re-measured with the amended eps (same declared 0.5*L2 rule,
+  # scripts/dn01_eps_scale.py, each space on its own Omega) and all 12 twins run on the amended L3.
+  joint_temporal_depth_space: metric_disparity
+  # AMENDMENT 2026-09-23T14:44Z (Manager; before ANY final-twin result; the 4 prefixes are RE-RUN from
+  # step 0 with it, the old prefix clones kept for provenance). Root cause of the prefixes' restoration
+  # head staying at zero init (restored PSNR == input): the global clip_grad_norm_(1.0) -- the metric
+  # depth loss gives the head ~5x the gradient of the relative one (grad probe, fp_h8_blur vs A1
+  # step6000: |g_depth->head| 6.86 vs 1.35, clip factor 0.146 vs 0.734, restore step ~13x smaller;
+  # /projects/b5dh/RAMEN_eval_dn01_gradprobe2/results/). Fix: training.grad_clip_per_group (head and
+  # restore each clipped at grad_clip; the head's clipping is then exactly D0's). Hygiene against the
+  # degraded-input IRS near-zero tail: metric_depth_clamp clamps predicted depth to [0.1, 80] m before
+  # the disparity inversion and in SiLog (identical in range, tested). NOTE: a clamped pixel gets no
+  # depth-loss gradient while outside the range.
+  metric_depth_clamp: [0.1, 80.0]
+
+training:
+  grad_clip_per_group: true               # AMENDMENT 2026-09-23T14:44Z, see loss.metric_depth_clamp above
+  severity_hold_steps: 2000               # A0/A1's noise schedule: clean 0-2k, ramp to full by 8k
+  severity_warmup_start: 0.0
+  severity_warmup_steps: 6000
+  severity_max_cap: 1.0
+  checkpoint_dir: runs/dn01_final

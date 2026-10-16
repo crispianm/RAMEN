@@ -1,0 +1,8 @@
+extends: dn01_f1_f_n45.yaml
+
+# DN-01 F1-SKY V2 (one-sided sky hinge, weight 0.1): the F1 arm dn01_f1_f_n45 (UNCHANGED) + ONLY the sky-fix keys below + its own checkpoint_dir. Which variant is READ is chosen by the
+# pre-declared selection rule (audit/, F1-SKY); the other variants are trained for the selection screen only. The sky-fix keys are wired to the real flags.
+loss:
+  sky_hinge_weight: 0.1
+training:
+  checkpoint_dir: runs/dn01_f1s_v2_f_n45

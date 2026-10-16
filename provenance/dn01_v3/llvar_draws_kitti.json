@@ -1,0 +1,103 @@
+{
+ "cell_spec": {
+  "blur_px": 3.0,
+  "ev_range": [
+   -3.0,
+   -0.5
+  ],
+  "isp_noise": "data.elvis_noise.degrade_clip_lowlight, ELVIS bank median profile, as llb3 (ll_cfg); exposure, blur, noise per draw",
+  "kappa_base": 0.186,
+  "kappa_mults": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "llvarf_ev_jitter": 0.15,
+  "llvarf_kappa_mult": [
+   0.5,
+   1.5
+  ],
+  "seed": "noise_seed(dataset, key, 'llvar|draw'); noise stream noise_seed(dataset, key, '<cell>|noise')"
+ },
+ "dataset": "kitti",
+ "draws": {
+  "2011_09_26_drive_0002_sync": {
+   "blur": 3.0,
+   "ev": -1.804245760871481,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "2011_09_26_drive_0005_sync": {
+   "blur": 3.0,
+   "ev": -0.773859146669333,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "2011_09_26_drive_0013_sync": {
+   "blur": 3.0,
+   "ev": -1.5526490955813028,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "2011_09_26_drive_0020_sync": {
+   "blur": 3.0,
+   "ev": -1.6252276631558498,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "2011_09_26_drive_0023_sync": {
+   "blur": 3.0,
+   "ev": -2.346381155733881,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "2011_09_26_drive_0036_sync": {
+   "blur": 3.0,
+   "ev": -1.4412695891756282,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "2011_09_26_drive_0079_sync": {
+   "blur": 3.0,
+   "ev": -1.0914333128342797,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "2011_09_26_drive_0095_sync": {
+   "blur": 3.0,
+   "ev": -1.6736070839506527,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "2011_09_26_drive_0113_sync": {
+   "blur": 3.0,
+   "ev": -2.9102064814516018,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "2011_09_28_drive_0037_sync": {
+   "blur": 3.0,
+   "ev": -2.116830218210628,
+   "kappa": 0.093,
+   "kappa_mult": 0.5
+  },
+  "2011_09_29_drive_0026_sync": {
+   "blur": 3.0,
+   "ev": -2.7640654300407115,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  },
+  "2011_09_30_drive_0016_sync": {
+   "blur": 3.0,
+   "ev": -1.763781902054366,
+   "kappa": 0.186,
+   "kappa_mult": 1.0
+  },
+  "2011_10_03_drive_0047_sync": {
+   "blur": 3.0,
+   "ev": -1.3955434527266115,
+   "kappa": 0.372,
+   "kappa_mult": 2.0
+  }
+ }
+}

@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Weights, data and run outputs stay outside the repository
+checkpoints/
+*.safetensors
+*.pt
+*.pth
+datasets/
+data/TEST/
+runs/
+logs/
+paper_results/
+paper_results_smoke/
+results/

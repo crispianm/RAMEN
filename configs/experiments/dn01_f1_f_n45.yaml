@@ -1,0 +1,14 @@
+extends: dn01_fv2_s_s43.yaml
+
+# DN-01 F1 arm F-n45 (the final-run candidate, DEV only; Q3 = DUAL: the fv2_s lineage = released Metric-VDA-S + the PocketDVDNet temp2 restorer head, motion modules + temp2 + proj trainable, CONTROL recipe =
+# the static-clip regime static_prob 0.25, no r7 knobs, 4000 steps, 4 GPUs, bf16, the same non-annealing LR as the anchor dn01_fv2_s_s43). The read is PRE-DECLARED by the Auditor: audit/F1_predeclared_20261001.md (sha256 1a8f17cc07766b3c88fa6330745d454ca2fca9e09f2ab503aa1308ad8f8de5a4) + audit/F1E6_reporting_addendum_20261001.md (sha256 a60fd8e39efbb03e6e308c9f99338bd54f607fc46c7abaa2874e43ffb4aadfd6); this header states no rule of its own.
+# NEW SEEDING (the Auditor's F1 requirement; recipe >= 9e0c7bb): training.seed_scheme x1000 (rank seeds seed*1000 + rank: no aliasing between seeds 45 / 46 / 47), data.seed 45, and data.split_seed 43 FIXED AND SHARED by all
+# six F / K runs: the held-out VKITTI / IRS scene split is the one data.seed 43 gave the old-seeding lineage (so every F1 run trains on the same scene set as the anchor dn01_fv2_s_s43), while the seed varies the clip
+# sampling, the degradation draws, the static coin and the loader streams. Only the keys below differ from dn01_fv2_s_s43.yaml (lr_decay_steps is restated with its inherited value so it is an explicit, auditable field) (tests/test_dn01_f1.py pins the exact config diff).
+data:
+  seed: 45
+  split_seed: 43
+training:
+  lr_decay_steps: 20000          # EXPLICIT, = the inherited value (cosine over 20000, 0.92x at step 4000, NOT annealed: the anchor dn01_fv2_s_s43 and E4's S base). One-line switch: 4000 = annealed (anchor then dn01_lossx_ctrl s43); K inherits it from F.
+  seed_scheme: x1000
+  checkpoint_dir: runs/dn01_f1_f_n45

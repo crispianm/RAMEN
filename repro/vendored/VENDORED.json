@@ -1,0 +1,15 @@
+{
+ "note": "Byte-identical copies of Auditor-cleared wrapper scripts that sit OUTSIDE the vendored scorer. generate_results.py refuses to run them if the sha256 differs (repro/execute.py verify_vendored).",
+ "files": {
+  "bench_overrides.py": {
+   "sha256": "c5add7ec29609892c3df148c56b37fc50317a7ba512a32b50911d17c78e951c3",
+   "source": "RAMEN git commit 0c6d07b (novelty-p1 worktree, scripts/bench_overrides.py); package claude_outputs/session_evidence/novelty_p1_scoring_package_20261012 (AUDITOR_CLEARED.txt, SHA256SUMS_PINS)",
+   "commit": "0c6d07b"
+  },
+  "fidelity_init_score.py": {
+   "sha256": "4771146762149c65a3aebc051c264dd54138dcea2cfe531255a12e116056564c",
+   "source": "claude_outputs/session_evidence/fidelity_package_20261012/fidelity_init_score.py (AUD-FIDELITY-20261012; listed in that package's SHA256SUMS; never committed to git)",
+   "commit": null
+  }
+ }
+}

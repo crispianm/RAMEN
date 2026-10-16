@@ -1,0 +1,13 @@
+Vendored third-party code
+=========================
+
+`eval_tae.py` is an UNMODIFIED copy of Video Depth Anything's temporal alignment error (TAE) evaluation script, vendored
+so DN-01's temporal metric follows the exact upstream definition (Auditor K38(c)).
+
+Source:   Video Depth Anything (Chen et al., CVPR 2025) -- https://github.com/DepthAnything/Video-Depth-Anything
+Repo:     local clone at 4f5ae23172ba60fd7bc11ef671cca678842c7072 (HEAD)
+File:     benchmark/eval/eval_tae.py (last changed upstream at e371c2bbf1ffb4e03e6b3c64e9cdd6d98ca2fa97,
+          2025-03-11), unmodified in the clone; sha256 8e481e94a4709c5ae945c81d8343170a38c253b6b7dac2a926d5bafc7de9606c
+License:  Apache-2.0 (LICENSE, copied verbatim from the repo root)
+Use:      evaluation/temporal_metrics.py calls `tae_torch` (and reproduces `eval_TAE`'s alignment in memory);
+          tests/test_temporal_metrics.py checks our in-memory scorer equals `eval_TAE` on identical inputs.
