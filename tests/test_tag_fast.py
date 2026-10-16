@@ -12,6 +12,7 @@ from repro.tag_fast import Agf3Stream, agf_v2, agf_v3
 
 # Reference = the scorer's own float64 numpy depth_agf, imported from evaluation/depth_probe.py (NOT copied); the file must be byte-identical to scorer commit 368b5c53.
 SCORER_COMMIT = "368b5c53b37ebd22f5d44ce0c9d514122efc88da"
+SCORER_DEPTH_PROBE_BLOB = "4b2269d10a35f2da9071b65592dab9816862a667"  # git blob of evaluation/depth_probe.py at SCORER_COMMIT (pinned: the public repo has no history)
 depth_agf, depth_agf_torch = tfp.original("depth_agf"), tfp.original("depth_agf_torch")
 
 pytestmark = pytest.mark.skipif(not torch.cuda.is_available(), reason="needs CUDA")
@@ -85,7 +86,7 @@ def _dist(o, ref):
 
 def test_reference_is_scorer_368b5c53():
     f = Path(dp.__file__)
-    blob = subprocess.check_output(["git", "-C", str(f.parent), "rev-parse", f"{SCORER_COMMIT}:evaluation/depth_probe.py"], text=True).strip()
+    blob = SCORER_DEPTH_PROBE_BLOB
     assert subprocess.check_output(["git", "hash-object", str(f)], text=True).strip() == blob, "depth_probe.py differs from the scorer at 368b5c53"
     assert depth_agf.__module__ == "evaluation.depth_probe" and not tfp._state["patched"]
 
