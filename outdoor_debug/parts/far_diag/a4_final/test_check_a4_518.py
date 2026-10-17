@@ -58,3 +58,19 @@ def test_sha_difference_in_pins_still_fails(key):         # negative control for
 def test_missing_pins_fails():
     d = good(); d["meta"]["pins"] = {}
     assert "every other meta field == the 378 release row" in failed(d)
+
+
+@pytest.mark.parametrize("key", ["frames_sha256", "pairs_sha256", "frames_tsv", "pairs_tsv"])
+def test_removed_pins_key_fails(key):                      # (c) a removed key must FAIL, path keys included
+    d = good(); del d["meta"]["pins"][key]
+    assert "every other meta field == the 378 release row" in failed(d)
+
+
+def test_added_pins_key_fails():
+    d = good(); d["meta"]["pins"]["extra"] = "x"
+    assert "every other meta field == the 378 release row" in failed(d)
+
+
+def test_both_clone_paths_changed_pass():                  # (b)
+    d = good(); d["meta"]["pins"]["frames_tsv"] = "/a/ddad_a4/f.tsv"; d["meta"]["pins"]["pairs_tsv"] = "/a/ddad_a4/p.tsv"
+    assert failed(d) == []

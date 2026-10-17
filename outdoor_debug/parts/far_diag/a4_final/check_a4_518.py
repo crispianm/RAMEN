@@ -9,9 +9,14 @@ SHAPE = re.compile(r"first clip: model input \((\d+), 3, 518, 826\) -> depth \(\
 SAME = ("precision", "max_len", "resolution_rule", "alignment", "bins_m", "bench_joint_sha256", "release_weights", "spec", "status", "limit_scenes", "pins_asserted", "per_scene_scored")
 
 
-def pins_no_paths(p):
-    """pins dict without clone-dependent PATH entries (keys ending _tsv/_dir/_path): the sha entries stay compared (the 518 job runs in a different clone dir than the 378 row)."""
-    return {k: v for k, v in (p or {}).items() if not k.endswith(("_tsv", "_dir", "_path"))}
+PATH_SUFFIX = ("_tsv", "_dir", "_path")
+
+
+def pins_equal(p, q):
+    """Key sets must be identical (a removed or added key FAILS); every value must be equal EXCEPT the clone-dependent PATH entries (keys ending _tsv/_dir/_path), which may differ."""
+    if not isinstance(p, dict) or not isinstance(q, dict) or not p or set(p) != set(q):
+        return False
+    return all(p[k] == q[k] for k in p if not k.endswith(PATH_SUFFIX))
 
 
 def checks(d, log_text, scorer_sha, ref):
@@ -23,7 +28,7 @@ def checks(d, log_text, scorer_sha, ref):
     p = m.get("pins", {}); c("frame list + pairs sha", p.get("frames_sha256") == FRAMES and p.get("pairs_sha256") == PAIRS)
     c("release weights sha", (m.get("release_weights") or {}).get("sha256") == W); c("GH200, fp16", "GH200" in str(m.get("gpu")) and m.get("precision") == "fp16")
     c("395 frames / 50 scenes, 0 non-finite", d.get("n_scored_frames") == 395 and d.get("n_scenes") == 50 and d.get("n_nonfinite_pred_px") == 0)
-    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME) and pins_no_paths(m.get("pins")) == pins_no_paths(r.get("pins")) and bool(pins_no_paths(m.get("pins"))))
+    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME) and pins_equal(m.get("pins"), r.get("pins")))
     bs, rb = d.get("bins", {}), ref.get("bins", {})
     c("same GT px/frames/scenes per bin as the 378 row", {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in bs.items()} == {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in rb.items()} and d.get("overall_n_px") == ref.get("overall_n_px"))
     c("all metrics finite", all(math.isfinite(b[k]) for b in bs.values() for k in ("absrel_unaligned_pooled", "median_pred_over_gt")) and math.isfinite(d.get("overall_absrel_0_200", float("nan"))))
