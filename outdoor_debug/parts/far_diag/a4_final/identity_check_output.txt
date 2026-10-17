@@ -1,0 +1,15 @@
+old (HEAD scorer 80916c4f) vs new default vs new --release-short-side 378, fake pipeline, cmp of result json minus seconds/sha/host/commit:
+IDENTICAL
+old vs 518 diff:
+39c39
+<  "label": "released Metric-VDA-S at the registered 378 input (not its default 518), fp16, exploratory DEV, report-only",
+---
+>  "label": "released Metric-VDA-S at its default 518 input (not the registered 378), fp16, exploratory DEV, report-only",
+53c53
+<   "label": "released Metric-VDA-S at the registered 378 input (not its default 518), fp16, exploratory DEV, report-only",
+---
+>   "label": "released Metric-VDA-S at its default 518 input (not the registered 378), fp16, exploratory DEV, report-only",
+64c64
+<   "short_side": 378,
+---
+>   "short_side": 518,

@@ -34,6 +34,9 @@ RELEASE_LABEL = "released Metric-VDA-S at the registered 378 input (not its defa
 RELEASE = {"metric_vda_s": dict(   # bench_joint DEPTH_MODELS key -> _vda_released(dev, metric=True): vits, metric=True head, fwd returns METRES (no scale/shift in vda_windows)
     isambard_path="/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth",
     sha256="3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33", size=116444063, label=RELEASE_LABEL)}
+# REGISTRATION.md A4 (DRAFT): the RELEASE spec only may be scored at its native 518 input. `ours:` stays at 378 (resolve_short_side refuses anything else).
+RELEASE_SHORT_SIDES = (378, 518)
+RELEASE_LABEL_518 = "released Metric-VDA-S at its default 518 input (not the registered 378), fp16, exploratory DEV, report-only"
 assert BINS_M == D.BINS_M or [tuple(map(float, b)) for b in D.BINS_M] == BINS_M
 
 
@@ -117,13 +120,23 @@ def assert_pins(frames_tsv=None, pairs_tsv=None) -> dict:
 
 
 # ----------------------------------------------------------------------------- model path
-def model_input(paths, hw_cache=None):
+def resolve_short_side(spec, requested) -> int:
+    """A4: 378 (registered) for everything; 518 only for a registered release spec. `ours:` at anything but 378 raises."""
+    ss = SHORT_SIDE if requested is None else int(requested)
+    if ss == SHORT_SIDE:
+        return ss
+    if not spec or spec not in RELEASE or ss not in RELEASE_SHORT_SIDES:
+        raise ValueError(f"short side {ss} refused: only a registered release --spec may use {RELEASE_SHORT_SIDES}; ours stays at {SHORT_SIDE}")
+    return ss
+
+
+def model_input(paths, hw_cache=None, short_side=SHORT_SIDE):
     """bench_joint.load_frames equivalent for DDAD (A2): per-frame RGB -> /255 -> Resize(lower_bound, mult 14, cubic, short side 378) -> (N,3,h,w)."""
     import cv2, torch
     import bench_joint as bj
     bj._vda_path()
     from video_depth_anything.util.transform import Resize
-    rs = Resize(width=SHORT_SIDE, height=SHORT_SIDE, resize_target=False, keep_aspect_ratio=True, ensure_multiple_of=14,
+    rs = Resize(width=short_side, height=short_side, resize_target=False, keep_aspect_ratio=True, ensure_multiple_of=14,
                 resize_method="lower_bound", image_interpolation_method=cv2.INTER_CUBIC)
     ims = [rs({"image": D.load_rgb(p).astype(np.float32) / 255.0})["image"] for p in paths]
     return torch.from_numpy(np.clip(np.stack(ims), 0, 1)).permute(0, 3, 1, 2).contiguous()
@@ -207,11 +220,13 @@ def main(argv=None):
     ap.add_argument("--spec-prefix", default="ours:")
     ap.add_argument("--limit-scenes", type=int, default=None, help="smoke only; recorded in meta, pins_asserted stays True for the lists but status=PARTIAL")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--release-short-side", type=int, default=None, help="A4: input short side for a registered release --spec (518 = its default). Default/absent = registered 378. Refused with --ckpt.")
     a = ap.parse_args(argv)
     if a.selftest:
         print(json.dumps(selftest(a.spec), indent=1)); return
     assert a.out and (a.ckpt or a.spec), "--out and one of --ckpt / --spec required"
     if a.spec: assert not a.ckpt, "release --spec must not be combined with --ckpt (an 'ours' checkpoint)"
+    ss = resolve_short_side(a.spec, a.release_short_side)
     out_path = Path(a.out); assert not out_path.exists(), f"{out_path} exists (never overwrite)"
     pins = assert_pins()
     D.read_frame_list(); D.read_pairs()     # the loader's own sha checks too
@@ -230,7 +245,7 @@ def main(argv=None):
     root = D.SCENES_DIR
 
     def predict(frames):
-        x = model_input([root / f["image"] for f in frames]).to(dev)
+        x = model_input([root / f["image"] for f in frames], short_side=ss).to(dev)
         with torch.autocast(**ac):
             d, _ = bj.run_pipeline(pipe, x, 0.0, 0.0, tuple(x.shape[-2:]))   # out_hw = model resolution: the A1 bilinear upsample happens in sample_prediction
         assert_same_hw(d, x)
@@ -244,14 +259,15 @@ def main(argv=None):
         per_scene[sc] = score_clip(acc, sc, frames, predict, root)
         print(f"{sc} scored={per_scene[sc]} {time.time() - t0:.0f}s", flush=True)
     res = acc.result()
-    if a.spec: res["label"] = RELEASE_LABEL
+    label = (RELEASE_LABEL_518 if ss == 518 else RELEASE_LABEL) if a.spec else LABEL
+    if a.spec: res["label"] = label
     full = a.limit_scenes is None
     if full:
         assert res["n_scored_frames"] == 395 and res["n_scenes"] == 50, (res["n_scored_frames"], res["n_scenes"])
-    meta = dict(label=RELEASE_LABEL if a.spec else LABEL, status="FULL" if full else "PARTIAL (--limit-scenes)", limit_scenes=a.limit_scenes, pins_asserted=full,
+    meta = dict(label=label, status="FULL" if full else "PARTIAL (--limit-scenes)", limit_scenes=a.limit_scenes, pins_asserted=full,
                 pins=pins, bench_joint_sha256=bj_sha, bench_joint_pinned=BJ_SHA, ddad_scorer_sha256=S.sha256_file(__file__),
                 dataset_module_sha256=S.sha256_file(D.__file__), scorer_module_sha256=S.sha256_file(S.__file__), **mm,
-                ramen_commit=bj.git_state(bj.REPO), precision="fp16", short_side=SHORT_SIDE, max_len=D.DDAD_LR_SPEC["max_len"],
+                ramen_commit=bj.git_state(bj.REPO), precision="fp16", short_side=ss, max_len=D.DDAD_LR_SPEC["max_len"],
                 resolution_rule="A1: bilinear(align_corners=False) pred -> 1936x1216, sampled at projected LIDAR px; GT never resized",
                 alignment="none", host=socket.gethostname(), gpu=torch.cuda.get_device_name(), torch=torch.__version__,
                 seconds=time.time() - t0, bins_m=bin_labels(), per_scene_scored=per_scene)

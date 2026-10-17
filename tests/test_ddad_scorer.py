@@ -219,3 +219,98 @@ def test_a3_shape_assert_fires_on_resampled_pipeline():
     DS.assert_same_hw(torch.zeros(4, 378, 602), x)          # same HxW passes
     with pytest.raises(AssertionError, match="extra resample"):
         DS.assert_same_hw(torch.zeros(4, 400, 602), x)               # monkeypatched predict returned a different HxW
+
+
+# ---------------------------------------------------------------- A4: release spec at 518 (REGISTRATION.md A4)
+def test_a4_default_is_registered_378():
+    assert DS.resolve_short_side(None, None) == 378
+    assert DS.resolve_short_side("metric_vda_s", None) == 378
+    assert DS.resolve_short_side("metric_vda_s", 378) == 378
+    assert DS.resolve_short_side(None, 378) == 378        # ours at its own 378 is fine
+
+
+def test_a4_release_may_use_518():
+    assert DS.resolve_short_side("metric_vda_s", 518) == 518
+    assert "518 input" in DS.RELEASE_LABEL_518 and "report-only" in DS.RELEASE_LABEL_518 and "registered 378" in DS.RELEASE_LABEL
+
+
+@pytest.mark.parametrize("spec,ss", [(None, 518), (None, 448), ("metric_vda_s", 448), ("metric_vda_s", 0), ("unknown_spec", 518)])
+def test_a4_forced_fail_ours_or_unregistered_cannot_change_input(spec, ss):
+    with pytest.raises(ValueError):
+        DS.resolve_short_side(spec, ss)
+
+
+def test_a4_model_input_short_side_param_default_unchanged():
+    import inspect
+    assert inspect.signature(DS.model_input).parameters["short_side"].default == 378
+
+
+def _fake_rgb(monkeypatch):
+    monkeypatch.setattr(DS.D, "load_rgb", lambda p: np.full((1216, 1936, 3), 128, np.uint8))
+
+
+@pytest.mark.parametrize("ss,hw", [(378, (378, 602)), (518, (518, 826))])
+def test_a4_model_input_real_resize_measured_shape(monkeypatch, ss, hw):
+    """Measured effect on the real bench_joint Resize (not a config key): the tensor that reaches the model has the size-dependent shape."""
+    pytest.importorskip("torch")
+    _fake_rgb(monkeypatch)
+    x = DS.model_input([Path("a.png"), Path("b.png")], short_side=ss)
+    assert tuple(x.shape) == (2, 3) + hw
+    x0 = DS.model_input([Path("a.png")])                    # default arg == registered 378 path
+    assert tuple(x0.shape[-2:]) == (378, 602)
+
+
+def test_a4_forced_fail_wrong_expected_shape_is_detected(monkeypatch):
+    """Control: the shape assertion used above must be able to fail (518 input is NOT the 378 shape)."""
+    pytest.importorskip("torch")
+    _fake_rgb(monkeypatch)
+    x = DS.model_input([Path("a.png")], short_side=518)
+    with pytest.raises(AssertionError):
+        assert tuple(x.shape[-2:]) == (378, 602)
+
+
+def _run_main_fake(monkeypatch, tmp_path, argv_extra, spec_args=("--spec", "metric_vda_s")):
+    """Runs the REAL main() with a fake pipeline recording the shape of the tensor handed to run_pipeline. Needs CUDA only for .to('cuda')."""
+    torch = pytest.importorskip("torch")
+    if not torch.cuda.is_available():
+        pytest.skip("needs cuda for the .to(device)/autocast asserts (tiny tensors only)")
+    import bench_joint as bj
+    seen = []
+    monkeypatch.setattr(bj, "build_pipeline", lambda spec, dev: {"metric": True, "spec": spec})
+    def fake_run(p, x, s, b, out_hw):
+        seen.append(tuple(x.shape)); return torch.zeros(x.shape[0], *x.shape[-2:], device=x.device), None
+    monkeypatch.setattr(bj, "run_pipeline", fake_run)
+    monkeypatch.setattr(DS, "model_meta", lambda ckpt, spec, paths: (spec, dict(spec=spec)))
+    monkeypatch.setattr(DS, "assert_pins", lambda *a, **k: {})
+    monkeypatch.setattr(DS.D, "read_frame_list", lambda *a, **k: None)
+    monkeypatch.setattr(DS.D, "read_pairs", lambda *a, **k: None)
+    monkeypatch.setattr(DS.D, "load_clips", lambda lim=None: [("s0", [dict(image="a.png", scored=False), dict(image="b.png", scored=False)])])
+    monkeypatch.setattr(DS.D, "load_rgb", lambda p: np.full((1216, 1936, 3), 128, np.uint8))
+    out = tmp_path / "o.json"
+    DS.main([*spec_args, "--out", str(out), "--device", "cuda", "--limit-scenes", "1", *argv_extra])
+    import json
+    return seen, json.loads(out.read_text())
+
+
+@pytest.mark.parametrize("extra,hw,short,label", [
+    ([], (378, 602), 378, "RELEASE_LABEL"),
+    (["--release-short-side", "378"], (378, 602), 378, "RELEASE_LABEL"),
+    (["--release-short-side", "518"], (518, 826), 518, "RELEASE_LABEL_518")])
+def test_a4_main_instantiated_pipeline_sees_the_size_and_label(monkeypatch, tmp_path, capsys, extra, hw, short, label):
+    seen, res = _run_main_fake(monkeypatch, tmp_path, extra)
+    assert seen and all(s[-2:] == hw for s in seen), seen
+    assert res["meta"]["short_side"] == short and res["label"] == res["meta"]["label"] == getattr(DS, label)
+    assert f"model input {(2, 3) + hw}" in capsys.readouterr().out      # the first-run shape log line
+
+
+def test_a4_main_refuses_518_for_ours_before_any_model_or_output(monkeypatch, tmp_path):
+    called = []
+    monkeypatch.setattr(DS, "assert_pins", lambda *a, **k: called.append("pins") or {})
+    out = tmp_path / "o.json"
+    with pytest.raises(ValueError, match="refused"):
+        DS.main(["--ckpt", "x.pt", "--release-short-side", "518", "--out", str(out)])
+    with pytest.raises(ValueError, match="refused"):
+        DS.main(["--spec", "metric_vda_s", "--release-short-side", "448", "--out", str(out)])
+    with pytest.raises(ValueError, match="refused"):
+        DS.main(["--spec", "unknown_spec", "--release-short-side", "518", "--out", str(out)])
+    assert not called and not out.exists()

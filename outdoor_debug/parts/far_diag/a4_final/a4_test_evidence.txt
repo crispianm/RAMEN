@@ -1,0 +1,23 @@
+# forced-fail (mutation) controls, 2026-10-17T22:34:24Z; scorer sha 8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503
+== M1 predict ignores ss
+FAILED tests/test_ddad_scorer.py::test_a4_main_instantiated_pipeline_sees_the_size_and_label[extra2-hw2-518-RELEASE_LABEL_518]
+1 failed, 28 passed in 1.49s
+== M2 resolve allows ours/any size
+FAILED tests/test_ddad_scorer.py::test_a4_forced_fail_ours_or_unregistered_cannot_change_input[None-518]
+FAILED tests/test_ddad_scorer.py::test_a4_forced_fail_ours_or_unregistered_cannot_change_input[None-448]
+FAILED tests/test_ddad_scorer.py::test_a4_forced_fail_ours_or_unregistered_cannot_change_input[metric_vda_s-448]
+FAILED tests/test_ddad_scorer.py::test_a4_forced_fail_ours_or_unregistered_cannot_change_input[metric_vda_s-0]
+FAILED tests/test_ddad_scorer.py::test_a4_forced_fail_ours_or_unregistered_cannot_change_input[unknown_spec-518]
+FAILED tests/test_ddad_scorer.py::test_a4_main_refuses_518_for_ours_before_any_model_or_output
+6 failed, 23 passed in 1.42s
+== M3 label 518 unused
+FAILED tests/test_ddad_scorer.py::test_a4_main_instantiated_pipeline_sees_the_size_and_label[extra2-hw2-518-RELEASE_LABEL_518]
+1 failed, 28 passed in 1.45s
+== M4 meta short_side hardcoded
+FAILED tests/test_ddad_scorer.py::test_a4_main_instantiated_pipeline_sees_the_size_and_label[extra2-hw2-518-RELEASE_LABEL_518]
+1 failed, 28 passed in 1.40s
+== restored
+....................................................                     [100%]
+52 passed in 2.36s
+8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503  outdoor_debug/parts/LR_DEV/ddad_scorer.py
+6cb76b7969cfa0c0dae13f97817b85b9d870694cd0ba919ce8a320b65c83e509  tests/test_ddad_scorer.py
