@@ -45,3 +45,36 @@ def test_effective_bound_includes_sentinel_only_with_flag_and_raised_cap(root):
     assert effective_depth_bound(ds) == 655.0       # released: cap 656 still clipped to the strict 655 sentinel bound
     ds.sky_as_valid_depth = True
     assert effective_depth_bound(ds) == 656.0
+
+
+# --- recipe path (Auditor O14 V1/V2): C3 builds VDASemanticsDegradedVKITTIDataset from a vda spec, not the base class ---
+from data.vda_semantics_dataset import VDASemanticsDegradedVKITTIDataset  # noqa: E402
+from train import _make_source_inner  # noqa: E402
+
+
+def _recipe_ds(root, **spec_extra):
+    spec = {"type": "vkitti", "root": str(root), "resize_mode": "vda", "degrade": True, "variants": ["clone"], "cameras": ["Camera_0"],
+            "no_holdout": True, "vkitti_max_depth": 656, **spec_extra}
+    common = dict(COMMON, degrade=True, resize_mode="vda")
+    return _make_source_inner(spec, "train", common)
+
+
+def test_recipe_path_flag_off_is_released(root):
+    ds = _recipe_ds(root, vkitti_max_depth=655)
+    assert type(ds) is VDASemanticsDegradedVKITTIDataset
+    s = ds[0]
+    assert float(s["mask"].max()) == 0.0 and float(s["sky"].min()) == 1.0 and float(s["depth"].max()) <= 655.0 + 1e-3
+
+
+def test_recipe_path_flag_on_sentinel_is_valid_655_35(root):
+    ds = _recipe_ds(root, vkitti_sky_as_valid_depth=True)
+    assert type(ds) is VDASemanticsDegradedVKITTIDataset and ds.sky_as_valid_depth
+    s = ds[0]
+    assert float(s["mask"].min()) == 1.0 and float(s["sky"].max()) == 0.0
+    assert np.allclose(s["depth"].numpy(), 655.35, atol=1e-3)
+    assert effective_depth_bound(ds) == 656.0
+
+
+def test_flag_requires_raised_cap(root):
+    with pytest.raises(ValueError):
+        _recipe_ds(root, vkitti_sky_as_valid_depth=True, vkitti_max_depth=655)

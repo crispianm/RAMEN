@@ -290,9 +290,19 @@ def _make_source_inner(spec: dict, split: str, common: dict):
     if t == "tartanair":
         cls = (VDASemanticsDegradedTartanAirDataset if vda_degrade
               else VDASemanticsTartanAirDataset if vda else VideoDepthClipDataset)
-        return cls(root=spec["root"], split=split, val_fraction=vf,
-                   max_trajectories=spec.get("max_trajectories"), envs=spec.get("envs"),
-                   **{k: v for k, v in common.items() if k != "resize_mode"})
+        ds = cls(root=spec["root"], split=split, val_fraction=vf,
+                 max_trajectories=spec.get("max_trajectories"), envs=spec.get("envs"),
+                 **{k: v for k, v in common.items() if k != "resize_mode"})
+        if spec.get("ts2_sky"):   # outdoor-debug TS2 sky/mask recipe (data/tartanair_ts2.py); absent = unchanged (released rule)
+            if not vda:
+                raise ValueError("ts2_sky is only implemented for resize_mode: vda")
+            if not spec.get("ts2_seg_root"):
+                raise ValueError("ts2_sky needs ts2_seg_root (dir holding <env>/<difficulty>/seg_lcam_front.zip)")
+            from data.tartanair_ts2 import TS2Labeller
+            ds.ts2 = TS2Labeller(spec["ts2_seg_root"], spec.get("ts2_env_table"), max_depth=ds.max_depth)
+        elif spec.get("ts2_seg_root") or spec.get("ts2_env_table"):
+            raise ValueError("ts2_seg_root / ts2_env_table given without ts2_sky: true")
+        return ds
     if t == "irs":
         cls = (VDASemanticsDegradedIRSDataset if vda_degrade
               else VDASemanticsIRSDataset if vda else IRSDataset)

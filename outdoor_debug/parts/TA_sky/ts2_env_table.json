@@ -1,0 +1,655 @@
+{
+ "envs": {
+  "AbandonedCable": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    44
+   ]
+  },
+  "AbandonedFactory": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    160
+   ]
+  },
+  "AbandonedFactory2": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    171
+   ]
+  },
+  "AbandonedSchool": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    67
+   ]
+  },
+  "AmericanDiner": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    0,
+    242
+   ]
+  },
+  "AmusementPark": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    28
+   ]
+  },
+  "AncientTowns": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    239
+   ]
+  },
+  "Antiquity3D": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    7
+   ]
+  },
+  "Apocalyptic": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64,
+    208
+   ]
+  },
+  "ArchVizTinyHouseDay": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    229
+   ]
+  },
+  "ArchVizTinyHouseNight": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": true,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    36
+   ]
+  },
+  "BrushifyMoon": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    59
+   ]
+  },
+  "CarWelding": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    188
+   ]
+  },
+  "CastleFortress": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    7
+   ]
+  },
+  "CoalMine": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "ConstructionSite": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    119
+   ]
+  },
+  "CountryHouse": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    92
+   ]
+  },
+  "CyberPunkDowntown": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    205
+   ]
+  },
+  "Cyberpunk": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    155
+   ]
+  },
+  "DesertGasStation": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    214
+   ]
+  },
+  "Downtown": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    208
+   ]
+  },
+  "EndofTheWorld": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "FactoryWeather": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "Fantasy": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    8
+   ]
+  },
+  "ForestEnv": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    27
+   ]
+  },
+  "Gascola": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    59
+   ]
+  },
+  "GothicIsland": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    242
+   ]
+  },
+  "GreatMarsh": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    23
+   ]
+  },
+  "HQWesternSaloon": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    244
+   ]
+  },
+  "HongKong": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "Hospital": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    137
+   ]
+  },
+  "House": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    85
+   ]
+  },
+  "IndustrialHangar": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    1
+   ]
+  },
+  "JapaneseAlley": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "JapaneseCity": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    217
+   ]
+  },
+  "MiddleEast": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    48
+   ]
+  },
+  "ModUrbanCity": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    133
+   ]
+  },
+  "ModernCityDowntown": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    123
+   ]
+  },
+  "ModularNeighborhood": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    104
+   ]
+  },
+  "ModularNeighborhoodIntExt": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    155
+   ]
+  },
+  "NordicHarbor": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    8
+   ]
+  },
+  "Ocean": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "Office": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    182
+   ]
+  },
+  "OldBrickHouseDay": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    30
+   ]
+  },
+  "OldBrickHouseNight": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "OldIndustrialCity": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    34
+   ]
+  },
+  "OldScandinavia": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    160
+   ]
+  },
+  "OldTownFall": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "OldTownNight": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "OldTownSummer": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "OldTownWinter": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "PolarSciFi": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    9
+   ]
+  },
+  "Prison": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    109
+   ]
+  },
+  "Restaurant": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    70
+   ]
+  },
+  "RetroOffice": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    182
+   ]
+  },
+  "Rome": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    109
+   ]
+  },
+  "Ruins": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    36,
+    116
+   ]
+  },
+  "SeasideTown": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "SeasonalForestAutumn": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "SeasonalForestSpring": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "SeasonalForestSummerNight": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "SeasonalForestWinter": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "SeasonalForestWinterNight": {
+   "fallback_sat_is_sky": true,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "Sewerage": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "ShoreCaves": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    64
+   ]
+  },
+  "Slaughter": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    70,
+    143
+   ]
+  },
+  "SoulCity": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": true,
+   "seg_sky_ok": false,
+   "sky_ids": [
+    175
+   ]
+  },
+  "Supermarket": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": []
+  },
+  "TerrainBlending": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    36
+   ]
+  },
+  "UrbanConstruction": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    9
+   ]
+  },
+  "VictorianStreet": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    146
+   ]
+  },
+  "WaterMillDay": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    29
+   ]
+  },
+  "WaterMillNight": {
+   "fallback_sat_is_sky": false,
+   "far_dome": false,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    182
+   ]
+  },
+  "WesternDesertTown": {
+   "fallback_sat_is_sky": false,
+   "far_dome": true,
+   "sat_nonsky_is_sky": false,
+   "seg_sky_ok": true,
+   "sky_ids": [
+    29
+   ]
+  }
+ },
+ "n_envs": 74,
+ "rule": "outdoor_debug/parts/TA_sky/ts_v2_draft.py::ts_v2_guarded",
+ "schema": "ts2_env_table/1",
+ "source_sha256": {
+  "far_near_class_74.csv": "979b25182880e3dbcfb6a79c80aeded9cad142d647cd68574efbc4b1d3c4fb00",
+  "sky_ids_74.json": "a7e83de66b400762e26fbb5347c18322a7f3851dc91aaf719592f61f185ad297",
+  "ta_sky_followup_decisions.csv": "530d85483501c7a4d0ee118dc63529e6a146136f7afad20cf079c8db28ea7452",
+  "unlabelled_decisions_extension.csv": "136c73bec5070f549d28c56472e61b318587bfafb0f639ca9c7562f353c391aa"
+ }
+}

@@ -43,7 +43,7 @@ from .irs_dataset import IRSDataset, _read_exr_depth
 from .pointodyssey_dataset import PointOdysseyDataset, _PO_DEPTH_SCALE
 from .video_clip_dataset import (STATIC_EV_JITTER, STATIC_NOISE_MULT, VideoDepthClipDataset, _decode_depth,
                                  _degrade_clip, _degrade_static_clip)
-from .vkitti_dataset import VKITTIDataset, _SKY_DEPTH_M, _decode_vkitti_depth
+from .vkitti_dataset import VKITTIDataset, _SKY_DEPTH_M, _SKY_VALID_DEPTH_M, _decode_vkitti_depth
 from .vda_resize import vda_crop_box, vda_resize_depth_like, vda_resize_frame
 from .pseudo_gt_dataset import PseudoGTVideoDataset
 from .video_only_dataset import VideoOnlyDataset
@@ -70,6 +70,8 @@ def _crop(arr: np.ndarray, x0: int, y0: int, target: int) -> np.ndarray:
 
 
 class VDASemanticsTartanAirDataset(VideoDepthClipDataset):
+    ts2 = None   # opt-in TS2 sky/mask recipe: a data.tartanair_ts2.TS2Labeller (set by train.py from `ts2_sky: true`); None = the released rule
+
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
         img_files, dep_files, video_id, start = self.clips[idx]
         indices = [start + t * self.frame_stride for t in range(self.num_frames)]
@@ -97,8 +99,11 @@ class VDASemanticsTartanAirDataset(VideoDepthClipDataset):
 
             d_raw = _decode_depth(str(dep_files[i]))  # (H0, W0) metres; inf for sky
             d_resized = vda_resize_depth_like(np.nan_to_num(d_raw, nan=0.0, posinf=1e9), *rwh)
-            valid = np.isfinite(d_raw) & (d_raw > 0) & (d_raw < self.max_depth)
-            sky = ~np.isfinite(d_raw) | (d_raw > 1.0e4)
+            if self.ts2 is None:       # released rule (default; byte-identical)
+                valid = np.isfinite(d_raw) & (d_raw > 0) & (d_raw < self.max_depth)
+                sky = ~np.isfinite(d_raw) | (d_raw > 1.0e4)
+            else:                      # opt-in TS2 (data/tartanair_ts2.py): seg-based sky / uncertain at RAW resolution; masks resized below exactly as released
+                sky, valid, _unc = self.ts2.label(dep_files[i], d_raw)
             valid_r = vda_resize_depth_like(valid.astype(np.float32), *rwh)
             sky_r = vda_resize_depth_like(sky.astype(np.float32), *rwh)
             d_c = _crop(np.clip(d_resized, 0.0, self.max_depth), x0, y0, H)
@@ -151,7 +156,14 @@ class VDASemanticsVKITTIDataset(VKITTIDataset):
             if self.vkitti_max_depth is not None:
                 valid &= d_raw < self.vkitti_max_depth
             sky = d_raw >= _SKY_DEPTH_M
-            d_resized = vda_resize_depth_like(np.clip(d_raw, 0.0, _SKY_DEPTH_M), *rwh)
+            d_hi = _SKY_DEPTH_M
+            if getattr(self, "sky_as_valid_depth", False):   # Add.44 VK655 (default off = byte-identical): the 65535 sentinel is a VALID 655.35 m target, sky=0
+                valid = np.isfinite(d_raw) & (d_raw > 0)
+                if self.vkitti_max_depth is not None:
+                    valid &= d_raw < self.vkitti_max_depth
+                sky = np.zeros_like(sky)
+                d_hi = _SKY_VALID_DEPTH_M
+            d_resized = vda_resize_depth_like(np.clip(d_raw, 0.0, d_hi), *rwh)
             valid_r = vda_resize_depth_like(valid.astype(np.float32), *rwh)
             sky_r = vda_resize_depth_like(sky.astype(np.float32), *rwh)
             depths.append(torch.from_numpy(_crop(d_resized, x0, y0, H).copy()).unsqueeze(0).float())
