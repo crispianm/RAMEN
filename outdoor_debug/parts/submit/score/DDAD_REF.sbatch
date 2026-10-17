@@ -2,7 +2,7 @@
 # DDAD LR_DEV scoring (exploratory DEV, report-only) of ONE checkpoint on ONE GH200 with ddad_scorer.py (Auditor-checked O26). First use: the REFERENCE checkpoint c3_n46 step12000 only.
 # Code: clean clone DDAD_PROJECT_DIR at DDAD_COMMIT (40-hex literal written at submit time by sed; the checked-in file holds UNSET and aborts).
 # Data: DDAD_LR_ROOT on the cluster = /projects/b5dh/scratch_ddad_20261017/DEV_LR (ddad_val -> ../val_subset, ddad_val_pairs.tsv); frame list = the repo's ddad_val_frames.tsv (sha asserted by the scorer).
-#SBATCH --job-name=outdoor_ddad_REF_step12000
+#SBATCH --job-name=outdoor_ddad_REF80916
 #SBATCH --partition=workq
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -13,13 +13,13 @@
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
 set -euo pipefail
-export LABEL="DDAD_REF_step12000"
+export LABEL="DDAD_REF_step12000_at80916c4f"
 export DDAD_COMMIT="UNSET"
 export DDAD_PROJECT_DIR="${DDAD_PROJECT_DIR:-/projects/b5dh/RAMEN_outdoor_screen_ddad}"
 export SCORE_ROOT="${SCORE_ROOT:-/projects/b5dh/RAMEN_outdoor_screen_scores}"
 export CKPT="/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt"
 export EXP_CKPT_SHA="f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af"
-export DDAD_SCORER_SHA="17646e01b11a53086e8dfd81ac38a0dffa943d829adbbad8f10900f162a5ecca"
+export DDAD_SCORER_SHA="80916c4f3b2ab0b8999b07e142847f8df157db5da756192f02f6df5dea1ed09f"
 export BJ_SHA="5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef"
 export DDAD_LR_ROOT="/projects/b5dh/scratch_ddad_20261017/DEV_LR"
 export VENV="/projects/b5dh/FocusMamba/.venv"
