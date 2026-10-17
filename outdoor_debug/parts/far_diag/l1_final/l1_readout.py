@@ -9,8 +9,10 @@ Output: G0 and, only if G0 passes, per-arm verdicts. Nothing here is a paper cla
  NF_p = max(|dev_V(B0) - dev_V(B0b)|, 1% relative of dev_V(B0));  NF_d = max(|dev_D(B0) - dev_D(B0b)|, 0.01 absolute);  guards NF = max(|B0 - B0b|, 1% relative of B0).
  leg V: dev_V(B0) - dev_V(arm) > NF_p.   leg D: dev_D(B0) - dev_D(arm) > NF_d  AND  dev_D80(arm) <= dev_D80(B0) + NF_b  (the [80,120) bin does not grow beyond its own noise floor;  NF_b = max(|dev_D80(B0) - dev_D80(B0b)|, 0.01 absolute)).
  CAUSE-IMPLICATED = leg V and leg D.  FIX-CANDIDATE = CAUSE-IMPLICATED and every GATED guard within NF.  PRIMARY-ONLY = leg V only.  DDAD-ONLY = leg D only.  NOT = neither.
+ Integrity (before any verdict): for every scored arm, meta.ckpt.step in scores.json AND ddad_scores.json == --stage, and meta.ckpt.sha256 equal across the two files.  A final readout (more arms than B0,B0b) with a declared arm missing returns rc 5.
+ NOTE: NF_p, NF_d, NF_b and the V/D legs are in dev = |1 - x| space (the same space as the legs); the guard NF_g is in the metric's own units (relative 1% of B0, or |B0 - B0b|).
  Guards (lower is better): abs_rel_unaligned for kitti, nyuv2, scannetpp; tae_gtvalid for kitti, scannetpp.  For S1 the nyuv2 and scannetpp guards are REPORTED, not gated (the arm removes those sources by design).
- DESCRIPTION ONLY (never in a verdict): DDAD overall/near-bin AbsRel and all bin medians, VKITTI exact pooled median / per-clip / ratio-of-medians / bin AbsRel."""
+ DESCRIPTION ONLY (never in a verdict): DDAD overall/near-bin AbsRel and the OTHER bin medians (the [80,120) bin median is GATED through NF_b above), VKITTI exact pooled median / per-clip / ratio-of-medians / bin AbsRel."""
 import argparse, json, sys
 from pathlib import Path
 ARMS = ["B0", "B0b", "S1", "S2", "S3", "S4", "S5", "S6"]
@@ -31,7 +33,7 @@ def verdict(S, D, arm):
     nfp = nf_rel(dev(xv(S["B0"])), dev(xv(S["B0b"]))); nfd = max(abs(dev(xd(D["B0"])) - dev(xd(D["B0b"]))), 0.01)
     nfb = max(abs(dev(xd(D["B0"], "[80,120)")) - dev(xd(D["B0b"], "[80,120)"))), 0.01)   # noise floor of the [80,120) bin (Manager ruling on L1 open item 5)
     chV = dev(xv(S["B0"])) - dev(xv(S[arm])); chD = dev(xd(D["B0"])) - dev(xd(D[arm])); ch80 = dev(xd(D["B0"], "[80,120)")) - dev(xd(D[arm], "[80,120)"))
-    legV = chV > nfp; legD = chD > nfd and ch80 >= -nfb
+    legV = chV > nfp; legD = chD > nfd and ch80 >= -nfb - 1e-12   # 1e-12: a growth that is exactly the tolerance (e.g. 0.72 -> 0.71 vs the 0.01 floor) must not flip on float noise
     worse, reported = [], []
     for ds, k in GUARDS:
         nf = nf_rel(gd(S["B0"], ds, k), gd(S["B0b"], ds, k)); w = gd(S[arm], ds, k) - gd(S["B0"], ds, k)
@@ -43,6 +45,17 @@ def verdict(S, D, arm):
     else: label = "NOT"
     if label == "FIX-CANDIDATE": label = "FIX-CANDIDATE (= CAUSE-IMPLICATED + gated guards within NF)"
     return dict(label=label, chV=chV, nfp=nfp, legV=legV, chD=chD, nfd=nfd, legD=legD, ch80=ch80, nfb=nfb, guards_worse=worse, guards_reported_only=reported)
+
+def integrity(S, D, stage):
+    """-> list of problems: ckpt step == stage in both files of every scored arm; ckpt sha identical across the two files of an arm."""
+    bad = []
+    for a in S:
+        ms, md = (S[a].get("meta") or {}).get("ckpt") or {}, (D[a].get("meta") or {}).get("ckpt") or {}
+        for nm, m in (("scores.json", ms), ("ddad_scores.json", md)):
+            if m.get("step") != stage: bad.append(f"{a}: {nm} meta.ckpt.step = {m.get('step')!r} != --stage {stage}")
+            if not m.get("sha256"): bad.append(f"{a}: {nm} has no meta.ckpt.sha256")
+        if ms.get("sha256") != md.get("sha256"): bad.append(f"{a}: ckpt sha256 differs between scores.json ({str(ms.get('sha256'))[:12]}) and ddad_scores.json ({str(md.get('sha256'))[:12]})")
+    return bad
 
 def load(root, arm):
     r = Path(root) / arm
@@ -56,6 +69,9 @@ def main(argv=None):
     for arm in want:
         if not (Path(a.scores_dir) / arm / "scores.json").exists(): print(f"missing {arm}: not scored yet"); continue
         S[arm], D[arm] = load(a.scores_dir, arm)
+    bad = integrity(S, D, a.stage)
+    if bad:
+        print("INTEGRITY FAIL (no verdicts): " + "; ".join(bad)); return 4
     print(f"# L1 readout, stage {a.stage} steps, DDAD gate = A ('exposed DEV gate', exploratory, unaudited)")
     if not all(b in S for b in ("B0", "B0b")): print("G0 needs B0 and B0b: NOT EVALUABLE (no verdicts)"); return 3
     ok, rows = g0(S, D)
@@ -76,6 +92,8 @@ def main(argv=None):
         p = S[arm]["primary"]["vkitti_far_80_655"]; d = D[arm]
         print(f"{arm:4s} VKITTI exact {p['pooled_median']:.4f} perclip {p['per_clip_median_mean']:.4f} ratio-of-med {p['ratio_of_medians']:.4f} bin_absrel {p['bin_absrel']:.4f} | DDAD overall AbsRel {d['overall_absrel_0_200']:.4f}, "
               + ", ".join(f"{b} {d['bins'][b]['median_pred_over_gt']:.3f}/{d['bins'][b]['absrel_unaligned_pooled']:.3f}" for b in d["bins"]) + "  (median pred:gt / AbsRel)")
+    miss = [x for x in want if x not in S]
+    if miss: print(f"INCOMPLETE: declared arm(s) {miss} not scored: rc 5 (this is not a complete readout)"); return 5
     return 0
 
 if __name__ == "__main__":
