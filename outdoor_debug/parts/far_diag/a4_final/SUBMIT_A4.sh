@@ -1,10 +1,10 @@
 #!/bin/bash
 # A4 (released Metric-VDA-S at 518, report-only): THE commands. NOT EXECUTED. Run block by block by hand on Manager/Auditor go, after the Auditor scorer diff check.
 set -euo pipefail
-exit 99   # safety: refuses to run as a script
+# (exit-99 guard removed after Auditor O44 diff check PASS + Manager GO; SUBMITTED by hand, see SUBMITTED.txt)
 ### Pins to substitute: A4_COMMIT = the a4-final commit (or its merge) holding ddad_scorer.py sha 8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503; it must be on the cluster clone /projects/b5dh/RAMEN_outdoor_screen_ddad
 ###   (the A3 job used that clone; update it the same way as for 7505639 -- no fetch/pull/reset of any other clone). Never touch AV2 data.
-export A4_COMMIT=UNSET_40HEX
+export A4_COMMIT=81887d15b20a10aff933551fa5bd783873f8c51b   # actual: a NEW clean clone from a git bundle at /projects/b5dh/RAMEN_outdoor_screen_ddad_a4 (no fetch/pull of any existing clone); sbatch filled outside the tree, submitted with --export=ALL,DDAD_PROJECT_DIR=...
 S=outdoor_debug/parts/submit/score
 ### Block 1 (cluster clone): confirm commit + scorer sha + clean tree, and that the 378 reference row exists (the checker reads it)
 cd /projects/b5dh/RAMEN_outdoor_screen_ddad && test "$(git rev-parse HEAD)" = "$A4_COMMIT" && test -z "$(git status --porcelain)"

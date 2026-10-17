@@ -1,0 +1,1 @@
+A4 submitted 2026-10-17T22:43:49Z (date -u on Isambard): job 7509896, DDAD_RELEASE_MVDA_518.filled.sbatch from /projects/b5dh/RAMEN_outdoor_screen_scores_sbatch_a4/, clone /projects/b5dh/RAMEN_outdoor_screen_ddad_a4 @ 81887d15b20a10aff933551fa5bd783873f8c51b (bundle /projects/b5dh/RAMEN_a4_81887d1.bundle). Report-only; not paper, not a gate.
