@@ -1,0 +1,25 @@
+=== world_size 4: first 200 sampler indices / clip ids vs A0 ===
+A0                       identical idx 200/200  identical clip ids 200/200
+TS2                      identical idx 200/200  identical clip ids 200/200
+A0b[data.seed46]         identical idx 0/200  identical clip ids 1/200
+A0b[resume_reseed46]     identical idx 200/200  identical clip ids 200/200
+A0b[both]                identical idx 0/200  identical clip ids 1/200
+noise draws (frames of the same 2 clips, real __getitem__, seeded_noise) equal to A0's:
+A0                       [True, True]
+TS2                      [True, True]
+A0b[data.seed46]         [True, True]
+A0b[resume_reseed46]     [False, False]
+A0b[both]                [False, False]
+
+=== world_size 1: first 200 sampler indices / clip ids vs A0 ===
+A0                       identical idx 200/200  identical clip ids 200/200
+TS2                      identical idx 200/200  identical clip ids 200/200
+A0b[data.seed46]         identical idx 200/200  identical clip ids 200/200
+A0b[resume_reseed46]     identical idx 0/200  identical clip ids 0/200
+A0b[both]                identical idx 0/200  identical clip ids 0/200
+noise draws (frames of the same 2 clips, real __getitem__, seeded_noise) equal to A0's:
+A0                       [True, True]
+TS2                      [True, True]
+A0b[data.seed46]         [True, True]
+A0b[resume_reseed46]     [False, False]
+A0b[both]                [False, False]

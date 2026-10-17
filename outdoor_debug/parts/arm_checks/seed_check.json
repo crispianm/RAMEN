@@ -1,0 +1,46 @@
+{
+ "4": {
+  "A0": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "TS2": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "A0b[data.seed46]": {
+   "same_idx": 0,
+   "same_clip": 1
+  },
+  "A0b[resume_reseed46]": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "A0b[both]": {
+   "same_idx": 0,
+   "same_clip": 1
+  }
+ },
+ "1": {
+  "A0": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "TS2": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "A0b[data.seed46]": {
+   "same_idx": 200,
+   "same_clip": 200
+  },
+  "A0b[resume_reseed46]": {
+   "same_idx": 0,
+   "same_clip": 0
+  },
+  "A0b[both]": {
+   "same_idx": 0,
+   "same_clip": 0
+  }
+ }
+}

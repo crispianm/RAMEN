@@ -655,6 +655,37 @@ def severity_schedule(step: int, hold: int, start: float, cap: float, warmup: in
     return start + (cap - start) * min(1.0, (step - hold) / warmup)
 
 
+def make_lr_scale(t: dict, warmup: int, total_steps: int):
+    """LR multiplier schedule (in [0, 1]; multiplies each param group's ``initial_lr``). Default: linear warmup over ``warmup`` steps, then cosine to 0 at ``lr_decay_steps`` (default total_steps).
+    Opt-in restart (all three keys; absent = byte-identical to the default above): ``training.lr_restart_step`` R, ``training.lr_restart_warmup`` W, ``training.lr_restart_peak`` P. For step >= R the scale is
+    P*(step-R+1)/W while step-R < W, then P*cosine from 1 at R+W down to 0 at ``lr_decay_steps`` (clamped at 0 beyond). Steps < R use the default schedule. Needed when a run resumes past the original cosine end."""
+    lr_decay_steps = int(t.get("lr_decay_steps", 0)) or total_steps
+    rs = t.get("lr_restart_step")
+    if (rs is None) != (t.get("lr_restart_warmup") is None) or (rs is None) != (t.get("lr_restart_peak") is None):
+        raise ValueError("training.lr_restart_step / lr_restart_warmup / lr_restart_peak must be set together")
+
+    def base(step):
+        if step < warmup:
+            return (step + 1) / warmup
+        prog = (step - warmup) / max(1, lr_decay_steps - warmup)
+        return 0.5 * (1 + math.cos(math.pi * min(1.0, prog)))
+
+    if rs is None:
+        return base
+    rs, rw, rp = int(rs), int(t["lr_restart_warmup"]), float(t["lr_restart_peak"])
+    if rw < 1 or not (0.0 < rp <= 1.0) or lr_decay_steps <= rs + rw:
+        raise ValueError(f"bad lr restart: warmup {rw} (>=1), peak {rp} (0,1], need lr_decay_steps {lr_decay_steps} > restart_step+warmup {rs + rw}")
+
+    def lr_scale(step):
+        if step < rs:
+            return base(step)
+        if step - rs < rw:
+            return rp * (step - rs + 1) / rw
+        prog = (step - rs - rw) / max(1, lr_decay_steps - rs - rw)
+        return rp * 0.5 * (1 + math.cos(math.pi * min(1.0, prog)))
+    return lr_scale
+
+
 def _start_state(dataset, t: dict, gstep: int, rank: int, resumed: bool) -> None:
     """Called once, after any resume. Sets the severity cap for the FIRST step from ``gstep``
     (a run resumed at step 8000 starts at step 8000's cap, not step 0's clean one) and, on a
@@ -2569,13 +2600,7 @@ def train(cfg: dict) -> None:
 
     # lr_decay_steps overrides the cosine length (default = total_steps). Setting it >> total_steps
     # holds LR ~constant (used to expose over-training erosion fast on a small repro).
-    lr_decay_steps = int(t.get("lr_decay_steps", 0)) or total_steps
-
-    def lr_scale(step):  # in [0, 1]; multiplies each param group's initial LR
-        if step < warmup:
-            return (step + 1) / warmup
-        prog = (step - warmup) / max(1, lr_decay_steps - warmup)
-        return 0.5 * (1 + math.cos(math.pi * min(1.0, prog)))
+    lr_scale = make_lr_scale(t, warmup, total_steps)   # in [0, 1]; multiplies each param group's initial LR
 
     best = float("inf")
     gstep = 0

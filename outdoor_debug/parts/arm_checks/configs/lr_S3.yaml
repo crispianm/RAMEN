@@ -1,0 +1,5 @@
+training:
+  lr_decay_steps: 14000
+  lr_restart_step: 12000
+  lr_restart_warmup: 100
+  lr_restart_peak: 1.0

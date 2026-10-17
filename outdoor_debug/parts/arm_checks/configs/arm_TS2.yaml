@@ -183,13 +183,13 @@ data:
   sampling: mass
 training:
   max_epochs: 1000
-  max_steps: 12000
+  max_steps: 14000
   batch_size: 1
   grad_accum: 4
   learning_rate: 0.0001
   weight_decay: 0.0
   warmup_steps: 500
-  lr_decay_steps: 12000
+  lr_decay_steps: 14000
   grad_clip: 1.0
   precision: bf16
   ema_decay: 0.0
@@ -200,17 +200,12 @@ training:
   checkpoint_every_steps: 500
   val_max_batches: 80
   causal_training: masked
-  checkpoint_dir: runs/dn01_v3_bfix_C3_B
+  checkpoint_dir: runs/outdoor_screen_TS2
   checkpoint_at_steps:
-  - 100
-  - 250
-  - 500
-  - 1000
-  - 2000
-  - 4000
-  - 6000
-  - 8000
-  - 12000
+  - 12500
+  - 13000
+  - 13500
+  - 14000
   grad_clip_per_group: true
   severity_hold_steps: 0
   severity_warmup_start: 0.0
@@ -218,7 +213,10 @@ training:
   seed_scheme: x1000
   head_lr_mult: 1.0
   gate_lr_scale: 10
-  resume_from: /projects/b5dh/RAMEN_train_dn01_v3_synreal_r50_B/runs/dn01_v3_synreal_r50_B/step6000.pt
+  resume_from: /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt
+  lr_restart_step: 12000
+  lr_restart_warmup: 100
+  lr_restart_peak: 1.0
 loss:
   ssi_weight: 1.0
   ssi_align: perclip
@@ -251,6 +249,7 @@ loss:
   sky_hinge_weight: 0.0
   log_terms: true
   sky_vda_zero_disparity: true
+  log_terms_every: 10
 eval:
   outdoor_monitor:
     root: /projects/b5dh/data/train/vkitti

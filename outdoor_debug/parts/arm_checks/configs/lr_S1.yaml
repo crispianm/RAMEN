@@ -1,0 +1,2 @@
+training:
+  lr_decay_steps: 14000
