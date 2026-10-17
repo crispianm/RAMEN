@@ -198,6 +198,9 @@ def main(argv=None):
         x = model_input([root / f["image"] for f in frames]).to(dev)
         with torch.autocast(**ac):
             d, _ = bj.run_pipeline(pipe, x, 0.0, 0.0, tuple(x.shape[-2:]))   # out_hw = model resolution: the A1 bilinear upsample happens in sample_prediction
+        assert tuple(d.shape[-2:]) == tuple(x.shape[-2:]), f"pipeline depth {tuple(d.shape[-2:])} != model input {tuple(x.shape[-2:])}: an extra resample happened (A1 allows only the sample_prediction upsample)"   # Auditor O26 (1)
+        if not getattr(predict, "_shape_logged", False):
+            print(f"[ddad_scorer] first clip: model input {tuple(x.shape)} -> depth {tuple(d.shape)} (same HxW, identity resample)", flush=True); predict._shape_logged = True
         return d
 
     clips = D.load_clips(a.limit_scenes)
