@@ -47,3 +47,6 @@ Model-input resolution for DDAD LR_DEV scoring: bench_joint-style resize (Resize
 
 ## DDAD scorer pin (2026-10-17T18:55:15Z, BEFORE any DDAD prediction)
 ddad_scorer.py sha256 1d1f7eea796e01c47ef25fcab02d9b7d00d0bd9f41e95bd86bee0c580ed7eaa4 (committed 556de6e), tests/test_ddad_scorer.py c7f644d7..., 8 synthetic tests pass (pred=0.9xGT -> 0.9/0.1 in every bin; GT-resize and per-frame alignment variants detectably differ; bin edges; pooling; frame-list/pairs sha assertions). Implements O11 (bins [0,20) [20,50) [50,80) [80,120) [120,200] m, pooled unaligned AbsRel, pooled median pred:gt, px/frame/scene counts, overall AbsRel) with A1+A2; asserts frame-list b8d9664f and pairs 962d4996. The model path (model_input/predict/main) has NOT been executed; no DDAD prediction exists. Auditor check required before the first DDAD prediction. Report-only, exploratory DEV.
+
+## DDAD scorer pin UPDATE (2026-10-17T18:59:46Z): replaces the earlier pin line (Auditor O27 accepted)
+ddad_scorer.py sha256 17646e01b11a53086e8dfd81ac38a0dffa943d829adbbad8f10900f162a5ecca at e0ca9d54e9dc0514131f30be064abd308d0e04ef (= 1d1f7eea + only the Auditor O26(1) shape assert/log). First DDAD run: job 7505514, start checkpoint c3_n46 step12000 only, GH200; Auditor checks its output before any arm runs on DDAD.
