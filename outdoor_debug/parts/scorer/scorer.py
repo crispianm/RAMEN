@@ -178,7 +178,7 @@ def main(argv=None):
             clean, raw_hw = bj.load_frames(ds, frames)
             gt = bj.load_gt(ds, frames)
             cam = None
-            if ds != "vkitti":
+            if ds in ("kitti", "scannetpp"):   # datasets with camera poses for TAE; nyuv2/vkitti have none (bj.camera raises for them), so no TAE there by construction
                 try:
                     cam = bj.camera(ds, key, frames)
                 except Exception as e:   # a missing camera/TAE input is a FAILED score, never a silent omission (R+D decision, Auditor S1)
