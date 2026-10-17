@@ -53,9 +53,10 @@ for spec in sys.argv[1:]:
         elif want and all(v == 0.0 for v in vals): out(arm, 3, "WARN", "hinge exactly 0 in all 5 rows: report as 'hinge inert at this start point' (O18), not as evidence")
         else: out(arm, 3, "ok", f"{len(rows)} rows, hinge key present={want}, values {vals if want else '-'}")
     # 4 TS2 startup line
-    ts = [l for l in txt if l.startswith("[ts2] TartanAir TS2 sky/mask ON")]
-    if arm in TS2_ARMS: out(arm, 4, "ok" if ts and SHA in ts[0] else "FAIL", f"[ts2] line {'with env_table_sha256 ' + SHA[:8] if ts and SHA in ts[0] else 'missing or wrong sha'}")
-    else: out(arm, 4, "FAIL" if ts else "ok", "no [ts2] line expected" + (" but found one" if ts else ""))
+    blob = "\n".join(txt)   # the 4 ranks' [ts2] prints can interleave on ONE line, so count OCCURRENCES, not lines
+    n_ts = len(re.findall(r"\[ts2\] TartanAir TS2 sky/mask ON", blob)); n_sha = len(re.findall(r"env_table_sha256=" + SHA, blob))
+    if arm in TS2_ARMS: out(arm, 4, "ok" if (n_ts == 4 and n_sha == 4) else "FAIL", f"[ts2] occurrences={n_ts}, with env_table_sha256 {SHA[:8]}: {n_sha} (expect 4 and 4)")
+    else: out(arm, 4, "ok" if n_ts == 0 else "FAIL", f"[ts2] occurrences={n_ts} (expect 0)")
     # 5 finite
     nf = [l for l in txt if "[warn] non-finite loss" in l and (m := re.search(r"step (\d+)", l)) and int(m.group(1)) <= 12050]
     out(arm, 5, "FAIL" if nf else "ok", f"{len(nf)} non-finite warnings in first 50 steps")
@@ -65,7 +66,10 @@ for spec in sys.argv[1:]:
     if not b: out(arm, 6, "WAIT", "bound line not in log")
     else: out(arm, 6, "ok" if re.search(re.escape(want) + r"(,|$)", b[0]) else "FAIL", f"want {want}; got: {b[0][-120:]}")
     # 7 identical source list / counts vs the first (A0) log
-    dl = [re.sub(r"seed=\d+", "seed=<S>" if arm == "A0b" else "seed=<S>", re.sub(r"vkitti=65[56]", "vkitti=<B>", l)) for l in txt if l.startswith("[data]")]   # the data seed is a declared A0b key (49 vs 45): ignored in the compare (the seed itself is checked by the config diff)
+    dl = [re.sub(r"seed=\d+", "seed=<S>", re.sub(r"vkitti=65[56]", "vkitti=<B>", l)) for l in txt if l.startswith("[data]")]
+    seeds = sorted({int(x) for l in txt if l.startswith("[data]") for x in re.findall(r"seed=(\d+)", l)})
+    want_seed = 49000 if arm == "A0b" else 45000   # data.seed 49 (A0b) / 45 (all other arms) x 1000: the declared seed is ASSERTED per arm, only the compare masks it
+    out(arm, 7, "ok" if seeds == [want_seed] else "FAIL", f"[data] seed values {seeds} (want [{want_seed}])")
     if data0 is None: data0 = dl; out(arm, 7, "ok", f"reference ({len(dl)} [data] lines)")
     else: out(arm, 7, "ok" if dl == data0 else "FAIL", "[data] lines identical to reference" if dl == data0 else f"differs from reference: {[x for x in dl if x not in data0][:3]}")
     # spike rule: mean printed loss over the first printed steps vs A0's

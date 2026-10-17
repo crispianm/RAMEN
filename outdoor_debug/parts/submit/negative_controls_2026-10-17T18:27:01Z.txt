@@ -1,0 +1,51 @@
+# negative controls for check_first_run.sh (redone checker), 2026-10-17T18:27:01Z; logs = the real full-run logs, mislabelled/edited
+--- NEG1 A0 log as A0b: item 7 must FAIL
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[A0b] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0b] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0b] item 7: FAIL [data] seed values [45000] (want [49000])
+[A0b] item 7: ok [data] lines identical to reference
+RESULT: FAIL (scancel)
+--- NEG2 TS2 log with one [ts2] removed: item 4 must FAIL
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[TS2] item 4: FAIL [ts2] occurrences=3, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2] item 7: ok [data] seed values [45000] (want [45000])
+[TS2] item 7: ok [data] lines identical to reference
+RESULT: FAIL (scancel)
+--- NEG3 A0 log as TS2: item 4 must FAIL
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[TS2] item 4: FAIL [ts2] occurrences=0, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+[TS2] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2] item 7: ok [data] seed values [45000] (want [45000])
+[TS2] item 7: ok [data] lines identical to reference
+RESULT: FAIL (scancel)
+--- NEG4 VK655 log as TS2: item 6 must FAIL
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[TS2] item 4: ok [ts2] occurrences=4, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2] item 6: FAIL want vkitti=655; got: 10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2] item 7: ok [data] seed values [45000] (want [45000])
+[TS2] item 7: ok [data] lines identical to reference
+RESULT: FAIL (scancel)
+--- NEG5 A0b log as TS2_H80: item 7 must FAIL
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[TS2_H80] item 4: FAIL [ts2] occurrences=0, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+[TS2_H80] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2_H80] item 7: FAIL [data] seed values [49000] (want [45000])
+[TS2_H80] item 7: ok [data] lines identical to reference
+RESULT: FAIL (scancel)

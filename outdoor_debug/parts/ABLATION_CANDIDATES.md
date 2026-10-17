@@ -42,3 +42,11 @@ Scorer pinned: outdoor_debug/parts/scorer/scorer.py sha256 fbd2c9992617b0e7e2f45
 - Evidence: the only difference is seed=49000 vs A0's 45000, the declared A0b key (data.seed 49; Auditor O18); clip counts (94581 train / 3 val), world_size 4 and sources are identical.
 - Manager decision (via cross-session message, received before 2026-10-17T18:24:41Z): 'continue, false positive'; no scancel. R+D had not cancelled (asked first); Manager process note: in future cancel first unless the FAIL is obviously the checker's own fault and the runs are cheap to keep.
 - Checker fix (separate commit): item 7 compares the [data] line with the seed value masked; re-run on all six logs at 2026-10-17T18:24:41Z: outputs in outdoor_debug/parts/submit/stop_check_all6_2026-10-17T18:24:41Z.txt, RESULT: RESULT: no FAIL (WAIT/WARN lines may remain).
+
+### Redo of the vacuous checker fix (Auditor O21, Manager rule: negative controls)
+- 00cb04b masked the seed for EVERY arm (same value on both branches of the conditional) so its 'no FAIL' re-run (c9e8841) proved nothing; withdrawn.
+- Redone checker (this commit): item 7 asserts seed=45000 for every arm except A0b = 49000 and compares [data] lines with the seed masked; item 4 counts [ts2] OCCURRENCES (4 per TS2-based arm, each with env_table_sha256 f19d0b83; 0 in A0/A0b).
+- Positive run on all six real logs (2026-10-17T18:27:01Z): outdoor_debug/parts/submit/stop_check_all6_redo_2026-10-17T18:27:01Z.txt, RESULT: no FAIL.
+- Negative controls (must FAIL, all did): outdoor_debug/parts/submit/negative_controls_2026-10-17T18:27:01Z.txt (A0 log as A0b -> item 7 FAIL; TS2 log with one [ts2] removed -> item 4 FAIL (3 occurrences); A0 log as TS2 -> item 4 FAIL; VK655 log as TS2 -> item 6 FAIL; A0b log as TS2_H80 -> item 7 FAIL).
+- Scorer forced-fail control: outdoor_debug/parts/scorer/forced_fail_sentinel.py (+_output.txt): on the real VKITTI DEV GT, far_mask with the sentinel on gives pooled median 0.84200, with the sentinel mask off 0.45777 -> the mask is active.
+- Scorer pin now: scorer.py sha256 a8b0731e7270b911f92d56eade55b413338b12fd4373aac2b93ae1a7da8171df at e0f6702 (Auditor O22 OK); replaces fbd2c999.

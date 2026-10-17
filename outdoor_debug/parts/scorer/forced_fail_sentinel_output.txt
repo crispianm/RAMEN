@@ -1,0 +1,3 @@
+sentinel px (gt>=655, every 1st): 43220547; far px (80<=gt<655): 15188340
+pooled median pred:gt  sentinel EXCLUDED (scorer) = 0.84200   sentinel INCLUDED (mask off) = 0.45777   changed = True
+FORCED-FAIL CONTROL OK: switching the sentinel mask off changes the statistic; the scorer's mask is active

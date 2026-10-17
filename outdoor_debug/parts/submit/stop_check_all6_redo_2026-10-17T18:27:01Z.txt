@@ -1,0 +1,97 @@
+=== A0  logs/outdoor_screen_A0_7504894.out  (last printed step 12200) ===
+[A0] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[A0] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[A0] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[A0] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[A0] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[A0] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[A0] item 3: ok 5 rows, hinge key present=False, values -
+[A0] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0] item 5: ok 0 non-finite warnings in first 50 steps
+[A0] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0] item 7: ok [data] seed values [45000] (want [45000])
+[A0] item 7: ok reference (2 [data] lines)
+[A0] loss mean(steps<=12100, n=5) = 0.5816 (reference)
+=== A0b  logs/outdoor_screen_A0b_7504897.out  (last printed step 12200) ===
+[A0b] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[A0b] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[A0b] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[A0b] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[A0b] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[A0b] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[A0b] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[A0b] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[A0b] item 3: ok 5 rows, hinge key present=False, values -
+[A0b] item 4: ok [ts2] occurrences=0 (expect 0)
+[A0b] item 5: ok 0 non-finite warnings in first 50 steps
+[A0b] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[A0b] item 7: ok [data] seed values [49000] (want [49000])
+[A0b] item 7: ok [data] lines identical to reference
+[A0b] loss mean = 0.6318, ratio to A0 1.09 -> ok
+=== TS2  logs/outdoor_screen_TS2_7504898.out  (last printed step 12160) ===
+[TS2] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[TS2] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[TS2] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[TS2] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[TS2] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[TS2] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[TS2] item 1: WAIT step 12200 not printed yet
+[TS2] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[TS2] item 3: ok 5 rows, hinge key present=False, values -
+[TS2] item 4: ok [ts2] occurrences=4, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2] item 5: ok 0 non-finite warnings in first 50 steps
+[TS2] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2] item 7: ok [data] seed values [45000] (want [45000])
+[TS2] item 7: ok [data] lines identical to reference
+[TS2] loss mean = 0.5803, ratio to A0 1.00 -> ok
+=== TS2_H80  logs/outdoor_screen_TS2_H80_7504900.out  (last printed step 12200) ===
+[TS2_H80] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[TS2_H80] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[TS2_H80] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[TS2_H80] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[TS2_H80] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[TS2_H80] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[TS2_H80] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[TS2_H80] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[TS2_H80] item 3: ok 5 rows, hinge key present=True, values [0.006313875998273488, 0.014388534488078619, 0.0067092316505750205, 0.0009064334196409618, 0.005325831517552615]
+[TS2_H80] item 4: ok [ts2] occurrences=4, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2_H80] item 5: ok 0 non-finite warnings in first 50 steps
+[TS2_H80] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2_H80] item 7: ok [data] seed values [45000] (want [45000])
+[TS2_H80] item 7: ok [data] lines identical to reference
+[TS2_H80] loss mean = 0.5874, ratio to A0 1.01 -> ok
+=== TS2_H300  logs/outdoor_screen_TS2_H300_7504902.out  (last printed step 12180) ===
+[TS2_H300] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[TS2_H300] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[TS2_H300] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[TS2_H300] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[TS2_H300] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[TS2_H300] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[TS2_H300] item 1: WAIT step 12200 not printed yet
+[TS2_H300] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[TS2_H300] item 3: ok 5 rows, hinge key present=True, values [0.02012361625675112, 0.03207558239373611, 0.018427685284405016, 0.004667942351079546, 0.012414280311350012]
+[TS2_H300] item 4: ok [ts2] occurrences=4, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2_H300] item 5: ok 0 non-finite warnings in first 50 steps
+[TS2_H300] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2_H300] item 7: ok [data] seed values [45000] (want [45000])
+[TS2_H300] item 7: ok [data] lines identical to reference
+[TS2_H300] loss mean = 0.6002, ratio to A0 1.03 -> ok
+=== TS2_VK655  logs/outdoor_screen_TS2_VK655_7504904.out  (last printed step 12200) ===
+[TS2_VK655] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[TS2_VK655] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[TS2_VK655] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[TS2_VK655] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[TS2_VK655] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[TS2_VK655] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[TS2_VK655] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[TS2_VK655] item 2: ok resume line found; totals printed [14000] (expect 14000)
+[TS2_VK655] item 3: ok 5 rows, hinge key present=False, values -
+[TS2_VK655] item 4: ok [ts2] occurrences=4, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+[TS2_VK655] item 5: ok 0 non-finite warnings in first 50 steps
+[TS2_VK655] item 6: ok want vkitti=656; got: 10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[TS2_VK655] item 7: ok [data] seed values [45000] (want [45000])
+[TS2_VK655] item 7: ok [data] lines identical to reference
+[TS2_VK655] loss mean = 0.5853, ratio to A0 1.01 -> ok
+RESULT: no FAIL (WAIT/WARN lines may remain)
