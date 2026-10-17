@@ -1,0 +1,8 @@
+OFF [keys absent]: bit-identical loss+grad vs BASE 8e1d9ae on 60/60 batches
+OFF [far_weight 1.0]: bit-identical loss+grad vs BASE 8e1d9ae on 60/60 batches
+OFF [far_weight 1.0 + far_from 50]: bit-identical loss+grad vs BASE 8e1d9ae on 60/60 batches
+OFF [log_terms on, keys absent]: bit-identical loss+grad vs BASE 8e1d9ae on 60/60 batches
+CONTROL (forced fail) [far_weight 4.0 + far_from 50]: bit-identical on 0/60 batches (must be < 60: the comparator can tell ON from OFF)
+train.py | 45 ++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 42 insertions(+), 3 deletions(-)
+S6 OFF-PROOF: PASS
