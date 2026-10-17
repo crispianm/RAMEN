@@ -74,3 +74,23 @@ def test_added_pins_key_fails():
 def test_both_clone_paths_changed_pass():                  # (b)
     d = good(); d["meta"]["pins"]["frames_tsv"] = "/a/ddad_a4/f.tsv"; d["meta"]["pins"]["pairs_tsv"] = "/a/ddad_a4/p.tsv"
     assert failed(d) == []
+
+
+def test_path_key_without_sha_pair_must_be_equal():
+    d = good(); d["meta"]["pins"]["new_tsv"] = "/a"; ref = copy.deepcopy(REF); ref["meta"]["pins"]["new_tsv"] = "/b"
+    assert "every other meta field == the 378 release row" in [n for n, ok in C.checks(d, LOG, SHA, ref) if not ok]
+
+
+def test_path_change_with_changed_paired_sha_fails():
+    d = good(); d["meta"]["pins"]["frames_tsv"] = "/other.tsv"; d["meta"]["pins"]["frames_sha256"] = "0" * 64
+    assert "every other meta field == the 378 release row" in failed(d)
+
+
+def test_non_path_pin_change_fails():
+    d = good(); ref = copy.deepcopy(REF); d["meta"]["pins"]["bench_joint"] = "a"; ref["meta"]["pins"]["bench_joint"] = "b"
+    assert "every other meta field == the 378 release row" in [n for n, ok in C.checks(d, LOG, SHA, ref) if not ok]
+
+
+def test_excluded_keys_are_named():
+    ok, ex = C.pins_compare({"frames_tsv": "/a", "frames_sha256": "s", "pairs_tsv": "/p", "pairs_sha256": "t"}, {"frames_tsv": "/b", "frames_sha256": "s", "pairs_tsv": "/p", "pairs_sha256": "t"})
+    assert ok and ex == ["frames_tsv"]

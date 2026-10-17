@@ -12,11 +12,21 @@ SAME = ("precision", "max_len", "resolution_rule", "alignment", "bins_m", "bench
 PATH_SUFFIX = ("_tsv", "_dir", "_path")
 
 
-def pins_equal(p, q):
-    """Key sets must be identical (a removed or added key FAILS); every value must be equal EXCEPT the clone-dependent PATH entries (keys ending _tsv/_dir/_path), which may differ."""
+def pins_compare(p, q):
+    """Key-by-key pins comparison -> (ok, excluded_path_keys). Key sets must be identical (removed/added key FAILS). Every value must be equal EXCEPT a filesystem-path key
+    (ends _tsv/_dir/_path), which may differ ONLY IF its paired sha key (<stem>_sha256, e.g. frames_tsv <-> frames_sha256) exists in both and is equal; a path key without a sha pair must be equal."""
     if not isinstance(p, dict) or not isinstance(q, dict) or not p or set(p) != set(q):
-        return False
-    return all(p[k] == q[k] for k in p if not k.endswith(PATH_SUFFIX))
+        return False, []
+    excluded = []
+    for k in sorted(p):
+        if p[k] == q[k]:
+            continue
+        if k.endswith(PATH_SUFFIX):
+            pair = k.rsplit("_", 1)[0] + "_sha256"
+            if pair in p and p[pair] == q[pair]:
+                excluded.append(k); continue
+        return False, excluded
+    return True, excluded
 
 
 def checks(d, log_text, scorer_sha, ref):
@@ -28,7 +38,7 @@ def checks(d, log_text, scorer_sha, ref):
     p = m.get("pins", {}); c("frame list + pairs sha", p.get("frames_sha256") == FRAMES and p.get("pairs_sha256") == PAIRS)
     c("release weights sha", (m.get("release_weights") or {}).get("sha256") == W); c("GH200, fp16", "GH200" in str(m.get("gpu")) and m.get("precision") == "fp16")
     c("395 frames / 50 scenes, 0 non-finite", d.get("n_scored_frames") == 395 and d.get("n_scenes") == 50 and d.get("n_nonfinite_pred_px") == 0)
-    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME) and pins_equal(m.get("pins"), r.get("pins")))
+    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME) and pins_compare(m.get("pins"), r.get("pins"))[0])
     bs, rb = d.get("bins", {}), ref.get("bins", {})
     c("same GT px/frames/scenes per bin as the 378 row", {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in bs.items()} == {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in rb.items()} and d.get("overall_n_px") == ref.get("overall_n_px"))
     c("all metrics finite", all(math.isfinite(b[k]) for b in bs.values() for k in ("absrel_unaligned_pooled", "median_pred_over_gt")) and math.isfinite(d.get("overall_absrel_0_200", float("nan"))))
@@ -41,6 +51,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     res = checks(json.load(open(a.scores)), open(a.log, errors="replace").read(), a.scorer_sha, json.load(open(a.ref378)))
     for n, ok in res: print(("PASS " if ok else "FAIL ") + n)
+    d = json.load(open(a.scores)); print("pins path keys excluded (differ, paired sha equal): " + (", ".join(pins_compare(d.get("meta", {}).get("pins"), json.load(open(a.ref378)).get("meta", {}).get("pins"))[1]) or "none"))
     nf = sum(1 for _, ok in res if not ok); print(f"RESULT: {'ALL PASS' if nf == 0 else str(nf) + ' FAIL'} ({len(res)} checks)"); return 1 if nf else 0
 
 
