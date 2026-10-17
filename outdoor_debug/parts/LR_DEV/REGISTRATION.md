@@ -28,3 +28,10 @@ Per bin, pooled over scored frames: AbsRel = mean(|pred - gt| / gt); pred:gt = m
 
 ## Pinned scorer
 bench_joint commit and DEV clip-list sha for the five-arm screen are logged together before the first training run (separate entry, same host type as these scores); a DDAD loader with a regression test (decode, units, masks) is added on outdoor-debug and its commit recorded here before scoring.
+
+## Amendment A1 (2026-10-17T17:06:17Z, from `date -u`; before any model prediction; Auditor O11 R1/R2)
+- Resolution rule (frozen): the model prediction for a scored frame is resized BILINEARLY to the native 1936x1216 camera resolution and sampled at the projected LIDAR pixels (integer pixel coordinates of the z-buffered projection); GT is never resized. Metric depth in metres, no scale/shift alignment.
+- LIDAR pairing: official scene_<sha>.json samples (camera datum CAMERA_01 <-> LIDAR datum of the same sample). 395 of 395 scored frames paired, 0 missing on disk. Pairs file ddad_val_pairs.tsv sha256 962d499612c40bca7d314f8ff16ce1d6c7b03962ae78938f472a101766150245.
+- Extract job: sbatch 7503602, sacct Submit 2026-10-17T16:48:50, Start 2026-10-17T16:48:51 (>= registration filing 16:48:22Z), End 16:53:27, COMPLETED. Extracted 8000 files (3950 CAMERA_01 PNG + 3950 LIDAR npz + 50 scene json + 50 calibration json); sha256sum -c on the cluster 8000/8000 OK. SUMS committed as val_subset_SHA256SUMS.gz (sha256 of the uncompressed file: b12fce8b50ba72c4acecddd194a4b9fdce276c59a7978b68ca18d2815bbbfcea). Local copy under data/DEV_LR/ddad_val/ holds the pruned subset (all 3950 PNGs, the 395 paired LIDAR npz, jsons).
+- Earlier job 7497679 (md5 + tar listing only, Start 2026-10-17T10:45:28, End 10:54:21) opened no payload files beyond streaming the tar for md5/listing.
+- Decode checks (loader regression test) use only the 5 sanity frames listed above, and cover units, valid mask, projection, intrinsics/extrinsics only.
