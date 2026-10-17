@@ -30,3 +30,7 @@ Final arms (nested, one change per step): A0 continuation (C3 recipe, old loader
 
 ## Add. 44 (2026-10-17, user via Manager): sixth arm TS2+VK655 added BEFORE any run
 Change vs TS2: VKITTI sky sentinel (65535 = 655.35 m) becomes valid metric depth (mask=1, sky=0, no hinge); VKITTI caps raised 655 -> 656 for this arm only. Motivation: inference that Metric-VDA trained VKITTI sky as a ~655 m target (unverified; VDA has no sky loss, training code unpublished). N tried: 5 -> 6. Nothing has run.
+
+## Submission log (2026-10-17T18:11Z, Manager approval, package 2a72223 code = 0034ac7)
+Clone /projects/b5dh/RAMEN_outdoor_screen_2a72223 (clean, 2a72223c); sbatch files in /projects/b5dh/RAMEN_outdoor_screen_2a72223_submit (sha-matched to outdoor_debug/parts/submit/). Smoke jobs (50 steps): outdoor_smoke_A0 = 7504811, outdoor_smoke_TS2_VK655 = 7504812. Full-run job ids are appended below before any result is read.
+Smokes 7504811/7504812 COMPLETED 0:0 (3:31 each); check_first_run.sh -s: items 1-7 ok for both (VK655 bound 656, A0 655; ts2 sha f19d0b83; loss ratio VK655/A0 = 1.01). Fulls submitted 2026-10-17T18:17Z (before any result): A0 7504894, A0b 7504897, TS2 7504898, TS2_H80 7504900, TS2_H300 7504902, TS2_VK655 7504904.
