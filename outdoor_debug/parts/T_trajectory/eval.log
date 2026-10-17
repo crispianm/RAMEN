@@ -1,0 +1,65 @@
+xFormers not available
+xFormers not available
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+xFormers not available
+xFormers not available
+kitti 2011_09_28_drive_0037_sync 19s
+kitti 2011_09_26_drive_0005_sync 43s
+kitti 2011_09_26_drive_0023_sync 96s
+kitti 2011_10_03_drive_0047_sync 121s
+kitti 2011_09_26_drive_0020_sync 140s
+kitti 2011_09_26_drive_0113_sync 159s
+kitti 2011_09_26_drive_0095_sync 183s
+vkitti Scene01_overcast 200s
+vkitti Scene01_sunset 217s
+vkitti Scene02_overcast 232s
+vkitti Scene02_sunset 248s
+vkitti Scene06_overcast 263s
+vkitti Scene06_sunset 278s
+vkitti Scene18_overcast 295s
+vkitti Scene18_sunset 311s
+vkitti Scene20_overcast 327s
+vkitti Scene20_sunset 343s
+scannetpp 05993dba6f 371s
+scannetpp 0d2ee665be 385s
+scannetpp 1ada7a0617 399s
+scannetpp 25f3b7a318 413s
+scannetpp 286b55a2bf 428s
+scannetpp 31a2c91c43 442s
+scannetpp 38d58a7a31 456s
+scannetpp 3e8bba0176 470s
+scannetpp 40aec5fffa 484s
+scannetpp 518e393115 499s
+scannetpp 578511c8a9 513s
+scannetpp 5eb31827b7 527s
+scannetpp 5f99900f09 541s
+scannetpp 6115eddb86 555s
+scannetpp 7b6477cb95 570s
+scannetpp 825d228aec 584s
+scannetpp 9277fe2bca 598s
+scannetpp 99fa5c25e1 612s
+scannetpp a8bf42d646 626s
+scannetpp ac48a9b736 641s
+scannetpp b0a08200c9 655s
+scannetpp bde1e479ad 669s
+scannetpp c4c04e6d6c 683s
+scannetpp c5439f4607 698s
+scannetpp ce175ef813 712s
+scannetpp dc9763176c 726s
+scannetpp e7af285f7d 740s
+scannetpp f2dc06b1d2 754s
+scannetpp f3d64c30f8 769s
+scannetpp f717985ed7 783s
+scannetpp fb5a96b1a2 797s
+DONE 798.5182018280029

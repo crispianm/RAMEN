@@ -1,0 +1,172 @@
+/home/wg19671/.claude/jobs/a0d391cb/tmp/od/train.py:275: UserWarning: VKITTIDataset: training split includes ['Scene01', 'Scene20'], synthetic re-renders of KITTI-raw drives ['2011_09_26_drive_0009_sync', '2011_10_03_drive_0047_sync'] that are in the KITTI evaluation sets (pass exclude_eval_overlap=True to drop them)
+  ds = cls(root=spec["root"], split=split, val_fraction=vf,
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 8; 30 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+sources ['tartanair', 'vkitti', 'pointodyssey_train', 'pointodyssey_val', 'irs', 'spring', 'kitti_raw', 'nyu_train', 'scannetpp_train'] dropped []
+batches 20
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not available
+checkpointed blocks: 12 restorer: False
+loaded released_0 released Metric-VDA-S (FT arch, vda_init=released, no trained weights)
+released_0 trainable tensors 168 numel 6978561 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104}
+  [released_0] batch 0 done 3.1s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=1.1054 vda=0.6481 skyterm=-0.01281
+  [released_0] batch 1 done 2.6s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=1.1175 vda=0.3175 skyterm=0.01617
+  [released_0] batch 2 done 2.0s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.6815 vda=0.4816 skyterm=0.00000
+  [released_0] batch 3 done 3.0s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.6722 vda=1.0655 skyterm=0.09496
+  [released_0] batch 4 done 2.7s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.9056 vda=0.6244 skyterm=-0.00494
+  [released_0] batch 5 done 3.0s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=1.3995 vda=0.6970 skyterm=-0.06133
+  [released_0] batch 6 done 3.0s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.6146 vda=1.0078 skyterm=-0.02111
+  [released_0] batch 7 done 1.9s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.5152 vda=0.2974 skyterm=0.00000
+  [released_0] batch 8 done 3.0s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.2652 vda=0.9359 skyterm=0.04124
+  [released_0] batch 9 done 2.0s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.8835 vda=0.7153 skyterm=0.00000
+  [released_0] batch 10 done 2.7s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.5501 vda=0.9408 skyterm=-0.02555
+  [released_0] batch 11 done 2.0s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=1.0338 vda=0.6333 skyterm=0.00000
+  [released_0] batch 12 done 2.6s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.6803 vda=0.3546 skyterm=0.00002
+  [released_0] batch 13 done 1.9s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=1.6196 vda=0.9368 skyterm=0.00000
+  [released_0] batch 14 done 2.7s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=1.1985 vda=0.5753 skyterm=0.03885
+  [released_0] batch 15 done 3.0s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.6823 vda=0.3077 skyterm=0.06148
+  [released_0] batch 16 done 3.0s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=1.2529 vda=0.7917 skyterm=-0.02041
+  [released_0] batch 17 done 3.0s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=2.1841 vda=1.1397 skyterm=0.08080
+  [released_0] batch 18 done 2.6s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.9273 vda=0.4407 skyterm=0.00117
+  [released_0] batch 19 done 1.9s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=1.0859 vda=0.3333 skyterm=0.00000
+checkpointed blocks: 12 restorer: False
+loaded ft_n46_6000 /mnt/DATA/DegradedDepth/checkpoints_v3/outdoor_debug_20261016/ft_n46/step6000.pt step 6000 trainable_ema
+ft_n46_6000 trainable tensors 168 numel 6978561 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104}
+  [ft_n46_6000] batch 0 done 2.7s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8424 vda=0.5829 skyterm=-0.00929
+  [ft_n46_6000] batch 1 done 2.6s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.7224 vda=0.2755 skyterm=-0.00788
+  [ft_n46_6000] batch 2 done 2.0s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.7051 vda=0.4325 skyterm=0.00000
+  [ft_n46_6000] batch 3 done 3.0s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2743 vda=0.9539 skyterm=0.09657
+  [ft_n46_6000] batch 4 done 2.7s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6886 vda=0.5192 skyterm=-0.00090
+  [ft_n46_6000] batch 5 done 3.0s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5741 vda=0.3864 skyterm=-0.05199
+  [ft_n46_6000] batch 6 done 2.9s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4449 vda=0.9443 skyterm=-0.01735
+  [ft_n46_6000] batch 7 done 1.9s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3935 vda=0.2066 skyterm=0.00000
+  [ft_n46_6000] batch 8 done 3.0s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0960 vda=0.8018 skyterm=0.04809
+  [ft_n46_6000] batch 9 done 2.0s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.7178 vda=0.5697 skyterm=0.00000
+  [ft_n46_6000] batch 10 done 2.7s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1684 vda=0.7433 skyterm=-0.03890
+  [ft_n46_6000] batch 11 done 2.0s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.5331 vda=0.4046 skyterm=0.00000
+  [ft_n46_6000] batch 12 done 2.6s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.4317 vda=0.2628 skyterm=0.00002
+  [ft_n46_6000] batch 13 done 1.9s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=1.0637 vda=0.5393 skyterm=0.00000
+  [ft_n46_6000] batch 14 done 2.7s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=0.9247 vda=0.4755 skyterm=0.04242
+  [ft_n46_6000] batch 15 done 3.0s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3988 vda=0.1805 skyterm=0.00190
+  [ft_n46_6000] batch 16 done 3.0s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.9213 vda=0.6542 skyterm=-0.04139
+  [ft_n46_6000] batch 17 done 3.0s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.8442 vda=1.1585 skyterm=0.12303
+  [ft_n46_6000] batch 18 done 2.6s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.7204 vda=0.3396 skyterm=0.00009
+  [ft_n46_6000] batch 19 done 1.9s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.7181 vda=0.2532 skyterm=0.00000
+checkpointed blocks: 12 restorer: False
+loaded ft_n46_8000 /mnt/DATA/DegradedDepth/checkpoints_v3/outdoor_debug_20261016/ft_n46/step8000.pt step 8000 trainable_ema
+ft_n46_8000 trainable tensors 168 numel 6978561 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104}
+  [ft_n46_8000] batch 0 done 2.7s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8345 vda=0.5679 skyterm=-0.00065
+  [ft_n46_8000] batch 1 done 2.7s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.6603 vda=0.2821 skyterm=-0.01072
+  [ft_n46_8000] batch 2 done 2.0s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.6709 vda=0.4067 skyterm=0.00000
+  [ft_n46_8000] batch 3 done 3.0s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2752 vda=0.9605 skyterm=0.08775
+  [ft_n46_8000] batch 4 done 2.7s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6561 vda=0.5027 skyterm=-0.00075
+  [ft_n46_8000] batch 5 done 3.0s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5440 vda=0.3668 skyterm=-0.04565
+  [ft_n46_8000] batch 6 done 3.0s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4334 vda=0.9501 skyterm=-0.01886
+  [ft_n46_8000] batch 7 done 1.9s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3766 vda=0.2136 skyterm=0.00000
+  [ft_n46_8000] batch 8 done 3.0s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0396 vda=0.7846 skyterm=0.04804
+  [ft_n46_8000] batch 9 done 2.0s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.6974 vda=0.5598 skyterm=0.00000
+  [ft_n46_8000] batch 10 done 2.7s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1726 vda=0.7593 skyterm=-0.03932
+  [ft_n46_8000] batch 11 done 2.0s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.4995 vda=0.3782 skyterm=0.00000
+  [ft_n46_8000] batch 12 done 2.6s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.4039 vda=0.2472 skyterm=0.00002
+  [ft_n46_8000] batch 13 done 1.9s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=1.0935 vda=0.5088 skyterm=0.00000
+  [ft_n46_8000] batch 14 done 2.7s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=0.9210 vda=0.4865 skyterm=0.04310
+  [ft_n46_8000] batch 15 done 3.0s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3937 vda=0.1837 skyterm=0.00581
+  [ft_n46_8000] batch 16 done 3.0s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.8778 vda=0.6268 skyterm=-0.04776
+  [ft_n46_8000] batch 17 done 3.0s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.8024 vda=1.1187 skyterm=0.12908
+  [ft_n46_8000] batch 18 done 2.6s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.7079 vda=0.3446 skyterm=-0.00028
+  [ft_n46_8000] batch 19 done 1.9s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.7178 vda=0.2550 skyterm=0.00000
+checkpointed blocks: 12 restorer: False
+loaded ft_n46_12000 /mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_ft_n46/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_ft_n46/step12000.pt step 12000 trainable_ema
+ft_n46_12000 trainable tensors 168 numel 6978561 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104}
+  [ft_n46_12000] batch 0 done 2.7s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8225 vda=0.5625 skyterm=-0.00484
+  [ft_n46_12000] batch 1 done 2.7s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.6128 vda=0.2650 skyterm=-0.01193
+  [ft_n46_12000] batch 2 done 2.0s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.6530 vda=0.4044 skyterm=0.00000
+  [ft_n46_12000] batch 3 done 3.0s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2362 vda=0.9477 skyterm=0.09067
+  [ft_n46_12000] batch 4 done 2.7s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6701 vda=0.5080 skyterm=-0.00150
+  [ft_n46_12000] batch 5 done 3.0s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5245 vda=0.3601 skyterm=-0.04260
+  [ft_n46_12000] batch 6 done 3.0s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4393 vda=0.9480 skyterm=-0.01897
+  [ft_n46_12000] batch 7 done 1.9s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3470 vda=0.1956 skyterm=0.00000
+  [ft_n46_12000] batch 8 done 3.0s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0320 vda=0.7595 skyterm=0.04865
+  [ft_n46_12000] batch 9 done 2.0s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.7100 vda=0.5667 skyterm=0.00000
+  [ft_n46_12000] batch 10 done 2.7s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1567 vda=0.7537 skyterm=-0.03936
+  [ft_n46_12000] batch 11 done 2.0s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.4574 vda=0.3448 skyterm=0.00000
+  [ft_n46_12000] batch 12 done 2.6s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.3766 vda=0.2287 skyterm=0.00002
+  [ft_n46_12000] batch 13 done 1.9s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=1.0133 vda=0.5342 skyterm=0.00000
+  [ft_n46_12000] batch 14 done 2.7s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=1.0005 vda=0.4906 skyterm=0.04239
+  [ft_n46_12000] batch 15 done 3.0s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3702 vda=0.1685 skyterm=-0.00061
+  [ft_n46_12000] batch 16 done 3.0s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.8615 vda=0.6261 skyterm=-0.04857
+  [ft_n46_12000] batch 17 done 3.0s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.7499 vda=1.0719 skyterm=0.12098
+  [ft_n46_12000] batch 18 done 2.7s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.6795 vda=0.3310 skyterm=-0.00021
+  [ft_n46_12000] batch 19 done 1.9s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.6986 vda=0.2439 skyterm=0.00000
+checkpointed blocks: 12 restorer: True
+loaded c3_n46_6000 /mnt/DATA/DegradedDepth/checkpoints_v3/outdoor_debug_20261016/c3_n46/step6000.pt step 6000 trainable_ema
+c3_n46_6000 trainable tensors 254 numel 8549063 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104, 'other': 86}
+  [c3_n46_6000] batch 0 done 23.7s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8864 vda=0.5834 skyterm=-0.00647
+  [c3_n46_6000] batch 1 done 23.5s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.7048 vda=0.2860 skyterm=-0.00927
+  [c3_n46_6000] batch 2 done 15.6s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.7174 vda=0.4476 skyterm=0.00000
+  [c3_n46_6000] batch 3 done 27.4s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2669 vda=0.9484 skyterm=0.09573
+  [c3_n46_6000] batch 4 done 23.5s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6696 vda=0.5138 skyterm=-0.00111
+  [c3_n46_6000] batch 5 done 27.4s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5626 vda=0.3871 skyterm=-0.05090
+  [c3_n46_6000] batch 6 done 27.4s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4767 vda=0.9510 skyterm=-0.01864
+  [c3_n46_6000] batch 7 done 15.6s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3722 vda=0.2279 skyterm=0.00000
+  [c3_n46_6000] batch 8 done 27.4s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0687 vda=0.8033 skyterm=0.04810
+  [c3_n46_6000] batch 9 done 15.6s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.7214 vda=0.5652 skyterm=0.00000
+  [c3_n46_6000] batch 10 done 23.5s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1835 vda=0.7432 skyterm=-0.03784
+  [c3_n46_6000] batch 11 done 15.6s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.5549 vda=0.4177 skyterm=0.00000
+  [c3_n46_6000] batch 12 done 23.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.4336 vda=0.2668 skyterm=0.00002
+  [c3_n46_6000] batch 13 done 15.6s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=0.9530 vda=0.4971 skyterm=0.00000
+  [c3_n46_6000] batch 14 done 23.5s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=0.8612 vda=0.4620 skyterm=0.04274
+  [c3_n46_6000] batch 15 done 27.4s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3950 vda=0.1763 skyterm=0.00094
+  [c3_n46_6000] batch 16 done 27.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.8704 vda=0.6298 skyterm=-0.03663
+  [c3_n46_6000] batch 17 done 27.4s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.8024 vda=1.1307 skyterm=0.11243
+  [c3_n46_6000] batch 18 done 23.5s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.7111 vda=0.3346 skyterm=-0.00023
+  [c3_n46_6000] batch 19 done 15.6s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.7016 vda=0.2504 skyterm=0.00000
+checkpointed blocks: 12 restorer: True
+loaded c3_n46_8000 /mnt/DATA/DegradedDepth/checkpoints_v3/outdoor_debug_20261016/c3_n46/step8000.pt step 8000 trainable_ema
+c3_n46_8000 trainable tensors 254 numel 8549063 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104, 'other': 86}
+  [c3_n46_8000] batch 0 done 23.5s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8764 vda=0.5676 skyterm=-0.00063
+  [c3_n46_8000] batch 1 done 23.5s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.7103 vda=0.2909 skyterm=-0.01122
+  [c3_n46_8000] batch 2 done 15.6s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.6737 vda=0.4148 skyterm=0.00000
+  [c3_n46_8000] batch 3 done 27.4s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2380 vda=0.9471 skyterm=0.09071
+  [c3_n46_8000] batch 4 done 23.5s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6371 vda=0.4849 skyterm=-0.00073
+  [c3_n46_8000] batch 5 done 27.4s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5352 vda=0.3697 skyterm=-0.04646
+  [c3_n46_8000] batch 6 done 27.4s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4511 vda=0.9533 skyterm=-0.01911
+  [c3_n46_8000] batch 7 done 15.6s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3538 vda=0.2165 skyterm=0.00000
+  [c3_n46_8000] batch 8 done 27.4s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0139 vda=0.7665 skyterm=0.04884
+  [c3_n46_8000] batch 9 done 15.6s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.7214 vda=0.5746 skyterm=0.00000
+  [c3_n46_8000] batch 10 done 23.5s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1412 vda=0.7329 skyterm=-0.03761
+  [c3_n46_8000] batch 11 done 15.6s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.4790 vda=0.3715 skyterm=0.00000
+  [c3_n46_8000] batch 12 done 23.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.3831 vda=0.2356 skyterm=0.00002
+  [c3_n46_8000] batch 13 done 15.6s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=0.9351 vda=0.4642 skyterm=0.00000
+  [c3_n46_8000] batch 14 done 23.5s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=0.8588 vda=0.4749 skyterm=0.04397
+  [c3_n46_8000] batch 15 done 27.4s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3994 vda=0.1776 skyterm=0.00348
+  [c3_n46_8000] batch 16 done 27.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.8598 vda=0.5995 skyterm=-0.04412
+  [c3_n46_8000] batch 17 done 27.4s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.7691 vda=1.1027 skyterm=0.11208
+  [c3_n46_8000] batch 18 done 23.5s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.7558 vda=0.3512 skyterm=-0.00026
+  [c3_n46_8000] batch 19 done 15.6s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.7071 vda=0.2554 skyterm=0.00000
+checkpointed blocks: 12 restorer: True
+loaded c3_n46_12000 /mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261012_c3rep/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt step 12000 trainable_ema
+c3_n46_12000 trainable tensors 254 numel 8549063 groups {'dpt_other': 36, 'last_dpt': 22, 'output_conv': 6, 'motion': 104, 'other': 86}
+  [c3_n46_12000] batch 0 done 23.5s  src=['irs', 'irs', 'pointodyssey_val', 'vkitti']  loss full=0.8736 vda=0.5640 skyterm=-0.00410
+  [c3_n46_12000] batch 1 done 23.5s  src=['tartanair', 'vkitti', 'pointodyssey_train', 'irs']  loss full=0.6419 vda=0.2723 skyterm=-0.01190
+  [c3_n46_12000] batch 2 done 15.6s  src=['irs', 'nyu_train', 'irs', 'irs']  loss full=0.6580 vda=0.4167 skyterm=0.00000
+  [c3_n46_12000] batch 3 done 27.4s  src=['scannetpp_train', 'tartanair', 'tartanair', 'nyu_train']  loss full=1.2231 vda=0.9355 skyterm=0.09022
+  [c3_n46_12000] batch 4 done 23.5s  src=['nyu_train', 'irs', 'tartanair', 'vkitti']  loss full=0.6661 vda=0.5059 skyterm=-0.00023
+  [c3_n46_12000] batch 5 done 27.4s  src=['nyu_train', 'pointodyssey_train', 'nyu_train', 'tartanair']  loss full=0.5121 vda=0.3553 skyterm=-0.04140
+  [c3_n46_12000] batch 6 done 27.4s  src=['tartanair', 'kitti_raw', 'tartanair', 'kitti_raw']  loss full=1.4657 vda=0.9556 skyterm=-0.02103
+  [c3_n46_12000] batch 7 done 15.6s  src=['kitti_raw', 'kitti_raw', 'kitti_raw', 'irs']  loss full=0.3661 vda=0.2100 skyterm=0.00000
+  [c3_n46_12000] batch 8 done 27.4s  src=['nyu_train', 'tartanair', 'nyu_train', 'tartanair']  loss full=1.0288 vda=0.7531 skyterm=0.04932
+  [c3_n46_12000] batch 9 done 15.6s  src=['irs', 'kitti_raw', 'scannetpp_train', 'nyu_train']  loss full=0.7028 vda=0.5628 skyterm=0.00000
+  [c3_n46_12000] batch 10 done 23.5s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.1466 vda=0.7338 skyterm=-0.03807
+  [c3_n46_12000] batch 11 done 15.6s  src=['nyu_train', 'scannetpp_train', 'tartanair', 'kitti_raw']  loss full=0.4466 vda=0.3443 skyterm=0.00000
+  [c3_n46_12000] batch 12 done 23.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'kitti_raw']  loss full=0.3472 vda=0.2104 skyterm=0.00002
+  [c3_n46_12000] batch 13 done 15.6s  src=['nyu_train', 'kitti_raw', 'pointodyssey_train', 'kitti_raw']  loss full=0.9031 vda=0.4871 skyterm=0.00000
+  [c3_n46_12000] batch 14 done 23.5s  src=['vkitti', 'tartanair', 'tartanair', 'irs']  loss full=0.8904 vda=0.4701 skyterm=0.04441
+  [c3_n46_12000] batch 15 done 27.4s  src=['tartanair', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.3674 vda=0.1636 skyterm=0.00029
+  [c3_n46_12000] batch 16 done 27.4s  src=['nyu_train', 'tartanair', 'kitti_raw', 'tartanair']  loss full=0.8310 vda=0.5935 skyterm=-0.04566
+  [c3_n46_12000] batch 17 done 27.4s  src=['tartanair', 'tartanair', 'tartanair', 'tartanair']  loss full=1.7069 vda=1.0524 skyterm=0.10696
+  [c3_n46_12000] batch 18 done 23.5s  src=['nyu_train', 'vkitti', 'irs', 'kitti_raw']  loss full=0.7321 vda=0.3279 skyterm=-0.00030
+  [c3_n46_12000] batch 19 done 15.6s  src=['kitti_raw', 'irs', 'kitti_raw', 'kitti_raw']  loss full=0.7057 vda=0.2455 skyterm=0.00000
+wrote 53036 rows

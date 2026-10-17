@@ -1,0 +1,21 @@
+xFormers not available
+xFormers not available
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+[VDANet] configured vda_repo='/projects/b5dh/repos/Video-Depth-Anything' does not exist on this host (likely baked in from a different training machine) -- falling back to the local default /mnt/DATA/DegradedDepth/competition/Video-Depth-Anything
+[VDANet] configured vda_checkpoint_path='/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth' does not exist on this host -- falling back to the local released copy /mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
+xFormers not available
+xFormers not available
+kitti 2011_09_28_drive_0037_sync 19s
+vkitti Scene01_overcast 35s
+scannetpp 05993dba6f 63s
+DONE 62.97560524940491
+rc=0
