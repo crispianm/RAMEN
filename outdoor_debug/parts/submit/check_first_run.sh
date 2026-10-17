@@ -65,7 +65,7 @@ for spec in sys.argv[1:]:
     if not b: out(arm, 6, "WAIT", "bound line not in log")
     else: out(arm, 6, "ok" if re.search(re.escape(want) + r"(,|$)", b[0]) else "FAIL", f"want {want}; got: {b[0][-120:]}")
     # 7 identical source list / counts vs the first (A0) log
-    dl = [re.sub(r"vkitti=65[56]", "vkitti=<B>", l) for l in txt if l.startswith("[data]")]
+    dl = [re.sub(r"seed=\d+", "seed=<S>" if arm == "A0b" else "seed=<S>", re.sub(r"vkitti=65[56]", "vkitti=<B>", l)) for l in txt if l.startswith("[data]")]   # the data seed is a declared A0b key (49 vs 45): ignored in the compare (the seed itself is checked by the config diff)
     if data0 is None: data0 = dl; out(arm, 7, "ok", f"reference ({len(dl)} [data] lines)")
     else: out(arm, 7, "ok" if dl == data0 else "FAIL", "[data] lines identical to reference" if dl == data0 else f"differs from reference: {[x for x in dl if x not in data0][:3]}")
     # spike rule: mean printed loss over the first printed steps vs A0's
