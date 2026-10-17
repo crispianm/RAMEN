@@ -1,0 +1,47 @@
+======================================== outdoor_screen_TS2 smoke=0
+ Job ID : 7504898   Node: nid010787   Started: 2026-10-17T18:17:48Z
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+ Commit : 2a72223c068d5ba0bde869a7c27d0e90d21abb5d   branch: HEAD
+ config : outdoor_debug/parts/confirm/stage1/configs/arm_S1_n47_TS2.yaml sha256 dc43eab2893dca05f0b94dde72bd30cb7a687fa42b7c228e73e1a5ff223ff63d OK
+ resume : /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt sha256 f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af OK
+ ckpt dir (only write location for checkpoints): /projects/b5dh/RAMEN_outdoor_screen_2a72223/runs/outdoor_screen_TS2
+ ts2 seg root entries: 75 (74 env zips + extras expected; 75 seen at drafting)
+ ts2 committed env table: f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76  (expected f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76; the train log prints env_table_sha256 too)
+train.py imports OK
+ launching: torchrun --standalone --nproc_per_node=4 train.py --config outdoor_debug/parts/arm_checks/configs/arm_TS2.yaml
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+xFormers not availablexFormers not available
+
+xFormers not available
+xFormers not available
+xFormers not available
+xFormers not availablexFormers not available
+
+xFormers not available
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+
+
+
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=51000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[checkpoint] permanent step{N}.pt snapshots at: [12500, 13000, 13500, 14000]
+[resume] /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt epoch=3 step=12000 best=0.3485
+e3 step12020/12050 loss=0.5583 lr=2.00e-05 824.8it/s static=0.0000 sev=1
+e3 step12040/12050 loss=0.5765 lr=4.00e-05 453.3it/s static=1.0000 sev=1
+e3 step12060/12050 loss=0.5798 lr=6.00e-05 299.3it/s static=1.0000 sev=1

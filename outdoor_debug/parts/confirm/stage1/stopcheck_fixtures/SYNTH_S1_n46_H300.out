@@ -1,0 +1,174 @@
+======================================== outdoor_screen_TS2_H300 smoke=0
+ Job ID : 7504902   Node: nid010811   Started: 2026-10-17T18:17:07Z
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+ Commit : 2a72223c068d5ba0bde869a7c27d0e90d21abb5d   branch: HEAD
+ config : outdoor_debug/parts/confirm/stage1/configs/arm_S1_n46_H300.yaml sha256 809b9e640247b9494b1a9b7bc3c7a35a77993f52df8d0121eb1f3fbc8f431a83 OK
+ resume : /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt sha256 f5c7c8f98fe0c9f97bcac3586e577d04e914fbbe1e2ac41dbdbd8ce0501db1af OK
+ ckpt dir (only write location for checkpoints): /projects/b5dh/RAMEN_outdoor_screen_2a72223/runs/outdoor_screen_TS2_H300
+ ts2 seg root entries: 75 (74 env zips + extras expected; 75 seen at drafting)
+ ts2 committed env table: f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76  (expected f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76; the train log prints env_table_sha256 too)
+train.py imports OK
+ launching: torchrun --standalone --nproc_per_node=4 train.py --config outdoor_debug/parts/arm_checks/configs/arm_TS2_H300.yaml
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+[git] HEAD=2a72223c068d5ba0bde869a7c27d0e90d21abb5d
+xFormers not availablexFormers not availablexFormers not available
+
+
+xFormers not available
+xFormers not available
+xFormers not availablexFormers not available
+
+xFormers not available
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=50000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[checkpoint] permanent step{N}.pt snapshots at: [12500, 13000, 13500, 14000]
+[resume] /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt epoch=3 step=12000 best=0.3485
+e3 step12020/14000 loss=0.5830 lr=2.00e-05 682.2it/s static=0.0000 sev=1
+e3 step12040/14000 loss=0.5957 lr=4.00e-05 406.1it/s static=1.0000 sev=1
+e3 step12060/14000 loss=0.5976 lr=6.00e-05 289.5it/s static=1.0000 sev=1
+e3 step12080/14000 loss=0.6079 lr=8.00e-05 224.7it/s static=0.0000 sev=1
+[monitor] step12100 outdoor median(pred)/median(GT) = 1.008 (pred 14.30 m, GT 14.18 m)
+e3 step12100/14000 loss=0.6168 lr=1.00e-04 177.9it/s static=0.0000 sev=1
+e3 step12120/14000 loss=0.6283 lr=1.00e-04 151.0it/s static=0.0000 sev=1
+e3 step12140/14000 loss=0.6280 lr=9.99e-05 131.4it/s static=0.0000 sev=1
+e3 step12160/14000 loss=0.6319 lr=9.98e-05 116.2it/s static=0.0000 sev=1
+e3 step12180/14000 loss=0.6398 lr=9.96e-05 104.1it/s static=0.0000 sev=1
+[monitor] step12200 outdoor median(pred)/median(GT) = 1.028 (pred 14.58 m, GT 14.18 m)
+e3 step12200/14000 loss=0.6329 lr=9.93e-05 92.9it/s static=0.0000 sev=1
+e3 step12220/14000 loss=0.6365 lr=9.90e-05 84.7it/s static=0.0000 sev=1
+e3 step12240/14000 loss=0.6339 lr=9.87e-05 77.8it/s static=0.0000 sev=1
+e3 step12260/14000 loss=0.6381 lr=9.83e-05 72.2it/s static=0.0000 sev=1
+e3 step12280/14000 loss=0.6409 lr=9.78e-05 66.7it/s static=0.0000 sev=1
+[monitor] step12300 outdoor median(pred)/median(GT) = 1.040 (pred 14.75 m, GT 14.18 m)
+e3 step12300/14000 loss=0.6338 lr=9.73e-05 61.8it/s static=0.0000 sev=1
+e3 step12320/14000 loss=0.6321 lr=9.68e-05 57.8it/s static=1.0000 sev=1
+e3 step12340/14000 loss=0.6297 lr=9.61e-05 54.7it/s static=1.0000 sev=1
+e3 step12360/14000 loss=0.6356 lr=9.55e-05 51.9it/s static=1.0000 sev=1
+e3 step12380/14000 loss=0.6358 lr=9.48e-05 48.8it/s static=0.0000 sev=1
+[monitor] step12400 outdoor median(pred)/median(GT) = 0.979 (pred 13.89 m, GT 14.18 m)
+e3 step12400/14000 loss=0.6358 lr=9.40e-05 46.2it/s static=0.0000 sev=1
+e3 step12420/14000 loss=0.6346 lr=9.32e-05 44.3it/s static=0.0000 sev=1
+e3 step12440/14000 loss=0.6318 lr=9.23e-05 42.0it/s static=1.0000 sev=1
+e3 step12460/14000 loss=0.6329 lr=9.14e-05 40.4it/s static=0.0000 sev=1
+e3 step12480/14000 loss=0.6341 lr=9.05e-05 38.8it/s static=0.0000 sev=1
+[monitor] step12500 outdoor median(pred)/median(GT) = 1.022 (pred 14.22 m, GT 14.18 m)
+e3 step12500/14000 loss=0.6364 lr=8.95e-05 37.2it/s static=0.0000 sev=1
+[val] step12500 AbsRel=0.3520 perframe=0.3506 metric=0.805 scaleCV=0.0231 d1=0.236
+[val/src] spring=0.3456
+e3 step12520/14000 loss=0.6370 lr=8.85e-05 35.7it/s static=0.0000 sev=1
+e3 step12540/14000 loss=0.6386 lr=8.74e-05 34.6it/s static=0.0000 sev=1
+e3 step12560/14000 loss=0.6382 lr=8.63e-05 33.4it/s static=0.0000 sev=1
+e3 step12580/14000 loss=0.6427 lr=8.51e-05 32.4it/s static=1.0000 sev=1
+[monitor] step12600 outdoor median(pred)/median(GT) = 0.979 (pred 13.89 m, GT 14.18 m)
+e3 step12600/14000 loss=0.6458 lr=8.39e-05 31.3it/s static=0.0000 sev=1
+e3 step12620/14000 loss=0.6439 lr=8.27e-05 30.3it/s static=0.0000 sev=1
+e3 step12640/14000 loss=0.6447 lr=8.14e-05 29.5it/s static=0.0000 sev=1
+e3 step12660/14000 loss=0.6472 lr=8.01e-05 28.7it/s static=0.0000 sev=1
+e3 step12680/14000 loss=0.6459 lr=7.88e-05 27.9it/s static=1.0000 sev=1
+[monitor] step12700 outdoor median(pred)/median(GT) = 1.012 (pred 14.35 m, GT 14.18 m)
+e3 step12700/14000 loss=0.6452 lr=7.74e-05 27.0it/s static=0.0000 sev=1
+e3 step12720/14000 loss=0.6424 lr=7.60e-05 26.4it/s static=0.0000 sev=1
+e3 step12740/14000 loss=0.6453 lr=7.46e-05 25.7it/s static=0.0000 sev=1
+e3 step12760/14000 loss=0.6461 lr=7.31e-05 25.1it/s static=0.0000 sev=1
+e3 step12780/14000 loss=0.6481 lr=7.17e-05 24.5it/s static=0.0000 sev=1
+[monitor] step12800 outdoor median(pred)/median(GT) = 0.997 (pred 14.14 m, GT 14.18 m)
+e3 step12800/14000 loss=0.6468 lr=7.02e-05 23.9it/s static=0.0000 sev=1
+e3 step12820/14000 loss=0.6473 lr=6.86e-05 23.4it/s static=0.0000 sev=1
+e3 step12840/14000 loss=0.6470 lr=6.71e-05 22.9it/s static=0.0000 sev=1
+e3 step12860/14000 loss=0.6499 lr=6.55e-05 22.4it/s static=0.0000 sev=1
+e3 step12880/14000 loss=0.6503 lr=6.39e-05 22.0it/s static=0.0000 sev=1
+[monitor] step12900 outdoor median(pred)/median(GT) = 1.030 (pred 14.53 m, GT 14.18 m)
+e3 step12900/14000 loss=0.6502 lr=6.24e-05 21.4it/s static=0.0000 sev=1
+e3 step12920/14000 loss=0.6519 lr=6.07e-05 21.0it/s static=1.0000 sev=1
+e3 step12940/14000 loss=0.6507 lr=5.91e-05 20.6it/s static=1.0000 sev=1
+e3 step12960/14000 loss=0.6514 lr=5.75e-05 20.2it/s static=0.0000 sev=1
+e3 step12980/14000 loss=0.6508 lr=5.59e-05 19.8it/s static=0.0000 sev=1
+[monitor] step13000 outdoor median(pred)/median(GT) = 0.953 (pred 13.52 m, GT 14.18 m)
+e3 step13000/14000 loss=0.6518 lr=5.42e-05 19.4it/s static=1.0000 sev=1
+[val] step13000 AbsRel=0.3586 perframe=0.3570 metric=0.650 scaleCV=0.0283 d1=0.230
+[val/src] spring=0.3490
+e3 step13020/14000 loss=0.6521 lr=5.26e-05 19.0it/s static=0.0000 sev=1
+e3 step13040/14000 loss=0.6526 lr=5.09e-05 18.7it/s static=0.0000 sev=1
+e3 step13060/14000 loss=0.6540 lr=4.93e-05 18.4it/s static=0.0000 sev=1
+e3 step13080/14000 loss=0.6545 lr=4.76e-05 18.1it/s static=0.0000 sev=1
+[monitor] step13100 outdoor median(pred)/median(GT) = 0.974 (pred 13.82 m, GT 14.18 m)
+e3 step13100/14000 loss=0.6550 lr=4.60e-05 17.8it/s static=0.0000 sev=1
+e3 step13120/14000 loss=0.6537 lr=4.43e-05 17.5it/s static=0.0000 sev=1
+e3 step13140/14000 loss=0.6528 lr=4.27e-05 17.2it/s static=1.0000 sev=1
+e3 step13160/14000 loss=0.6534 lr=4.10e-05 17.0it/s static=0.0000 sev=1
+e3 step13180/14000 loss=0.6538 lr=3.94e-05 16.7it/s static=0.0000 sev=1
+[monitor] step13200 outdoor median(pred)/median(GT) = 0.993 (pred 14.08 m, GT 14.18 m)
+e3 step13200/14000 loss=0.6535 lr=3.78e-05 16.4it/s static=1.0000 sev=1
+e3 step13220/14000 loss=0.6533 lr=3.62e-05 16.2it/s static=0.0000 sev=1
+e3 step13240/14000 loss=0.6532 lr=3.46e-05 16.0it/s static=0.0000 sev=1
+e3 step13260/14000 loss=0.6521 lr=3.31e-05 15.8it/s static=0.0000 sev=1
+e3 step13280/14000 loss=0.6521 lr=3.15e-05 15.6it/s static=0.0000 sev=1
+[monitor] step13300 outdoor median(pred)/median(GT) = 0.968 (pred 13.73 m, GT 14.18 m)
+e3 step13300/14000 loss=0.6526 lr=3.00e-05 15.3it/s static=0.0000 sev=1
+e3 step13320/14000 loss=0.6526 lr=2.85e-05 15.1it/s static=0.0000 sev=1
+e3 step13340/14000 loss=0.6527 lr=2.70e-05 14.9it/s static=0.0000 sev=1
+e3 step13360/14000 loss=0.6523 lr=2.56e-05 14.8it/s static=0.0000 sev=1
+e3 step13380/14000 loss=0.6539 lr=2.41e-05 14.6it/s static=0.0000 sev=1
+[monitor] step13400 outdoor median(pred)/median(GT) = 1.010 (pred 14.33 m, GT 14.18 m)
+e3 step13400/14000 loss=0.6544 lr=2.27e-05 14.4it/s static=0.0000 sev=1
+e3 step13420/14000 loss=0.6564 lr=2.14e-05 14.2it/s static=0.0000 sev=1
+e3 step13440/14000 loss=0.6561 lr=2.00e-05 14.0it/s static=0.0000 sev=1
+e3 step13460/14000 loss=0.6575 lr=1.87e-05 13.9it/s static=0.0000 sev=1
+e3 step13480/14000 loss=0.6565 lr=1.74e-05 13.7it/s static=0.0000 sev=1
+[monitor] step13500 outdoor median(pred)/median(GT) = 0.996 (pred 14.14 m, GT 14.18 m)
+e3 step13500/14000 loss=0.6571 lr=1.62e-05 13.5it/s static=1.0000 sev=1
+[val] step13500 AbsRel=0.3576 perframe=0.3555 metric=0.612 scaleCV=0.0478 d1=0.237
+[val/src] spring=0.3473
+e3 step13520/14000 loss=0.6564 lr=1.50e-05 13.4it/s static=1.0000 sev=1
+e3 step13540/14000 loss=0.6558 lr=1.38e-05 13.2it/s static=1.0000 sev=1
+e3 step13560/14000 loss=0.6561 lr=1.27e-05 13.1it/s static=0.0000 sev=1
+e3 step13580/14000 loss=0.6561 lr=1.16e-05 12.9it/s static=1.0000 sev=1
+[monitor] step13600 outdoor median(pred)/median(GT) = 0.996 (pred 14.13 m, GT 14.18 m)
+e3 step13600/14000 loss=0.6573 lr=1.06e-05 12.8it/s static=1.0000 sev=1
+e3 step13620/14000 loss=0.6570 lr=9.60e-06 12.7it/s static=0.0000 sev=1
+e3 step13640/14000 loss=0.6564 lr=8.65e-06 12.5it/s static=0.0000 sev=1
+e3 step13660/14000 loss=0.6564 lr=7.74e-06 12.4it/s static=1.0000 sev=1
+e3 step13680/14000 loss=0.6571 lr=6.88e-06 12.3it/s static=0.0000 sev=1
+[monitor] step13700 outdoor median(pred)/median(GT) = 0.981 (pred 13.91 m, GT 14.18 m)
+e3 step13700/14000 loss=0.6573 lr=6.07e-06 12.1it/s static=1.0000 sev=1
+e3 step13720/14000 loss=0.6572 lr=5.30e-06 12.0it/s static=0.0000 sev=1
+e3 step13740/14000 loss=0.6568 lr=4.58e-06 11.9it/s static=0.0000 sev=1
+e3 step13760/14000 loss=0.6573 lr=3.92e-06 11.7it/s static=0.0000 sev=1
+e3 step13780/14000 loss=0.6577 lr=3.30e-06 11.6it/s static=0.0000 sev=1
+[monitor] step13800 outdoor median(pred)/median(GT) = 0.981 (pred 13.92 m, GT 14.18 m)
+e3 step13800/14000 loss=0.6573 lr=2.74e-06 11.5it/s static=0.0000 sev=1
+e3 step13820/14000 loss=0.6562 lr=2.22e-06 11.4it/s static=1.0000 sev=1
+e3 step13840/14000 loss=0.6556 lr=1.76e-06 11.3it/s static=0.0000 sev=1
+e3 step13860/14000 loss=0.6546 lr=1.35e-06 11.2it/s static=0.0000 sev=1
+e3 step13880/14000 loss=0.6537 lr=9.97e-07 11.1it/s static=0.0000 sev=1
+[monitor] step13900 outdoor median(pred)/median(GT) = 0.973 (pred 13.81 m, GT 14.18 m)
+e3 step13900/14000 loss=0.6537 lr=6.96e-07 10.9it/s static=0.0000 sev=1
+e3 step13920/14000 loss=0.6529 lr=4.48e-07 10.9it/s static=0.0000 sev=1
+e3 step13940/14000 loss=0.6517 lr=2.54e-07 10.8it/s static=0.0000 sev=1
+e3 step13960/14000 loss=0.6504 lr=1.15e-07 10.7it/s static=0.0000 sev=1
+e3 step13980/14000 loss=0.6494 lr=3.01e-08 10.6it/s static=0.0000 sev=1
+[monitor] step14000 outdoor median(pred)/median(GT) = 0.978 (pred 13.87 m, GT 14.18 m)
+e3 step14000/14000 loss=0.6501 lr=6.83e-11 10.5it/s static=0.0000 sev=1
+[val] step14000 AbsRel=0.3556 perframe=0.3536 metric=0.708 scaleCV=0.0356 d1=0.226
+[val/src] spring=0.3460
+[done] best AbsRel=0.3485 in 89.3 min
+======================================== done 2026-10-17T19:47:55Z

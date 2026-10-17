@@ -1,0 +1,79 @@
+## POSITIVE: six synthetic fixtures (real screen logs, edited): rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## NEG n47 TS2 wrong seed (45000 instead of 51000): rc=1 expected FAIL -> OK
+    [S1_n47_TS2] item 7: FAIL [data] seed values [45000] (want [51000] = data.seed 51 x1000)
+    RESULT: FAIL (scancel)
+## NEG n48 H300 seed of another pair (51000): rc=1 expected FAIL -> OK
+    [S1_n48_H300] item 7: FAIL [data] seed values [51000] (want [52000] = data.seed 52 x1000)
+    RESULT: FAIL (scancel)
+## NEG n47 H300 resumed from the n46 checkpoint: rc=1 expected FAIL -> OK
+    [S1_n47_H300] item 2: FAIL resume line [resume] /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n46/step12000.pt epoch=3 step=12000 best=0.3485 (want exactly one, path /projects/b5dh/RAMEN_train_dn01_c3rep_2026100
+    RESULT: FAIL (scancel)
+## NEG n48 TS2 resumed from the n47 checkpoint: rc=1 expected FAIL -> OK
+    [S1_n48_TS2] item 2: FAIL resume line [resume] /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n47/step12000.pt epoch=3 step=12000 best=0.3485 (want exactly one, path /projects/b5dh/RAMEN_train_dn01_c3rep_20261009
+    RESULT: FAIL (scancel)
+## NEG config line sha != yaml sha: rc=1 expected FAIL -> OK
+    [S1_n46_H300] item 7: FAIL log config line  config : outdoor_debug/parts/confirm/stage1/configs/arm_S1_n46_H300.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb
+    RESULT: FAIL (scancel)
+## NEG only 3 [ts2] lines (n47 TS2): rc=1 expected FAIL -> OK
+    [S1_n47_TS2] item 4: FAIL [ts2] occurrences=3, with env_table_sha256 f19d0b83: 4 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG [ts2] wrong sha: rc=1 expected FAIL -> OK
+    [S1_n48_H300] item 4: FAIL [ts2] occurrences=4, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG no [ts2] lines in a control: rc=1 expected FAIL -> OK
+    [S1_n46_TS2] item 4: FAIL [ts2] occurrences=0, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG lr x2 in n47 H300: rc=1 expected FAIL -> OK
+    [S1_n47_H300] item 1: FAIL table step 12020 lr 4.000e-05 expected 2.000e-05
+    [S1_n47_H300] item 1: FAIL table step 12040 lr 8.000e-05 expected 4.000e-05
+    [S1_n47_H300] item 1: FAIL table step 12060 lr 1.200e-04 expected 6.000e-05
+    [S1_n47_H300] item 1: FAIL table step 12080 lr 1.600e-04 expected 8.000e-05
+    [S1_n47_H300] item 1: FAIL table step 12100 lr 2.000e-04 expected 1.000e-04
+## NEG lr never decays (constant 1e-4 after step 12100): rc=1 expected FAIL -> OK
+    [S1_n46_TS2] item 1: FAIL table step 12400 lr 1.000e-04 expected 9.400e-05
+    [S1_n46_TS2] item 1: FAIL table step 12600 lr 1.000e-04 expected 8.390e-05
+    [S1_n46_TS2] item 1: FAIL table step 13000 lr 1.000e-04 expected 5.420e-05
+    [S1_n46_TS2] item 1: FAIL table step 13400 lr 1.000e-04 expected 2.270e-05
+    [S1_n46_TS2] item 1: FAIL table step 13800 lr 1.000e-04 expected 2.740e-06
+## NEG vkitti bound 656 (n48 TS2): rc=1 expected FAIL -> OK
+    [S1_n48_TS2] item 6: FAIL want vkitti=655; got: 10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+    [S1_n48_TS2] item 8: FAIL differs from reference: ['[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_trai
+    RESULT: FAIL (scancel)
+## NEG [data] clip counts differ inside a pair (n47 H300): rc=1 expected FAIL -> OK
+    [S1_n47_H300] item 8: FAIL differs from reference: ['[data] train clips=94580 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    RESULT: FAIL (scancel)
+## NEG non-finite warning: rc=1 expected FAIL -> OK
+    [S1_n47_H300] item 5: FAIL 1 non-finite warnings in first 50 steps
+    RESULT: FAIL (scancel)
+## NEG no resume line (from-scratch log): rc=1 expected FAIL -> OK
+    [S1_n48_H300] item 2: FAIL resume line MISSING (want exactly one, path /projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n48/step12000.pt, step=12000)
+    RESULT: FAIL (scancel)
+## NEG resume_reseed missing in n47 TS2 config: rc=1 expected FAIL -> OK
+    [S1_n47_TS2] item 7: FAIL config data.seed ['51'] and training.resume_reseed [] (want both [51])
+    [S1_n47_TS2] item 7: FAIL log config line  config : outdoor_debug/parts/confirm/stage1/configs/arm_S1_n47_TS2.yaml sha256 dc43eab2893dca05f0b94dde72bd30cb7a687fa42b7c228e73e1a5ff223ff63d OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/t
+    RESULT: FAIL (scancel)
+## NEG resume_reseed 50 != data.seed 51 in n47 TS2 config: rc=1 expected FAIL -> OK
+    [S1_n47_TS2] item 7: FAIL config data.seed ['51'] and training.resume_reseed ['50'] (want both [51])
+    [S1_n47_TS2] item 7: FAIL log config line  config : outdoor_debug/parts/confirm/stage1/configs/arm_S1_n47_TS2.yaml sha256 dc43eab2893dca05f0b94dde72bd30cb7a687fa42b7c228e73e1a5ff223ff63d OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/t
+    RESULT: FAIL (scancel)
+## NEG hinge key present in the controls: rc=1 expected FAIL -> OK
+    [S1_n46_TS2] item 3: FAIL hinge key presence wrong (want False) at steps [12010, 12020, 12030, 12040, 12050]
+    [S1_n47_TS2] item 3: FAIL hinge key presence wrong (want False) at steps [12010, 12020, 12030, 12040, 12050]
+    [S1_n48_TS2] item 3: FAIL hinge key presence wrong (want False) at steps [12010, 12020, 12030, 12040, 12050]
+    RESULT: FAIL (scancel)
+## NEG hinge key missing in the H300 runs: rc=1 expected FAIL -> OK
+    [S1_n46_H300] item 3: FAIL hinge key presence wrong (want True) at steps [12010, 12020, 12030, 12040, 12050]
+    [S1_n47_H300] item 3: FAIL hinge key presence wrong (want True) at steps [12010, 12020, 12030, 12040, 12050]
+    [S1_n48_H300] item 3: FAIL hinge key presence wrong (want True) at steps [12010, 12020, 12030, 12040, 12050]
+    RESULT: FAIL (scancel)
+## NEG unedited screen logs (seed 45000): rc=1 expected FAIL -> OK
+    [S1_n46_TS2] item 7: FAIL [data] seed values [45000] (want [50000] = data.seed 50 x1000)
+    [S1_n46_TS2] item 7: FAIL log config line  config : outdoor_debug/parts/arm_checks/configs/arm_TS2.yaml sha256 0e04c9c61f0a115a1c7ddfb225300500d54ab4f6f77c30c4bd0b976191567ead OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdo
+    [S1_n46_H300] item 7: FAIL [data] seed values [45000] (want [50000] = data.seed 50 x1000)
+    [S1_n46_H300] item 7: FAIL log config line  config : outdoor_debug/parts/arm_checks/configs/arm_TS2_H300.yaml sha256 30131c56829b28770c4e6bf19b5447e8698468567edcc03de21ea411aeb461c6 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od
+    RESULT: FAIL (scancel)
+## POSITIVE smoke mode (-s), truncated at step 12060 (n47 TS2 + n48 H300): rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+
+NEGATIVE-CONTROL SUITE: ALL AS EXPECTED

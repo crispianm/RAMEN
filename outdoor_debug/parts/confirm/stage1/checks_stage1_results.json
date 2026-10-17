@@ -1,0 +1,345 @@
+{
+ "classes_S1_n46_TS2": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "classes_S1_n46_H300": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "classes_S1_n47_TS2": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "classes_S1_n47_H300": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "classes_S1_n48_TS2": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "classes_S1_n48_H300": {
+  "tartanair": {
+   "type": "tartanair",
+   "cls": "VDASemanticsDegradedTartanAirDataset",
+   "ts2": "TS2Labeller",
+   "vkitti_max_depth": null,
+   "n": 9781
+  },
+  "vkitti": {
+   "type": "vkitti",
+   "cls": "VDASemanticsDegradedVKITTIDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": 655.0,
+   "n": 1280
+  },
+  "pointodyssey": {
+   "type": "pointodyssey",
+   "cls": "VDASemanticsDegradedPointOdysseyDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1059
+  },
+  "irs": {
+   "type": "irs",
+   "cls": "VDASemanticsDegradedIRSDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 3191
+  },
+  "spring": {
+   "type": "spring",
+   "cls": "DegradedSpringDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 134
+  },
+  "kitti_raw": {
+   "type": "kitti_raw",
+   "cls": "DegradedKITTIRawTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 1277
+  },
+  "nyu_train": {
+   "type": "nyu_train",
+   "cls": "DegradedNYUTrainDataset",
+   "ts2": "NoneType",
+   "vkitti_max_depth": null,
+   "n": 338
+  },
+  "<local build stopped>": {
+   "type": "<local build stopped>",
+   "err": "ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/"
+  }
+ },
+ "a2": {
+  "clip": 0,
+  "masks_differ": true,
+  "depth_frames_equal": true
+ },
+ "b": {
+  "S1_n46_TS2": null,
+  "S1_n46_H300": 0.34011977910995483,
+  "S1_n47_TS2": null,
+  "S1_n47_H300": 0.34011977910995483,
+  "S1_n48_TS2": null,
+  "S1_n48_H300": 0.34011977910995483
+ }
+}

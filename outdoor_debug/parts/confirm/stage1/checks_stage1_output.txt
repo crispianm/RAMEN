@@ -1,0 +1,70 @@
+== (a) classes through the real _build_multisource, six configs
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+/home/wg19671/.claude/jobs/a0d391cb/tmp/od/train.py:275: UserWarning: VKITTIDataset: training split includes ['Scene01', 'Scene20'], synthetic re-renders of KITTI-raw drives ['2011_09_26_drive_0009_sync', '2011_10_03_drive_0047_sync'] that are in the KITTI evaluation sets (pass exclude_eval_overlap=True to drop them)
+  ds = cls(root=spec["root"], split=split, val_fraction=vf,
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n46_TS2: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n46_TS2: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n46_TS2: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n46_TS2: vkitti has no ts2
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n46_H300: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n46_H300: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n46_H300: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n46_H300: vkitti has no ts2
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n47_TS2: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n47_TS2: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n47_TS2: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n47_TS2: vkitti has no ts2
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n47_H300: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n47_H300: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n47_H300: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n47_H300: vkitti has no ts2
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n48_TS2: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n48_TS2: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n48_TS2: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n48_TS2: vkitti has no ts2
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [OK] S1_n48_H300: tartanair class VDASemanticsDegradedTartanAirDataset
+  [OK] S1_n48_H300: tartanair.ts2 = TS2Labeller (want TS2Labeller)
+  [OK] S1_n48_H300: vkitti VDASemanticsDegradedVKITTIDataset max_depth 655.0 (want 655)
+  [OK] S1_n48_H300: vkitti has no ts2
+== (a2) TS2 TartanAir vs the screen A0 (no TS2) dataset, same clip, same seed: masks differ, depth/frames equal
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+  clip 0: classes VDASemanticsDegradedTartanAirDataset/VDASemanticsDegradedTartanAirDataset, ts2 NoneType vs TS2Labeller; masks_differ=True depth+frames_equal=True
+== (b) hinge on a real TS2 TartanAir batch (pred=10 m): nonzero only in H300
+  [OK] S1_n46_TS2: sky_hinge_weighted(pred=10m) = None
+  [OK] S1_n46_H300: sky_hinge_weighted(pred=10m) = 0.34011977910995483
+  [OK] S1_n47_TS2: sky_hinge_weighted(pred=10m) = None
+  [OK] S1_n47_H300: sky_hinge_weighted(pred=10m) = 0.34011977910995483
+  [OK] S1_n48_TS2: sky_hinge_weighted(pred=10m) = None
+  [OK] S1_n48_H300: sky_hinge_weighted(pred=10m) = 0.34011977910995483
+== forced fails (each must be detected)
+    (real loader raised: ts2_seg_root / ts2_env_table given without ts2_sky: true )
+  forced-fail [control with ts2_sky false (seg_root kept) -> loader/class check] -> detected
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  forced-fail [control with both ts2 keys removed -> class check] -> detected
+  forced-fail [H300 with hinge weight 0 -> hinge check] -> detected
+  forced-fail [control with the hinge keys -> hinge check] -> detected
+  forced-fail [H300 floor 1 m (hinge zero at pred 10 m) -> hinge check] -> detected
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  forced-fail [vkitti bound 656 -> class check] -> detected
+
+STAGE1 REAL-PATH CHECKS: positives OK; forced-fail suite all detected
