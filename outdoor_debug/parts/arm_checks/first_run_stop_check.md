@@ -35,3 +35,8 @@ print("rows",len(rows),"hinge-key mismatches",bad,"values",[r.get("sky_hinge_wei
 sys.exit(1 if bad or len(rows)<5 else 0)
 PY
 ```
+
+## Added per Auditor O18
+6. VK655 only: the start-up effective-bound print (printed per source from `effective_depth_bound`) shows VKITTI 656; the other five arms show 655. Otherwise STOP.
+7. All six arms: an identical start-up source list and per-source clip counts (this also covers ScanNet++, which could not be built locally). Compare arm logs against A0's; any difference STOP.
+Readout rule (O18): if the hinge term in H80/H300 is 0 throughout, report that arm as 'hinge inert at this start point', not as evidence about the hinge. Screen numbers are 'exploratory, unaudited'.
