@@ -74,7 +74,7 @@ grep -q "^  vda_init: released\$" "$CFG_REL"      || { echo "ERROR: model.vda_in
 if [[ "$ARM" == "S6" ]]; then
     PATCH="outdoor_debug/parts/far_diag/l1_final/S6_diff.patch"
     [[ -n "${S6_CLEARED_PATCH_SHA:-}" ]] || { echo "ERROR: S6 needs S6_CLEARED_PATCH_SHA (the Auditor's diff check has not been recorded)"; exit 1; }
-    [[ "$(sha256sum "$PATCH" | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: S6_diff.patch sha != the cleared sha"; exit 1; }
+    [[ "$(sha256sum "$PATCH" | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: S6_diff.patch sha $(sha256sum "$PATCH" | cut -d' ' -f1) != the cleared sha $S6_CLEARED_PATCH_SHA"; exit 1; }
     # host-independent diff text: --full-index (no abbreviation, so core.abbrev cannot change the hash), --no-color, --no-ext-diff (Auditor O48)
     [[ "$(git diff --full-index --no-color --no-ext-diff "$TRAIN_BASE_COMMIT" HEAD -- train.py | sha256sum | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: train.py at HEAD differs from base+cleared patch (git diff --full-index $TRAIN_BASE_COMMIT HEAD -- train.py != the cleared patch)"; exit 1; }
     [[ "$(sha256sum train.py | cut -d' ' -f1)" == "$TRAIN_PY_SHA" ]] || { echo "ERROR: train.py sha != TRAIN_PY_SHA (S6 gate)"; exit 1; }
