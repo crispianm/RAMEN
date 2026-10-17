@@ -21,6 +21,8 @@ CASES = {   # name -> (arm, S override, D override, S1?) -> expected label prefi
     "primary_only": ("S2", dict(xv=0.93), dict(x120=0.58), "PRIMARY-ONLY"),
     "ddad_only": ("S4", dict(xv=0.85), dict(x120=0.75, x80=0.80), "DDAD-ONLY"),
     "not": ("S5", dict(xv=0.85), dict(x120=0.58), "NOT"),
+    "ddad_80bin_growth_within_NF_b": ("S3", dict(xv=0.93), dict(x120=0.75, x80=0.731), "FIX-CANDIDATE"),
+    "ddad_80bin_growth_beyond_NF_b": ("S3", dict(xv=0.93), dict(x120=0.75, x80=0.729), "PRIMARY-ONLY"),
     "ddad_leg_blocked_by_80bin_growth": ("S6", dict(xv=0.93), dict(x120=0.75, x80=0.50), "PRIMARY-ONLY"),
     "vkitti_below_NF": ("S2", dict(xv=0.855), dict(x120=0.75, x80=0.80), "DDAD-ONLY"),
     "ddad_below_NF": ("S2", dict(xv=0.93), dict(x120=0.595, x80=0.80), "PRIMARY-ONLY"),
@@ -51,13 +53,14 @@ def _patched(**kw):
     def v(S, D, arm):
         src = dict(R=R); return _mut_verdict(S, D, arm, **kw)
     return v
-def _mut_verdict(S, D, arm, flip_v=False, no_nf=False, ignore_80=False, flip_guard=False, gate_s1=False, use_80_bin=False, drop_tae=False, drop_ddad=False):
+def _mut_verdict(S, D, arm, flip_v=False, no_nf=False, ignore_80=False, flip_guard=False, gate_s1=False, use_80_bin=False, drop_tae=False, drop_ddad=False, no_nfb=False):
     xd = (lambda d, b="[120,200]": R.xd(d, "[80,120)")) if use_80_bin else R.xd
     nfp = 0.0 if no_nf else R.nf_rel(R.dev(R.xv(S["B0"])), R.dev(R.xv(S["B0b"])))
     nfd = 0.0 if no_nf else max(abs(R.dev(xd(D["B0"])) - R.dev(xd(D["B0b"]))), 0.01)
+    nfb = 0.0 if no_nfb else max(abs(R.dev(R.xd(D["B0"], "[80,120)")) - R.dev(R.xd(D["B0b"], "[80,120)"))), 0.01)
     chV = R.dev(R.xv(S["B0"])) - R.dev(R.xv(S[arm])); chV = -chV if flip_v else chV
     chD = R.dev(xd(D["B0"])) - R.dev(xd(D[arm])); ch80 = 0.0 if ignore_80 else R.dev(R.xd(D["B0"], "[80,120)")) - R.dev(R.xd(D[arm], "[80,120)"))
-    legV, legD = chV > nfp, (chD > nfd and ch80 >= 0.0) and not drop_ddad
+    legV, legD = chV > nfp, (chD > nfd and ch80 >= -nfb) and not drop_ddad
     worse = []
     for ds, k in R.GUARDS:
         if drop_tae and k == "tae_gtvalid": continue
@@ -65,7 +68,7 @@ def _mut_verdict(S, D, arm, flip_v=False, no_nf=False, ignore_80=False, flip_gua
         if w > nf and not (arm == "S1" and ds in ("nyuv2", "scannetpp") and not gate_s1): worse.append(ds)
     label = ("FIX-CANDIDATE" if not worse else "CAUSE-IMPLICATED") if (legV and legD) else ("PRIMARY-ONLY" if legV else ("DDAD-ONLY" if legD else "NOT"))
     return dict(label=label)
-@pytest.mark.parametrize("mut", [dict(flip_v=True), dict(no_nf=True), dict(ignore_80=True), dict(flip_guard=True), dict(gate_s1=True), dict(use_80_bin=True), dict(drop_tae=True), dict(drop_ddad=True)])
+@pytest.mark.parametrize("mut", [dict(flip_v=True), dict(no_nf=True), dict(ignore_80=True), dict(flip_guard=True), dict(gate_s1=True), dict(use_80_bin=True), dict(drop_tae=True), dict(drop_ddad=True), dict(no_nfb=True)])
 def test_forced_fail_mutants_are_caught(mut):
     assert table_mismatches(lambda S, D, arm: _mut_verdict(S, D, arm, **mut)) != [], f"mutant {mut} slipped through the case table"
 def test_unmutated_reference_reimplementation_agrees():
@@ -101,3 +104,15 @@ def test_branch_b_and_garbage_are_refused(tmp_path, capsys):
 def test_missing_baselines_not_evaluable(tmp_path, capsys):
     S, D, arm = build("fix"); _write(tmp_path, {arm: S[arm]}, {arm: D[arm]})
     assert R.main(["--scores-dir", str(tmp_path), "--stage", "2000", "--ddad-gate", "A", "--arms", f"B0,B0b,{arm}"]) == 3
+
+
+def test_nf_b_is_the_80bin_noise_floor_and_boundaries():
+    S, D, arm = build("fix")                                   # baselines' [80,120) medians are equal -> NF_b = the 0.01 floor
+    assert R.verdict(S, D, arm)["nfb"] == 0.01
+    D["S3"] = D_(0.75, x80=0.731); assert R.verdict(S, D, "S3")["legD"] is True        # growth 0.009 <= 0.01
+    D["S3"] = D_(0.75, x80=0.729); assert R.verdict(S, D, "S3")["legD"] is False       # growth 0.011 > 0.01
+    # a noisier pair of baselines widens the tolerance: |B0 - B0b| on the [80,120) dev = 0.03 -> growth 0.025 is inside
+    D["B0b"] = D_(0.60, x80=0.77); v = R.verdict(S, D, "S3")
+    assert v["nfb"] == pytest.approx(0.03)
+    D["S3"] = D_(0.75, x80=0.715); assert R.verdict(S, D, "S3")["legD"] is True        # growth 0.025 <= 0.03
+    D["S3"] = D_(0.75, x80=0.705); assert R.verdict(S, D, "S3")["legD"] is False       # growth 0.035 > 0.03

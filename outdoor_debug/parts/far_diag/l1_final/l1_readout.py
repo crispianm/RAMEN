@@ -7,7 +7,7 @@ Output: G0 and, only if G0 passes, per-arm verdicts. Nothing here is a paper cla
  x_D  = DDAD bins['[120,200]'].median_pred_over_gt;  x_D80 = bins['[80,120)']...;  378 input (the registered scorer).
  G0 (validity): for EACH of B0 and B0b:  x_V <= 0.93  AND  x_D <= 0.75.   Both legs, both runs. Fail at --stage 2000 => automatic 4000-step retry of B0/B0b (arms are NOT run at 2000); fail at --stage 4000 => STOP (no arm verdicts).
  NF_p = max(|dev_V(B0) - dev_V(B0b)|, 1% relative of dev_V(B0));  NF_d = max(|dev_D(B0) - dev_D(B0b)|, 0.01 absolute);  guards NF = max(|B0 - B0b|, 1% relative of B0).
- leg V: dev_V(B0) - dev_V(arm) > NF_p.   leg D: dev_D(B0) - dev_D(arm) > NF_d  AND  dev_D80(arm) <= dev_D80(B0) (the [80,120) bin does not grow).
+ leg V: dev_V(B0) - dev_V(arm) > NF_p.   leg D: dev_D(B0) - dev_D(arm) > NF_d  AND  dev_D80(arm) <= dev_D80(B0) + NF_b  (the [80,120) bin does not grow beyond its own noise floor;  NF_b = max(|dev_D80(B0) - dev_D80(B0b)|, 0.01 absolute)).
  CAUSE-IMPLICATED = leg V and leg D.  FIX-CANDIDATE = CAUSE-IMPLICATED and every GATED guard within NF.  PRIMARY-ONLY = leg V only.  DDAD-ONLY = leg D only.  NOT = neither.
  Guards (lower is better): abs_rel_unaligned for kitti, nyuv2, scannetpp; tae_gtvalid for kitti, scannetpp.  For S1 the nyuv2 and scannetpp guards are REPORTED, not gated (the arm removes those sources by design).
  DESCRIPTION ONLY (never in a verdict): DDAD overall/near-bin AbsRel and all bin medians, VKITTI exact pooled median / per-clip / ratio-of-medians / bin AbsRel."""
@@ -29,8 +29,9 @@ def g0(S, D):
 def verdict(S, D, arm):
     """pure function of the 4 score files B0, B0b, arm -> dict (the unit under test; mutants of it are rejected by test_l1_readout.py)."""
     nfp = nf_rel(dev(xv(S["B0"])), dev(xv(S["B0b"]))); nfd = max(abs(dev(xd(D["B0"])) - dev(xd(D["B0b"]))), 0.01)
+    nfb = max(abs(dev(xd(D["B0"], "[80,120)")) - dev(xd(D["B0b"], "[80,120)"))), 0.01)   # noise floor of the [80,120) bin (Manager ruling on L1 open item 5)
     chV = dev(xv(S["B0"])) - dev(xv(S[arm])); chD = dev(xd(D["B0"])) - dev(xd(D[arm])); ch80 = dev(xd(D["B0"], "[80,120)")) - dev(xd(D[arm], "[80,120)"))
-    legV = chV > nfp; legD = chD > nfd and ch80 >= 0.0
+    legV = chV > nfp; legD = chD > nfd and ch80 >= -nfb
     worse, reported = [], []
     for ds, k in GUARDS:
         nf = nf_rel(gd(S["B0"], ds, k), gd(S["B0b"], ds, k)); w = gd(S[arm], ds, k) - gd(S["B0"], ds, k)
@@ -41,7 +42,7 @@ def verdict(S, D, arm):
     elif legD: label = "DDAD-ONLY"
     else: label = "NOT"
     if label == "FIX-CANDIDATE": label = "FIX-CANDIDATE (= CAUSE-IMPLICATED + gated guards within NF)"
-    return dict(label=label, chV=chV, nfp=nfp, legV=legV, chD=chD, nfd=nfd, legD=legD, ch80=ch80, guards_worse=worse, guards_reported_only=reported)
+    return dict(label=label, chV=chV, nfp=nfp, legV=legV, chD=chD, nfd=nfd, legD=legD, ch80=ch80, nfb=nfb, guards_worse=worse, guards_reported_only=reported)
 
 def load(root, arm):
     r = Path(root) / arm
