@@ -1,0 +1,29 @@
+mean |dL/dlog(pred)| per pixel in the perturbed band (x1e-6), loss pixel-pooled over the whole clip; N px = 8192
+
+== error in ONE band only, pred=0.80*GT ==
+term              5m        10m        20m        40m        80m       150m       300m       500m   ratio(20m/150m)  ratio(20m/500m)
+ssi           500.28     457.69     291.19     162.73     461.03      45.92      22.63      13.50       6.34      21.57
+gradmatch     722.69     691.59     391.68     208.37     110.01      59.02      29.53      11.55       6.64      33.90
+tgm           162.92      95.95      50.16      25.27      12.65       6.74       3.37       2.02       7.44      24.81
+vda          1080.63    1139.98     679.08     369.62     504.27     104.62      52.00      24.79       6.49      27.39
+silog         334.30     334.30     334.30     334.30     334.30     334.30     334.30     334.30       1.00       1.00
+
+== error in ONE band only, pred=0.55*GT ==
+term              5m        10m        20m        40m        80m       150m       300m       500m   ratio(20m/150m)  ratio(20m/500m)
+ssi           441.56     502.25     364.31     218.92      80.56      68.27      33.27      19.76       5.34      18.43
+gradmatch     887.95     835.90     492.65     281.05     157.28      87.73      43.42      16.91       5.62      29.13
+tgm           162.06     116.03      70.36      36.77      18.49       9.85       4.91       2.95       7.15      23.89
+vda          1015.87    1254.04     850.67     497.21     185.74     155.51      76.46      36.29       5.47      23.44
+silog         334.30     334.30     334.30     334.30     334.30     334.30     334.30     334.30       1.00       1.00
+
+== SAME error in all bands (global scale), pred=0.55*GT: mean |dL/dlog(pred)| per pixel (x1e-6) ==
+vda [1524.895, 907.128, 432.521, 224.683, 198.306, 50.475, 32.488, 14.596]
+silog [86.317, 86.317, 86.317, 86.317, 86.317, 86.317, 86.317, 86.317]
+
+== SiLog (as trained: pooled over eligible px, lambda 0.5): far error 0.55*GT, rest perfect; far share f of the eligible pixels ==
+f_far   mean|dL/dlog p| per far px (x1e-6)   total far pull = sum over far px (x1e-3)   SiLog value
+0.030         1086.8           171.72   0.1027
+0.050          820.1           220.61   0.1319
+0.100          541.7           308.25   0.1843
+0.250          274.0           467.74   0.2796
+0.500          199.3           612.37   0.3661
