@@ -1,9 +1,9 @@
 #!/bin/bash
 # Dry-run of the TRAIN sbatch PREFLIGHT (not the training) on a local clone, with forced-fail controls. The sbatch is copied with ONLY environment constants swapped (cluster paths -> local paths,
 # torchrun -> echo, the post-training checksum block removed); every check under test is the committed logic. usage: test_sbatch_preflight_l1.sh <pin-commit-sha>
-# needs ~/.venvs/ramen and the local release weights; works in /tmp/l1_pf. Exit 0 iff every control behaved as expected.
+# needs ~/.venvs/ramen and the local release weights; works in $L1_PF_DIR (default: the job tmp dir; never shared /tmp). Exit 0 iff every control behaved as expected.
 set -uo pipefail
-PIN="$1"; SRC="$(cd "$(dirname "$0")/../../../.." && pwd)"; W=/tmp/l1_pf; rm -rf "$W"; mkdir -p "$W/sb" "$W/cache"
+PIN="$1"; SRC="$(cd "$(dirname "$0")/../../../.." && pwd)"; W="${L1_PF_DIR:-/home/wg19671/.claude/jobs/a0d391cb/tmp/l1_pf}"; rm -rf "$W"; mkdir -p "$W/sb" "$W/cache"
 git clone -q "$SRC" "$W/clone" && git -C "$W/clone" checkout -q --detach "$PIN" && mkdir -p "$W/clone/logs"
 D=outdoor_debug/parts/far_diag/l1_final; ok=1; REL_LOCAL=/mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth
 git -C "$W/clone" config user.email t@t; git -C "$W/clone" config user.name t
