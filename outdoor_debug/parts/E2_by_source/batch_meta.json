@@ -1,0 +1,161 @@
+{
+ "sources": [
+  "tartanair",
+  "vkitti",
+  "pointodyssey_train",
+  "pointodyssey_val",
+  "irs",
+  "spring",
+  "kitti_raw",
+  "nyu_train",
+  "scannetpp_train"
+ ],
+ "sampling_mass": {
+  "tartanair": 310000.0,
+  "vkitti": 40000.0,
+  "pointodyssey_train": 87206.0,
+  "pointodyssey_val": 12794.0,
+  "irs": 100000.0,
+  "spring": 4843.0,
+  "kitti_raw": 299397.0,
+  "nyu_train": 170297.0,
+  "scannetpp_train": 85149.0
+ },
+ "clips_per_source": {
+  "tartanair": 9929,
+  "vkitti": 1360,
+  "pointodyssey_train": 7311,
+  "pointodyssey_val": 1071,
+  "irs": 3248,
+  "spring": 163,
+  "kitti_raw": 1373,
+  "nyu_train": 417,
+  "scannetpp_train": 42093
+ },
+ "batches": 20,
+ "bs": 4,
+ "frames": 8,
+ "seed": 45,
+ "src_per_batch": [
+  [
+   "irs",
+   "irs",
+   "pointodyssey_val",
+   "vkitti"
+  ],
+  [
+   "tartanair",
+   "vkitti",
+   "pointodyssey_train",
+   "irs"
+  ],
+  [
+   "irs",
+   "nyu_train",
+   "irs",
+   "irs"
+  ],
+  [
+   "scannetpp_train",
+   "tartanair",
+   "tartanair",
+   "nyu_train"
+  ],
+  [
+   "nyu_train",
+   "irs",
+   "tartanair",
+   "vkitti"
+  ],
+  [
+   "nyu_train",
+   "pointodyssey_train",
+   "nyu_train",
+   "tartanair"
+  ],
+  [
+   "tartanair",
+   "kitti_raw",
+   "tartanair",
+   "kitti_raw"
+  ],
+  [
+   "kitti_raw",
+   "kitti_raw",
+   "kitti_raw",
+   "irs"
+  ],
+  [
+   "nyu_train",
+   "tartanair",
+   "nyu_train",
+   "tartanair"
+  ],
+  [
+   "irs",
+   "kitti_raw",
+   "scannetpp_train",
+   "nyu_train"
+  ],
+  [
+   "tartanair",
+   "tartanair",
+   "tartanair",
+   "tartanair"
+  ],
+  [
+   "nyu_train",
+   "scannetpp_train",
+   "tartanair",
+   "kitti_raw"
+  ],
+  [
+   "nyu_train",
+   "tartanair",
+   "kitti_raw",
+   "kitti_raw"
+  ],
+  [
+   "nyu_train",
+   "kitti_raw",
+   "pointodyssey_train",
+   "kitti_raw"
+  ],
+  [
+   "vkitti",
+   "tartanair",
+   "tartanair",
+   "irs"
+  ],
+  [
+   "tartanair",
+   "tartanair",
+   "kitti_raw",
+   "tartanair"
+  ],
+  [
+   "nyu_train",
+   "tartanair",
+   "kitti_raw",
+   "tartanair"
+  ],
+  [
+   "tartanair",
+   "tartanair",
+   "tartanair",
+   "tartanair"
+  ],
+  [
+   "nyu_train",
+   "vkitti",
+   "irs",
+   "kitti_raw"
+  ],
+  [
+   "kitti_raw",
+   "irs",
+   "kitti_raw",
+   "kitti_raw"
+  ]
+ ]
+}
