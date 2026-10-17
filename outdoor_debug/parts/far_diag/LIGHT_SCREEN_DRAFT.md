@@ -58,3 +58,13 @@ Training: 2000 steps x 7 runs. Measured basis (SCREEN_PROPOSAL, sacct): ~0.72 h 
 - DDAD as a decision leg: only with the user's explicit word (it changes Add. 43's report-only); if allowed it is labelled 'exposed DEV gate' and exploratory only. Default in this draft: DDAD is report-only.
 - S6 only if declared before the first run (otherwise not run).
 - A4 conditions: A4 filed in REGISTRATION.md first; the patch committed with a new scorer sha; tests including the refusal paths; the first 518 run's shape log; every comparison names both input sizes (378 for ours, 518 for the release row).
+
+## DECISION BRANCHES for DDAD (Auditor O38a; the Manager has the user pick A or B before clearance; both written now, nothing else differs)
+**Branch A: the user allows the exposed DDAD gate** (changes Add. 43's report-only for THIS new sweep only; labelled 'exposed DEV gate', exploratory):
+- G0 = (B0 VKITTI 80-655 m legacy median <= 0.93) AND (B0 DDAD [120,200] median <= 0.75); either fails => STOP and report, no arm verdicts.
+- Verdicts exactly as in 'Pre-declared rule' above (CAUSE-IMPLICATED / FIX-CANDIDATE / PRIMARY-ONLY / DDAD-ONLY / NOT), with the DDAD [120,200] move as the second leg.
+**Branch B: DDAD stays report-only (Add. 43 unchanged; the default if the user does not say otherwise)**:
+- G0 = the VKITTI leg only: B0 VKITTI 80-655 m legacy median <= 0.93; if it fails => STOP and report, no arm verdicts. B0's DDAD [120,200] median is reported, not gated.
+- Verdicts: PRIMARY-ONLY (primary improves by more than NF_p) with all gated guards within NF = 'PRIMARY HIT (in-domain fit; no cause or transfer claim)'; PRIMARY-ONLY with a guard beyond NF = 'PRIMARY-ONLY, guard fails'; otherwise NOT. The CAUSE-IMPLICATED and FIX-CANDIDATE labels are NOT used in Branch B (they need the real-data leg).
+- DDAD per-bin medians and AbsRel are DESCRIBED per arm (exposed, 378 input; the A4 release row names its own 518 input) and never enter any verdict; the readout script prints them in a separate description block.
+The readout script carries a single flag `--ddad-gate {A,B}` fixed at pre-declaration time; the chosen branch is recorded in the exploration log before the first run.
