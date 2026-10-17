@@ -1,0 +1,855 @@
+{
+ "tartanairpy_repo": "https://github.com/castacks/tartanairpy",
+ "tartanairpy_commit": "158a6844d782942110967325ca3082f50ab2bfc7",
+ "segfiles_zip": "tartanairpy/segfiles.zip",
+ "segfiles_zip_sha256": "80a87e5892c7f2bd03cae24931e3a1bd4dbfc37ddc6d09d04e7cd953e6e59468",
+ "sky_name_rule": "class name in {sky, skysphere, sky0, cloud} (case-insensitive)",
+ "n_envs": 74,
+ "n_without_sky_name": 14,
+ "envs": {
+  "AbandonedCable": {
+   "sky_names": {
+    "sky": 44
+   },
+   "sky_ids": [
+    44
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 78
+  },
+  "AbandonedFactory": {
+   "sky_names": {
+    "sky": 160
+   },
+   "sky_ids": [
+    160
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 19
+  },
+  "AbandonedFactory2": {
+   "sky_names": {
+    "sky": 171
+   },
+   "sky_ids": [
+    171
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 27
+  },
+  "AbandonedSchool": {
+   "sky_names": {
+    "sky": 67
+   },
+   "sky_ids": [
+    67
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 111
+  },
+  "AmericanDiner": {
+   "sky_names": {
+    "sky0": 242,
+    "sky": 0
+   },
+   "sky_ids": [
+    0,
+    242
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": true,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 46
+  },
+  "AmusementPark": {
+   "sky_names": {
+    "sky": 28
+   },
+   "sky_ids": [
+    28
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 22
+  },
+  "AncientTowns": {
+   "sky_names": {
+    "sky": 239
+   },
+   "sky_ids": [
+    239
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 20
+  },
+  "Antiquity3D": {
+   "sky_names": {
+    "sky": 7
+   },
+   "sky_ids": [
+    7
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 28
+  },
+  "Apocalyptic": {
+   "sky_names": {
+    "cloud": 64,
+    "sky": 208
+   },
+   "sky_ids": [
+    64,
+    208
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 31
+  },
+  "ArchVizTinyHouseDay": {
+   "sky_names": {
+    "sky": 229
+   },
+   "sky_ids": [
+    229
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 56
+  },
+  "ArchVizTinyHouseNight": {
+   "sky_names": {
+    "skysphere": 36
+   },
+   "sky_ids": [
+    36
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 10
+  },
+  "BrushifyMoon": {
+   "sky_names": {
+    "sky": 59
+   },
+   "sky_ids": [
+    59
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {
+    "sun": 72
+   },
+   "n_classes": 7
+  },
+  "CarWelding": {
+   "sky_names": {
+    "sky": 188
+   },
+   "sky_ids": [
+    188
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 33
+  },
+  "CastleFortress": {
+   "sky_names": {
+    "sky": 7
+   },
+   "sky_ids": [
+    7
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 39
+  },
+  "CoalMine": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 26
+  },
+  "ConstructionSite": {
+   "sky_names": {
+    "sky": 119
+   },
+   "sky_ids": [
+    119
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 70
+  },
+  "CountryHouse": {
+   "sky_names": {
+    "sky": 92
+   },
+   "sky_ids": [
+    92
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 66
+  },
+  "CyberPunkDowntown": {
+   "sky_names": {
+    "sky": 205
+   },
+   "sky_ids": [
+    205
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 37
+  },
+  "Cyberpunk": {
+   "sky_names": {
+    "sky": 155
+   },
+   "sky_ids": [
+    155
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 83
+  },
+  "DesertGasStation": {
+   "sky_names": {
+    "sky": 214
+   },
+   "sky_ids": [
+    214
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 50
+  },
+  "Downtown": {
+   "sky_names": {
+    "sky": 208
+   },
+   "sky_ids": [
+    208
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 35
+  },
+  "EndofTheWorld": {
+   "sky_names": {
+    "skysphere": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 5
+  },
+  "FactoryWeather": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 49
+  },
+  "Fantasy": {
+   "sky_names": {
+    "sky": 8
+   },
+   "sky_ids": [
+    8
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 38
+  },
+  "ForestEnv": {
+   "sky_names": {
+    "sky": 27
+   },
+   "sky_ids": [
+    27
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 10
+  },
+  "Gascola": {
+   "sky_names": {
+    "sky": 59
+   },
+   "sky_ids": [
+    59
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 7
+  },
+  "GothicIsland": {
+   "sky_names": {
+    "sky": 242
+   },
+   "sky_ids": [
+    242
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 49
+  },
+  "GreatMarsh": {
+   "sky_names": {
+    "sky": 23
+   },
+   "sky_ids": [
+    23
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 22
+  },
+  "HQWesternSaloon": {
+   "sky_names": {
+    "sky": 244
+   },
+   "sky_ids": [
+    244
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 47
+  },
+  "HongKong": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 44
+  },
+  "Hospital": {
+   "sky_names": {
+    "sky": 137
+   },
+   "sky_ids": [
+    137
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 150
+  },
+  "House": {
+   "sky_names": {
+    "sky": 85
+   },
+   "sky_ids": [
+    85
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 114
+  },
+  "IndustrialHangar": {
+   "sky_names": {
+    "sky": 1
+   },
+   "sky_ids": [
+    1
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 44
+  },
+  "JapaneseAlley": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 43
+  },
+  "JapaneseCity": {
+   "sky_names": {
+    "sky": 217
+   },
+   "sky_ids": [
+    217
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 66
+  },
+  "MiddleEast": {
+   "sky_names": {
+    "sky": 48
+   },
+   "sky_ids": [
+    48
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 63
+  },
+  "ModUrbanCity": {
+   "sky_names": {
+    "sky": 133
+   },
+   "sky_ids": [
+    133
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 78
+  },
+  "ModernCityDowntown": {
+   "sky_names": {
+    "sky": 123
+   },
+   "sky_ids": [
+    123
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 43
+  },
+  "ModularNeighborhood": {
+   "sky_names": {
+    "sky": 104
+   },
+   "sky_ids": [
+    104
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 77
+  },
+  "ModularNeighborhoodIntExt": {
+   "sky_names": {
+    "sky": 155
+   },
+   "sky_ids": [
+    155
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 81
+  },
+  "NordicHarbor": {
+   "sky_names": {
+    "sky": 8
+   },
+   "sky_ids": [
+    8
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 30
+  },
+  "Ocean": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 8
+  },
+  "Office": {
+   "sky_names": {
+    "skysphere": 182
+   },
+   "sky_ids": [
+    182
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 78
+  },
+  "OldBrickHouseDay": {
+   "sky_names": {
+    "sky": 30
+   },
+   "sky_ids": [
+    30
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 116
+  },
+  "OldBrickHouseNight": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 115
+  },
+  "OldIndustrialCity": {
+   "sky_names": {
+    "sky": 34
+   },
+   "sky_ids": [
+    34
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 75
+  },
+  "OldScandinavia": {
+   "sky_names": {
+    "sky": 160
+   },
+   "sky_ids": [
+    160
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 24
+  },
+  "OldTownFall": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 31
+  },
+  "OldTownNight": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 30
+  },
+  "OldTownSummer": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 31
+  },
+  "OldTownWinter": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 31
+  },
+  "PolarSciFi": {
+   "sky_names": {
+    "sky": 9
+   },
+   "sky_ids": [
+    9
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 26
+  },
+  "Prison": {
+   "sky_names": {
+    "sky": 109
+   },
+   "sky_ids": [
+    109
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 61
+  },
+  "Restaurant": {
+   "sky_names": {
+    "sky": 70
+   },
+   "sky_ids": [
+    70
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 27
+  },
+  "RetroOffice": {
+   "sky_names": {
+    "sky": 182
+   },
+   "sky_ids": [
+    182
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 72
+  },
+  "Rome": {
+   "sky_names": {
+    "sky": 109
+   },
+   "sky_ids": [
+    109
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 60
+  },
+  "Ruins": {
+   "sky_names": {
+    "cloud": 36,
+    "sky": 116
+   },
+   "sky_ids": [
+    36,
+    116
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 24
+  },
+  "SeasideTown": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 45
+  },
+  "SeasonalForestAutumn": {
+   "sky_names": {
+    "sky": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 4
+  },
+  "SeasonalForestSpring": {
+   "sky_names": {
+    "sky": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 4
+  },
+  "SeasonalForestSummerNight": {
+   "sky_names": {
+    "sky": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 4
+  },
+  "SeasonalForestWinter": {
+   "sky_names": {
+    "sky": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 4
+  },
+  "SeasonalForestWinterNight": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 4
+  },
+  "Sewerage": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 41
+  },
+  "ShoreCaves": {
+   "sky_names": {
+    "sky": 64
+   },
+   "sky_ids": [
+    64
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 6
+  },
+  "Slaughter": {
+   "sky_names": {
+    "sky": 70,
+    "skysphere": 143
+   },
+   "sky_ids": [
+    70,
+    143
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {
+    "sun": 171
+   },
+   "n_classes": 30
+  },
+  "SoulCity": {
+   "sky_names": {
+    "sky": 175
+   },
+   "sky_ids": [
+    175
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 50
+  },
+  "Supermarket": {
+   "sky_names": {},
+   "sky_ids": [],
+   "has_sky_name": false,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 136
+  },
+  "TerrainBlending": {
+   "sky_names": {
+    "skysphere": 36
+   },
+   "sky_ids": [
+    36
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 7
+  },
+  "UrbanConstruction": {
+   "sky_names": {
+    "sky": 9
+   },
+   "sky_ids": [
+    9
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 20
+  },
+  "VictorianStreet": {
+   "sky_names": {
+    "sky": 146
+   },
+   "sky_ids": [
+    146
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 16
+  },
+  "WaterMillDay": {
+   "sky_names": {
+    "sky": 29
+   },
+   "sky_ids": [
+    29
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 83
+  },
+  "WaterMillNight": {
+   "sky_names": {
+    "sky": 182
+   },
+   "sky_ids": [
+    182
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 82
+  },
+  "WesternDesertTown": {
+   "sky_names": {
+    "sky": 29
+   },
+   "sky_ids": [
+    29
+   ],
+   "has_sky_name": true,
+   "zero_is_sky_id": false,
+   "other_sky_like_names_not_used": {},
+   "n_classes": 78
+  }
+ }
+}
