@@ -51,7 +51,7 @@ print("\n== SiLog (as trained: pooled over eligible px, lambda 0.5): far error 0
 print("f_far   mean|dL/dlog p| per far px (x1e-6)   total far pull = sum over far px (x1e-3)   SiLog value")
 rng = np.random.default_rng(0)
 nearsel = (band <= 4).numpy(); farsel = (band >= 5).numpy()
-for f in (0.03, 0.05, 0.10, 0.25, 0.50):
+for f in (0.014, 0.03, 0.05, 0.10, 0.25, 0.50):
     nn_, nf = int(nearsel.sum()), int(farsel.sum())
     keep_far = min(nf, int(round(f / (1 - f) * nn_)))
     keep_near = nn_ if keep_far < nf else int(round((1 - f) / f * nf))

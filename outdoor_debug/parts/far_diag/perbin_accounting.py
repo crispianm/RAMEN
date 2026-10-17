@@ -34,6 +34,10 @@ for s in d["sources"]:
 d["sources"] = srcs; d["num_frames"] = args.frames; d["num_workers"] = 0; d["clean_prob"] = 1.0   # degrade stays on (loader requirement for metric_supervision); clean_prob 1 = RGB untouched, GT is never degraded
 loader, _ = train._build_multisource({"data": d, "training": {"batch_size": 1}}, "train", 1, 0)
 ds = loader.dataset; offs = ds.cumulative_sizes
+train._set_severity_max(ds, 1.0)
+for k, v in (("clean_prob", 1.0), ("seeded_noise", bool(d["seeded_noise"])), ("blur_only_prob", float(d["blur_only_prob"])), ("static_prob", float(d["static_prob"])),
+             ("static_noise_mult", tuple(float(x) for x in d["static_noise_mult"])), ("static_ev_jitter", float(d["static_ev_jitter"])), ("lowlight", d["lowlight"])):
+    train._set_dataset_attr(ds, k, v)
 mass = {n: float(s["sampling_mass"]) for n, s in zip(names, srcs)}
 sizes = {}; prev = 0
 for n, c in zip(names, offs): sizes[n] = int(c - prev); prev = c

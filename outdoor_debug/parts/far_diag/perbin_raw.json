@@ -1,0 +1,276 @@
+{
+ "bins": [
+  "0-20",
+  "20-50",
+  "50-80",
+  "80-120",
+  "120-200",
+  "200-655",
+  ">=655"
+ ],
+ "edges": [
+  0,
+  20,
+  50,
+  80,
+  120,
+  200,
+  655,
+  1000000000.0
+ ],
+ "sources": {
+  "tartanair": {
+   "clips": 40,
+   "mass": 310000.0,
+   "n_clips_in_source": 9929,
+   "total_px": 85863680.0,
+   "sky_px": 6012156.0,
+   "metric_sup": true,
+   "silog_ceil": 655.0,
+   "sparse": false,
+   "valid_px": [
+    64913267.0,
+    7016883.0,
+    1480955.0,
+    937819.0,
+    646489.0,
+    621031.0,
+    4230536.0
+   ],
+   "silog_px": [
+    64913267.0,
+    7016883.0,
+    1480955.0,
+    937819.0,
+    646489.0,
+    621031.0,
+    0.0
+   ]
+  },
+  "vkitti": {
+   "clips": 40,
+   "mass": 40000.0,
+   "n_clips_in_source": 1360,
+   "total_px": 85863680.0,
+   "sky_px": 15055122.0,
+   "metric_sup": true,
+   "silog_ceil": Infinity,
+   "sparse": false,
+   "valid_px": [
+    42274554.0,
+    17033766.0,
+    4451871.0,
+    2704587.0,
+    2799257.0,
+    1544523.0,
+    0.0
+   ],
+   "silog_px": [
+    42274554.0,
+    17033766.0,
+    4451871.0,
+    2704587.0,
+    2799257.0,
+    1544523.0,
+    0.0
+   ]
+  },
+  "pointodyssey_train": {
+   "clips": 40,
+   "mass": 87206.0,
+   "n_clips_in_source": 7311,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": 655.0,
+   "sparse": false,
+   "valid_px": [
+    72109229.0,
+    1861414.0,
+    164568.0,
+    7291.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    72109229.0,
+    1861414.0,
+    164568.0,
+    7291.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "pointodyssey_val": {
+   "clips": 40,
+   "mass": 12794.0,
+   "n_clips_in_source": 1071,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": 655.0,
+   "sparse": false,
+   "valid_px": [
+    75577825.0,
+    700258.0,
+    2611.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    75577825.0,
+    700258.0,
+    2611.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "irs": {
+   "clips": 40,
+   "mass": 100000.0,
+   "n_clips_in_source": 3248,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": Infinity,
+   "sparse": false,
+   "valid_px": [
+    83589352.0,
+    139925.0,
+    1911.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    83589352.0,
+    139925.0,
+    1911.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "spring": {
+   "clips": 40,
+   "mass": 4843.0,
+   "n_clips_in_source": 163,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": false,
+   "silog_ceil": Infinity,
+   "sparse": false,
+   "valid_px": [
+    57737540.0,
+    15426460.0,
+    2056452.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "kitti_raw": {
+   "clips": 40,
+   "mass": 299397.0,
+   "n_clips_in_source": 1373,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": Infinity,
+   "sparse": true,
+   "valid_px": [
+    11358095.0,
+    3068323.0,
+    432319.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    11358095.0,
+    3068323.0,
+    432319.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "nyu_train": {
+   "clips": 40,
+   "mass": 170297.0,
+   "n_clips_in_source": 417,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": Infinity,
+   "sparse": false,
+   "valid_px": [
+    82732866.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    82732866.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "scannetpp_train": {
+   "clips": 40,
+   "mass": 85149.0,
+   "n_clips_in_source": 42093,
+   "total_px": 85863680.0,
+   "sky_px": 0.0,
+   "metric_sup": true,
+   "silog_ceil": Infinity,
+   "sparse": false,
+   "valid_px": [
+    85807578.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "silog_px": [
+    85807578.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "scheme": "stratified N clips/source seeded random.Random(45); weight = mass/sum(mass)"
+}

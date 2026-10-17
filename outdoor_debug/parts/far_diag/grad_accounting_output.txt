@@ -22,6 +22,7 @@ silog [86.317, 86.317, 86.317, 86.317, 86.317, 86.317, 86.317, 86.317]
 
 == SiLog (as trained: pooled over eligible px, lambda 0.5): far error 0.55*GT, rest perfect; far share f of the eligible pixels ==
 f_far   mean|dL/dlog p| per far px (x1e-6)   total far pull = sum over far px (x1e-3)   SiLog value
+0.014         1618.4           118.15   0.0706
 0.030         1086.8           171.72   0.1027
 0.050          820.1           220.61   0.1319
 0.100          541.7           308.25   0.1843

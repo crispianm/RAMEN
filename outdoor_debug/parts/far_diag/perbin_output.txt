@@ -1,0 +1,13 @@
+/home/wg19671/.claude/jobs/a0d391cb/tmp/od/train.py:275: UserWarning: VKITTIDataset: training split includes ['Scene01', 'Scene20'], synthetic re-renders of KITTI-raw drives ['2011_09_26_drive_0009_sync', '2011_10_03_drive_0047_sync'] that are in the KITTI evaluation sets (pass exclude_eval_overlap=True to drop them)
+  ds = cls(root=spec["root"], split=split, val_fraction=vf,
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 8; 30 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+tartanair 40 valid frac 0.930 sky 0.070 far>=80 0.0750
+vkitti 40 valid frac 0.825 sky 0.175 far>=80 0.0821
+pointodyssey_train 40 valid frac 0.863 sky 0.000 far>=80 0.0001
+pointodyssey_val 40 valid frac 0.888 sky 0.000 far>=80 0.0000
+irs 40 valid frac 0.975 sky 0.000 far>=80 0.0000
+spring 40 valid frac 0.876 sky 0.000 far>=80 0.0000
+kitti_raw 40 valid frac 0.173 sky 0.000 far>=80 0.0000
+nyu_train 40 valid frac 0.964 sky 0.000 far>=80 0.0000
+scannetpp_train 40 valid frac 0.999 sky 0.000 far>=80 0.0000
