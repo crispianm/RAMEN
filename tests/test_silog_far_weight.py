@@ -187,6 +187,18 @@ def test_log_term_only_when_on(zero_vda_loss):
             assert abs(float(v) - float(frac)) < 1e-6
 
 
+def test_log_term_uses_ge_at_the_boundary(zero_vda_loss):
+    """second review (S6-code mutant): the logged far-pixel fraction counts GT >= far_from (a pixel exactly AT far_from is far, as in the loss weight).  Pixels set to exactly 50.0 make `>` differ from `>=`."""
+    cfg = _cfg(log_terms=True, metric_silog_far_weight=4.0, metric_silog_far_from=50.0)
+    pred, batch = _batch(); d = batch["depth"].clone(); d[..., 0, :2] = 50.0; batch["depth"] = d     # a few pixels at exactly 50.0
+    m = batch["mask"] > 0.5
+    ge, gt = (d[m] >= 50.0).float().mean(), (d[m] > 50.0).float().mean()
+    assert float(ge) > float(gt), "vacuous: the batch must contain pixels exactly at far_from"
+    train._TERM_ACC.clear() if hasattr(train, "_TERM_ACC") else None
+    compute_loss(pred, batch, cfg); s = getattr(train, "_TERM_ACC", {})["silog_far_px_frac"]; v = s[0] / s[1] if isinstance(s, (list, tuple)) else s
+    assert abs(float(v) - float(ge)) < 1e-6 and abs(float(v) - float(gt)) > 1e-6
+
+
 def test_config_validation_refusals():
     ok = _cfg(metric_silog_far_weight=4.0, metric_silog_far_from=50.0); check_metricfix(ok)
     check_metricfix(_cfg()); check_metricfix(_cfg(metric_silog_far_weight=1.0))
