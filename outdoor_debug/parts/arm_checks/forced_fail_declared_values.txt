@@ -1,0 +1,2 @@
+declared value [DEFECT] TS2_H300: loss.sky_hinge_min_depth = '300.0' (want 30.0)
+ALL EXPECTED DIFFS EXACT: False

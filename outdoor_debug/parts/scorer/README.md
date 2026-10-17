@@ -78,3 +78,6 @@ Host of the earlier numbers: the local workstation (hostname IT101668 / bench_jo
 
 ## Primary statistic (Auditor O23; no scorer change)
 The decision quantity is |1 - x| with x = `primary.vkitti_far_80_655.legacy_subsample_median` (equal clip weight). `success_rule_quantity_abs_1_minus_pred_gt` in the JSON is computed from the EXACT pooled median and is NOT the decision quantity (renaming it later = new sha + S3 re-run before any arm score). Exact pooled, per-clip-median mean, ratio of medians and bin AbsRel are reported as description only.
+
+## Correction (R+D, after the S3 regression)
+Earlier text in this README attributes the exact-pooled vs legacy median gap to sampling error (<0.003). That is WRONG: the regression shows 0.8634 vs 0.8417 (2.6%). The gap is the clip-weighting difference (legacy = 10 clips x 100k seeded px, equal clip weight; exact pooled = weighted by far-px count). See the Primary statistic section above.

@@ -117,3 +117,8 @@ tests/test_lr_restart.py 6 passed; all 20 test files that import train (incl. te
 
 ## R+D decision on A0b seed (supersedes the seed-46 mention above)
 A0b uses data.seed 49 + training.resume_reseed 49 (a seed not used by c3rep replicates 46/47/48, so the 4-GPU sampler order is not a replay of n46's post-resume clips). All other arms keep data.seed 45, no resume_reseed. Config diffs re-run: ALL EXPECTED DIFFS EXACT.
+
+## Reviewer follow-up (independent review, outdoor_debug/parts/review/REVIEW.md)
+- train.py file:line citations in section 4 are STALE after make_lr_scale and later edits (claims verified true where resolved; resolve by symbol name, not line).
+- arms.py now also asserts the declared VALUES per arm (H80 floor 80, H300 floor 300, hinge weight 0.1, VK655 bound 656 + flag, ts2_sky, A0b seeds 49/49, A0 seed 45); forced-fail (H300 wanted 30) shown in forced_fail_declared_values.txt.
+- classes.py has no per-source fallback; ScanNet++ cannot be built locally, so its class is verified only by the [data] source list and clip counts identical across the six full-run logs (item 7).

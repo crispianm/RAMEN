@@ -66,5 +66,18 @@ log_terms/log_terms_every per arm: {'A0': (True, 10), 'A0b': (True, 10), 'TS2': 
 - data.sources[vkitti].vkitti_max_depth: 655 -> 656
 - data.sources[vkitti].vkitti_sky_as_valid_depth: <absent> -> true
 - training.checkpoint_dir: "runs/outdoor_screen_A0" -> "runs/outdoor_screen_TS2_VK655"
+declared value [OK] A0: data.seed = '45' (want 45)
+declared value [OK] A0b: data.seed = '49' (want 49)
+declared value [OK] A0b: training.resume_reseed = '49' (want 49)
+declared value [OK] TS2: data.sources[tartanair].ts2_sky = 'true' (want True)
+declared value [OK] TS2_H80: data.sources[tartanair].ts2_sky = 'true' (want True)
+declared value [OK] TS2_H80: loss.sky_hinge_weight = '0.1' (want 0.1)
+declared value [OK] TS2_H80: loss.sky_hinge_min_depth = '80.0' (want 80.0)
+declared value [OK] TS2_H300: data.sources[tartanair].ts2_sky = 'true' (want True)
+declared value [OK] TS2_H300: loss.sky_hinge_weight = '0.1' (want 0.1)
+declared value [OK] TS2_H300: loss.sky_hinge_min_depth = '300.0' (want 300.0)
+declared value [OK] TS2_VK655: data.sources[tartanair].ts2_sky = 'true' (want True)
+declared value [OK] TS2_VK655: data.sources[vkitti].vkitti_sky_as_valid_depth = 'true' (want True)
+declared value [OK] TS2_VK655: data.sources[vkitti].vkitti_max_depth = '656' (want 656)
 
 ALL EXPECTED DIFFS EXACT: True

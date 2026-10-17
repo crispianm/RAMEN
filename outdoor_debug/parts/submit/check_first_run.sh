@@ -13,7 +13,7 @@ import json, os, re, sys, math
 RUNS, SMOKE = os.environ["RUNS"], os.environ["SMOKE"] == "1"
 TOTAL = 12050 if SMOKE else 14000
 TS2_ARMS = {"TS2", "TS2_H80", "TS2_H300", "TS2_VK655"}; HINGE = {"TS2_H80", "TS2_H300"}
-TABLE = {12020: 2.00e-05, 12040: 4.00e-05, 12060: 6.00e-05, 12080: 8.00e-05, 12100: 1.00e-04, 12120: 1.00e-04, 12200: 9.93e-05}
+TABLE = {12020: 2.00e-05, 12040: 4.00e-05, 12060: 6.00e-05, 12080: 8.00e-05, 12100: 1.00e-04, 12120: 1.00e-04, 12200: 9.93e-05, 12400: 9.40e-05, 12600: 8.39e-05, 13000: 5.42e-05, 13400: 2.27e-05, 13800: 2.74e-06}
 SHA = "f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76"
 fails = 0
 def out(arm, item, status, msg=""):

@@ -1,0 +1,28 @@
+--- positive: real A0 log
+[A0] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[A0] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[A0] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[A0] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[A0] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[A0] item 1: ok step 12400 lr 9.400e-05 expected 9.400e-05
+[A0] item 1: WAIT step 12600 not printed yet
+[A0] item 1: WAIT step 13000 not printed yet
+[A0] item 1: WAIT step 13400 not printed yet
+[A0] item 1: WAIT step 13800 not printed yet
+RESULT: no FAIL (WAIT/WARN lines may remain)
+--- forced fail: flat 1e-4 LR after 12100
+[A0] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+[A0] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+[A0] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+[A0] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+[A0] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+[A0] item 1: ok step 12200 lr 9.930e-05 expected 9.930e-05
+[A0] item 1: FAIL step 12400 lr 1.000e-04 expected 9.400e-05
+[A0] item 1: WAIT step 12600 not printed yet
+[A0] item 1: WAIT step 13000 not printed yet
+[A0] item 1: WAIT step 13400 not printed yet
+[A0] item 1: WAIT step 13800 not printed yet
+RESULT: FAIL (scancel)

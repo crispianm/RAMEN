@@ -102,6 +102,18 @@ if __name__ == "__main__":
             status = "OK" if keys == exp else "DEFECT"; ok &= (keys == exp)
         lines.append(f"\n## {x} -> {y}  [{status}]  ({len(d)} differing keys)")
         for k, a, b in d: lines.append(f"- {k}: {a} -> {b}")
+    # declared VALUES (reviewer finding 2): the diff above only checks WHICH keys differ; assert the values too
+    VALUES = {"A0": {"data.seed": 45},
+              "A0b": {"data.seed": 49, "training.resume_reseed": 49},
+              "TS2": {"data.sources[tartanair].ts2_sky": True},
+              "TS2_H80": {"data.sources[tartanair].ts2_sky": True, "loss.sky_hinge_weight": 0.1, "loss.sky_hinge_min_depth": 80.0},
+              "TS2_H300": {"data.sources[tartanair].ts2_sky": True, "loss.sky_hinge_weight": 0.1, "loss.sky_hinge_min_depth": 300.0},
+              "TS2_VK655": {"data.sources[tartanair].ts2_sky": True, "data.sources[vkitti].vkitti_sky_as_valid_depth": True, "data.sources[vkitti].vkitti_max_depth": 656}}
+    for n, kv in VALUES.items():
+        fl = dict(flat(arms[n]))
+        for k, v in kv.items():
+            good = fl.get(k, "<absent>") == json.dumps(v); ok &= good
+            lines.append(f"declared value [{'OK' if good else 'DEFECT'}] {n}: {k} = {fl.get(k, '<absent>')!r} (want {v!r})")
     lines.append(f"\nALL EXPECTED DIFFS EXACT: {ok}")
     # also vs A0 for every arm (the Manager asked for 'every arm vs A0')
     (OUT / "config_diffs.md").write_text("\n".join(lines) + "\n")
