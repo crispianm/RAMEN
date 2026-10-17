@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """L1 checkpoint-side LR/feature probe (the stdout `lr=` shows GROUP 0 only, so the head group of S5 and the gate group are checked HERE, on what the trainer actually saved).
 usage (cluster venv python; torch + pyyaml; the checkpoint is our own file, loaded with weights_only=False):
-  check_optimizer_lr.py --ckpt runs/l1_<ARM>_k<K>/{last.pt|step<K>.pt|step<S>.pt} --arm ARM -K 2000|4000 [--cfg-dir DIR] [--expect-step N] [-F]
+  check_optimizer_lr.py --ckpt runs/l1_<ARM>_k<K>/{last.pt|step<K>.pt|step<S>.pt} --arm ARM -K 2000|4000 [--cfg-dir DIR] [--expect-step N] [--smoke N] [-F]
 Checks (each FAIL => exit 1; an unreadable/partial file is WAIT (exit 0) unless -F):
-  1 the config the TRAINER EXECUTED (ckpt['cfg']) == the committed arm yaml, key for key
+  1 the config the TRAINER EXECUTED (ckpt['cfg']) == the committed arm yaml, key for key. With --smoke N the expected yaml is the arm yaml after the sbatch's OWN 3 smoke substitutions (max_steps K->N, checkpoint_dir runs/l1_smoke_<ARM>_k<K>, checkpoint_at_steps [K]->[N]; train_template_l1.sbatch); each must apply exactly once, else FAIL.
   2 optimizer: exactly 3 param groups with (188, 64, 2) params; initial_lr = (1e-4, 1e-4 | 1e-5 for S5, 1e-3) read from the saved state
   3 saved lr of EVERY group == initial_lr * closed-form scale(step-1) (warmup 500 then cosine to 0 at K): the schedule really multiplied all groups (incl. the S5 head group and the gate group)
   4 step: the checkpoint's own step (== --expect-step when given; with -F for a final stepK.pt it must be K)
 Needs only ckpt['cfg'], ckpt['step'], ckpt['optimizer']['param_groups'] (the optimizer state itself is not inspected)."""
-import argparse, math, sys
+import argparse, math, re, sys
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
 def scale(g, K, W=500):
@@ -16,7 +16,7 @@ def scale(g, K, W=500):
     return (s + 1) / W if s < W else 0.5 * (1 + math.cos(math.pi * min(1.0, (s - W) / (K - W))))
 def main(argv=None):
     ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", required=True); ap.add_argument("--arm", required=True); ap.add_argument("-K", type=int, required=True, choices=(2000, 4000))
-    ap.add_argument("--cfg-dir"); ap.add_argument("--expect-step", type=int); ap.add_argument("-F", action="store_true"); a = ap.parse_args(argv)
+    ap.add_argument("--cfg-dir"); ap.add_argument("--expect-step", type=int); ap.add_argument("--smoke", type=int, default=0); ap.add_argument("-F", action="store_true"); a = ap.parse_args(argv)
     import torch, yaml
     res = []
     def chk(n, ok, d=""): res.append((n, bool(ok), d))
@@ -25,8 +25,15 @@ def main(argv=None):
         cfg, step, pg = ck["cfg"], int(ck["step"]), ck["optimizer"]["param_groups"]
     except Exception as e:
         print(("FAIL " if a.F else "WAIT ") + f"checkpoint unreadable/partial ({type(e).__name__}: {str(e)[:120]}): re-run later"); return 1 if a.F else 0
-    cfgp = Path(a.cfg_dir or HERE / f"configs/k{a.K}") / f"arm_{a.arm}.yaml"; want = yaml.safe_load(open(cfgp))
-    chk("executed config (ckpt['cfg']) == committed arm yaml", cfg == want, "differs: " + str(sorted(k for k in set(cfg) | set(want) if cfg.get(k) != want.get(k)))[:200])
+    cfgp = Path(a.cfg_dir or HERE / f"configs/k{a.K}") / f"arm_{a.arm}.yaml"; txt = open(cfgp).read()
+    if a.smoke:   # the sbatch's 3 sed substitutions, applied to the arm yaml text (same patterns as train_template_l1.sbatch)
+        N = a.smoke; K = a.K
+        txt, n1 = re.subn(rf"^  max_steps: {K}$", f"  max_steps: {N}", txt, flags=re.M)
+        txt, n2 = re.subn(rf"^  checkpoint_dir: runs/l1_{a.arm}_k{K}$", f"  checkpoint_dir: runs/l1_smoke_{a.arm}_k{K}", txt, flags=re.M)
+        txt, n3 = re.subn(rf"^(  checkpoint_at_steps:\n)  - {K}$", rf"\g<1>  - {N}", txt, flags=re.M)
+        chk("smoke substitutions each apply exactly once (max_steps, checkpoint_dir, checkpoint_at_steps)", (n1, n2, n3) == (1, 1, 1), str((n1, n2, n3)))
+    want = yaml.safe_load(txt)
+    chk("executed config (ckpt['cfg']) == committed arm yaml" + (f" after the sbatch smoke substitutions (N={a.smoke})" if a.smoke else ""), cfg == want, "differs: " + str(sorted(k for k in set(cfg) | set(want) if cfg.get(k) != want.get(k)))[:200])
     chk("optimizer has exactly 3 param groups with (188, 64, 2) params", [len(g["params"]) for g in pg] == [188, 64, 2], str([len(g["params"]) for g in pg]))
     head = 1e-5 if a.arm == "S5" else 1e-4; want_init = [1e-4, head, 1e-3]
     chk(f"initial_lr per group == {want_init} (S5: head group x0.1; gate group 1e-3 = 10x)", len(pg) == 3 and all(abs(g.get("initial_lr", -1) / w - 1) < 1e-9 for g, w in zip(pg, want_init)), str([g.get("initial_lr") for g in pg]))

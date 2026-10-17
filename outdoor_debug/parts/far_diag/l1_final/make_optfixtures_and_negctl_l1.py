@@ -12,8 +12,16 @@ print("real c3_n46 step12000 ckpt: ckpt['cfg'] == resolved config yaml:", real["
 assert real["cfg"] == base
 def scale(g, K, W=500):
     s = g - 1; return (s + 1) / W if s < W else 0.5 * (1 + math.cos(math.pi * min(1.0, (s - W) / (K - W))))
-def fixture(arm, K, step, name, mut=None):
-    cfg = yaml.safe_load(open(H / f"configs/k{K}/arm_{arm}.yaml")); pg = copy.deepcopy(real["optimizer"]["param_groups"]); head = 1e-5 if arm == "S5" else 1e-4
+def smoke_cfg(arm, K, N):
+    """the arm yaml after the sbatch's OWN sed: the 3 -e lines are EXTRACTED from train_template_l1.sbatch and executed by bash (not re-typed here)."""
+    tpl = (H / "train_template_l1.sbatch").read_text().splitlines()
+    i = next(j for j, l in enumerate(tpl) if l.lstrip().startswith("sed -e \"s/^  max_steps"))
+    cmd = "\n".join(tpl[i:i + 3]); assert cmd.rstrip().endswith('"$CFG_REL" > "$RUN_CFG"'), cmd
+    out = FX / f"smoke_{arm}_{K}_{N}.yaml"
+    r = subprocess.run(["bash", "-c", f'ARM={arm}; K={K}; N={N}; CFG_REL={H}/configs/k{K}/arm_{arm}.yaml; RUN_CFG={out}\n{cmd}'], capture_output=True, text=True); assert r.returncode == 0, r.stderr
+    return yaml.safe_load(open(out))
+def fixture(arm, K, step, name, mut=None, cfg=None):
+    cfg = cfg if cfg is not None else yaml.safe_load(open(H / f"configs/k{K}/arm_{arm}.yaml")); pg = copy.deepcopy(real["optimizer"]["param_groups"]); head = 1e-5 if arm == "S5" else 1e-4
     for g, il in zip(pg, (1e-4, head, 1e-3)): g["initial_lr"] = il; g["lr"] = il * scale(step, K)
     d = {"cfg": cfg, "step": step, "optimizer": {"param_groups": pg, "state": {}}}
     if mut: mut(d)
@@ -34,6 +42,26 @@ for K in (2000, 4000):
 def neg(label, arm, K, step, mut, extra=()):
     global allok; allok &= run("NEG " + label, fixture(arm, K, step, "neg.pt", mut), arm, K, True, extra)
 def set_lr(f): return lambda d: [g.__setitem__("lr", f(g)) for g in d["optimizer"]["param_groups"]]
+# ---- B1 (second review): the smoke checkpoint carries the SMOKE config (sbatch sed), --smoke N must accept exactly that and nothing else ----
+sm0 = smoke_cfg("B0", 2000, 120); sm_arm = yaml.safe_load(open(H / "configs/k2000/arm_B0.yaml"))
+assert sm0["training"]["max_steps"] == 120 and sm0["training"]["checkpoint_dir"] == "runs/l1_smoke_B0_k2000" and sm0["training"]["checkpoint_at_steps"] == [120]
+for K in (2000, 4000):
+    for a in ARMS:
+        allok &= run(f"POSITIVE SMOKE {a} K={K} (cfg = the sbatch sed of the arm yaml, step 120)", fixture(a, K, 120, f"smoke_{a}_{K}.pt", cfg=smoke_cfg(a, K, 120)), a, K, False, ("--smoke", "120", "--expect-step", "120", "-F"))
+allok &= run("FORCED-FAIL (the second review's B1): the same correct smoke checkpoint WITHOUT --smoke is rejected (full-run yaml compared)", fixture("S5", 2000, 120, "smoke_nos.pt", cfg=smoke_cfg("S5", 2000, 120)), "S5", 2000, True, ("--expect-step", "120"))
+def smneg(label, arm, K, mutcfg, extra=("--smoke", "120", "--expect-step", "120"), step=120):
+    global allok
+    c = smoke_cfg(arm, K, 120); mutcfg(c); allok &= run("NEG SMOKE " + label, fixture(arm, K, step, "smneg.pt", cfg=c), arm, K, True, extra)
+smneg("one UNDECLARED key changed (data.seed 47)", "S5", 2000, lambda c: c["data"].__setitem__("seed", 47))
+smneg("one undeclared key changed (training.head_lr_mult)", "S5", 2000, lambda c: c["training"].__setitem__("head_lr_mult", 1.0))
+smneg("an undeclared extra key added", "S1", 2000, lambda c: c["training"].__setitem__("zzz", 1))
+smneg("a declared key not substituted: max_steps still 2000", "S5", 2000, lambda c: c["training"].__setitem__("max_steps", 2000))
+smneg("a declared key not substituted: checkpoint_dir is the full-run dir", "S5", 2000, lambda c: c["training"].__setitem__("checkpoint_dir", "runs/l1_S5_k2000"))
+smneg("a declared key not substituted: checkpoint_at_steps still [2000]", "S5", 2000, lambda c: c["training"].__setitem__("checkpoint_at_steps", [2000]))
+smneg("smoke dir of ANOTHER arm", "S5", 2000, lambda c: c["training"].__setitem__("checkpoint_dir", "runs/l1_smoke_S1_k2000"))
+smneg("smoke of 60 steps declared as --smoke 120", "S5", 2000, lambda c: c["training"].__setitem__("max_steps", 60), ("--smoke", "120", "--expect-step", "120"))
+smneg("resume_from set in a smoke config", "S1", 2000, lambda c: c["training"].__setitem__("resume_from", "/x.pt"))
+allok &= run("NEG SMOKE: --smoke 120 on a FULL-run checkpoint (cfg = arm yaml)", fixture("S5", 2000, 120, "full_as_smoke.pt"), "S5", 2000, True, ("--smoke", "120", "--expect-step", "120"))
 neg("S5 head group NOT scaled (initial_lr 1e-4)", "S5", 2000, 1000, lambda d: d["optimizer"]["param_groups"][1].update(initial_lr=1e-4, lr=1e-4 * scale(1000, 2000)))
 neg("B0 head group wrongly at 0.1x", "B0", 2000, 1000, lambda d: d["optimizer"]["param_groups"][1].update(initial_lr=1e-5, lr=1e-5 * scale(1000, 2000)))
 neg("S5 head lr not decayed (stale at initial)", "S5", 2000, 1500, lambda d: d["optimizer"]["param_groups"][1].update(lr=1e-5))

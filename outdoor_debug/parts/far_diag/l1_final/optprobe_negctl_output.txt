@@ -127,6 +127,71 @@ real c3_n46 step12000 ckpt: ckpt['cfg'] == resolved config yaml: True | param gr
     RESULT: ALL PASS (7 checks) step=1000 arm=S6 K=4000
 ## POSITIVE S6 K=4000 step 4000: rc=0 expected no FAIL -> OK
     RESULT: ALL PASS (7 checks) step=4000 arm=S6 K=4000
+## POSITIVE SMOKE B0 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=B0 K=2000
+## POSITIVE SMOKE B0b K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=B0b K=2000
+## POSITIVE SMOKE S1 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S1 K=2000
+## POSITIVE SMOKE S2 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S2 K=2000
+## POSITIVE SMOKE S3 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S3 K=2000
+## POSITIVE SMOKE S4 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S4 K=2000
+## POSITIVE SMOKE S5 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S5 K=2000
+## POSITIVE SMOKE S6 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S6 K=2000
+## POSITIVE SMOKE B0 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=B0 K=4000
+## POSITIVE SMOKE B0b K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=B0b K=4000
+## POSITIVE SMOKE S1 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S1 K=4000
+## POSITIVE SMOKE S2 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S2 K=4000
+## POSITIVE SMOKE S3 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S3 K=4000
+## POSITIVE SMOKE S4 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S4 K=4000
+## POSITIVE SMOKE S5 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S5 K=4000
+## POSITIVE SMOKE S6 K=4000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (8 checks) step=120 arm=S6 K=4000
+## FORCED-FAIL (the second review's B1): the same correct smoke checkpoint WITHOUT --smoke is rejected (full-run yaml compared): rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['training']]
+    RESULT: 1 FAIL (7 checks) step=120 arm=S5 K=2000
+## NEG SMOKE one UNDECLARED key changed (data.seed 47): rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['data']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE one undeclared key changed (training.head_lr_mult): rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE an undeclared extra key added: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S1 K=2000
+## NEG SMOKE a declared key not substituted: max_steps still 2000: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE a declared key not substituted: checkpoint_dir is the full-run dir: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE a declared key not substituted: checkpoint_at_steps still [2000]: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE smoke dir of ANOTHER arm: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE smoke of 60 steps declared as --smoke 120: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
+## NEG SMOKE resume_from set in a smoke config: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S1 K=2000
+## NEG SMOKE: --smoke 120 on a FULL-run checkpoint (cfg = arm yaml): rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 1 FAIL (8 checks) step=120 arm=S5 K=2000
 ## NEG S5 head group NOT scaled (initial_lr 1e-4): rc=1 expected FAIL -> OK
     FAIL initial_lr per group == [0.0001, 1e-05, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001, 0.001]]
     FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
