@@ -123,7 +123,9 @@ def test_pins_fire():
     with pytest.raises(AssertionError, match="UNSET"):
         S.assert_pins({}, {"a": S.UNSET})
     with pytest.raises(AssertionError, match="UNSET"):
-        S.assert_pins({k: "z" for k in S.PINS})                               # the draft scorer has unset pins and refuses real runs
+        S.assert_pins({k: ("z" if v == S.UNSET else v) for k, v in S.PINS.items()})                               # the draft scorer has unset pins and refuses real runs
+    assert "scorer_sha" not in S.PINS                                         # D1: the scorer's own sha is pinned OUTSIDE the file (--expect-scorer-sha)
+    assert {"meta_sha", "clips_sha", "objects_sha", "frames_sha"} <= set(S.PINS)
 
 
 def test_decision_rule_O36():
@@ -150,15 +152,126 @@ def test_guard_5pct_relative_per_bin():
     assert S.guard_check(h, t)["[120,200]"]["status"] == "UNEVALUABLE"
 
 
+def _run(P, absrel, arm, seed="s50", stage=1, ckpt=None):
+    return dict(sky=dict(P_framebalanced_median=P, kept_frame_ids=["f1", "f2"], dropped_frame_ids=[], frame_mask_px=[5000, 6000]), bins=_bins(absrel),
+                n_scored_frames=2, n_lidar_px_valid_before_sky=100, n_lidar_px_sky_excluded=10,
+                meta=dict(arm=arm, ckpt_sha=ckpt or f"sha_{arm}", seed_label=seed, stage=stage))
+
+
 def test_compare_end_to_end_verdict():
-    def run(P, absrel):
-        return dict(sky=dict(P_framebalanced_median=P), bins=_bins(absrel))
-    c = S.compare(run(600.0, 0.10), run(150.0, 0.10))
+    def cmp(h, t, stage=2):
+        return S.compare(h, t, stage=stage)
+    H = lambda P, a: _run(P, a, "H300", stage=2, seed="stage2"); T = lambda P, a: _run(P, a, "TS2", stage=2, seed="stage2")
+    c = cmp(H(600.0, 0.10), T(150.0, 0.10))
     assert c["verdict"] == "CONFIRMED" and c["d_ln_PH300_over_PTS2"] == pytest.approx(math.log(4))
-    assert "THREE paired starts" in c["single_seed_note"]
-    assert S.compare(run(600.0, 0.12), run(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # guard fails
-    assert S.compare(run(180.0, 0.10), run(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # 0<d<ln1.5
-    assert S.compare(run(140.0, 0.10), run(150.0, 0.10))["verdict"] == "REFUTED"
+    assert c["disclosure"] == S.STAGE2_NOTE and c["disclosure"].startswith("SINGLE SEED (50): one paired difference cannot size seed noise; the A0/A0b screen pair showed 26% spread on a guard. Sign and magnitude only.")
+    assert "the guards carry the information" in S.STAGE2_NOTE and "NOT an accuracy claim" in S.STAGE2_NOTE
+    assert cmp(H(600.0, 0.12), T(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # guard fails
+    assert cmp(H(180.0, 0.10), T(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # 0<d<ln1.5
+    assert cmp(H(140.0, 0.10), T(150.0, 0.10))["verdict"] == "REFUTED"
+    c1 = S.compare(_run(600.0, 0.1, "H300"), _run(150.0, 0.1, "TS2"), stage=1)
+    assert c1["disclosure"] == S.STAGE1_NOTE and "THREE" in c1["disclosure"]
+
+
+def test_disclosure_strings_are_verbatim_and_stage_specific():
+    for k in ("guards carry the information", "TS2+H300 was chosen after the screen", "NOT BETTER on its primary", "THREE paired", "26% spread on a guard"):
+        assert k in S.STAGE1_NOTE, k
+    assert "SINGLE SEED" not in S.STAGE1_NOTE and "THREE" not in S.STAGE2_NOTE
+    assert "single seed" not in S.LABEL_STAGE1.lower() and "single seed 50" in S.LABEL_STAGE2
+    reg = open(Path(__file__).resolve().parents[1] / "AV2_REGISTRATION.md").read()
+    assert "SINGLE SEED (50): one paired difference cannot size seed noise; the A0/A0b screen pair showed 26% spread on a guard. Sign and magnitude only." in reg
+    assert "P measures what the hinge enforces by design; a pass is near built-in and is NOT an accuracy claim; the guards carry the information." in reg
+    assert "P measures what the hinge enforces by design; a pass is near built-in and is NOT an accuracy claim; the guards carry the information." in S.STAGE2_NOTE
+
+
+def test_check_scorer_sha(tmp_path):
+    f = tmp_path / "s.py"; f.write_text("x=1\n")
+    good = A.sha256_file(f)
+    assert S.check_scorer_sha(good, f) == good
+    with pytest.raises(AssertionError, match="refusing"):
+        S.check_scorer_sha("0" * 64, f)
+    with pytest.raises(SystemExit):
+        S.check_scorer_sha(None, f)
+    with pytest.raises(SystemExit):
+        S.check_scorer_sha("", f)
+
+
+def test_registered_pins_match_constants():
+    import build_av2_masks as B
+    assert S.PINS["segmenter_a_sha"] == B.SEG_A["bin_sha"] == "a3dbf2d7a9912203078f304d88df8cfee9fd752ca2d2413f82036bdb02c5e7df"
+    assert S.PINS["segmenter_b_sha"] == B.SEG_B["bin_sha"] == "876855252aa674c7ad6e920c268d6722add811a927806372811faa724f19856c"
+    assert B.SEG_A["revision"] == "739f5d4692954e4a185eac280dec1ba5a7d52f1d" and B.SEG_B["revision"] == "8ed649db2cc1756b8bc36f0cad00b0812e333027"
+    here = Path(__file__).resolve().parents[1]
+    assert A.sha256_file(here / "av2_clips.tsv") == A.REGISTERED_SHAS["clips_sha"] == S.PINS["clips_sha"]
+    assert A.sha256_file(here / "av2_val_logs_stage1_50.txt") == S.PINS["logs_sha"]
+
+
+def test_compare_pairs_end_to_end():
+    def run(P, absrel, arm, k):
+        return _run(P, absrel, arm, seed=k)
+    def mk(**ov):
+        d = {k: (run(600.0, 0.10, "H300", k), run(150.0, 0.10, "TS2", k)) for k in S.PAIRS}
+        d.update(ov); return d
+    assert S.compare_pairs(mk())["verdict"] == "CONFIRMED"
+    r = S.compare_pairs(mk(s51=(run(170.0, 0.10, "H300", "s51"), run(150.0, 0.10, "TS2", "s51")))); assert r["verdict"] == "NOT CONFIRMED" and r["d_min"] < r["ln_margin"] <= r["d_mean"]
+    assert S.compare_pairs(mk(s52=(run(140.0, 0.10, "H300", "s52"), run(150.0, 0.10, "TS2", "s52"))))["verdict"] == "REFUTED"
+    assert S.compare_pairs(mk(s50=(run(600.0, 0.12, "H300", "s50"), run(150.0, 0.10, "TS2", "s50"))))["verdict"] == "NOT CONFIRMED"
+    with pytest.raises(AssertionError):
+        S.compare_pairs({k: v for k, v in mk().items() if k != "s52"})
+    swapped = mk(); swapped["s50"] = (swapped["s50"][1], swapped["s50"][0])                      # TS2 given as H300
+    with pytest.raises(AssertionError, match="argument order"):
+        S.compare_pairs(swapped)
+
+
+def test_route_frame_drop_changes_guards_not_P_and_reverse():
+    """R1 M4 at the routing level: a mask-dropped frame is out of P only (guards see it); a kept frame is in both."""
+    f = ramp(); gt = sparse(f, 20000); anys = np.zeros((H, W), bool)
+    cert = np.zeros((H, W), bool); cert[:600] = True
+    pred = np.full((504, 378), 20.0, np.float32); pred[:150] = 450.0
+    acc, sky = S.Accumulator(), S.SkyAccumulator()
+    assert S.route_frame(acc, sky, "L:1", pred, cert, anys, gt, "L", {"L:1"}) is True                 # dropped
+    assert acc.scored_frames == 1 and acc.result()["overall_n_px"] > 0                                 # the guard accumulator CHANGED
+    assert sky.seen == 0 and sky.result()["n_frames_kept"] == 0                                         # the sky accumulator did NOT
+    assert S.route_frame(acc, sky, "L:2", pred, cert, anys, gt, "L", {"L:1"}) is False                 # not dropped
+    assert acc.scored_frames == 2 and sky.seen == 1 and sky.kept_ids == ["L:2"]
+    # the reverse: a frame that is not mask-dropped but fails the scorer's own <2000 px rule is out of P, still in the guards
+    tiny = np.zeros((H, W), bool); tiny[:5] = True
+    S.route_frame(acc, sky, "L:3", pred, tiny, anys, gt, "L", set())
+    assert acc.scored_frames == 3 and sky.seen == 2 and sky.dropped == 1 and sky.dropped_ids == ["L:3"] and sky.kept_ids == ["L:2"]
+
+
+@pytest.mark.parametrize("iou,ok", [(0.85, True), (0.8500001, True), (0.8499, False), (0.8, False), (1.0, True), (float("nan"), False), (True, False), (False, False),
+                                    (float("inf"), False), (1.0000001, False), (-0.1, False), (None, False), ("0.9", False)])
+def test_check_mask_meta_iou_boundary_and_garbage(iou, ok):
+    m = dict(status="OK", pooled_iou=iou, dropped=[])
+    if ok:
+        S.check_mask_meta(m)
+    else:
+        with pytest.raises(RuntimeError):
+            S.check_mask_meta(m)
+
+
+def test_pairing_window_is_inclusive_25ms_both_selectors():
+    """One camera frame (so the phase search cannot rescue it): |dt| = 25,000,000 ns is accepted, 25,000,001 ns (25.000001 ms) is dropped, on either side of the camera frame."""
+    import select_av2_frames as Sel
+    t0 = 10**15
+    for sign in (+1, -1):
+        for dt, scored in ((25_000_000, True), (25_000_001, False), (24_999_999, True)):
+            r = A.select_frames([t0], [t0 + sign * dt]); s = Sel.select([t0], [t0 + sign * dt])
+            assert (len(r["scored"]) == 1) == scored and (len(r["dropped"]) == 1) == (not scored), (sign, dt)
+            assert s[1] == r["scored"] and s[2] == r["dropped"]
+            if scored:
+                assert r["scored"][0][3] == dt
+            else:
+                assert r["dropped"][0][2] == dt
+
+
+def test_sky_accumulator_records_ids_and_mask_px():
+    sky = np.zeros((H, W), bool); sky[:600] = True
+    pred = np.full((504, 378), 300.0, np.float32)
+    k = S.SkyAccumulator(); k.add(pred, sky, "a"); k.add(pred, np.zeros((H, W), bool), "b")
+    r = k.result()
+    assert r["kept_frame_ids"] == ["a"] and r["dropped_frame_ids"] == ["b"] and r["frame_mask_px"][1] == 0 and r["frame_mask_px"][0] > 2000
 
 
 def test_selection_rule_and_pairing():
@@ -173,7 +286,7 @@ def test_selection_rule_and_pairing():
     assert all(s[3] <= A.MAX_PAIR_DT_NS for s in r["scored"])
     # tie rule: equidistant sweeps -> the earlier one
     assert A.nearest_sweep(150, np.array([100, 200]))[0] == 100
-    # forced fail: no sweep within 50 ms -> dropped, counted
+    # forced fail: no sweep within 25 ms -> dropped, counted
     r2 = A.select_frames(cam, [10**12])
     assert len(r2["scored"]) == 0 and len(r2["dropped"]) == 15
     # clip longer than the window is truncated
@@ -261,21 +374,6 @@ def test_stage1_pair_rule():
     assert S.PAIRS == ("s50", "s51", "s52")
 
 
-def test_compare_pairs_end_to_end():
-    def run(P, absrel):
-        return dict(sky=dict(P_framebalanced_median=P), bins=_bins(absrel))
-    ok = {k: (run(600.0, 0.10), run(150.0, 0.10)) for k in S.PAIRS}
-    assert S.compare_pairs(ok)["verdict"] == "CONFIRMED"
-    one_low = dict(ok); one_low["s51"] = (run(170.0, 0.10), run(150.0, 0.10))              # d = ln(170/150) < ln 1.5
-    r = S.compare_pairs(one_low); assert r["verdict"] == "NOT CONFIRMED" and r["d_min"] < r["ln_margin"] <= r["d_mean"]
-    refuted = dict(ok); refuted["s52"] = (run(140.0, 0.10), run(150.0, 0.10))
-    assert S.compare_pairs(refuted)["verdict"] == "REFUTED"
-    badguard = dict(ok); badguard["s50"] = (run(600.0, 0.12), run(150.0, 0.10))
-    assert S.compare_pairs(badguard)["verdict"] == "NOT CONFIRMED"
-    with pytest.raises(AssertionError):
-        S.compare_pairs({"s50": ok["s50"], "s51": ok["s51"]})
-
-
 def test_phase_rule_r1_picks_aligned_phase_and_ties_go_to_zero():
     cam = list(range(0, 300 * 50_000_000, 50_000_000))                        # 20 Hz
     aligned0 = list(range(10_000_000, 150 * 100_000_000, 100_000_000))         # sweeps 10 ms after even cam frames
@@ -285,8 +383,40 @@ def test_phase_rule_r1_picks_aligned_phase_and_ties_go_to_zero():
     assert r1["phase"] == 1 and len(r1["scored"]) == 15 and r1["clip"][0] == cam[1]       # forced-fail case: filed phase-0-only rule would score 0 frames
     # the filed (phase 0 only) rule on the same log scores nothing, so the test fails if the phase search is removed
     assert A._select_phase(sorted(cam), np.array(mis0, np.int64), 0)[1] == []
-    # tie (both phases aligned: sweeps every 50 ms) -> 0
+    # tie (both phases aligned: sweeps every 50 ms, i.e. one per camera frame) -> 0
     both = list(range(10_000_000, 300 * 50_000_000, 50_000_000))
     assert A.select_frames(cam, both)["phase"] == 0
     import select_av2_frames as Sel
     assert Sel.select(cam, mis0)[0][0] == cam[1] and Sel.select(cam, aligned0)[0][0] == cam[0]
+
+
+# ------------------------------------------------------------------ runner (O45: expected scorer sha is a literal committed in the runbook)
+def _runner_args(tmp_path):
+    return ["--ckpt", "x.pt", "--pair", "s50", "--arm", "H300", "--out", str(tmp_path / "o.json"), "--root", "r", "--mask", "m", "--frames", "f", "--clips", "c", "--objects", "o", "--logs", "l"]
+
+
+def test_runbook_placeholder_is_refused_by_the_runner(tmp_path):
+    import run_score as R
+    rb = Path(__file__).resolve().parents[1] / "RUNBOOK_STAGE1.md"
+    assert "EXPECT_SCORER_SHA = <FILLED_AFTER_FINAL_COMMIT>" in rb.read_text() or R.read_expected_sha(rb.read_text())     # unfilled placeholder, or a filled 64-hex literal
+    for bad in ("EXPECT_SCORER_SHA = <FILLED_AFTER_FINAL_COMMIT>", "EXPECT_SCORER_SHA = abc", "EXPECT_SCORER_SHA = " + "A" * 64, "no line here",
+                "EXPECT_SCORER_SHA = " + "a" * 64 + "\nEXPECT_SCORER_SHA = " + "b" * 64):
+        with pytest.raises(SystemExit):
+            R.read_expected_sha(bad)
+    assert R.read_expected_sha("x\nEXPECT_SCORER_SHA = " + "a" * 64 + "\ny") == "a" * 64
+    f = tmp_path / "rb.md"; f.write_text("EXPECT_SCORER_SHA = <FILLED_AFTER_FINAL_COMMIT>\n")
+    with pytest.raises(SystemExit):
+        R.main([str(f), "--", *_runner_args(tmp_path)])
+
+
+def test_runner_with_wrong_registered_sha_makes_the_scorer_refuse(tmp_path):
+    import subprocess, run_score as R
+    here = Path(__file__).resolve().parents[1]
+    wrong = tmp_path / "wrong.md"; wrong.write_text("EXPECT_SCORER_SHA = " + "0" * 64 + "\n")
+    p = subprocess.run([sys.executable, "-I", str(here / "run_score.py"), str(wrong), "--", *_runner_args(tmp_path)], capture_output=True, text=True)
+    assert p.returncode != 0 and "scorer sha" in p.stderr and "refusing to run" in p.stderr
+    good = tmp_path / "good.md"; good.write_text("EXPECT_SCORER_SHA = " + A.sha256_file(here / "av2_scorer.py") + "\n")
+    p = subprocess.run([sys.executable, "-I", str(here / "run_score.py"), str(good), "--", *_runner_args(tmp_path)], capture_output=True, text=True)
+    assert "refusing to run" not in p.stderr and p.returncode != 0          # passes the scorer-sha gate, then fails later on the dummy paths
+    src = (here / "run_score.py").read_text()
+    assert "sha256" not in src and "hashlib" not in src                      # the runner never hashes the scorer

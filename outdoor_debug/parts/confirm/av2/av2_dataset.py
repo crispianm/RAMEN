@@ -96,6 +96,80 @@ def frame_id(log: str, cam_ts: int) -> str:
     return f"{log}:{int(cam_ts)}"
 
 
+# ----------------------------------------------------------------------------- registered inputs (frames tsv + pinned clip table + object list)
+OBJ_PFX = "datasets/av2/sensor/val/"
+# sha256 of the registered R1 tables (Auditor O45): the scorer and the mask builder refuse any other file.
+REGISTERED_SHAS = dict(frames_sha="1207c93b73bcf2967643445e1a27d479e415a581b7aa08bfcce14f26db604e59",
+                       clips_sha="3f57db92806fec2d7e559584af1234fbf290a51ea322750c007df334cb05c1ee",
+                       objects_sha="9d577f318630b1056b08b109c079b54859971d2cbcaa4a0e21f484465e909f64")
+
+
+def read_frames_tsv(path) -> list:
+    out = []
+    for ln in open(path):
+        p = ln.rstrip("\n").split("\t")
+        if len(p) == 5:
+            out.append((p[0], int(p[1]), int(p[2]), int(p[3]), int(p[4])))        # log, cam_ts, lidar_ts, dt_ns, clip_idx
+    return out
+
+
+def read_clips_tsv(path) -> dict:
+    """{log: (phase, [cam_ts ...])} from the pinned clip table (log, phase, n_clip, comma-separated clip camera timestamps). Never from a directory glob."""
+    out = {}
+    for ln in open(path):
+        if not ln.strip():
+            continue
+        log, phase, n, ts = ln.rstrip("\n").split("\t")
+        clip = [int(t) for t in ts.split(",")]
+        assert len(clip) == int(n) <= MAX_LEN, f"{log}: n_clip {n} != {len(clip)} or > {MAX_LEN}"
+        assert clip == sorted(set(clip)), f"{log}: clip not strictly ascending"
+        assert int(phase) in (0, 1)
+        assert log not in out, f"duplicate log {log} in the clip table"
+        out[log] = (int(phase), clip)
+    return out
+
+
+def load_registered_inputs(frames_path, clips_path, objects_path, root=None, registered=None, check_files=True) -> dict:
+    """The ONLY source of the model clip and the scored frames. Checks, in order: sha256 of the three tables against `registered` (default REGISTERED_SHAS);
+    every scored row: clip[clip_idx] == cam_ts (and the log has a clip); every clip jpg and every paired sweep appears in objects.tsv (key list of the R1 download);
+    if check_files: every one of those files exists under root. Returns {log: dict(clip=[cam_ts], rows=[(log,cam,lidar,dt,idx)])}."""
+    reg = REGISTERED_SHAS if registered is None else registered
+    for name, p in (("frames_sha", frames_path), ("clips_sha", clips_path), ("objects_sha", objects_path)):
+        got = sha256_file(p)
+        if got != reg[name]:
+            raise AssertionError(f"{name}: {got} != registered {reg[name]} ({p})")
+    clips = read_clips_tsv(clips_path)
+    keys = {ln.split("\t")[0] for ln in open(objects_path) if ln.strip()}
+    by_log: dict = {}
+    for r in read_frames_tsv(frames_path):
+        by_log.setdefault(r[0], []).append(r)
+    out = {}
+    for log, rows in by_log.items():
+        if log not in clips:
+            raise AssertionError(f"{log}: scored frames but no row in the clip table")
+        clip = clips[log][1]
+        for (_, cam, lid, dt, idx) in rows:
+            if not (0 <= idx < len(clip)) or clip[idx] != cam:
+                raise AssertionError(f"{log}: clip[{idx}] != scored camera timestamp {cam}")
+            if dt > MAX_PAIR_DT_NS:
+                raise AssertionError(f"{log}:{cam}: dt {dt} ns > {MAX_PAIR_DT_NS}")
+            k = f"{OBJ_PFX}{log}/sensors/lidar/{lid}.feather"
+            if k not in keys:
+                raise AssertionError(f"{k} not in objects.tsv")
+        for t in clip:
+            k = f"{OBJ_PFX}{log}/sensors/cameras/{CAMERA}/{t}.jpg"
+            if k not in keys:
+                raise AssertionError(f"{k} not in objects.tsv")
+        if check_files:
+            d = Path(root) / log
+            miss = [str(d / "sensors" / "cameras" / CAMERA / f"{t}.jpg") for t in clip if not (d / "sensors" / "cameras" / CAMERA / f"{t}.jpg").is_file()]
+            miss += [str(d / "sensors" / "lidar" / f"{r[2]}.feather") for r in rows if not (d / "sensors" / "lidar" / f"{r[2]}.feather").is_file()]
+            if miss:
+                raise FileNotFoundError(f"{log}: {len(miss)} registered files missing, e.g. {miss[0]}")
+        out[log] = dict(clip=clip, rows=rows)
+    return out
+
+
 # ----------------------------------------------------------------------------- geometry (pure)
 def se3(qw, qx, qy, qz, tx, ty, tz) -> np.ndarray:
     T = np.eye(4)
@@ -119,10 +193,18 @@ def sparse_gt(pts_cam: np.ndarray, K: np.ndarray, hw=NATIVE_HW) -> np.ndarray:
     return D.sparse_depth_from_cam_points(pts_cam, K, None, hw, MAX_DEPTH_M)
 
 
+def project_all_returns(pts_cam: np.ndarray, K: np.ndarray) -> np.ndarray:
+    """(N,2) float64 pixel coords (x=col, y=row) of ALL points with z > 0, NO range cap and NO image-bounds filter (the registered LiDAR exclusion of the
+    sky mask applies to every return in front of the camera, not only the <=200 m GT returns)."""
+    u, v, z, front = D.project_points(np.asarray(pts_cam, np.float64), K, None, NATIVE_HW)
+    ok = front & np.isfinite(u) & np.isfinite(v)
+    return np.stack([u[ok], v[ok]], 1)
+
+
 # ----------------------------------------------------------------------------- frozen sky-mask store
 class MaskStore:
     """npz keyed by frame id ('<log>:<cam_ts>'): '<id>|certain' and '<id>|any' = packbits(bool native mask), '<id>|shape' = [H,W].
-    certain = both segmenters sky with p>=0.9, eroded, no LiDAR return within 5 px (the PRIMARY sky set).
+    certain = both segmenters sky with p>=0.9, eroded, no projected LiDAR return within 9 px (round(5*1550/900); the PRIMARY sky set).
     any     = sky by EITHER segmenter at argmax (no threshold, no erosion; used ONLY to exclude pixels from the far-range guard)."""
 
     def __init__(self, path):
@@ -171,13 +253,8 @@ class Log:
         i = i.iloc[0]
         assert (int(i.height_px), int(i.width_px)) == NATIVE_HW, f"{log_id}: intrinsics image size {(i.height_px, i.width_px)} != {NATIVE_HW}"
         self.K = K_from_row(i.fx_px, i.fy_px, i.cx_px, i.cy_px)
+        self.xyz_dtypes: set = set()
         self._pose_by_ts = {int(t): k for k, t in enumerate(self.poses["timestamp_ns"].to_numpy())}
-
-    def cam_timestamps(self) -> list[int]:
-        return sorted(int(p.stem) for p in (self.dir / "sensors" / "cameras" / CAMERA).glob("*.jpg"))
-
-    def lidar_timestamps(self) -> list[int]:
-        return sorted(int(p.stem) for p in (self.dir / "sensors" / "lidar").glob("*.feather"))
 
     def city_T_ego(self, ts: int) -> np.ndarray:
         k = self._pose_by_ts.get(int(ts))
@@ -186,16 +263,36 @@ class Log:
         r = self.poses.iloc[k]
         return se3(r.qw, r.qx, r.qy, r.qz, r.tx_m, r.ty_m, r.tz_m)
 
-    def sparse_gt(self, cam_ts: int, lidar_ts: int) -> np.ndarray:
+    def _pts_cam(self, cam_ts: int, lidar_ts: int) -> np.ndarray:
+        """ALL returns of the paired sweep in the camera frame at cam_ts (no range cap, no image-bounds filter).
+        The sweep's x,y,z columns may be stored as float16 (~0.125 m spacing at 128-256 m): they are cast to float64 here and the stored dtype is recorded in
+        self.xyz_dtypes (disclosed in the mask meta and the scorer meta; no rule depends on it)."""
         import pandas as pd
         sw = pd.read_feather(self.dir / "sensors" / "lidar" / f"{lidar_ts}.feather")
+        for c in ("x", "y", "z"):
+            self.xyz_dtypes.add(str(sw[c].dtype))
         pts = sw[["x", "y", "z"]].to_numpy(np.float64)
-        pc = lidar_ego_to_camera(pts, self.city_T_ego(lidar_ts), self.city_T_ego(cam_ts), self.ego_T_cam)
-        return sparse_gt(pc, self.K)
+        return lidar_ego_to_camera(pts, self.city_T_ego(lidar_ts), self.city_T_ego(cam_ts), self.ego_T_cam)
+
+    def sparse_gt(self, cam_ts: int, lidar_ts: int) -> np.ndarray:
+        return sparse_gt(self._pts_cam(cam_ts, lidar_ts), self.K)
+
+    def all_returns_uv(self, cam_ts: int, lidar_ts: int) -> np.ndarray:
+        """(N,2) float (x=col, y=row) of EVERY return in front of the camera (z > 0), whatever its range: used for the LiDAR exclusion of the sky mask (D12)."""
+        return project_all_returns(self._pts_cam(cam_ts, lidar_ts), self.K)
 
     def image_path(self, cam_ts: int) -> Path:
-        return self.dir / "sensors" / "cameras" / CAMERA / f"{int(cam_ts)}.jpg"
+        return self.image_path_of(self.dir.parent, self.id, cam_ts)
+
+    @staticmethod
+    def image_path_of(root, log_id: str, cam_ts: int) -> Path:
+        return Path(root) / log_id / "sensors" / "cameras" / CAMERA / f"{int(cam_ts)}.jpg"
 
 
 def load_rgb(path) -> np.ndarray:
-    return D.load_rgb(path)
+    """AV2 jpg reader (own message; the DDAD loader's text says PNG and is not touched)."""
+    import cv2
+    img = cv2.imread(str(path), cv2.IMREAD_COLOR)
+    if img is None:
+        raise ValueError(f"JPG decode failure: {path}")
+    return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

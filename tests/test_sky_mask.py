@@ -8,6 +8,7 @@ torch = pytest.importorskip('torch')
 SEG = Path(__file__).resolve().parents[1] / "outdoor_debug" / "parts" / "confirm" / "seg"
 sys.path.insert(0, str(SEG))
 import make_sky_mask as M
+sys.path.insert(0, str(SEG.parent / 'av2'))
 import make_panel as P
 
 H, W = 100, 160   # short side 100 -> erosion radius round(8*100/900)=1; use explicit radii where needed
@@ -67,32 +68,27 @@ def test_lidar_exclusion():
     assert M.apply_lidar(m, np.zeros((0, 2)), radius=5).sum() == m.sum()
 
 
-def test_dropped_frames():
+def test_dropped_frames_rule_and_old_store_path_is_gone():
     a, b = maps(50)
     ea = np.full((H, W), 0.05, np.float32)
-    tiny = ea.copy(); tiny[:1, :W] = .99          # 1 row = 1% exactly -> kept after no erosion? radius forces drop
-    pairs = {"ok": (a, b), "none": (ea, ea), "tiny": (tiny, tiny)}
-    masks, dropped = M.build_masks(pairs)
-    assert set(masks) == {"ok"} and sorted(dropped) == ["none", "tiny"]
+    tiny = ea.copy(); tiny[:1, :W] = .99          # 1 row
+    ok = M.certain_sky(a, b); none = M.certain_sky(ea, ea); t = M.certain_sky(tiny, tiny)
+    assert not M.is_dropped(ok) and M.is_dropped(none) and M.is_dropped(t)
     # LiDAR can push a frame below the limit
-    masks2, dropped2 = M.build_masks({"ok": (a, b)}, lidar={"ok": np.stack(np.meshgrid(np.arange(0, W), np.arange(0, 50)), -1).reshape(-1, 2)})
-    assert dropped2 == ["ok"]
+    uv = np.stack(np.meshgrid(np.arange(0, W), np.arange(0, 50)), -1).reshape(-1, 2)
+    assert M.is_dropped(M.apply_lidar(ok, uv))
+    # D16: the old path that REMOVED dropped frames from the store (contradicting R1 M4) no longer exists
+    for gone in ("build_masks", "write_mask_file", "read_mask_file"):
+        assert not hasattr(M, gone), gone
+    with pytest.raises(SystemExit):
+        M.main()
 
 
-def test_determinism_and_roundtrip(tmp_path):
+def test_determinism_of_masks():
     a, b = maps(); rs = np.random.RandomState(0)
-    a2 = a + rs.rand(H, W).astype(np.float32) * 0.005; b2 = b.copy()
-    pairs = {"f2": (a2, b2), "f1": (a, b)}
-    shas = []
-    for i in range(2):
-        masks, dr = M.build_masks(pairs)
-        shas.append(M.write_mask_file(tmp_path / f"m{i}.npz", masks, dr, {"x": 1}))
-    assert shas[0] == shas[1]
-    assert (tmp_path / "m0.npz").read_bytes() == (tmp_path / "m1.npz").read_bytes()
-    assert hashlib.sha256((tmp_path / "m0.npz").read_bytes()).hexdigest() == shas[0]
-    masks, dr = M.build_masks(pairs)
-    got, meta = M.read_mask_file(tmp_path / "m0.npz")
-    assert all((got[k] == masks[k]).all() for k in masks) and meta["rule"]["prob_thresh"] == 0.9
+    a2 = a + rs.rand(H, W).astype(np.float32) * 0.005
+    m1 = M.certain_sky(a2, b); m2 = M.certain_sky(a2.copy(), b.copy())
+    assert (m1 == m2).all() and m1.sum() > 0
 
 
 def test_forced_fail_variants_differ():
@@ -110,14 +106,19 @@ def test_work_size():
     assert M.work_size(2048, 1550)[1] == 512 and M.work_size(2048, 1550)[0] % 32 == 0
 
 
-def test_panel_smoke(tmp_path):
+def test_panel_smoke():
     rs = np.random.RandomState(1)
-    frames = {f"f{i:02d}": rs.randint(0, 255, (90, 160, 3), np.uint8) for i in range(30)}
-    masks = {k: np.zeros((90, 160), bool) for k in list(frames)[::2]}
-    for m in masks.values(): m[:30] = True
-    g = P.panel(frames, masks)
+    frames = {f"L:{i:02d}": rs.randint(0, 255, (90, 160, 3), np.uint8) for i in range(30)}
+    masks = {}
+    for k in frames:
+        c = np.zeros((90, 160), bool); c[:30] = True; a = c.copy(); a[:40] = True
+        masks[k] = (c, a)
+    g = P.panel(frames, masks, dropped={"L:03"}, tile=(480, 270))
     assert g.shape == (3 * 270, 4 * 480, 3)
-    assert len(P.pick(list(frames))) == 12 and P.pick(list(frames))[0] == "f00" and P.pick(list(frames))[-1] == "f29"
+    assert len(P.pick(list(frames))) == 12 and P.pick(list(frames))[0] == "L:00" and P.pick(list(frames))[-1] == "L:29"
+    o = P.overlay(frames["L:00"], *masks["L:00"])
+    assert (o[:30, :, 0] > o[:30, :, 2]).mean() > 0.5 and (o[30:40, :, 2] > o[30:40, :, 0]).mean() > 0.5       # certain = red, any-only = blue
+    assert (o[60:] == frames["L:00"][60:]).all()
 
 
 def test_oneformer_semantic_scores_normalised():

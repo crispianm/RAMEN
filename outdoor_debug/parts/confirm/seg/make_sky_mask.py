@@ -11,10 +11,10 @@ DECLARED RULE (thresholds fixed here, BEFORE any use on real data):
   * boundary band: a pixel is kept only if its Euclidean distance to the nearest
     non-certain pixel is > r, r = round(8 * short_side / 900) px, min 1 (8 px at 1600x900 =
     the proposal's rule). Image borders are NOT treated as non-sky.
-  * LiDAR exclusion (applied by the scorer, function provided): drop pixels within
-    r_l = round(5 * short_side / 900) px (min 1) of any projected LiDAR return.
-  * dropped frames: a frame with < 1% of its pixels certain-sky (after erosion and, if
-    given, LiDAR exclusion) is DROPPED and counted.
+  * LiDAR exclusion (applied by av2/build_av2_masks.py): drop pixels within
+    r_l = round(5 * short_side / 900) px (min 1; 9 px at 1550) of ANY projected LiDAR return in front of the camera.
+  * dropped frames: a frame with < 1% of its pixels certain-sky (after erosion and LiDAR exclusion)
+    is listed as dropped = out of the PRIMARY P only (R1 M4); its masks stay in the store.
   * Determinism: fp32, eval(), no augmentation, torch seed 0, no sampling.
   * Cityscapes OneFormer (shi-labs/oneformer_cityscapes_swin_large, task token 'semantic') sky
     score = the transformers post_process_semantic_segmentation score
@@ -23,11 +23,10 @@ DECLARED RULE (thresholds fixed here, BEFORE any use on real data):
     NORMALISED here (declared) by sum_c S[c,h,w] so that per-pixel class scores sum to 1;
     sky prob = S[sky]/sum_c S, computed at the model output resolution, then upsampled bilinearly.
   * SegFormer sky prob = softmax over the 150 classes of the logits.
-File format: ONE .npz (uncompressed, keys sorted): 'm|<frame_id>' packed bits (np.packbits of the
-HxW bool, row-major), 's|<frame_id>' int32 [H,W], '__meta__' uint8 json (rule constants, model
-pins, dropped list). The sha256 of the file is written next to it (<file>.sha256).
+Mask files for AV2 are written ONLY by av2/build_av2_masks.py (the scorer's MaskStore format + sidecar meta). The older build_masks/write_mask_file path (which removed
+dropped frames from the store, contradicting R1 M4) was DELETED.
 """
-import argparse, hashlib, io, json, sys
+import json
 from pathlib import Path
 import numpy as np
 from scipy import ndimage
@@ -85,18 +84,20 @@ def certain_sky(p_a, p_b, thresh=PROB_THRESH, radius=None, require_both=True):
 
 def lidar_exclusion(shape, uv, radius=None):
     """Bool [H,W] True where a projected LiDAR return is within `radius` px (Euclidean).
-    uv: [N,2] float (x=col, y=row); out-of-image points are ignored."""
+    uv: [N,2] float (x=col, y=row). A return outside the image still excludes the image pixels within `radius` of it (canvas padded by ceil(radius))."""
     h, w = shape
     if radius is None:
         radius = lidar_radius(min(h, w))
-    seed = np.ones((h, w), bool)
+    pad = int(np.ceil(radius))
     uv = np.asarray(uv, float).reshape(-1, 2)
-    x = np.round(uv[:, 0]).astype(int); y = np.round(uv[:, 1]).astype(int)
-    ok = (x >= 0) & (x < w) & (y >= 0) & (y < h)
+    uv = uv[np.isfinite(uv).all(1)]
+    x = np.round(uv[:, 0]).astype(np.int64) + pad; y = np.round(uv[:, 1]).astype(np.int64) + pad
+    ok = (x >= 0) & (x < w + 2 * pad) & (y >= 0) & (y < h + 2 * pad)
     if not ok.any():
         return np.zeros((h, w), bool)
+    seed = np.ones((h + 2 * pad, w + 2 * pad), bool)
     seed[y[ok], x[ok]] = False
-    return ndimage.distance_transform_edt(seed) <= radius
+    return (ndimage.distance_transform_edt(seed) <= radius)[pad:pad + h, pad:pad + w]
 
 
 def apply_lidar(mask, uv, radius=None):
@@ -144,49 +145,6 @@ def is_dropped(mask, drop_frac=DROP_FRAC):
     return mask.sum() < drop_frac * mask.size
 
 
-def build_masks(prob_pairs, lidar=None, **kw):
-    """prob_pairs: {frame_id: (p_a, p_b)} image-size maps. lidar: {frame_id: uv} optional.
-    Returns (masks{id: bool}, dropped[list of ids]). Dropped frames are not in masks."""
-    masks, dropped = {}, []
-    for fid in sorted(prob_pairs):
-        pa, pb = prob_pairs[fid]
-        m = certain_sky(pa, pb, **kw)
-        if lidar is not None and fid in lidar:
-            m = apply_lidar(m, lidar[fid])
-        if is_dropped(m):
-            dropped.append(fid)
-        else:
-            masks[fid] = m
-    return masks, dropped
-
-
-# ---------------------------------------------------------------- file format
-def write_mask_file(path, masks, dropped, pins=None):
-    meta = dict(rule=RULE, pins=pins or {}, dropped=sorted(dropped), n_kept=len(masks))
-    arrs = {}
-    for fid in sorted(masks):
-        m = masks[fid]
-        arrs["m|" + fid] = np.packbits(m.reshape(-1))
-        arrs["s|" + fid] = np.array(m.shape, np.int32)
-    arrs["__meta__"] = np.frombuffer(json.dumps(meta, sort_keys=True).encode(), np.uint8)
-    path = Path(path)
-    np.savez(path, **dict(sorted(arrs.items())))
-    h = hashlib.sha256(path.read_bytes()).hexdigest()
-    Path(str(path) + ".sha256").write_text(f"{h}  {path.name}\n")
-    return h
-
-
-def read_mask_file(path):
-    z = np.load(path, allow_pickle=False)
-    meta = json.loads(bytes(z["__meta__"]).decode())
-    masks = {}
-    for k in z.files:
-        if k.startswith("m|"):
-            fid = k[2:]; h, w = (int(v) for v in z["s|" + fid])
-            masks[fid] = np.unpackbits(z[k])[: h * w].reshape(h, w).astype(bool)
-    return masks, meta
-
-
 # ---------------------------------------------------------------- model wrappers (lazy)
 def work_size(h, w):
     s = WORK_SHORT / min(h, w)
@@ -217,7 +175,7 @@ def split_sky_margin(P, sky_id):
 
 
 class _Seg:
-    def __init__(self, repo, revision, expect, kind, device="cpu"):
+    def __init__(self, repo, revision, expect, kind, device="cpu", use_safetensors=None):
         import torch
         from transformers import AutoConfig
         self.torch = torch
@@ -230,7 +188,8 @@ class _Seg:
         else:
             from transformers import OneFormerForUniversalSegmentation as M, OneFormerProcessor
             self.processor = OneFormerProcessor.from_pretrained(repo, revision=revision)
-        self.model = M.from_pretrained(repo, revision=revision, torch_dtype=torch.float32).to(device).eval()
+        kw = {} if use_safetensors is None else dict(use_safetensors=use_safetensors)     # D9: the verified pytorch_model.bin is loaded, never a model.safetensors
+        self.model = M.from_pretrained(repo, revision=revision, torch_dtype=torch.float32, **kw).to(device).eval()
 
     def sky_maps(self, img):
         """img uint8 [H,W,3] -> (p, margin) float32 [H,W]: sky prob and (sky prob - max other-class prob), both upsampled bilinear to image size."""
@@ -263,31 +222,7 @@ class _Seg:
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--images", required=True, help="text file, one image path per line (frame id = file stem)")
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--ade-repo", default="nvidia/segformer-b5-finetuned-ade-640-640")
-    ap.add_argument("--city-repo", default="shi-labs/oneformer_cityscapes_swin_large")
-    ap.add_argument("--ade-rev", required=True, help="pinned HF commit hash")
-    ap.add_argument("--city-rev", required=True, help="pinned HF commit hash")
-    ap.add_argument("--lidar-npz", default=None, help="optional npz: key=frame id, value [N,2] uv")
-    ap.add_argument("--device", default="cpu")
-    a = ap.parse_args()
-    from PIL import Image
-    paths = [Path(p) for p in Path(a.images).read_text().split("\n") if p.strip()]
-    ids = [p.stem for p in paths]
-    assert len(set(ids)) == len(ids), "frame ids (file stems) must be unique"
-    A = _Seg(a.ade_repo, a.ade_rev, ADE_EXPECT, "segformer", a.device)
-    B = _Seg(a.city_repo, a.city_rev, CITY_EXPECT, "oneformer", a.device)
-    lid = dict(np.load(a.lidar_npz)) if a.lidar_npz else None
-    pairs = {}
-    for p, fid in zip(paths, ids):
-        img = np.asarray(Image.open(p).convert("RGB"))
-        pairs[fid] = (A.sky_prob(img), B.sky_prob(img))
-    masks, dropped = build_masks(pairs, lid)
-    pins = dict(ade=[a.ade_repo, a.ade_rev], city=[a.city_repo, a.city_rev])
-    h = write_mask_file(a.out, masks, dropped, pins)
-    print(f"kept {len(masks)} dropped {len(dropped)} sha256 {h}")
+    raise SystemExit("make_sky_mask.py has no CLI any more: use outdoor_debug/parts/confirm/av2/build_av2_masks.py")
 
 
 if __name__ == "__main__":

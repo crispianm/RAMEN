@@ -153,3 +153,131 @@ def test_empty_union_is_rejected_not_perfect(tmp_path):
     with pytest.raises(M.MaskRejected):
         B.assemble(res, tmp_path / "x.npz", dict(segmenter_a_sha="a", segmenter_b_sha="b", frames_sha="f"))
     assert not (tmp_path / "x.npz").exists()
+
+
+# ------------------------------------------------------------------ second-review additions (D5-D8, D9, D12, D17, D18)
+def _frame_with(pa_val, pb_val, ma=0.98, mb=0.98):
+    """A: rows < 600 at p=pa_val; B: rows < 600 at p=pb_val (margins as given)."""
+    pa, ma_, pb, mb_ = probs()
+    pa = pa.copy(); pb = pb.copy(); ma_ = ma_.copy(); mb_ = mb_.copy()
+    pa[:SKY_ROWS] = pa_val; pb[:SKY_ROWS] = pb_val; ma_[:SKY_ROWS] = ma; mb_[:SKY_ROWS] = mb
+    return pa, ma_, pb, mb_
+
+
+def test_prob_threshold_is_0p9_in_each_segmenter():
+    r = B.frame_masks(*_frame_with(0.99, 0.89), None)            # B just below 0.9 -> certain EMPTY (but `any` is not: argmax margin >= 0)
+    assert r["n_certain"] == 0 and r["any"].any()
+    r = B.frame_masks(*_frame_with(0.89, 0.99), None)
+    assert r["n_certain"] == 0
+    r = B.frame_masks(*_frame_with(0.90, 0.90), None)            # exactly 0.9 in both: inclusive
+    assert r["n_certain"] == 586 * W
+    assert M.PROB_THRESH == 0.9
+
+
+def test_both_segmenters_required_for_certain():
+    pa, ma, pb, mb = probs()
+    pb_off = np.full((H, W), 0.02, np.float32); mb_off = np.full((H, W), -0.96, np.float32)
+    assert B.frame_masks(pa, ma, pb_off, mb_off, None)["n_certain"] == 0         # only A says sky
+    assert B.frame_masks(pb_off, mb_off, pb, mb, None)["n_certain"] == 0         # only B says sky
+    assert B.frame_masks(pa, ma, pb, mb, None)["n_certain"] == 586 * W
+    # the A-only region is still `any`
+    assert B.frame_masks(pa, ma, pb_off, mb_off, None)["any"][100].all()
+
+
+def test_any_layer_p_ge_half_clause_without_argmax():
+    """p_sky >= 0.5 puts a pixel in `any` even when another class has the larger probability (margin < 0)."""
+    pa, ma, pb, mb = probs(sky_rows=0)
+    pa = pa.copy(); ma = ma.copy()
+    pa[1000:1100] = 0.6; ma[1000:1100] = -0.2                                 # sky 0.6 vs another class 0.8: argmax is not sky, p >= 0.5
+    pa[1200:1300] = 0.49; ma[1200:1300] = -0.2                                # p just below 0.5 and not argmax: NOT in any
+    r = B.frame_masks(pa, ma, pb, mb, None)
+    assert r["any"][1050].all() and not r["any"][1250].any()
+    assert M.any_sky(np.array([0.5], np.float32), np.array([-0.1], np.float32))[0] and not M.any_sky(np.array([0.4999], np.float32), np.array([-0.1], np.float32))[0]
+
+
+def test_agreement_boundary_0p85_in_make_sky_mask():
+    assert M.check_agreement([(8500, 10000)]) == 0.85
+    with pytest.raises(M.MaskRejected):
+        M.check_agreement([(8499, 10000)])
+    assert M.IOU_MIN == 0.85
+
+
+def test_scorer_meta_iou_boundary_0p85():
+    S.check_mask_meta(dict(status="OK", pooled_iou=0.85, dropped=[]))
+    with pytest.raises(RuntimeError):
+        S.check_mask_meta(dict(status="OK", pooled_iou=0.8499, dropped=[]))
+    assert S.IOU_MIN == M.IOU_MIN
+
+
+def test_iou_is_pooled_BEFORE_the_drops(tmp_path):
+    """A dropped frame (< 1% certain-sky) where the segmenters disagree must still count in the pooled IoU."""
+    pa, ma, pb, mb = probs()
+    good = B.frame_masks(pa, ma, pb, mb, None)
+    pa2, ma2, pb2, mb2 = probs(sky_rows=20)                                    # both say sky in 20 rows (certain eroded to 6 rows -> dropped) ...
+    pa2 = pa2.copy(); ma2 = ma2.copy()
+    pa2[1000:1500] = 0.7; ma2[1000:1500] = 0.4                                 # ... and only A says sky in 500 more rows (in `any`, not certain)
+    bad = B.frame_masks(pa2, ma2, pb2, mb2, None)
+    assert bad["dropped"] and not good["dropped"]
+    assert good["inter"] / good["union"] == 1.0                                # IoU over the NON-dropped frames alone would be 1.0 and pass
+    with pytest.raises(M.MaskRejected):
+        B.assemble({"L:1": good, "L:2": bad}, tmp_path / "x.npz", dict(segmenter_a_sha="a", segmenter_b_sha="b", frames_sha="f"))
+    assert not (tmp_path / "x.npz").exists()
+    i, u = good["inter"] + bad["inter"], good["union"] + bad["union"]
+    assert i / u < 0.85
+
+
+def test_segmenter_pins_are_constants_and_safetensors_refused(tmp_path, monkeypatch):
+    assert B.SEG_A["bin_sha"] == "a3dbf2d7a9912203078f304d88df8cfee9fd752ca2d2413f82036bdb02c5e7df" and B.SEG_B["bin_sha"] == "876855252aa674c7ad6e920c268d6722add811a927806372811faa724f19856c"
+    assert B.SEG_A["revision"] == "739f5d4692954e4a185eac280dec1ba5a7d52f1d" and B.SEG_B["revision"] == "8ed649db2cc1756b8bc36f0cad00b0812e333027"
+    import inspect
+    assert "seg_a_sha" not in inspect.getsource(B.main) and "seg-a-sha" not in inspect.getsource(B.main)       # no CLI-derived sha
+    import hashlib
+    da, db = tmp_path / "a", tmp_path / "b"
+    for d, c in ((da, b"wa"), (db, b"wb")):
+        d.mkdir(); (d / "pytorch_model.bin").write_bytes(c)
+    pa = dict(repo="r", revision="v", bin_sha=hashlib.sha256(b"wa").hexdigest()); pb = dict(repo="r2", revision="v2", bin_sha=hashlib.sha256(b"wb").hexdigest())
+    out = B.verify_segmenters(da, db, pa, pb)
+    assert out["segmenter_a"] == dict(repo="r", revision="v", pytorch_model_bin_sha256=pa["bin_sha"]) and out["segmenter_b_sha"] == pb["bin_sha"]
+    with pytest.raises(RuntimeError, match="registered"):
+        B.verify_segmenters(da, db, dict(pa, bin_sha="0" * 64), pb)
+    (db / "model.safetensors").write_bytes(b"x")                                # a safetensors file next to the verified .bin
+    with pytest.raises(RuntimeError, match="safetensors"):
+        B.verify_segmenters(da, db, pa, pb)
+
+
+def test_seg_wrapper_passes_use_safetensors_false(monkeypatch):
+    pytest.importorskip("torch"); tf = pytest.importorskip("transformers")
+    from types import SimpleNamespace
+    seen = []
+
+    class FakeModel:
+        def to(self, d): return self
+        def eval(self): return self
+    def fake_from_pretrained(*a, **kw):
+        seen.append(kw); return FakeModel()
+    id2 = {i: f"c{i}" for i in range(150)}; id2[2] = "sky"
+    monkeypatch.setattr(tf.AutoConfig, "from_pretrained", lambda *a, **k: SimpleNamespace(id2label=id2))
+    monkeypatch.setattr(tf.SegformerForSemanticSegmentation, "from_pretrained", fake_from_pretrained)
+    M._Seg("dir", None, M.ADE_EXPECT, "segformer", "cpu", use_safetensors=False)
+    assert seen and seen[0].get("use_safetensors") is False
+    seen.clear(); M._Seg("dir", None, M.ADE_EXPECT, "segformer", "cpu")
+    assert "use_safetensors" not in seen[0]
+
+
+def test_lidar_exclusion_covers_returns_beyond_200m_and_just_outside_the_image():
+    K = A.K_from_row(1000.0, 1000.0, W / 2, H / 2)
+    pts = np.array([[0.0, -150.0, 300.0], [0.0, 0.0, -5.0], [0.0, 0.0, 450.0]])           # 300 m, behind the camera, 450 m
+    uv = A.project_all_returns(pts, K)
+    assert uv.shape == (2, 2) and np.allclose(uv[0], [W / 2, H / 2 - 500]) and np.allclose(uv[1], [W / 2, H / 2])
+    assert np.isnan(A.sparse_gt(pts, K)).all()                                              # the capped GT map has none of them
+    ex = M.lidar_exclusion((H, W), uv, 9)
+    assert ex[int(H / 2 - 500), int(W / 2)] and ex[int(H / 2 - 500) + 9, int(W / 2)] and not ex[int(H / 2 - 500) + 10, int(W / 2)]
+    out = M.lidar_exclusion((H, W), np.array([[-3.0, 100.0]]), 9)                              # 3 px left of the image: its disk still reaches into it
+    assert out[100, 0] and out[100, 5] and not out[100, 7]
+    assert not M.lidar_exclusion((H, W), np.array([[-12.0, 100.0]]), 9).any()
+
+
+def test_declared_radii_in_docstrings_match():
+    import re
+    txt = open(Path(B.__file__)).read() + open(Path(A.__file__)).read()
+    assert "12 px" not in txt and "within 5 px" not in txt
