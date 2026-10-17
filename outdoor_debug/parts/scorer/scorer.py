@@ -181,8 +181,8 @@ def main(argv=None):
             if ds != "vkitti":
                 try:
                     cam = bj.camera(ds, key, frames)
-                except Exception as e:
-                    res.setdefault("warnings", []).append(f"{ds}/{key}: camera failed ({e!r}); tae omitted for this clip")
+                except Exception as e:   # a missing camera/TAE input is a FAILED score, never a silent omission (R+D decision, Auditor S1)
+                    raise RuntimeError(f"{ds}/{key}: camera failed ({e!r}); tae cannot be computed -> score failed") from e
             skym = None
             if proto.get("sky_mask") == "kitti_colour":
                 from evaluation.sky_metrics import kitti_sky_masks
