@@ -22,3 +22,8 @@ Notes
 3. TS (TartanAir sky-threshold fix) fixes a confirmed labelling issue but is a new recipe (O2 item 5). It needs a regression test with per-env finite-sky cases on the branch before use.
 4. Held fixed across all arms: start checkpoint sha, steps, seed, data-stream order, eval DEV set. A0 continuation is the in-sweep baseline.
 5. N tried = 7 from the first run (A0, H80, H300, TS, T-a, T-b, T-c); any arm added later counts. Exploration log (arms, N tried incl. discarded, baseline, DEV set, shas) is appended BEFORE any result is seen.
+
+## USER DECISION (Addendum 42, relayed by Manager 2026-10-17): supersedes the table above
+1. Fix labels first: the TartanAir task (seg download, parity, per-env sky audit, TS v2 rule + regression tests) completes BEFORE any screen training. Hinge arms run on corrected TartanAir sky.
+2. No teacher arms: T-a, T-b, T-c are DROPPED by the user before any run. They were never tried, so they do not count in N tried. (Rows and the teacher caveats above are kept only as a record.)
+Final arms (nested, one change per step): A0 continuation (C3 recipe, old loader); TS2 = A0 + TS v2 loader; TS2+H80 = TS2 + hinge 0.1 @ 80 m; TS2+H300 = TS2 + hinge 0.1 @ 300 m. N tried = 4, all pre-declared here, DEV only. Hinge-on-TS-v2 arms are the hinge arms themselves; no further arms without an addition to this list before results are seen.
