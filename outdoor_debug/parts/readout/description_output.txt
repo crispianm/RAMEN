@@ -1,0 +1,26 @@
+sec keys: ['kitti_sky', 'vkitti_sky', 'vkitti_near_lt30_pred_over_gt', 'tartanair_far', 'tartanair_far_note']
+  kitti_sky {'frames': 638, 'n_px': 14070185, 'pooled_median': 306.9877014160156, 'median_of_frame_medians': 162.72193908691406, 'framebalanced_median': 154.0913543701172, 'frac_gt80': 0.7984344200165101, 'frac_gt200': 0.6677826197736562}
+  vkitti_sky {'frames': 640, 'n_px': 43220547, 'pooled_median': 345.0227355957031, 'median_of_frame_medians': 317.8965148925781, 'framebalanced_median': 299.41815185546875, 'frac_gt80': 0.9419378704300063, 'frac_gt200': 0.7940099184769689, 'legacy_subsample_median': 303.25482177734375, 'exact_pooled_median_all_px': 345.0227355957031}
+  vkitti_near_lt30_pred_over_gt {'n': 176121421, 'pooled_median': 1.093052864074707, 'mean': 1.1300657987594604, 'abs_dev': 0.09305286407470703, 'legacy_subsample_median': 1.0903832912445068}
+
+# secondary sky/near (value per arm)
+vkitti_near_lt30_pred_over_gt.abs_dev: A0=0.0931 A0b=0.1156 TS2=0.0929 TS2_H80=0.0925 TS2_H300=0.0934 TS2_VK655=0.0953
+
+# by-range VKITTI AbsRel_raw
+0-10: A0=0.1371 A0b=0.1539 TS2=0.1362 TS2_H80=0.1373 TS2_H300=0.1388 TS2_VK655=0.1428
+10-30: A0=0.1663 A0b=0.1827 TS2=0.1645 TS2_H80=0.1656 TS2_H300=0.1721 TS2_VK655=0.1895
+30-80: A0=0.2016 A0b=0.2113 TS2=0.1980 TS2_H80=0.2016 TS2_H300=0.2098 TS2_VK655=0.2655
+>80: A0=0.2020 A0b=0.2131 TS2=0.2041 TS2_H80=0.2091 TS2_H300=0.2050 TS2_VK655=0.2436
+
+# DDAD: per bin median pred:gt / pooled AbsRel (exploratory DEV, report-only); reference = start ckpt
+overall AbsRel: ref=0.2074 A0=0.1999 A0b=0.2163 TS2=0.1989 TS2_H80=0.2000 TS2_H300=0.2028 TS2_VK655=0.2082
+[0,20) med:  ref=1.201 A0=1.193 A0b=1.209 TS2=1.191 TS2_H80=1.193 TS2_H300=1.195 TS2_VK655=1.199
+[0,20) absrel: ref=0.2205 A0=0.2110 A0b=0.2296 TS2=0.2094 TS2_H80=0.2109 TS2_H300=0.2142 TS2_VK655=0.2178
+[20,50) med:  ref=1.123 A0=1.109 A0b=1.142 TS2=1.107 TS2_H80=1.108 TS2_H300=1.113 TS2_VK655=1.119
+[20,50) absrel: ref=0.1779 A0=0.1653 A0b=0.1931 TS2=0.1635 TS2_H80=0.1643 TS2_H300=0.1691 TS2_VK655=0.1765
+[50,80) med:  ref=0.943 A0=0.926 A0b=0.958 TS2=0.922 TS2_H80=0.921 TS2_H300=0.930 TS2_VK655=0.933
+[50,80) absrel: ref=0.1472 A0=0.1479 A0b=0.1465 TS2=0.1488 TS2_H80=0.1493 TS2_H300=0.1484 TS2_VK655=0.1567
+[80,120) med:  ref=0.742 A0=0.722 A0b=0.754 TS2=0.718 TS2_H80=0.717 TS2_H300=0.724 TS2_VK655=0.724
+[80,120) absrel: ref=0.2714 A0=0.2879 A0b=0.2606 TS2=0.2919 TS2_H80=0.2919 TS2_H300=0.2873 TS2_VK655=0.2929
+[120,200] med:  ref=0.574 A0=0.548 A0b=0.582 TS2=0.542 TS2_H80=0.542 TS2_H300=0.548 TS2_VK655=0.543
+[120,200] absrel: ref=0.4226 A0=0.4471 A0b=0.4144 TS2=0.4530 TS2_H80=0.4529 TS2_H300=0.4476 TS2_VK655=0.4526

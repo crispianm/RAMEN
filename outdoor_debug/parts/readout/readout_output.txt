@@ -1,0 +1,30 @@
+# arm | legacy median x | |1-x| | change vs A0 (+ = closer to 1)
+A0         0.86279 0.13721 +0.00000
+A0b        0.86865 0.13135 +0.00586
+TS2        0.85866 0.14134 -0.00413
+TS2_H80    0.85419 0.14581 -0.00860
+TS2_H300   0.86374 0.13626 +0.00095
+TS2_VK655  0.90708 0.09292 +0.04429
+
+NF primary = max(|A0-A0b| in |1-x|, 1% rel) = 0.00586  (|A0-A0b| = 0.00586)
+
+# guards: value A0 | A0b | NF
+kitti      abs_rel_unaligned  0.13982 0.14715 NF=0.00734
+nyuv2      abs_rel_unaligned  0.09737 0.07672 NF=0.02065
+scannetpp  abs_rel_unaligned  0.12137 0.12122 NF=0.00121
+kitti      tae_gtvalid        2.00156 1.99741 NF=0.02002
+scannetpp  tae_gtvalid        1.74843 1.75705 NF=0.01748
+
+# verdicts (exploratory, unaudited)
+TS2        primary change -0.00413 vs NF 0.00586 -> within/below NF; guards worse than NF: none; => NOT BETTER | exact-pooled sign agrees with legacy
+TS2_H80    primary change -0.00860 vs NF 0.00586 -> within/below NF; guards worse than NF: none; => NOT BETTER | exact-pooled sign agrees with legacy
+TS2_H300   primary change +0.00095 vs NF 0.00586 -> within/below NF; guards worse than NF: none; => NOT BETTER | exact-pooled sign agrees with legacy
+TS2_VK655  primary change +0.04429 vs NF 0.00586 -> beyond NF; guards worse than NF: none; => BETTER | exact-pooled sign agrees with legacy
+
+# description only (exact pooled, per-clip-median mean, ratio of medians, bin AbsRel >80)
+A0         exact 0.88109 | perclip 0.85804 | ratio-of-med 0.93270 | bin_absrel 0.20204
+A0b        exact 0.87914 | perclip 0.86675 | ratio-of-med 0.94020 | bin_absrel 0.21306
+TS2        exact 0.87540 | perclip 0.85430 | ratio-of-med 0.92807 | bin_absrel 0.20410
+TS2_H80    exact 0.87051 | perclip 0.85234 | ratio-of-med 0.92824 | bin_absrel 0.20910
+TS2_H300   exact 0.88178 | perclip 0.85937 | ratio-of-med 0.94503 | bin_absrel 0.20495
+TS2_VK655  exact 0.92167 | perclip 0.89722 | ratio-of-med 0.99346 | bin_absrel 0.24355
