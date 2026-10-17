@@ -1,0 +1,1172 @@
+{
+ "A0": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 5.1
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 655.0,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.3
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.9
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 1.4
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 1.6
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 1.6
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ },
+ "A0b": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 3.9
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 655.0,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.4
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 2.9
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ },
+ "TS2": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "TS2Labeller",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 4.1
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 655.0,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 1.0
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.4
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 2.9
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ },
+ "TS2_H80": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "TS2Labeller",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 4.5
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 655.0,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.4
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 2.8
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 1.3
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ },
+ "TS2_H300": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "TS2Labeller",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 3.2
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 655.0,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 1.0
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.5
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 3.0
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ },
+ "TS2_VK655": {
+  "records": [
+   {
+    "split": "train",
+    "type": "tartanair",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/tartanair",
+    "cls": "VDASemanticsDegradedTartanAirDataset",
+    "mro": [
+     "VDASemanticsDegradedTartanAirDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsTartanAirDataset",
+     "VideoDepthClipDataset"
+    ],
+    "n": 9781,
+    "state": {
+     "ts2": "TS2Labeller",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10000.0
+    },
+    "sec": 4.3
+   },
+   {
+    "split": "train",
+    "type": "vkitti",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/vkitti",
+    "cls": "VDASemanticsDegradedVKITTIDataset",
+    "mro": [
+     "VDASemanticsDegradedVKITTIDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsVKITTIDataset",
+     "VKITTIDataset"
+    ],
+    "n": 1280,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": 656.0,
+     "sky_as_valid_depth": true,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.2
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/train",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 7204,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 3.3
+   },
+   {
+    "split": "train",
+    "type": "pointodyssey",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/point_odyssey/val",
+    "cls": "VDASemanticsDegradedPointOdysseyDataset",
+    "mro": [
+     "VDASemanticsDegradedPointOdysseyDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsPointOdysseyDataset",
+     "PointOdysseyDataset"
+    ],
+    "n": 1059,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": 655.0,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 999.0
+    },
+    "sec": 1.6
+   },
+   {
+    "split": "train",
+    "type": "irs",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/irs",
+    "cls": "VDASemanticsDegradedIRSDataset",
+    "mro": [
+     "VDASemanticsDegradedIRSDataset",
+     "_VDADegradedMixin",
+     "VDASemanticsIRSDataset",
+     "IRSDataset"
+    ],
+    "n": 3191,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 1.6
+   },
+   {
+    "split": "train",
+    "type": "spring",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/spring",
+    "cls": "DegradedSpringDataset",
+    "mro": [
+     "DegradedSpringDataset",
+     "_VDADegradedMixin",
+     "SpringDataset",
+     "V3ClipDataset"
+    ],
+    "n": 134,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": false,
+     "sparse_gt": false,
+     "max_depth": 80.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "kitti_raw",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/kitti_raw",
+    "cls": "DegradedKITTIRawTrainDataset",
+    "mro": [
+     "DegradedKITTIRawTrainDataset",
+     "_VDADegradedMixin",
+     "KITTIRawTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 1277,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": true,
+     "max_depth": 80.0
+    },
+    "sec": 1.6
+   },
+   {
+    "split": "train",
+    "type": "nyu_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/nyuv2/data",
+    "cls": "DegradedNYUTrainDataset",
+    "mro": [
+     "DegradedNYUTrainDataset",
+     "_VDADegradedMixin",
+     "NYUTrainDataset",
+     "V3ClipDataset"
+    ],
+    "n": 338,
+    "state": {
+     "ts2": "NoneType",
+     "vkitti_max_depth": null,
+     "sky_as_valid_depth": null,
+     "silog_max_depth": null,
+     "metric_supervision": true,
+     "sparse_gt": false,
+     "max_depth": 10.0
+    },
+    "sec": 0.0
+   },
+   {
+    "split": "train",
+    "type": "scannetpp_train",
+    "root": "/mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train",
+    "error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+   }
+  ],
+  "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+ }
+}

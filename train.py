@@ -300,6 +300,8 @@ def _make_source_inner(spec: dict, split: str, common: dict):
                 raise ValueError("ts2_sky needs ts2_seg_root (dir holding <env>/<difficulty>/seg_lcam_front.zip)")
             from data.tartanair_ts2 import TS2Labeller
             ds.ts2 = TS2Labeller(spec["ts2_seg_root"], spec.get("ts2_env_table"), max_depth=ds.max_depth)
+            from data.tartanair_ts2 import table_sha256
+            print(f"[ts2] TartanAir TS2 sky/mask ON: class={type(ds).__name__} seg_root={spec['ts2_seg_root']} env_table_sha256={table_sha256(spec.get('ts2_env_table'))}", flush=True)
         elif spec.get("ts2_seg_root") or spec.get("ts2_env_table"):
             raise ValueError("ts2_seg_root / ts2_env_table given without ts2_sky: true")
         return ds
