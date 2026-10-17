@@ -42,7 +42,7 @@ for A in S1 S2 S3 S4 S5; do eval "J_$A=\$(sbatch --parsable --export=ALL,PROJECT
 #   stop check:  $D/check_first_run_l1.sh -K 2000 -r runs B0=logs/l1_B0_k2000_${B0}.out S1=logs/l1_S1_k2000_${J_S1}.out S2=... S3=... S4=... S5=...        (FAIL => scancel that job)
 for A in S1 S2 S3 S4 S5; do eval "sbatch --dependency=afterok:\$J_$A --export=ALL,PROJECT_DIR=$CL $S/SCORE_${A}_k2000.sbatch"; done
 ### 5c: S6 is a SEPARATE GATED JOB: only after the Auditor has checked S6_diff.patch and recorded the sha256 of the patch it checked:
-export S6SHA=$(sha256sum $D/S6_diff.patch | cut -d' ' -f1)      # must equal the sha the Auditor cleared (the job refuses otherwise; it also refuses if train.py != base 8e1d9ae + that patch)
+export S6SHA=$(sha256sum $D/S6_diff.patch | cut -d' ' -f1)      # = sha256 of `git diff --full-index --no-color --no-ext-diff 8e1d9ae <commit> -- train.py` = the patch file; must equal the sha the Auditor cleared (298cac3b...); the job refuses otherwise, and also refuses if train.py != base + that patch or sha256(train.py) != 475ffdbf...
 SM6=$(sbatch --parsable --time=00:25:00 --job-name=l1_smoke_S6 --export=ALL,SMOKE=120,PROJECT_DIR=$CL,S6_CLEARED_PATCH_SHA=$S6SHA $S/TRAIN_S6_k2000.sbatch)
 #   gate: COMPLETED 0:0 and  $D/check_first_run_l1.sh -F -S 120 -K 2000 -r runs S6=logs/l1_smoke_S6_${SM6}.out   (item 9 needs the step-100 loss_terms row with silog_far_px_frac) + probe: --ckpt runs/l1_smoke_S6_k2000/step120.pt --arm S6 -K 2000 --expect-step 120 -F
 J_S6=$(sbatch --parsable --dependency=afterok:$SM6 --export=ALL,PROJECT_DIR=$CL,S6_CLEARED_PATCH_SHA=$S6SHA $S/TRAIN_S6_k2000.sbatch)

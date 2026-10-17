@@ -32,6 +32,7 @@ export BASE_SHA="d286b62cef5f5e603ca909675b7daf22c4e120b0b99dfe3d5ec69bcbebd911a
 export REL_WEIGHTS="/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth"
 export REL_SHA="3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33"       # the RELEASED Metric-VDA-S (model.vda_init released; same file the DDAD release row used)
 export SEED="49"
+export TRAIN_PY_SHA="475ffdbfdf79e3d6dc10c30dad5bd05bd9948b4b1f0153004300122682eb8822"   # sha256 of the S6-containing train.py the Auditor checked (O48)
 export TRAIN_BASE_COMMIT="8e1d9ae"      # S6 gate: train.py may differ from this base ONLY by S6_diff.patch
 export VENV="/projects/b5dh/FocusMamba/.venv"
 export NGPU=4
@@ -74,8 +75,10 @@ if [[ "$ARM" == "S6" ]]; then
     PATCH="outdoor_debug/parts/far_diag/l1_final/S6_diff.patch"
     [[ -n "${S6_CLEARED_PATCH_SHA:-}" ]] || { echo "ERROR: S6 needs S6_CLEARED_PATCH_SHA (the Auditor's diff check has not been recorded)"; exit 1; }
     [[ "$(sha256sum "$PATCH" | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: S6_diff.patch sha != the cleared sha"; exit 1; }
-    [[ "$(git diff "$TRAIN_BASE_COMMIT" HEAD -- train.py | sha256sum | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: train.py at HEAD differs from base+cleared patch (git diff $TRAIN_BASE_COMMIT HEAD -- train.py != the cleared patch)"; exit 1; }
-    echo " S6 gate OK: train.py == $TRAIN_BASE_COMMIT + the cleared patch ($S6_CLEARED_PATCH_SHA)"
+    # host-independent diff text: --full-index (no abbreviation, so core.abbrev cannot change the hash), --no-color, --no-ext-diff (Auditor O48)
+    [[ "$(git diff --full-index --no-color --no-ext-diff "$TRAIN_BASE_COMMIT" HEAD -- train.py | sha256sum | cut -d' ' -f1)" == "$S6_CLEARED_PATCH_SHA" ]] || { echo "ERROR: train.py at HEAD differs from base+cleared patch (git diff --full-index $TRAIN_BASE_COMMIT HEAD -- train.py != the cleared patch)"; exit 1; }
+    [[ "$(sha256sum train.py | cut -d' ' -f1)" == "$TRAIN_PY_SHA" ]] || { echo "ERROR: train.py sha != TRAIN_PY_SHA (S6 gate)"; exit 1; }
+    echo " S6 gate OK: train.py == $TRAIN_BASE_COMMIT + the cleared patch ($S6_CLEARED_PATCH_SHA), train.py sha $TRAIN_PY_SHA"
 fi
 
 RUN_CFG="$CFG_REL"

@@ -34,6 +34,10 @@ PSHA=$(sha256sum "$SRC/$D/S6_diff.patch" | cut -d' ' -f1)
 clean; mk S6 2000 "$PIN";                          go "NEG S6 without S6_CLEARED_PATCH_SHA" 1 "needs S6_CLEARED_PATCH_SHA"
 clean; mk S6 2000 "$PIN";                          go "NEG S6 with a wrong cleared sha" 1 "S6_diff.patch sha != the cleared sha" S6_CLEARED_PATCH_SHA=0000000000000000000000000000000000000000000000000000000000000000
 clean; mk S6 2000 "$PIN";                          go "POSITIVE S6 with the cleared patch sha (train.py == base + patch)" 0 "S6 gate OK" S6_CLEARED_PATCH_SHA=$PSHA
+clean; mk S6 2000 "$PIN";                          go "POSITIVE S6 gate under git core.abbrev=7 (host-independent diff text)" 0 "S6 gate OK" S6_CLEARED_PATCH_SHA=$PSHA GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.abbrev GIT_CONFIG_VALUE_0=7
+clean; mk S6 2000 "$PIN";                          go "POSITIVE S6 gate under git core.abbrev=12" 0 "S6 gate OK" S6_CLEARED_PATCH_SHA=$PSHA GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.abbrev GIT_CONFIG_VALUE_0=12
+clean; mk S6 2000 "$PIN" -e 's/^export TRAIN_PY_SHA=.*/export TRAIN_PY_SHA="0000000000000000000000000000000000000000000000000000000000000000"/'; go "NEG S6: wrong TRAIN_PY_SHA literal" 1 "train.py sha != TRAIN_PY_SHA" S6_CLEARED_PATCH_SHA=$PSHA
+clean; echo "# stale edit" >> "$W/clone/train.py"; git -C "$W/clone" commit -q -am "stale train.py"; NP=$(git -C "$W/clone" rev-parse HEAD); mk S6 2000 "$NP"; go "NEG S6: committed train.py differs from base+cleared patch (stale/edited train.py)" 1 "differs from base+cleared patch" S6_CLEARED_PATCH_SHA=$PSHA
 clean; mk S6 2000 "$PIN" -e 's/^export TRAIN_BASE_COMMIT=.*/export TRAIN_BASE_COMMIT="HEAD~1"/'; go "NEG S6: train.py differs from base+cleared patch (base moved)" 1 "differs from base+cleared patch" S6_CLEARED_PATCH_SHA=$PSHA
 # mutated-config commits (the yaml is changed, committed, its sha put in the sbatch: only the semantic greps can catch these)
 mutc() {  # mutc <ARM> <K> <label> <want substring> <python edit on yaml text>

@@ -1,5 +1,5 @@
 diff --git a/train.py b/train.py
-index 1bcf913..13aa164 100644
+index 1bcf913bab79c925c87962ddf7192c5f80d361f7..13aa164629707d3a121ca6e373d61c6aaea1bff7 100644
 --- a/train.py
 +++ b/train.py
 @@ -1267,14 +1267,43 @@ def _compute_loss_vda(pred: torch.Tensor, batch: dict, cfg: dict, pred_is_dispar
