@@ -1,0 +1,98 @@
+[baseline (4090 host, 12000)] rc=0
+[1 pins_asserted False] rc=1
+    FAIL pins_asserted is true   [got False]
+[1b pins_asserted missing] rc=1
+    FAIL pins_asserted is true   [got None]
+[2 scorer sha] rc=1
+    FAIL scorer sha256   [got fbd2c99900000000000000000000000000000000000000000000000000000000]
+[3 bj sha] rc=1
+    FAIL bench_joint sha256   [got 0000000000000000000000000000000000000000000000000000000000000000 pinned 5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef]
+[3b bj pinned field only] rc=1
+    FAIL bench_joint sha256   [got 5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef pinned 0000000000000000000000000000000000000000000000000000000000000000]
+[4 combined sha] rc=1
+    FAIL combined clip sha   [got 0000000000000000000000000000000000000000000000000000000000000000]
+[4b combined_pinned only] rc=1
+    FAIL combined clip sha   [got aca96bbd894855cc99b8d97dbdf6e957d1c1f4efb0d49c77ff6108d8dccd7de6]
+[5 weights_key trainable] rc=1
+    FAIL ckpt weights_key trainable_ema   [got 'trainable']
+[6 step 14000 vs expect 12000] rc=1
+    FAIL ckpt step == 12000   [got 14000]
+[6b step missing, no --expect-step] rc=1
+    FAIL ckpt step present   [got None]
+[6c step 0 no --expect-step (accepted?)] rc=0
+[7 ckpt sha wrong w/ expect] rc=1
+    FAIL ckpt sha256   [got aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+[7b ckpt sha garbage(64 chars) no expect] rc=0
+[8 host: no GH200 w/ expect GH200] rc=1
+    FAIL host type string contains 'GH200'   [got IT101668.wks.bris.ac.uk | NVIDIA GeForce RTX 4090]
+[8b host omitted flag, host=''] rc=1
+    FAIL host type string recorded   [got  | NVIDIA GeForce RTX 4090]
+[8c gpu says A100 only, expect GH200 but hostname contains GH200] rc=0
+[9 nyuv2_frames 500] rc=1
+    FAIL nyuv2_frames == 160   [got 500]
+[9b nyuv2_frames 160.0 float] rc=0
+[10 precision fp32] rc=1
+    FAIL precision fp16   [got 'fp32']
+[11 limit_clips 2] rc=1
+    FAIL no limit_clips/max_frames   [got 2/None]
+[11b max_frames 5] rc=1
+    FAIL no limit_clips/max_frames   [got None/5]
+[11c both keys deleted] rc=0
+[12 datasets missing vkitti] rc=1
+    FAIL meta.datasets has all four   [got ['kitti', 'nyuv2', 'scannetpp']]
+[13 kitti n_clips 6] rc=1
+    FAIL kitti present with 7 clips   [n_clips=6 per_video=7]
+[13b kitti per_video drop one] rc=1
+    FAIL kitti present with 7 clips   [n_clips=7 per_video=6]
+[13c kitti clips renamed (wrong keys, right count)] rc=0
+[13d clip_lists.kitti.keys_sha256 wrong+keys swapped] rc=0
+[13e vkitti guards missing] rc=1
+    FAIL vkitti present with 10 clips   [n_clips=None per_video=0]
+    FAIL vkitti abs_rel_unaligned finite   [got None]
+[14 nyuv2 abs_rel NaN] rc=1
+    FAIL nyuv2 abs_rel_unaligned finite   [got nan]
+[14b nyuv2 abs_rel absurd 99] rc=0
+[15 kitti tae NaN] rc=1
+    FAIL kitti tae present+finite   [got nan]
+[15b scannetpp tae_gtvalid missing] rc=1
+    FAIL scannetpp tae_gtvalid present+finite   [got None]
+[15c nyuv2 tae absent (not required)] rc=0
+[16 one kitti clip tae_gtvalid NaN] rc=1
+    FAIL kitti every clip has finite tae_gtvalid   [bad clips ['2011_09_28_drive_0037_sync']]
+[16b macro tae_gtvalid altered inconsistent w/ per_video] rc=0
+[17 primary legacy missing] rc=1
+    FAIL primary vkitti far legacy_subsample_median finite   [got None]
+[17b legacy NaN] rc=1
+    FAIL primary vkitti far legacy_subsample_median finite   [got nan]
+[17c legacy_subsample_n 5 (not 1e6)] rc=0
+[17d legacy=-3 (nonsense but finite)] rc=0
+[17e mask string says 40<=gt (bin changed)] rc=0
+[17f primary.n tiny / sentinel included? n=1] rc=0
+[18 ramen_commit dirty] rc=0
+[19 scores.json is empty dict] rc=1
+    FAIL pins_asserted is true   [got None]
+    FAIL scorer sha256   [got None]
+    FAIL bench_joint sha256   [got None pinned None]
+    FAIL combined clip sha   [got None]
+    FAIL ckpt weights_key trainable_ema   [got None]
+    FAIL ckpt step == 12000   [got None]
+    FAIL ckpt sha256   [got None]
+    FAIL host type string contains '4090'   [got None | None]
+    FAIL nyuv2_frames == 160   [got None]
+    FAIL precision fp16   [got None]
+    FAIL meta.datasets has all four   [got None]
+    FAIL kitti present with 7 clips   [n_clips=None per_video=0]
+    FAIL kitti abs_rel_unaligned finite   [got None]
+    FAIL nyuv2 present with 4 clips   [n_clips=None per_video=0]
+    FAIL nyuv2 abs_rel_unaligned finite   [got None]
+    FAIL scannetpp present with 31 clips   [n_clips=None per_video=0]
+    FAIL scannetpp abs_rel_unaligned finite   [got None]
+    FAIL vkitti present with 10 clips   [n_clips=None per_video=0]
+    FAIL vkitti abs_rel_unaligned finite   [got None]
+    FAIL kitti tae_gtvalid present+finite   [got None]
+    FAIL kitti tae present+finite   [got None]
+    FAIL scannetpp tae_gtvalid present+finite   [got None]
+    FAIL scannetpp tae present+finite   [got None]
+    FAIL kitti every clip has finite tae_gtvalid   [bad clips []]
+    FAIL scannetpp every clip has finite tae_gtvalid   [bad clips []]
+    FAIL primary vkitti far legacy_subsample_median finite   [got None]
