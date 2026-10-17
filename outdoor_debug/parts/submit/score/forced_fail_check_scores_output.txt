@@ -1,0 +1,40 @@
+# check_scores.py forced-fail tests, 2026-10-17T18:42:31Z. Base = regression scores.json (4090). Each edited copy must print the named FAIL; control passes.
+## control (unedited, --expect-step 12000 --expect-ckpt-sha f5c7c8f9.. ) -> expect ALL PASS
+RESULT: ALL PASS (27 checks) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/scorer/regression_c3_n46_step12000_20261017T182513Z/scores.json
+## host type: control file is a 4090, so --expect-host-contains GH200 must FAIL
+FAIL host type string contains 'GH200'   [got IT101668.wks.bris.ac.uk | NVIDIA GeForce RTX 4090]
+RESULT: 1 FAIL (27 checks) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/scorer/regression_c3_n46_step12000_20261017T182513Z/scores.json
+## edited copy: pins_false
+FAIL pins_asserted is true   [got False]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/pins_false.json
+## edited copy: scorer_sha
+FAIL scorer sha256   [got 0000000000000000000000000000000000000000000000000000000000000000]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/scorer_sha.json
+## edited copy: bj_sha
+FAIL bench_joint sha256   [got 1111111111111111111111111111111111111111111111111111111111111111 pinned 5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/bj_sha.json
+## edited copy: ckpt_step
+FAIL ckpt step == 12000   [got 13500]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/ckpt_step.json
+## edited copy: ckpt_sha
+FAIL ckpt sha256   [got 2222222222222222222222222222222222222222222222222222222222222222]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/ckpt_sha.json
+## edited copy: nyuv2_frames
+FAIL nyuv2_frames == 160   [got 0]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/nyuv2_frames.json
+## edited copy: fp32
+FAIL precision fp16   [got 'fp32']
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/fp32.json
+## edited copy: no_vkitti
+FAIL vkitti present with 10 clips   [n_clips=None per_video=0]
+FAIL vkitti abs_rel_unaligned finite   [got None]
+RESULT: 2 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/no_vkitti.json
+## edited copy: no_kitti_tae
+FAIL kitti tae_gtvalid present+finite   [got None]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/no_kitti_tae.json
+## edited copy: scannetpp_tae_nan
+FAIL scannetpp tae present+finite   [got nan]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/scannetpp_tae_nan.json
+## edited copy: limit
+FAIL no limit_clips/max_frames   [got 2/None]
+RESULT: 1 FAIL (27 checks) /tmp/tmp.Z9NFiVXgaU/limit.json
