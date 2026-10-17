@@ -41,6 +41,7 @@ def _decode_vkitti_depth(path: str) -> np.ndarray:
     return arr.astype(np.float32) / 100.0  # cm -> m
 
 
+_SKY_VALID_DEPTH_M = 655.35  # Add.44 arm VK655: the sentinel value (65535 cm) used as a VALID metric target when ``sky_as_valid_depth`` is set
 _SKY_DEPTH_M = 655.0  # VKITTI sky / no-return sentinel (65535 cm ≈ 655.35 m); real geometry sits below it
 
 
@@ -183,9 +184,14 @@ class VKITTIDataset(Dataset):
             # Mask ONLY sky / no-return (the 65535 sentinel) and ≤0 — keep far trees/hillsides
             # past max_depth with their true depth (the 80 m cap is applied later, at eval).
             valid = np.isfinite(d_raw) & (d_raw > 0) & (d_raw < _SKY_DEPTH_M)
+            if getattr(self, "sky_as_valid_depth", False):   # Add.44 VK655 (default off = byte-identical): the 65535 sentinel is a VALID 655.35 m target, sky=0
+                valid = np.isfinite(d_raw) & (d_raw > 0)
             # Sky sentinel: target disparity 0 for the VDA-style sky loss; NOT in `mask`.
             sky = d_raw >= _SKY_DEPTH_M
             d = np.clip(d_raw, 0.0, _SKY_DEPTH_M)
+            if getattr(self, "sky_as_valid_depth", False):
+                sky = np.zeros_like(sky)
+                d = np.clip(d_raw, 0.0, _SKY_VALID_DEPTH_M)
             dt = torch.from_numpy(d).unsqueeze(0).float()
             mt = torch.from_numpy(valid.astype(np.float32)).unsqueeze(0)
             st = torch.from_numpy(sky.astype(np.float32)).unsqueeze(0)

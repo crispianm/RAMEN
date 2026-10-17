@@ -9,13 +9,15 @@ Caveat on the target: VKITTI trains on all 5 scenes and the TartanAir envs are t
 ## Deviation from Add.42
 Add.42 listed A0, TS v2, H80, H300. This draft: hinge arms are nested on TS v2 (TS2+H80, TS2+H300; standalone H80/H300 on old labels dropped) and A0b (second-seed A0, noise sizing only) is added. The user should accept or strike this explicitly.
 
-## Arms (N tried = 4 primary + A0b noise arm = 5; exploration log appended before results)
+## Arms (N tried = 4 primary + A0b noise arm + VK655 = 6; exploration log appended before results)
 | Arm | Change vs previous | Config |
 |---|---|---|
 | A0 | none (in-sweep baseline) | C3 recipe, c1abf81 loader, `sky_hinge_weight: 0.0` |
 | TS2 | TartanAir loader sky rule = TS v2 (seg-sky first, saturation fallback, uncertain px excluded from sky and valid) | A0 + new loader flag (new recipe, own regression test) |
 | TS2+H80 | + one-sided sky hinge, weight 0.1, floor 80 m | TS2 + `sky_hinge_weight: 0.1`, floor 80 m |
 | TS2+H300 | hinge floor 300 m instead | as above, floor 300 m |
+| TS2+VK655 (Add. 44) | ONE change vs TS2: VKITTI sky (65535 sentinel, 655.35 m) is VALID metric depth at 655.35 m in all depth losses (sky=0, mask=1; SSI/TGM see disparity 1/655.35, SiLog sees 655.35 m). No hinge (`sky_hinge_weight: 0`). | TS2 + source flag `vkitti_sky_as_valid_depth: true` and `vkitti_max_depth: 656` on the VKITTI source ONLY (raised from 655, else 655.35 is excluded). TartanAir = TS2, unchanged. Regression test tests/test_vkitti_sky_as_valid.py: sentinel pixel gets mask=1, depth 655.35, sky=0 under the flag; released behaviour (mask=0, sky=1, depth<=655) without it. |
+Add. 44 provenance (user decision relayed by RAMEN Manager, 2026-10-17): VDA has no sky loss (0 'sky' hits in the VDA paper, supp or loss code); Metric-VDA's README says only 'trained on Virtual KITTI and IRS' and its training code is unpublished. Released Metric-VDA predicts VKITTI sky at ~576 m and real frames at 598-674 m. The hypothesis that it trained VKITTI sky as a valid ~655 m target is an INFERENCE and is UNVERIFIED; this arm tests whether that recipe reproduces the release's far behaviour, not whether the release did it.
 Dropped by user before any run: teacher arms T-a/b/c (not counted).
 Held fixed across arms: start checkpoint sha (c3_n46 step12000, SUMS in checkpoints_v3/eval_20261012_c3rep), steps, seed, data-stream order, eval DEV set, optimizer settings.
 
@@ -29,7 +31,7 @@ Held fixed across arms: start checkpoint sha (c3_n46 step12000, SUMS in checkpoi
   - GUARDS: every near-field guard not worse than A0 by more than NF: KITTI, NYUv2, ScanNet++ DEV AbsRel (unaligned), and TAE on the same clips = video_macro.tae_gtvalid (user ruling 10-10) for every TAE guard.
   - SECONDARY / description only: TartanAir far (training envs, "training environments, not held out"), horse and KITTI sky medians.
   - Scoring: all arms scored on the same host type with one pinned bench_joint commit. The DEV clip-list sha (from bj.select_clips(ds,"dev") keys) and that commit are computed and logged together before the first training run (not yet computed).
-- Declared set (Add. O6b): 5 arms = A0, A0b, TS2, TS2+H80, TS2+H300; N tried = 5; nothing added after any result; a later combination is a new sweep with its own log entry and counts in N tried. User may strike A0b (N = 4).
+- Declared set (Add. O6b, amended by Add. 44 BEFORE any run; Auditor ruling on the amendment pending): 6 arms = A0, A0b, TS2, TS2+H80, TS2+H300, TS2+VK655; N tried = 6 (~35 GH200-h training: 6 x 5.8); nothing added after any result; a later combination is a new sweep with its own log entry and counts in N tried. User may strike A0b (N = 4).
 - Labelling: Downtown, Hospital, ForestEnv, OldBrickHouseNight are TRAINING envs; any TartanAir number on them is "training environments, not held out".
 
 ## Gates

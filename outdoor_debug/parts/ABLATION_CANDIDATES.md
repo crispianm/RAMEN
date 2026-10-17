@@ -27,3 +27,6 @@ Notes
 1. Fix labels first: the TartanAir task (seg download, parity, per-env sky audit, TS v2 rule + regression tests) completes BEFORE any screen training. Hinge arms run on corrected TartanAir sky.
 2. No teacher arms: T-a, T-b, T-c are DROPPED by the user before any run. They were never tried, so they do not count in N tried. (Rows and the teacher caveats above are kept only as a record.)
 Final arms (nested, one change per step): A0 continuation (C3 recipe, old loader); TS2 = A0 + TS v2 loader; TS2+H80 = TS2 + hinge 0.1 @ 80 m; TS2+H300 = TS2 + hinge 0.1 @ 300 m. N tried = 4, all pre-declared here, DEV only. Hinge-on-TS-v2 arms are the hinge arms themselves; no further arms without an addition to this list before results are seen.
+
+## Add. 44 (2026-10-17, user via Manager): sixth arm TS2+VK655 added BEFORE any run
+Change vs TS2: VKITTI sky sentinel (65535 = 655.35 m) becomes valid metric depth (mask=1, sky=0, no hinge); VKITTI caps raised 655 -> 656 for this arm only. Motivation: inference that Metric-VDA trained VKITTI sky as a ~655 m target (unverified; VDA has no sky loss, training code unpublished). N tried: 5 -> 6. Nothing has run.

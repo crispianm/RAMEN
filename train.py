@@ -282,6 +282,10 @@ def _make_source_inner(spec: dict, split: str, common: dict):
             if not vda:
                 raise ValueError("vkitti_max_depth is only implemented for resize_mode: vda")
             ds.vkitti_max_depth = float(spec["vkitti_max_depth"])
+        if spec.get("vkitti_sky_as_valid_depth"):   # Add.44 arm VK655; absent = unchanged. Needs the cap raised above 655.35, else the sentinel stays excluded
+            if float(spec.get("vkitti_max_depth") or 0.0) <= 655.35:
+                raise ValueError("vkitti_sky_as_valid_depth needs vkitti_max_depth > 655.35 (e.g. 656)")
+            ds.sky_as_valid_depth = True
         return ds
     if t == "tartanair":
         cls = (VDASemanticsDegradedTartanAirDataset if vda_degrade
@@ -384,6 +388,8 @@ def effective_depth_bound(ds) -> float:
     if hasattr(ds, "vkitti_max_depth"):
         from data.vkitti_dataset import _SKY_DEPTH_M
         cap = getattr(ds, "vkitti_max_depth", None)
+        if getattr(ds, "sky_as_valid_depth", False):   # Add.44 VK655: the sentinel (655.35 m) is inside the bound
+            return float(cap)
         return float(_SKY_DEPTH_M if cap is None else min(_SKY_DEPTH_M, cap))
     return float(getattr(ds, "max_depth", float("nan")))
 
