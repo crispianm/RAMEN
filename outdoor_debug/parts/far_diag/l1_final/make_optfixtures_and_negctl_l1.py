@@ -26,9 +26,11 @@ def fixture(arm, K, step, name, mut=None, cfg=None):
     d = {"cfg": cfg, "step": step, "optimizer": {"param_groups": pg, "state": {}}}
     if mut: mut(d)
     p = FX / name; torch.save(d, p); return p
-def run(label, p, arm, K, want_fail, extra=()):
-    r = subprocess.run([sys.executable, str(H / "check_optimizer_lr.py"), "--ckpt", str(p), "--arm", arm, "-K", str(K), *extra], capture_output=True, text=True)
+def run(label, p, arm, K, want_fail, extra=(), need=None, probe=None):
+    """need: a substring that must appear on a `FAIL ...` line (so the NEG cannot pass because some OTHER check failed); probe: the probe script to run (default the shipped one)."""
+    r = subprocess.run([sys.executable, str(probe or H / "check_optimizer_lr.py"), "--ckpt", str(p), "--arm", arm, "-K", str(K), *extra], capture_output=True, text=True)
     ok = (r.returncode == 1) == want_fail
+    if need: ok = ok and any(l.startswith("FAIL") and need in l for l in r.stdout.splitlines())
     print(f"## {label}: rc={r.returncode} expected {'FAIL' if want_fail else 'no FAIL'} -> {'OK' if ok else 'WRONG'}")
     for l in [l for l in (r.stdout + r.stderr).splitlines() if l.startswith("FAIL") or l.startswith("RESULT") or l.startswith("WAIT")][:3]: print("   ", l[:230])
     return ok
@@ -39,6 +41,36 @@ for K in (2000, 4000):
         for st in (120, 500, 1000, K):
             allok &= run(f"POSITIVE {a} K={K} step {st}", fixture(a, K, st, f"{a}_k{K}_s{st}.pt"), a, K, False, ("--expect-step", str(st)))
         allok &= run(f"POSITIVE -F final {a} K={K} stepK", fixture(a, K, K, f"step{K}.pt"), a, K, False, ("-F",)) if False else True
+# ---- second review: sub-check ISOLATION for REDUNDANT checks (each alone must catch its own fault) + the smoke substitution-count check on its own ----
+PROBE0 = (H / "check_optimizer_lr.py").read_text()
+SC = 'len(pg) == 3 and all(abs(g["lr"] - g["initial_lr"] * sc) <= 1e-6 * max(g["initial_lr"] * sc, 1e-30) + 1e-18 for g in pg)'
+INI = 'len(pg) == 3 and all(abs(g.get("initial_lr", -1) / w - 1) < 1e-9 for g, w in zip(pg, want_init))'
+RAT = 'len(pg) == 3 and pg[0]["lr"] > 0 and abs(pg[1]["lr"] / pg[0]["lr"] - head / 1e-4) < 1e-6 and abs(pg[2]["lr"] / pg[0]["lr"] - 10) < 1e-6, ""'
+def variant(name, removed):
+    s = PROBE0
+    for o_, n_ in removed:
+        if s.count(o_) != 1: print(f"## WRONG isolation builder '{name}': check text not found exactly once in check_optimizer_lr.py ({o_[:50]!r})"); global allok; allok = False; return None
+        s = s.replace(o_, n_)
+    pth = FX / f"probe_{name}.py"; pth.write_text(s.replace("HERE = Path(__file__).resolve().parent", f"HERE = Path({str(H)!r})")); return pth
+V_INI = variant("init_only", [(SC, "True"), (RAT, 'True, ""')]); V_RAT = variant("ratio_only", [(SC, "True"), (INI, "True")]); V_RNG = variant("range_only", [(SC, "True"), (INI, "True"), (RAT, 'True, ""')])
+NOOP = lambda d: None
+if V_INI:
+    f = lambda d: d["optimizer"]["param_groups"][1].update(initial_lr=1e-4, lr=1e-4 * scale(1000, 2000))
+    allok &= run("NEG[iso] initial_lr check ALONE: S5 head group at 1e-4 (lr consistent with it)", fixture("S5", 2000, 1000, "iso1.pt", f), "S5", 2000, True, need="initial_lr per group", probe=V_INI)
+    f = lambda d: d["optimizer"]["param_groups"][2].update(initial_lr=1e-4, lr=1e-4 * scale(500, 2000))
+    allok &= run("NEG[iso] initial_lr check ALONE: gate group not 10x", fixture("S2", 2000, 500, "iso2.pt", f), "S2", 2000, True, need="initial_lr per group", probe=V_INI)
+if V_RAT:
+    f = lambda d: d["optimizer"]["param_groups"][1].update(initial_lr=1e-4, lr=1e-4 * scale(1000, 2000))
+    allok &= run("NEG[iso] ratio check ALONE: S5 head group lr ratio 1 instead of 0.1", fixture("S5", 2000, 1000, "iso3.pt", f), "S5", 2000, True, need="group lr ratios", probe=V_RAT)
+    f = lambda d: d["optimizer"]["param_groups"][1].update(initial_lr=1e-5, lr=1e-5 * scale(1000, 2000))
+    allok &= run("NEG[iso] ratio check ALONE: B0 head group at 0.1x", fixture("B0", 2000, 1000, "iso4.pt", f), "B0", 2000, True, need="group lr ratios", probe=V_RAT)
+if V_RNG:
+    allok &= run("NEG[iso] step-range check ALONE: step 2100 > K (lr consistent = 0)", fixture("S3", 2000, 2100, "iso5.pt"), "S3", 2000, True, need="step is positive and <= K", probe=V_RNG)
+    allok &= run("NEG[iso] step-range check ALONE: step 0", fixture("B0", 2000, 0, "iso6.pt"), "B0", 2000, True, need="step is positive and <= K", probe=V_RNG)
+# smoke substitution COUNT on its own: an arm yaml whose max_steps line is formatted so the sbatch's sed pattern does not match; the ckpt cfg is that same yaml unsubstituted -> the cfg compare PASSES, only the count check can FAIL
+cdx = FX / "cfg_nomatch"; (cdx).mkdir(exist_ok=True); yt = (H / "configs/k2000/arm_B0.yaml").read_text(); assert "  max_steps: 2000\n" in yt
+(cdx / "arm_B0.yaml").write_text(yt.replace("  max_steps: 2000\n", "  max_steps:  2000\n")); c_nm = yaml.safe_load((cdx / "arm_B0.yaml").read_text())
+allok &= run("NEG SMOKE[iso] substitution count: the sbatch sed would not match max_steps (cfg compare alone would PASS)", fixture("B0", 2000, 120, "iso7.pt", cfg=c_nm), "B0", 2000, True, ("--smoke", "120", "--expect-step", "120", "--cfg-dir", str(cdx)), need="smoke substitutions each apply exactly once")
 def neg(label, arm, K, step, mut, extra=()):
     global allok; allok &= run("NEG " + label, fixture(arm, K, step, "neg.pt", mut), arm, K, True, extra)
 def set_lr(f): return lambda d: [g.__setitem__("lr", f(g)) for g in d["optimizer"]["param_groups"]]

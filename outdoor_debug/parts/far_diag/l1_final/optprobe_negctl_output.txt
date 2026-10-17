@@ -127,6 +127,28 @@ real c3_n46 step12000 ckpt: ckpt['cfg'] == resolved config yaml: True | param gr
     RESULT: ALL PASS (7 checks) step=1000 arm=S6 K=4000
 ## POSITIVE S6 K=4000 step 4000: rc=0 expected no FAIL -> OK
     RESULT: ALL PASS (7 checks) step=4000 arm=S6 K=4000
+## NEG[iso] initial_lr check ALONE: S5 head group at 1e-4 (lr consistent with it): rc=1 expected FAIL -> OK
+    FAIL initial_lr per group == [0.0001, 1e-05, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001, 0.001]]
+    RESULT: 1 FAIL (6 checks) step=1000 arm=S5 K=2000
+## NEG[iso] initial_lr check ALONE: gate group not 10x: rc=1 expected FAIL -> OK
+    FAIL initial_lr per group == [0.0001, 0.0001, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001, 0.0001]]
+    RESULT: 1 FAIL (6 checks) step=500 arm=S2 K=2000
+## NEG[iso] ratio check ALONE: S5 head group lr ratio 1 instead of 0.1: rc=1 expected FAIL -> OK
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 1 FAIL (6 checks) step=1000 arm=S5 K=2000
+## NEG[iso] ratio check ALONE: B0 head group at 0.1x: rc=1 expected FAIL -> OK
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 1 FAIL (6 checks) step=1000 arm=B0 K=2000
+## NEG[iso] step-range check ALONE: step 2100 > K (lr consistent = 0): rc=1 expected FAIL -> OK
+    FAIL step is positive and <= K   [got 2100]
+    RESULT: 1 FAIL (6 checks) step=2100 arm=S3 K=2000
+## NEG[iso] step-range check ALONE: step 0: rc=1 expected FAIL -> OK
+    FAIL step is positive and <= K   [got 0]
+    RESULT: 1 FAIL (6 checks) step=0 arm=B0 K=2000
+## NEG SMOKE[iso] substitution count: the sbatch sed would not match max_steps (cfg compare alone would PASS): rc=1 expected FAIL -> OK
+    FAIL smoke substitutions each apply exactly once (max_steps, checkpoint_dir, checkpoint_at_steps)   [(0, 1, 1)]
+    FAIL executed config (ckpt['cfg']) == committed arm yaml after the sbatch smoke substitutions (N=120)   [differs: ['training']]
+    RESULT: 2 FAIL (8 checks) step=120 arm=B0 K=2000
 ## POSITIVE SMOKE B0 K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
     RESULT: ALL PASS (8 checks) step=120 arm=B0 K=2000
 ## POSITIVE SMOKE B0b K=2000 (cfg = the sbatch sed of the arm yaml, step 120): rc=0 expected no FAIL -> OK
