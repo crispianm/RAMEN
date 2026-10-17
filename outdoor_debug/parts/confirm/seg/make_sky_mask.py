@@ -2,7 +2,7 @@
 
 DECLARED RULE (thresholds fixed here, BEFORE any use on real data):
   * two segmenters must AGREE: SegFormer ADE20K (class 'sky', id 2) and a Cityscapes
-    Mask2Former semantic model (class 'sky', trainId 10). Ids are asserted BY NAME from the
+    OneFormer semantic model (class 'sky', trainId 10). Ids are asserted BY NAME from the
     model config id2label (assert_sky_id), never trusted by number alone.
   * working resolution: short side 512, long side rounded to a multiple of 32 (aspect kept),
     image resized bilinear (PIL) for both models; ImageNet mean/std normalisation.
@@ -16,8 +16,12 @@ DECLARED RULE (thresholds fixed here, BEFORE any use on real data):
   * dropped frames: a frame with < 1% of its pixels certain-sky (after erosion and, if
     given, LiDAR exclusion) is DROPPED and counted.
   * Determinism: fp32, eval(), no augmentation, torch seed 0, no sampling.
-  * Cityscapes Mask2Former sky score = sum_q softmax(class_logits)[q,sky] * sigmoid(mask_logits)[q]
-    divided by sum over all real classes of the same quantity (so it is a normalised probability).
+  * Cityscapes OneFormer (shi-labs/oneformer_cityscapes_swin_large, task token 'semantic') sky
+    score = the transformers post_process_semantic_segmentation score
+    S[c,h,w] = sum_q softmax(class_queries_logits)[q,c] (null class dropped, [..., :-1])
+               * sigmoid(masks_queries_logits)[q,h,w],
+    NORMALISED here (declared) by sum_c S[c,h,w] so that per-pixel class scores sum to 1;
+    sky prob = S[sky]/sum_c S, computed at the model output resolution, then upsampled bilinearly.
   * SegFormer sky prob = softmax over the 150 classes of the logits.
 File format: ONE .npz (uncompressed, keys sorted): 'm|<frame_id>' packed bits (np.packbits of the
 HxW bool, row-major), 's|<frame_id>' int32 [H,W], '__meta__' uint8 json (rule constants, model
@@ -151,6 +155,20 @@ def work_size(h, w):
     return r(h), r(w)
 
 
+def oneformer_semantic_scores(class_logits, mask_logits):
+    """transformers post_process_semantic_segmentation score, normalised.
+    class_logits [B,Q,C+1] (last = null class), mask_logits [B,Q,h,w] -> [B,C,h,w], sums to 1 over C."""
+    import torch
+    cl = class_logits.softmax(dim=-1)[..., :-1]
+    mk = mask_logits.sigmoid()
+    seg = torch.einsum("bqc,bqhw->bchw", cl, mk)
+    return seg / seg.sum(1, keepdim=True).clamp_min(1e-6)
+
+
+def oneformer_sky_prob(class_logits, mask_logits, sky_id):
+    return oneformer_semantic_scores(class_logits, mask_logits)[:, sky_id:sky_id + 1]
+
+
 class _Seg:
     def __init__(self, repo, revision, expect, kind, device="cpu"):
         import torch
@@ -163,7 +181,8 @@ class _Seg:
         if kind == "segformer":
             from transformers import SegformerForSemanticSegmentation as M
         else:
-            from transformers import Mask2FormerForUniversalSegmentation as M
+            from transformers import OneFormerForUniversalSegmentation as M, OneFormerProcessor
+            self.processor = OneFormerProcessor.from_pretrained(repo, revision=revision)
         self.model = M.from_pretrained(repo, revision=revision, torch_dtype=torch.float32).to(device).eval()
 
     def sky_prob(self, img):
@@ -177,14 +196,16 @@ class _Seg:
         x = (x - np.array([0.485, 0.456, 0.406], np.float32)) / np.array([0.229, 0.224, 0.225], np.float32)
         x = torch.from_numpy(x.transpose(2, 0, 1)).unsqueeze(0).to(self.device)
         with torch.no_grad():
-            o = self.model(pixel_values=x)
             if self.kind == "segformer":
+                o = self.model(pixel_values=x)
                 p = F.softmax(o.logits.float(), 1)[:, self.sky:self.sky + 1]      # [1,1,h/4,w/4]
             else:
-                cl = F.softmax(o.class_queries_logits.float(), -1)[..., :-1]       # [1,Q,C]
-                mk = o.masks_queries_logits.float().sigmoid()                      # [1,Q,h/4,w/4]
-                seg = torch.einsum("bqc,bqhw->bchw", cl, mk)
-                p = seg[:, self.sky:self.sky + 1] / seg.sum(1, keepdim=True).clamp_min(1e-6)
+                # the processor is used ONLY for the task-token ids ('the task is semantic');
+                # pixel_values stay our declared working-res tensor (no processor resize).
+                ti = self.processor(images=Image.fromarray(img).resize((ww, wh), Image.BILINEAR),
+                                    task_inputs=["semantic"], return_tensors="pt")["task_inputs"].to(self.device)
+                o = self.model(pixel_values=x, task_inputs=ti)
+                p = oneformer_sky_prob(o.class_queries_logits.float(), o.masks_queries_logits.float(), self.sky)
             p = F.interpolate(p, size=(H, W), mode="bilinear", align_corners=False)
         return p[0, 0].cpu().numpy().astype(np.float32)
 
@@ -194,7 +215,7 @@ def main():
     ap.add_argument("--images", required=True, help="text file, one image path per line (frame id = file stem)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--ade-repo", default="nvidia/segformer-b5-finetuned-ade-640-640")
-    ap.add_argument("--city-repo", default="facebook/mask2former-swin-large-cityscapes-semantic")
+    ap.add_argument("--city-repo", default="shi-labs/oneformer_cityscapes_swin_large")
     ap.add_argument("--ade-rev", required=True, help="pinned HF commit hash")
     ap.add_argument("--city-rev", required=True, help="pinned HF commit hash")
     ap.add_argument("--lidar-npz", default=None, help="optional npz: key=frame id, value [N,2] uv")
@@ -205,7 +226,7 @@ def main():
     ids = [p.stem for p in paths]
     assert len(set(ids)) == len(ids), "frame ids (file stems) must be unique"
     A = _Seg(a.ade_repo, a.ade_rev, ADE_EXPECT, "segformer", a.device)
-    B = _Seg(a.city_repo, a.city_rev, CITY_EXPECT, "mask2former", a.device)
+    B = _Seg(a.city_repo, a.city_rev, CITY_EXPECT, "oneformer", a.device)
     lid = dict(np.load(a.lidar_npz)) if a.lidar_npz else None
     pairs = {}
     for p, fid in zip(paths, ids):

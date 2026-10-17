@@ -3,6 +3,7 @@ import hashlib, sys
 from pathlib import Path
 import numpy as np
 import pytest
+torch = pytest.importorskip('torch')
 
 SEG = Path(__file__).resolve().parents[1] / "outdoor_debug" / "parts" / "confirm" / "seg"
 sys.path.insert(0, str(SEG))
@@ -117,3 +118,54 @@ def test_panel_smoke(tmp_path):
     g = P.panel(frames, masks)
     assert g.shape == (3 * 270, 4 * 480, 3)
     assert len(P.pick(list(frames))) == 12 and P.pick(list(frames))[0] == "f00" and P.pick(list(frames))[-1] == "f29"
+
+
+def test_oneformer_semantic_scores_normalised():
+    g = torch.Generator().manual_seed(0)
+    cl = torch.randn(2, 7, 20, generator=g)          # 19 classes + null
+    mk = torch.randn(2, 7, 6, 9, generator=g)
+    S = M.oneformer_semantic_scores(cl, mk)
+    assert S.shape == (2, 19, 6, 9)
+    assert torch.allclose(S.sum(1), torch.ones(2, 6, 9), atol=1e-5)
+    # equals the HF formula divided by its per-pixel total
+    raw = torch.einsum("bqc,bqhw->bchw", cl.softmax(-1)[..., :-1], mk.sigmoid())
+    assert torch.allclose(S, raw / raw.sum(1, keepdim=True), atol=1e-6)
+    # argmax identical to HF post_process_semantic_segmentation
+    assert (S.argmax(1) == raw.argmax(1)).all()
+
+
+def test_oneformer_sky_prob_mocked_peak():
+    cl = torch.full((1, 2, 20), -20.0); cl[0, 0, 10] = 20.0; cl[0, 1, 3] = 20.0   # q0 = sky, q1 = other
+    mk = torch.full((1, 2, 4, 4), -20.0); mk[0, 0, :2] = 20.0; mk[0, 1, 2:] = 20.0
+    p = M.oneformer_sky_prob(cl, mk, 10)
+    assert p.shape == (1, 1, 4, 4)
+    assert (p[0, 0, :2] > 0.99).all() and (p[0, 0, 2:] < 0.01).all()
+    # null-class-dominated query contributes nothing
+    cl2 = cl.clone(); cl2[0, 0] = -20.0; cl2[0, 0, 19] = 20.0
+    assert (M.oneformer_sky_prob(cl2, mk, 10)[0, 0, :2] < 0.5).all()
+
+
+def test_oneformer_mocked_probs_into_mask_and_forced_fail():
+    cl = torch.full((1, 2, 20), -20.0); cl[0, 0, 10] = 20.0; cl[0, 1, 3] = 20.0
+    mk = torch.full((1, 2, 25, 40), -20.0); mk[0, 0, :12] = 20.0; mk[0, 1, 12:] = 20.0
+    pb = M.oneformer_sky_prob(cl, mk, 10)
+    pb = torch.nn.functional.interpolate(pb, size=(H, W), mode="bilinear", align_corners=False)[0, 0].numpy()
+    a, _ = maps(50)
+    ref = M.certain_sky(a, pb, radius=1)
+    assert ref[:40].any() and not ref[60:].any()
+    assert (M.certain_sky(a, pb, radius=0) != ref).any()
+    a2 = a.copy(); a2[:, :80] = 0.1                      # segmenter A disagrees on the left
+    assert not M.certain_sky(a2, pb, radius=1)[:, :80].any()
+    d1 = M.certain_sky(a, pb, radius=1); d2 = M.certain_sky(a, pb, radius=1)
+    assert (d1 == d2).all()
+
+
+def test_oneformer_id2label_tamper():
+    city = {i: f"c{i}" for i in range(19)}; city[10] = "sky"
+    assert M.assert_sky_id(city, *M.CITY_EXPECT) == 10
+    moved = dict(city); moved[10] = "terrain"; moved[9] = "sky"
+    dup = dict(city); dup[4] = "sky"
+    missing = dict(city); missing[10] = "vegetation"
+    for bad in (moved, dup, missing):
+        with pytest.raises(AssertionError):
+            M.assert_sky_id(bad, *M.CITY_EXPECT)
