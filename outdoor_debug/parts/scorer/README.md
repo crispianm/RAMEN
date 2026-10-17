@@ -74,3 +74,7 @@ Host of the earlier numbers: the local workstation (hostname IT101668 / bench_jo
 3. NYUv2 160-frame truncation (kept for like-for-like with D_baseline) versus all 500 frames on the GH200: needs a one-line ruling; either way identical for all arms.
 4. Success-rule sign: |1-pred:gt| treats over- and under-prediction alike; the start model is at 0.158 (under).
 5. KITTI TAE needs OXTS zips + calib on the host (local present; on Isambard `kitti_raw_zips`/`kitti_calib` paths in bench_joint PATHS); the scorer warns and omits tae for a clip if `camera()` fails (a missing TAE must be treated as a failed score).
+
+
+## Primary statistic (Auditor O23; no scorer change)
+The decision quantity is |1 - x| with x = `primary.vkitti_far_80_655.legacy_subsample_median` (equal clip weight). `success_rule_quantity_abs_1_minus_pred_gt` in the JSON is computed from the EXACT pooled median and is NOT the decision quantity (renaming it later = new sha + S3 re-run before any arm score). Exact pooled, per-clip-median mean, ratio of medians and bin AbsRel are reported as description only.

@@ -1,0 +1,24 @@
+[BASELINE unmutated] rc=0 8 passed in 0.70s
+[CAUGHT] far_mask lo inclusive -> exclusive (gt >= lo -> gt > lo) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_excluded_and_bin_edges; 1 failed in 0.09s
+[CAUGHT] far_mask sentinel exclusive -> inclusive (gt < sentinel -> <=) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_excluded_and_bin_edges; 1 failed in 0.08s
+[CAUGHT] SENTINEL_M 655 -> 655.4 (admits 655.35 sentinel) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_excluded_and_bin_edges; 1 failed in 0.08s
+[CAUGHT] SENTINEL_M 655 -> 654  :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_excluded_and_bin_edges; 1 failed in 0.08s
+[CAUGHT] FAR_LO 80 -> 79 (def-time default arg) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_excluded_and_bin_edges; 1 failed in 0.08s
+[SURVIVED] far_mask drops isfinite :: 8 passed in 0.71s
+[CAUGHT] range_masks lower edge (gt > lo) -> (gt >= lo) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] range_masks upper edge (gt <= hi) -> (gt < hi) :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] RANGES 10-30 -> 11-30 edge move :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] RANGES >80 lo 80 -> 81 :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] range_masks min_depth 0.1 -> 0.0 :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] range_masks sky not excluded :: FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] absrel_sums divides by pred :: E         comparison failed; FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] absrel_sums returns mean not sum (n,s) wrong :: E         comparison failed; FAILED x/y/sc/tests/test_outdoor_scorer.py::test_range_bins_and_pooled_absrel; 1 failed, 3 passed in 0.08s
+[CAUGHT] ratio_stats median -> mean :: E         comparison failed; FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_does_not_move_the_ratio; 1 failed, 1 passed in 0.08s
+[SURVIVED] sky_levels frac_gt80 threshold 80 -> 90 :: 8 passed in 0.71s
+[SURVIVED] sky_levels frame-balanced cap 3000 -> 30 :: 8 passed in 0.74s
+[SURVIVED] main(): vkitti sky def gtf >= sky_depth -> > (not unit-testable pure fn) :: 8 passed in 0.70s
+[SURVIVED] main(): legacy subsample 100000 -> 1 (far) :: 8 passed in 0.70s
+[SURVIVED] main(): near bin gtf < 30 -> < 31 :: 8 passed in 0.72s
+[SURVIVED] main(): far bin uses range_masks instead of far_mask (80<gt<=inf vs 80<=gt<655) :: 8 passed in 0.71s
+[CAUGHT] main(): primary success quantity abs(1-median) -> median :: E         comparison failed; E         comparison failed; FAILED x/y/sc/tests/test_outdoor_scorer.py::test_sentinel_does_not_move_the_ratio; 1 failed, 1 passed 
+[SURVIVED] main(): pooled absrel accumulates into range bins wrongly (acc_rng[r][0] += n_)->(+= 0) :: 8 passed in 0.73s

@@ -1,0 +1,12 @@
+outfull_none.json -> PASS
+outfull_flagoff_recipe.json -> FAIL
+    c4 VK655: silog_mask_px=4918400, sentinel px in SiLog mask=0 (claimed 8,586,368 / 3,667,968)
+    c4 VK655: grad on sentinel px = 0.0 (claimed 9.05e-3)
+outfull_hingew0.json -> FAIL
+    c5 TS2_H80: hinge at pred=10m = None expected 0.00000 (w=0.0, floor=80.0)
+    c5 TS2_H80: hinge nonzero above floor: None
+    c5 TS2_H300: hinge at pred=10m = None expected 0.00000 (w=0.0, floor=300.0)
+    c5 TS2_H300: hinge nonzero above floor: None
+outfull_hingefloor1.json -> FAIL
+    c5 TS2_H80: hinge at pred=10m = 0.0 expected -0.23026 (w=0.1, floor=1.0)
+    c5 TS2_H300: hinge at pred=10m = 0.0 expected -0.23026 (w=0.1, floor=1.0)

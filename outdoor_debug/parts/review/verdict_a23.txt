@@ -1,0 +1,14 @@
+out_none.json -> PASS (no fails)
+out_ts2off.json -> FAIL
+    c2 degrade_False seed0: TS2 masks == A0 masks (no change)
+    c2 degrade_False seed0: differs from ts_v2_guarded ref (mask 1.0, sky 1.0); TS2 sky%=0.000 A0 sky%=0.0
+    c2 degrade_False seed1: TS2 masks == A0 masks (no change)
+    c2 degrade_False seed1: differs from ts_v2_guarded ref (mask 1.0, sky 1.0); TS2 sky%=0.000 A0 sky%=0.0
+    c2 degrade_True seed0: TS2 masks == A0 masks (no change)
+    c2 degrade_True seed0: differs from ts_v2_guarded ref (mask 1.0, sky 1.0); TS2 sky%=0.000 A0 sky%=0.0
+    c2 degrade_True seed1: TS2 masks == A0 masks (no change)
+    c2 degrade_True seed1: differs from ts_v2_guarded ref (mask 1.0, sky 1.0); TS2 sky%=0.000 A0 sky%=0.0
+out_flagoff_recipe.json -> FAIL
+    c3 degrade_False: VK655 sentinel_px%=0.00 mask%=57.24 sky%=42.76 depth_max=654.75
+    c3 degrade_True: VK655 sentinel_px%=0.00 mask%=57.28 sky%=42.72 depth_max=651.3499755859375
+out_flagoff_base_only.json -> PASS (no fails)
