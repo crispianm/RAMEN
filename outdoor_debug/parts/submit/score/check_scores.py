@@ -11,6 +11,9 @@ BJ_SHA = "5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef"
 COMBINED = "aca96bbd894855cc99b8d97dbdf6e957d1c1f4efb0d49c77ff6108d8dccd7de6"
 DSETS = {"kitti": 7, "nyuv2": 4, "scannetpp": 31, "vkitti": 10}
 TAE_DS = ("kitti", "scannetpp")
+R3 = {"kitti": "e187a28b87d43f3b3e6f687a0acc944f216fa754b4512fc373d616c5bece0a3a", "nyuv2": "49adc06914d2bfcdec0d602a37099f0289e498780302df39f512a010c6e58797",
+      "scannetpp": "010a310b828dedeaac77700463d243644d83b35a8146d75fa88da79862bb37c6", "vkitti": "2f57ab4872f2ff8e82e86c30f89fa21de5db3351d457df7dc9bb4e7389f15073"}
+PRIMARY_MASK = "80.0<=gt<655.0, finite; sentinel 655.35 excluded on GT"
 
 def fin(x):
     return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
@@ -33,6 +36,7 @@ def run(d, a):
     chk("combined clip sha", m.get("combined_clip_sha256") == COMBINED == m.get("combined_pinned"), f"got {m.get('combined_clip_sha256')}")
     ck = m.get("ckpt", {}) or {}
     chk("ckpt weights_key trainable_ema", ck.get("weights_key") == "trainable_ema", f"got {ck.get('weights_key')!r}")
+    chk("--expect-step / --expect-ckpt-sha / --expect-host-contains were all passed (strict mode, reviewer finding 3/4)", a.expect_step is not None and bool(a.expect_ckpt_sha) and bool(a.expect_host_contains), "an expect flag is missing")
     if a.expect_step is not None:
         chk(f"ckpt step == {a.expect_step}", ck.get("step") == a.expect_step, f"got {ck.get('step')!r}")
     else:
@@ -44,14 +48,19 @@ def run(d, a):
         chk("ckpt sha256 recorded (64 hex)", isinstance(s, str) and len(s) == 64, f"got {s!r}")
     hs = f"{m.get('host')} | {m.get('gpu')}"
     if a.expect_host_contains:
-        chk(f"host type string contains {a.expect_host_contains!r}", a.expect_host_contains in hs, f"got {hs}")
+        chk(f"gpu string contains {a.expect_host_contains!r} (gpu field only: the hostname can contain it spuriously)", a.expect_host_contains in str(m.get("gpu")), f"got gpu {m.get('gpu')!r}")
     else:
         chk("host type string recorded", bool(m.get("host")) and bool(m.get("gpu")), f"got {hs}")
     chk("nyuv2_frames == 160", m.get("nyuv2_frames") == 160, f"got {m.get('nyuv2_frames')!r}")
     chk("precision fp16", m.get("precision") == "fp16", f"got {m.get('precision')!r}")
-    chk("no limit_clips/max_frames", m.get("limit_clips") is None and m.get("max_frames") is None, f"got {m.get('limit_clips')!r}/{m.get('max_frames')!r}")
+    chk("no limit_clips/max_frames (keys present and null)", "limit_clips" in m and "max_frames" in m and m.get("limit_clips") is None and m.get("max_frames") is None, f"got {m.get('limit_clips')!r}/{m.get('max_frames')!r}")
     chk("meta.datasets has all four", all(k in (m.get("datasets") or []) for k in DSETS), f"got {m.get('datasets')}")
     g = d.get("guards", {}) if isinstance(d, dict) else {}
+    cl = m.get("clip_lists", {}) or {}
+    for ds in DSETS:
+        c = cl.get(ds) or {}
+        chk(f"{ds} clip-key sha256 == R3 pin", c.get("keys_sha256") == R3[ds] == c.get("pinned"), f"got {c.get('keys_sha256')}")
+        chk(f"{ds} per_video keys == clip_lists keys", sorted((get(g, ds, "per_video") or {}).keys()) == sorted(c.get("keys") or ["<none>"]), "per_video keys differ from clip list")
     for ds, n in DSETS.items():
         gd = g.get(ds)
         chk(f"{ds} present with {n} clips", isinstance(gd, dict) and gd.get("n_clips") == n and len(gd.get("per_video", {})) == n,
@@ -66,7 +75,11 @@ def run(d, a):
         bad = [k for k, r in pv.items() if not fin((r or {}).get("tae_gtvalid"))]
         chk(f"{ds} every clip has finite tae_gtvalid", not bad and bool(pv), f"bad clips {bad}")
     v = get(d, "primary", "vkitti_far_80_655", "legacy_subsample_median")
-    chk("primary vkitti far legacy_subsample_median finite", fin(v), f"got {v!r}")
+    chk("primary vkitti far legacy_subsample_median finite and in (0,2)", fin(v) and 0.0 < v < 2.0, "missing, non-finite or out of range (value withheld: sealed)")
+    pr = get(d, "primary", "vkitti_far_80_655") or {}
+    chk("primary legacy_subsample_n == 1000000", pr.get("legacy_subsample_n") == 1000000, f"got {pr.get('legacy_subsample_n')!r}")
+    chk("primary mask string == [80,655) GT-side, sentinel excluded", pr.get("mask") == PRIMARY_MASK, f"got {pr.get('mask')!r}")
+    chk("primary n (exact far px) >= 1e6 and pooled_median finite", isinstance(pr.get("n"), int) and pr.get("n") >= 1000000 and fin(pr.get("pooled_median")), f"n={pr.get('n')!r}")
     return out
 
 def main(argv=None):
