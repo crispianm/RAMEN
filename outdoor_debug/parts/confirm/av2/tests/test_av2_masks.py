@@ -141,3 +141,15 @@ def test_wrong_segmenter_sha_raises(tmp_path):
     assert B.verify_seg_sha(f, good) == good
     with pytest.raises(RuntimeError, match="registered"):
         B.verify_seg_sha(f, "0" * 64)
+
+
+def test_empty_union_is_rejected_not_perfect(tmp_path):
+    with pytest.raises(M.MaskRejected, match="unevaluable"):
+        M.check_agreement([(0, 0), (0, 0)])
+    # a real frame with NO sky in either segmenter (all candidate frames) must not write a store
+    p = np.full((H, W), 0.02, np.float32); m = np.full((H, W), -0.96, np.float32)
+    res = {"L:1": B.frame_masks(p, m, p, m, None)}
+    assert res["L:1"]["union"] == 0
+    with pytest.raises(M.MaskRejected):
+        B.assemble(res, tmp_path / "x.npz", dict(segmenter_a_sha="a", segmenter_b_sha="b", frames_sha="f"))
+    assert not (tmp_path / "x.npz").exists()

@@ -66,7 +66,8 @@ verify)
     [ -f "$o" ] && [ "$(stat -c %s "$o")" = "$s" ] || { echo "BAD $k"; bad=$((bad+1)); }
   done < "$META/objects.tsv"
   [ "$bad" = 0 ] || { echo "$bad objects bad"; exit 6; }
-  ( cd "$DEST/data" && find . -type f | sort | xargs -P 8 -n 50 sha256sum | sort -k2 > "$META/SHA256SUMS" )
+  # manifest = the R1 object list ONLY (pre-R1 unused files and any leftover .part are excluded by construction)
+  ( cd "$DEST/data" && cut -f1 "$META/objects.tsv" | sed "s#^datasets/av2/sensor/val/#./#" | sort | xargs -P 8 -n 50 sha256sum | sort -k2 > "$META/SHA256SUMS" )
   n_obj=$(wc -l < "$META/objects.tsv"); n_sum=$(wc -l < "$META/SHA256SUMS")
   [ "$n_obj" = "$n_sum" ] || { echo "object count $n_obj != manifest $n_sum"; exit 7; }
   sha256sum "$META/SHA256SUMS" | tee "$META/SHA256SUMS.sha256"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the ONE frozen AV2 sky-mask store (shared by both arms) in the scorer's MaskStore format + a .meta.json sidecar.
 Registration R1 rules (all fixed before any use on real data):
-  certain = both segmenters p_sky >= 0.9 (image-size, bilinear-upsampled probs), eroded: Euclid distance to the nearest non-certain px > r_e = round(8*short/900) (=12 px at 1550),
+  certain = both segmenters p_sky >= 0.9 (image-size, bilinear-upsampled probs), eroded: Euclid distance to the nearest non-certain px > r_e = round(8*short/900) (=14 px at 1550),
             minus pixels within r_l = round(5*short/900) (=9 px at 1550) of any projected LiDAR return of the paired sweep.  [no horizon rule]
   any     = sky by EITHER segmenter: argmax is sky OR p_sky >= 0.5 (superset of certain by construction; asserted).
   drop rule 1 (this script): a frame with < 1% of its native pixels certain-sky (after erosion and LiDAR exclusion) is listed in meta.dropped = excluded from the PRIMARY P only

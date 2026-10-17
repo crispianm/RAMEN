@@ -121,14 +121,16 @@ def iou_counts(pa, ma, pb, mb):
 
 
 def pooled_iou(counts):
-    """counts: iterable of (inter, union) over ALL candidate frames (kept and dropped). Returns pooled IoU; 1.0 if the union is empty."""
+    """counts: iterable of (inter, union) over ALL candidate frames (kept and dropped). Returns pooled IoU; nan if the union is empty."""
     i = sum(c[0] for c in counts); u = sum(c[1] for c in counts)
-    return 1.0 if u == 0 else i / u
+    return float("nan") if u == 0 else i / u          # empty union = UNEVALUABLE (check_agreement rejects it)
 
 
 def check_agreement(counts, iou_min=IOU_MIN):
     """Raise MaskRejected if the pooled IoU is below iou_min (declared stop rule). Returns the IoU."""
     v = pooled_iou(counts)
+    if not v == v:
+        raise MaskRejected("pooled segmenter IoU unevaluable (no sky in either segmenter on any frame): mask set rejected (NOT CONFIRMED)")
     if v < iou_min:
         raise MaskRejected(f"pooled segmenter IoU {v:.4f} < {iou_min}: mask set rejected (NOT CONFIRMED, stop before any prediction)")
     return v
