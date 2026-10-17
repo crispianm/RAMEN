@@ -1,3 +1,4 @@
+# run against pin 72dd8d19b6df9d67c538b7b0da7c9220094d235a (the commit that contains the docs; the preflight logic does not depend on the pin value)
 OK    POSITIVE B0 k2000 full: preflight passes and reaches the launch (rc=0, log has 'DRYRUN-torchrun')
 OK    POSITIVE S5 k4000 SMOKE=120: smoke config + dir (rc=0, log has 'runs/l1_smoke_S5_k4000')
       smoke diff lines in log: 3 (must be 3)  >   max_steps: 120;>   checkpoint_dir: runs/l1_smoke_S5_k4000;>   - 120;
