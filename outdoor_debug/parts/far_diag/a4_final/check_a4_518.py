@@ -6,7 +6,12 @@ BJ = "5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef"; W = "3c
 FRAMES = "b8d9664fb0c28df0fab61ad71383d48660c5444c4538a8f471fd4bbc8f0e5098"; PAIRS = "962d499612c40bca7d314f8ff16ce1d6c7b03962ae78938f472a101766150245"
 L518 = "released Metric-VDA-S at its default 518 input (not the registered 378), fp16, exploratory DEV, report-only"
 SHAPE = re.compile(r"first clip: model input \((\d+), 3, 518, 826\) -> depth \(\1, 518, 826\) \(same HxW, identity resample\)")
-SAME = ("precision", "max_len", "resolution_rule", "alignment", "bins_m", "bench_joint_sha256", "pins", "release_weights", "spec", "status", "limit_scenes", "pins_asserted", "per_scene_scored")
+SAME = ("precision", "max_len", "resolution_rule", "alignment", "bins_m", "bench_joint_sha256", "release_weights", "spec", "status", "limit_scenes", "pins_asserted", "per_scene_scored")
+
+
+def pins_no_paths(p):
+    """pins dict without clone-dependent PATH entries (keys ending _tsv/_dir/_path): the sha entries stay compared (the 518 job runs in a different clone dir than the 378 row)."""
+    return {k: v for k, v in (p or {}).items() if not k.endswith(("_tsv", "_dir", "_path"))}
 
 
 def checks(d, log_text, scorer_sha, ref):
@@ -18,7 +23,7 @@ def checks(d, log_text, scorer_sha, ref):
     p = m.get("pins", {}); c("frame list + pairs sha", p.get("frames_sha256") == FRAMES and p.get("pairs_sha256") == PAIRS)
     c("release weights sha", (m.get("release_weights") or {}).get("sha256") == W); c("GH200, fp16", "GH200" in str(m.get("gpu")) and m.get("precision") == "fp16")
     c("395 frames / 50 scenes, 0 non-finite", d.get("n_scored_frames") == 395 and d.get("n_scenes") == 50 and d.get("n_nonfinite_pred_px") == 0)
-    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME))
+    c("every other meta field == the 378 release row", all(m.get(k) == r.get(k) for k in SAME) and pins_no_paths(m.get("pins")) == pins_no_paths(r.get("pins")) and bool(pins_no_paths(m.get("pins"))))
     bs, rb = d.get("bins", {}), ref.get("bins", {})
     c("same GT px/frames/scenes per bin as the 378 row", {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in bs.items()} == {k: (b["n_px"], b["n_frames"], b["n_scenes"]) for k, b in rb.items()} and d.get("overall_n_px") == ref.get("overall_n_px"))
     c("all metrics finite", all(math.isfinite(b[k]) for b in bs.values() for k in ("absrel_unaligned_pooled", "median_pred_over_gt")) and math.isfinite(d.get("overall_absrel_0_200", float("nan"))))

@@ -42,3 +42,19 @@ def test_forced_fail_each_check(mut, name):
                                  "first clip: model input (100, 3, 378, 602) -> depth (100, 378, 602) (same HxW, identity resample)"])
 def test_forced_fail_shape_log(log):
     assert "shape log: first clip (N,3,518,826) -> depth (N,518,826)" in failed(good(), log)
+
+
+def test_clone_path_difference_in_pins_is_allowed():      # regression for job 7509896: only the clone dir in pins.frames_tsv differed
+    d = good(); d["meta"]["pins"]["frames_tsv"] = "/elsewhere/RAMEN_outdoor_screen_ddad_a4/outdoor_debug/parts/LR_DEV/ddad_val_frames.tsv"
+    assert failed(d) == []
+
+
+@pytest.mark.parametrize("key", ["frames_sha256", "pairs_sha256"])
+def test_sha_difference_in_pins_still_fails(key):         # negative control for the relaxation
+    d = good(); d["meta"]["pins"][key] = "0" * 64
+    assert "every other meta field == the 378 release row" in failed(d)
+
+
+def test_missing_pins_fails():
+    d = good(); d["meta"]["pins"] = {}
+    assert "every other meta field == the 378 release row" in failed(d)
