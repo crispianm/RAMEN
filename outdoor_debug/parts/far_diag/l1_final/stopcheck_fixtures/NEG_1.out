@@ -1,0 +1,137 @@
+ config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+xFormers not available
+xFormers not available
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=49000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[checkpoint] permanent step{N}.pt snapshots at: [2000]
+[monitor] step0 outdoor median(pred)/median(GT) = 1.006 (pred 14.27 m, GT 14.18 m)
+e0 step20/2000 loss=0.4351 lr=4.00e-06 1.5it/s static=1.0000 sev=0.04
+e0 step40/2000 loss=0.4103 lr=8.00e-06 1.6it/s static=0.0000 sev=0.08
+e0 step60/2000 loss=0.4008 lr=1.20e-05 1.6it/s static=0.0000 sev=0.12
+e0 step80/2000 loss=0.3919 lr=1.60e-05 1.6it/s static=0.0000 sev=0.16
+[monitor] step100 outdoor median(pred)/median(GT) = 0.978 (pred 13.87 m, GT 14.18 m)
+e0 step100/2000 loss=0.3972 lr=2.00e-05 1.6it/s static=0.0000 sev=0.2
+e0 step120/2000 loss=0.3876 lr=2.40e-05 1.6it/s static=0.0000 sev=0.24
+e0 step140/2000 loss=0.3826 lr=2.80e-05 1.6it/s static=0.0000 sev=0.28
+e0 step160/2000 loss=0.3769 lr=3.20e-05 1.6it/s static=1.0000 sev=0.32
+e0 step180/2000 loss=0.3844 lr=3.60e-05 1.6it/s static=0.0000 sev=0.36
+[monitor] step200 outdoor median(pred)/median(GT) = 0.902 (pred 12.79 m, GT 14.18 m)
+e0 step200/2000 loss=0.3812 lr=4.00e-05 1.6it/s static=0.0000 sev=0.4
+e0 step220/2000 loss=0.3767 lr=4.40e-05 1.6it/s static=1.0000 sev=0.44
+e0 step240/2000 loss=0.3738 lr=4.80e-05 1.6it/s static=0.0000 sev=0.48
+e0 step260/2000 loss=0.3725 lr=5.20e-05 1.6it/s static=0.0000 sev=0.52
+e0 step280/2000 loss=0.3711 lr=5.60e-05 1.6it/s static=0.0000 sev=0.56
+[monitor] step300 outdoor median(pred)/median(GT) = 0.992 (pred 13.96 m, GT 14.18 m)
+e0 step300/2000 loss=0.3707 lr=6.00e-05 1.6it/s static=0.0000 sev=0.6
+e0 step320/2000 loss=0.3692 lr=6.40e-05 1.6it/s static=0.0000 sev=0.64
+e0 step340/2000 loss=0.3690 lr=6.80e-05 1.6it/s static=0.0000 sev=0.68
+e0 step360/2000 loss=0.3691 lr=7.20e-05 1.6it/s static=0.0000 sev=0.72
+e0 step380/2000 loss=0.3680 lr=7.60e-05 1.6it/s static=0.0000 sev=0.76
+[monitor] step400 outdoor median(pred)/median(GT) = 0.942 (pred 13.36 m, GT 14.18 m)
+e0 step400/2000 loss=0.3691 lr=8.00e-05 1.6it/s static=0.0000 sev=0.8
+e0 step420/2000 loss=0.3693 lr=8.40e-05 1.6it/s static=0.0000 sev=0.84
+e0 step440/2000 loss=0.3689 lr=8.80e-05 1.6it/s static=1.0000 sev=0.88
+e0 step460/2000 loss=0.3674 lr=9.20e-05 1.6it/s static=0.0000 sev=0.92
+e0 step480/2000 loss=0.3681 lr=9.60e-05 1.6it/s static=1.0000 sev=0.96
+[monitor] step500 outdoor median(pred)/median(GT) = 0.878 (pred 12.15 m, GT 14.18 m)
+e0 step500/2000 loss=0.3688 lr=1.00e-04 1.6it/s static=0.0000 sev=1
+e0 step520/2000 loss=0.3701 lr=1.00e-04 1.6it/s static=1.0000 sev=1
+e0 step540/2000 loss=0.3718 lr=9.98e-05 1.6it/s static=0.0000 sev=1
+e0 step560/2000 loss=0.3725 lr=9.96e-05 1.6it/s static=1.0000 sev=1
+e0 step580/2000 loss=0.3730 lr=9.93e-05 1.6it/s static=1.0000 sev=1
+[monitor] step600 outdoor median(pred)/median(GT) = 1.016 (pred 14.40 m, GT 14.18 m)
+e0 step600/2000 loss=0.3751 lr=9.89e-05 1.6it/s static=0.0000 sev=1
+e0 step620/2000 loss=0.3776 lr=9.85e-05 1.6it/s static=1.0000 sev=1
+e0 step640/2000 loss=0.3765 lr=9.79e-05 1.6it/s static=0.0000 sev=1
+e0 step660/2000 loss=0.3757 lr=9.73e-05 1.6it/s static=0.0000 sev=1
+e0 step680/2000 loss=0.3760 lr=9.65e-05 1.6it/s static=1.0000 sev=1
+[monitor] step700 outdoor median(pred)/median(GT) = 0.964 (pred 13.27 m, GT 14.18 m)
+e0 step700/2000 loss=0.3740 lr=9.57e-05 1.6it/s static=0.0000 sev=1
+e0 step720/2000 loss=0.3738 lr=9.48e-05 1.6it/s static=0.0000 sev=1
+e0 step740/2000 loss=0.3731 lr=9.39e-05 1.6it/s static=0.0000 sev=1
+e0 step760/2000 loss=0.3729 lr=9.28e-05 1.6it/s static=1.0000 sev=1
+e0 step780/2000 loss=0.3738 lr=9.17e-05 1.6it/s static=1.0000 sev=1
+[monitor] step800 outdoor median(pred)/median(GT) = 0.949 (pred 13.46 m, GT 14.18 m)
+e0 step800/2000 loss=0.3740 lr=9.05e-05 1.6it/s static=0.0000 sev=1
+e0 step820/2000 loss=0.3735 lr=8.92e-05 1.6it/s static=0.0000 sev=1
+e0 step840/2000 loss=0.3751 lr=8.79e-05 1.6it/s static=0.0000 sev=1
+e0 step860/2000 loss=0.3760 lr=8.65e-05 1.6it/s static=0.0000 sev=1
+e0 step880/2000 loss=0.3771 lr=8.51e-05 1.6it/s static=0.0000 sev=1
+[monitor] step900 outdoor median(pred)/median(GT) = 0.973 (pred 13.81 m, GT 14.18 m)
+e0 step900/2000 loss=0.3770 lr=8.35e-05 1.6it/s static=1.0000 sev=1
+e0 step920/2000 loss=0.3779 lr=8.20e-05 1.6it/s static=0.0000 sev=1
+e0 step940/2000 loss=0.3770 lr=8.03e-05 1.6it/s static=0.0000 sev=1
+e0 step960/2000 loss=0.3781 lr=7.86e-05 1.6it/s static=0.0000 sev=1
+e0 step980/2000 loss=0.3778 lr=7.69e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1000 outdoor median(pred)/median(GT) = 0.936 (pred 13.28 m, GT 14.18 m)
+e0 step1000/2000 loss=0.3769 lr=7.51e-05 1.6it/s static=0.0000 sev=1
+e0 step1020/2000 loss=0.3767 lr=7.33e-05 1.6it/s static=0.0000 sev=1
+e0 step1040/2000 loss=0.3766 lr=7.14e-05 1.6it/s static=0.0000 sev=1
+e0 step1060/2000 loss=0.3771 lr=6.95e-05 1.6it/s static=0.0000 sev=1
+e0 step1080/2000 loss=0.3774 lr=6.75e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1100 outdoor median(pred)/median(GT) = 1.043 (pred 14.71 m, GT 14.18 m)
+e0 step1100/2000 loss=0.3770 lr=6.56e-05 1.6it/s static=1.0000 sev=1
+e0 step1120/2000 loss=0.3768 lr=6.35e-05 1.6it/s static=0.0000 sev=1
+e0 step1140/2000 loss=0.3777 lr=6.15e-05 1.6it/s static=0.0000 sev=1
+e0 step1160/2000 loss=0.3775 lr=5.95e-05 1.6it/s static=0.0000 sev=1
+e0 step1180/2000 loss=0.3771 lr=5.74e-05 1.6it/s static=1.0000 sev=1
+[monitor] step1200 outdoor median(pred)/median(GT) = 0.958 (pred 13.60 m, GT 14.18 m)
+e0 step1200/2000 loss=0.3766 lr=5.53e-05 1.6it/s static=0.0000 sev=1
+e0 step1220/2000 loss=0.3761 lr=5.32e-05 1.6it/s static=1.0000 sev=1
+e0 step1240/2000 loss=0.3762 lr=5.12e-05 1.6it/s static=0.0000 sev=1
+e0 step1260/2000 loss=0.3757 lr=4.91e-05 1.6it/s static=0.0000 sev=1
+e0 step1280/2000 loss=0.3757 lr=4.70e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1300 outdoor median(pred)/median(GT) = 1.067 (pred 15.13 m, GT 14.18 m)
+e0 step1300/2000 loss=0.3757 lr=4.49e-05 1.6it/s static=0.0000 sev=1
+e0 step1320/2000 loss=0.3752 lr=4.28e-05 1.6it/s static=1.0000 sev=1
+e0 step1340/2000 loss=0.3744 lr=4.07e-05 1.6it/s static=0.0000 sev=1
+e0 step1360/2000 loss=0.3751 lr=3.87e-05 1.6it/s static=0.0000 sev=1
+e0 step1380/2000 loss=0.3750 lr=3.67e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1400 outdoor median(pred)/median(GT) = 0.974 (pred 13.69 m, GT 14.18 m)
+e0 step1400/2000 loss=0.3740 lr=3.46e-05 1.6it/s static=0.0000 sev=1
+e0 step1420/2000 loss=0.3735 lr=3.27e-05 1.6it/s static=0.0000 sev=1
+e0 step1440/2000 loss=0.3741 lr=3.07e-05 1.6it/s static=0.0000 sev=1
+e0 step1460/2000 loss=0.3739 lr=2.88e-05 1.6it/s static=1.0000 sev=1
+e0 step1480/2000 loss=0.3730 lr=2.69e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1500 outdoor median(pred)/median(GT) = 0.978 (pred 13.88 m, GT 14.18 m)
+e0 step1500/2000 loss=0.3721 lr=2.51e-05 1.6it/s static=0.0000 sev=1
+e0 step1520/2000 loss=0.3719 lr=2.33e-05 1.6it/s static=1.0000 sev=1
+e0 step1540/2000 loss=0.3713 lr=2.16e-05 1.6it/s static=0.0000 sev=1
+e0 step1560/2000 loss=0.3717 lr=1.99e-05 1.6it/s static=0.0000 sev=1
+e0 step1580/2000 loss=0.3720 lr=1.82e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1600 outdoor median(pred)/median(GT) = 0.969 (pred 13.55 m, GT 14.18 m)
+e0 step1600/2000 loss=0.3721 lr=1.66e-05 1.6it/s static=0.0000 sev=1
+e0 step1620/2000 loss=0.3721 lr=1.51e-05 1.6it/s static=0.0000 sev=1
+e0 step1640/2000 loss=0.3721 lr=1.36e-05 1.6it/s static=0.0000 sev=1
+e0 step1660/2000 loss=0.3715 lr=1.22e-05 1.6it/s static=0.0000 sev=1
+e0 step1680/2000 loss=0.3710 lr=1.09e-05 1.6it/s static=0.0000 sev=1
+[monitor] step1700 outdoor median(pred)/median(GT) = 0.974 (pred 13.48 m, GT 14.18 m)
+e0 step1700/2000 loss=0.3713 lr=9.61e-06 1.6it/s static=0.0000 sev=1
+e0 step1720/2000 loss=0.3714 lr=8.41e-06 1.6it/s static=0.0000 sev=1
+e0 step1740/2000 loss=0.3707 lr=7.29e-06 1.6it/s static=0.0000 sev=1
+e0 step1760/2000 loss=0.3714 lr=6.24e-06 1.6it/s static=0.0000 sev=1
+e0 step1780/2000 loss=0.3716 lr=5.26e-06 1.6it/s static=0.0000 sev=1
+[monitor] step1800 outdoor median(pred)/median(GT) = 0.946 (pred 13.42 m, GT 14.18 m)
+e0 step1800/2000 loss=0.3718 lr=4.37e-06 1.6it/s static=0.0000 sev=1
+e0 step1820/2000 loss=0.3718 lr=3.55e-06 1.6it/s static=0.0000 sev=1
+e0 step1840/2000 loss=0.3715 lr=2.82e-06 1.6it/s static=0.0000 sev=1
+e0 step1860/2000 loss=0.3714 lr=2.16e-06 1.6it/s static=0.0000 sev=1
+e0 step1880/2000 loss=0.3710 lr=1.60e-06 1.6it/s static=1.0000 sev=1
+[monitor] step1900 outdoor median(pred)/median(GT) = 0.970 (pred 13.76 m, GT 14.18 m)
+e0 step1900/2000 loss=0.3706 lr=1.11e-06 1.6it/s static=0.0000 sev=1
+e0 step1920/2000 loss=0.3710 lr=7.18e-07 1.6it/s static=0.0000 sev=1
+e0 step1940/2000 loss=0.3703 lr=4.07e-07 1.6it/s static=0.0000 sev=1
+e0 step1960/2000 loss=0.3705 lr=1.84e-07 1.6it/s static=0.0000 sev=1
+e0 step1980/2000 loss=0.3703 lr=4.84e-08 1.6it/s static=0.0000 sev=1
+[monitor] step2000 outdoor median(pred)/median(GT) = 0.915 (pred 12.98 m, GT 14.18 m)
+e0 step2000/2000 loss=0.3704 lr=1.10e-10 1.6it/s static=1.0000 sev=1

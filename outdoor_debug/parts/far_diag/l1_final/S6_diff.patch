@@ -1,0 +1,76 @@
+diff --git a/train.py b/train.py
+index 1bcf913..13aa164 100644
+--- a/train.py
++++ b/train.py
+@@ -1267,14 +1267,43 @@ def _compute_loss_vda(pred: torch.Tensor, batch: dict, cfg: dict, pred_is_dispar
+     if m_si is None:   # K80 option B: no clip of this batch is metric-supervised (a TartanAir / PointOdyssey / pseudo-GT clip): SSI / gradient / TGM only; the zero keeps the graph
+         return total
+     pd_d = pd_raw[m_si].clamp_min(1e-3) if rng is None else pd_raw[m_si].clamp(*rng)   # ReLU output can be exactly 0
+-    diff_log = torch.log(depth.reshape(B, T, H, W).float()[m_si]) - torch.log(pd_d)
+-    silog = torch.sqrt((diff_log.pow(2).mean() - lambd * diff_log.mean().pow(2)).clamp_min(1e-12))
++    gt_si = depth.reshape(B, T, H, W).float()[m_si]
++    diff_log = torch.log(gt_si) - torch.log(pd_d)
++    far_w = silog_far_weight_cfg(cfg.get("loss", {}))
++    if far_w is None:   # L1 S6 (default off: neither key set, or far_weight exactly 1.0 = this ORIGINAL expression, the weighted branch is never entered = byte-identical)
++        silog = torch.sqrt((diff_log.pow(2).mean() - lambd * diff_log.mean().pow(2)).clamp_min(1e-12))
++    else:
++        silog = silog_far_weighted(diff_log, gt_si, lambd, far_w[0], far_w[1])
++        if log_terms:
++            _term_add("silog_far_px_frac", (gt_si >= far_w[1]).float().mean())
+     if log_terms:
+         _term_add("silog", silog)
+         _term_add("silog_mean_log_err", diff_log.mean())      # + = prediction BELOW the GT, - = ABOVE (the signed scale error the term sees)
+     return total + silog_w * silog
+ 
+ 
++def silog_far_weight_cfg(lc: dict) -> tuple[float, float] | None:
++    """L1 S6 opt-in: ``(far_weight, far_from)`` from ``loss.metric_silog_far_weight`` / ``loss.metric_silog_far_from``, or None when the feature is OFF (far_weight absent or exactly 1.0).
++    ``far_from`` is REQUIRED whenever the feature is on (no hidden default)."""
++    fw = lc.get("metric_silog_far_weight")
++    if fw is None or float(fw) == 1.0:
++        return None
++    ff = lc.get("metric_silog_far_from")
++    if ff is None:
++        raise ValueError("loss.metric_silog_far_weight != 1.0 needs loss.metric_silog_far_from (m)")
++    return float(fw), float(ff)
++
++
++def silog_far_weighted(diff_log: torch.Tensor, gt_depth: torch.Tensor, lambd: float, far_weight: float, far_from: float) -> torch.Tensor:
++    """L1 S6: SiLog with a per-pixel weight w = 1 + (far_weight - 1) * [gt_depth >= far_from] (GT metres, 1-D tensors over the SiLog-eligible pixels):
++    sqrt(sum(w d^2)/sum(w) - lambd * (sum(w d)/sum(w))^2), clamped at 1e-12 like the original. With all w equal this is algebraically the original expression."""
++    w = 1.0 + (far_weight - 1.0) * (gt_depth >= far_from).to(diff_log.dtype)
++    sw = w.sum()
++    m1 = (w * diff_log).sum() / sw
++    m2 = (w * diff_log.pow(2)).sum() / sw
++    return torch.sqrt((m2 - lambd * m1.pow(2)).clamp_min(1e-12))
++
++
+ def silog_mask(m: torch.Tensor, batch: dict) -> torch.Tensor | None:
+     """K80 option B, per-source metric supervision: the SiLog mask. Without ``metric_sup`` in the batch (every config but option B) this IS ``m`` (byte-identical); with it, ``m`` restricted to the clips whose
+     source is metric-supervised (``metric_sup`` 1.0 per clip), or None when none of the batch's clips is (or none has a valid pixel), so the caller skips the term."""
+@@ -1373,7 +1402,7 @@ def _sha256_file(path) -> str:
+ 
+ 
+ def check_metricfix(cfg: dict) -> None:
+-    """METRICFIX opt-in keys (every one absent = off = byte-identical to the base): ``loss.metric_silog_max_depth`` (SiLog-only far ceiling, m), ``loss.log_terms`` (per-term loss rows), ``data.sources[].max_depth`` (per-source
++    """METRICFIX opt-in keys (every one absent = off = byte-identical to the base): ``loss.metric_silog_max_depth`` (SiLog-only far ceiling, m), ``loss.log_terms`` (per-term loss rows), L1 S6 ``loss.metric_silog_far_weight`` + ``loss.metric_silog_far_from`` (far-weighted SiLog), ``data.sources[].max_depth`` (per-source
+     validity bound, m), ``data.sources[].silog_max_depth`` (per-source SiLog far ceiling, m), ``training.head_lr_mult`` (LR multiplier of the trainable DPT head; needs ``model.freeze_depth_head: false``), ``model.init_from_sha256`` ('record' or a hex sha256 pin of ``model.init_from``),
+     ``eval.outdoor_monitor`` (the outdoor VKITTI scale monitor)."""
+     lc, t, m = cfg.get("loss", {}), cfg.get("training", {}), cfg.get("model", {})
+@@ -1385,6 +1414,16 @@ def check_metricfix(cfg: dict) -> None:
+         pos(lc["metric_silog_max_depth"], "loss.metric_silog_max_depth")
+         if float(lc.get("metric_silog_weight", 0.0)) <= 0:
+             raise ValueError("loss.metric_silog_max_depth needs loss.metric_silog_weight > 0 (it bounds the SiLog term)")
++    if lc.get("metric_silog_far_weight") is not None or lc.get("metric_silog_far_from") is not None:   # L1 S6 (absent = off = byte-identical)
++        if lc.get("metric_silog_far_weight") is None:
++            raise ValueError("loss.metric_silog_far_from needs loss.metric_silog_far_weight (alone it would be a no-op)")
++        pos(lc["metric_silog_far_weight"], "loss.metric_silog_far_weight")
++        if float(lc["metric_silog_far_weight"]) != 1.0:
++            if lc.get("metric_silog_far_from") is None:
++                raise ValueError("loss.metric_silog_far_weight != 1.0 needs loss.metric_silog_far_from (m)")
++            pos(lc["metric_silog_far_from"], "loss.metric_silog_far_from")
++            if float(lc.get("metric_silog_weight", 0.0)) <= 0:
++                raise ValueError("loss.metric_silog_far_weight needs loss.metric_silog_weight > 0 (it weights the SiLog term)")
+     if "log_terms" in lc and not isinstance(lc["log_terms"], bool):
+         raise ValueError(f"loss.log_terms must be a bool, got {lc['log_terms']!r}")
+     for s in (cfg.get("data") or {}).get("sources") or []:

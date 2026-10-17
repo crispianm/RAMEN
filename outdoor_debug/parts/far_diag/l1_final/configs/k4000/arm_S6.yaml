@@ -1,0 +1,256 @@
+model:
+  arch: vda
+  config_name: da3-small
+  checkpoint_path: /projects/b5dh/RAMEN/checkpoints/depth-anything-v3-small.safetensors
+  temporal_type: dyfn_attn_renorm
+  require_temporal_type: dyfn_attn_renorm
+  temporal_scales:
+  - 0
+  - 1
+  - 2
+  - 3
+  temporal_kernel: 3
+  temporal_hidden_dim: 64
+  temporal_gate_init: 0.1
+  use_temporal: true
+  use_frontend: true
+  frontend_type: deblur
+  use_profile: false
+  lora_rank: 32
+  lora_alpha: 32.0
+  per_frame_encode: true
+  strict_causal: true
+  device: cuda
+  vda_repo: /projects/b5dh/repos/Video-Depth-Anything
+  vda_encoder: vits
+  metric: true
+  vda_init: released
+  da_v2_checkpoint_path: /projects/b5dh/DaBiT/weights/depth_anything_v2_vits.pth
+  vda_checkpoint_path: /projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth
+  init_from: null
+  restoration_head: false
+  restoration_hidden: 8
+  restoration_fuse_scale: 1.0
+  restoration_feat_norm: groupnorm
+  restoration_rgb_frames: 1
+  frontend: none
+  freeze_depth_head: false
+  shared_temporal: true
+  st_width: full
+  st_inject: false
+  st_unfreeze_motion: true
+  st_temp2_init: /projects/b5dh/RAMEN_train_dn01_st_recal/runs/recal_full/temp2_distilled.pt
+  st_depth_input: restored
+  st_stage2_width: wide2x
+data:
+  sources:
+  - resize_mode: vda
+    type: tartanair
+    root: /projects/b5dh/data/train/tartanair
+    sampling_mass: 310000
+    metric_supervision: true
+    sparse_gt: false
+    silog_max_depth: 655.0
+    max_depth: 10000.0
+  - resize_mode: vda
+    type: vkitti
+    root: /projects/b5dh/data/train/vkitti
+    variants:
+    - clone
+    - fog
+    - morning
+    - overcast
+    - rain
+    - sunset
+    - 15-deg-left
+    - 15-deg-right
+    - 30-deg-left
+    - 30-deg-right
+    cameras:
+    - Camera_0
+    - Camera_1
+    no_holdout: true
+    vkitti_max_depth: 655
+    sampling_mass: 40000
+    metric_supervision: true
+    sparse_gt: false
+  - resize_mode: vda
+    type: pointodyssey
+    root: /projects/b5dh/data/train/point_odyssey/train
+    po_keep_list: provenance/dn01_vdamix/po_filter_v1.json
+    po_keep_sha256: ff4851c6ad1d8bb0754ef9ef30aeb1c83562624041074acd41e41b5e9eedb34c
+    sampling_mass: 87206
+    metric_supervision: true
+    sparse_gt: false
+    silog_max_depth: 655.0
+    max_depth: 999.0
+  - resize_mode: vda
+    type: pointodyssey
+    root: /projects/b5dh/data/train/point_odyssey/val
+    po_keep_list: provenance/dn01_v3/po_filter_val_v1.json
+    po_keep_sha256: 65c0900e22c8681e97aec0f063a955cffaf05dec24d45c0a6ab66ab0568839a3
+    sampling_mass: 12794
+    metric_supervision: true
+    sparse_gt: false
+    silog_max_depth: 655.0
+    max_depth: 999.0
+  - resize_mode: vda
+    type: irs
+    root: /projects/b5dh/data/train/irs
+    val_fraction: 0.0
+    sampling_mass: 100000
+    metric_supervision: true
+    sparse_gt: false
+  - resize_mode: vda
+    type: spring
+    root: /projects/b5dh/data/train/spring
+    val_fraction: 0.03
+    sampling_mass: 4843
+    metric_supervision: false
+    sparse_gt: false
+    max_depth: 80.0
+  - resize_mode: vda
+    type: kitti_raw
+    root: /projects/b5dh/data/train/kitti_raw
+    gt_root: /projects/b5dh/data/train/kitti_raw_gt
+    sampling_mass: 299397
+    metric_supervision: true
+    sparse_gt: true
+    max_depth: 80.0
+    allow_missing: false
+  - resize_mode: vda
+    type: nyu_train
+    root: /projects/b5dh/data/train/nyuv2/data
+    exclude_video_test: true
+    sampling_mass: 170297
+    metric_supervision: true
+    sparse_gt: false
+    max_depth: 10.0
+  - resize_mode: vda
+    type: scannetpp_train
+    root: /projects/b5dh/data/train/scannetpp_train
+    splits:
+    - sem_test
+    extra_root: /projects/b5dh/data/train/scannetpp_train_full
+    extra_scene_list: provenance/dn01_v3/scannetpp_train_subset140.txt
+    extra_scene_list_sha256: 495f6299cb458686d8d0c0eae11d9c03cf179f702aee623791e969b13ae7d040
+    allow_missing: false
+    frame_stride: 6
+    sampling_mass: 85149
+    metric_supervision: true
+    sparse_gt: false
+    max_depth: 10.0
+  val_sources:
+  - resize_mode: vda
+    type: spring
+    root: /projects/b5dh/data/train/spring
+    val_fraction: 0.03
+  uniform_sampler: true
+  val_clips_per_source: 20
+  num_frames: 32
+  image_size:
+  - 518
+  - 518
+  clip_stride: 32
+  frame_stride: 1
+  max_depth: 80.0
+  max_clips_per_video: null
+  seed: 46
+  degrade: true
+  degrade_mode:
+  - awgn_blur
+  - lowlight
+  val_degrade_severity: null
+  num_workers: 8
+  val_batch_size: 1
+  clean_prob: 0.2
+  seeded_noise: true
+  blur_only_prob: 0.5
+  lowlight:
+    ev:
+    - -3.0
+    - -0.5
+    kappa: 0.186
+    target: exposed
+  static_prob: 0.25
+  static_noise_mult:
+  - 0.5
+  - 1.5
+  static_ev_jitter: 0.15
+  split_seed: 43
+  sampling: mass
+training:
+  max_epochs: 1000
+  max_steps: 4000
+  batch_size: 1
+  grad_accum: 4
+  learning_rate: 0.0001
+  weight_decay: 0.0
+  warmup_steps: 500
+  lr_decay_steps: 4000
+  grad_clip: 1.0
+  precision: bf16
+  ema_decay: 0.0
+  renorm_lr_scale: 1.0
+  severity_warmup_steps: 500
+  severity_max_cap: 1.0
+  val_every_steps: 100000
+  checkpoint_every_steps: 500
+  val_max_batches: 80
+  causal_training: masked
+  checkpoint_dir: runs/l1_S6_k4000
+  checkpoint_at_steps:
+  - 4000
+  grad_clip_per_group: true
+  severity_hold_steps: 0
+  severity_warmup_start: 0.0
+  frontend_only: false
+  seed_scheme: x1000
+  head_lr_mult: 1.0
+  gate_lr_scale: 10
+  resume_from: null
+loss:
+  ssi_weight: 1.0
+  ssi_align: perclip
+  tgm_weight: 10.0
+  gradient_weight: 0.5
+  silog_weight: 0.0
+  metric_weight: 0.0
+  distill_weight: 0.0
+  consistency_weight: 0.0
+  gram_weight: 0.0
+  profile_weight: 0.0
+  frontend_weight: 0.0
+  enh_weight: 1.0
+  sky_zero_disparity: false
+  loss_mode: vda
+  ssi_scales: 4
+  ssi_trim: 0.0
+  metric_silog_weight: 1.0
+  metric_silog_lambda: 0.5
+  joint_temporal_mode: lse
+  joint_temporal_weight: 0.0
+  joint_temporal_tau: 0.026
+  joint_temporal_ramp:
+  - 8000
+  - 10000
+  joint_temporal_depth_space: metric_disparity
+  metric_depth_clamp:
+  - 0.1
+  - 100000.0
+  sky_hinge_weight: 0.0
+  log_terms: true
+  sky_vda_zero_disparity: true
+  metric_silog_far_weight: 4.0
+  metric_silog_far_from: 50.0
+eval:
+  outdoor_monitor:
+    root: /projects/b5dh/data/train/vkitti
+    every_steps: 100
+    clips: 4
+    variants:
+    - clone
+    - overcast
+    cameras:
+    - Camera_0
+    clean_too: true

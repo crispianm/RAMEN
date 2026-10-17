@@ -1,0 +1,198 @@
+real c3_n46 step12000 ckpt: ckpt['cfg'] == resolved config yaml: True | param groups: [188, 64, 2] [0.0001, 0.0001, 0.001]
+## POSITIVE B0 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=B0 K=2000
+## POSITIVE B0 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=B0 K=2000
+## POSITIVE B0 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=B0 K=2000
+## POSITIVE B0 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=B0 K=2000
+## POSITIVE B0b K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=B0b K=2000
+## POSITIVE B0b K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=B0b K=2000
+## POSITIVE B0b K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=B0b K=2000
+## POSITIVE B0b K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=B0b K=2000
+## POSITIVE S1 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S1 K=2000
+## POSITIVE S1 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S1 K=2000
+## POSITIVE S1 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S1 K=2000
+## POSITIVE S1 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S1 K=2000
+## POSITIVE S2 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S2 K=2000
+## POSITIVE S2 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S2 K=2000
+## POSITIVE S2 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S2 K=2000
+## POSITIVE S2 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S2 K=2000
+## POSITIVE S3 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S3 K=2000
+## POSITIVE S3 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S3 K=2000
+## POSITIVE S3 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S3 K=2000
+## POSITIVE S3 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S3 K=2000
+## POSITIVE S4 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S4 K=2000
+## POSITIVE S4 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S4 K=2000
+## POSITIVE S4 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S4 K=2000
+## POSITIVE S4 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S4 K=2000
+## POSITIVE S5 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S5 K=2000
+## POSITIVE S5 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S5 K=2000
+## POSITIVE S5 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S5 K=2000
+## POSITIVE S5 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S5 K=2000
+## POSITIVE S6 K=2000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S6 K=2000
+## POSITIVE S6 K=2000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S6 K=2000
+## POSITIVE S6 K=2000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S6 K=2000
+## POSITIVE S6 K=2000 step 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=S6 K=2000
+## POSITIVE B0 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=B0 K=4000
+## POSITIVE B0 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=B0 K=4000
+## POSITIVE B0 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=B0 K=4000
+## POSITIVE B0 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=B0 K=4000
+## POSITIVE B0b K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=B0b K=4000
+## POSITIVE B0b K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=B0b K=4000
+## POSITIVE B0b K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=B0b K=4000
+## POSITIVE B0b K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=B0b K=4000
+## POSITIVE S1 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S1 K=4000
+## POSITIVE S1 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S1 K=4000
+## POSITIVE S1 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S1 K=4000
+## POSITIVE S1 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S1 K=4000
+## POSITIVE S2 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S2 K=4000
+## POSITIVE S2 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S2 K=4000
+## POSITIVE S2 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S2 K=4000
+## POSITIVE S2 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S2 K=4000
+## POSITIVE S3 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S3 K=4000
+## POSITIVE S3 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S3 K=4000
+## POSITIVE S3 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S3 K=4000
+## POSITIVE S3 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S3 K=4000
+## POSITIVE S4 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S4 K=4000
+## POSITIVE S4 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S4 K=4000
+## POSITIVE S4 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S4 K=4000
+## POSITIVE S4 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S4 K=4000
+## POSITIVE S5 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S5 K=4000
+## POSITIVE S5 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S5 K=4000
+## POSITIVE S5 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S5 K=4000
+## POSITIVE S5 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S5 K=4000
+## POSITIVE S6 K=4000 step 120: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=120 arm=S6 K=4000
+## POSITIVE S6 K=4000 step 500: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=500 arm=S6 K=4000
+## POSITIVE S6 K=4000 step 1000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=1000 arm=S6 K=4000
+## POSITIVE S6 K=4000 step 4000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=4000 arm=S6 K=4000
+## NEG S5 head group NOT scaled (initial_lr 1e-4): rc=1 expected FAIL -> OK
+    FAIL initial_lr per group == [0.0001, 1e-05, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001, 0.001]]
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 2 FAIL (6 checks) step=1000 arm=S5 K=2000
+## NEG B0 head group wrongly at 0.1x: rc=1 expected FAIL -> OK
+    FAIL initial_lr per group == [0.0001, 0.0001, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 1e-05, 0.001]]
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 2 FAIL (6 checks) step=1000 arm=B0 K=2000
+## NEG S5 head lr not decayed (stale at initial): rc=1 expected FAIL -> OK
+    FAIL every group's saved lr == initial_lr * scale(1499) = *2.509074e-01 (warmup 500, cosine to 0 at 2000)   [[(2.509074473302546e-05, 2.509074473302546e-05), (1e-05, 2.509074473302546e-06), (0.0002509074473302546, 0.00025090744733
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 2 FAIL (6 checks) step=1500 arm=S5 K=2000
+## NEG gate group not 10x (initial 1e-4): rc=1 expected FAIL -> OK
+    FAIL initial_lr per group == [0.0001, 0.0001, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001, 0.0001]]
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 2 FAIL (6 checks) step=500 arm=S2 K=2000
+## NEG gate group lr frozen at 0: rc=1 expected FAIL -> OK
+    FAIL every group's saved lr == initial_lr * scale(499) = *1.000000e+00 (warmup 500, cosine to 0 at 2000)   [[(0.0001, 0.0001), (0.0001, 0.0001), (0.0, 0.001)]]
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    RESULT: 2 FAIL (6 checks) step=500 arm=S3 K=2000
+## NEG no decay: lr == initial at step 1500: rc=1 expected FAIL -> OK
+    FAIL every group's saved lr == initial_lr * scale(1499) = *2.509074e-01 (warmup 500, cosine to 0 at 2000)   [[(0.0001, 2.509074473302546e-05), (0.0001, 2.509074473302546e-05), (0.001, 0.0002509074473302546)]]
+    RESULT: 1 FAIL (6 checks) step=1500 arm=B0 K=2000
+## NEG 12000-step cosine saved lr at step 1000: rc=1 expected FAIL -> OK
+    FAIL every group's saved lr == initial_lr * scale(999) = *7.509064e-01 (warmup 500, cosine to 0 at 2000)   [[(9.953429730181653e-05, 7.509063507079443e-05), (9.953429730181653e-05, 7.509063507079443e-05), (0.0009953429730181654, 0
+    RESULT: 1 FAIL (6 checks) step=1000 arm=B0b K=2000
+## NEG lr x2: rc=1 expected FAIL -> OK
+    FAIL every group's saved lr == initial_lr * scale(999) = *7.509064e-01 (warmup 500, cosine to 0 at 2000)   [[(0.00015018127014158886, 7.509063507079443e-05), (0.00015018127014158886, 7.509063507079443e-05), (0.0015018127014158884,
+    RESULT: 1 FAIL (6 checks) step=1000 arm=S1 K=2000
+## NEG only 2 param groups: rc=1 expected FAIL -> OK
+    FAIL optimizer has exactly 3 param groups with (188, 64, 2) params   [[188, 64]]
+    FAIL initial_lr per group == [0.0001, 0.0001, 0.001] (S5: head group x0.1; gate group 1e-3 = 10x)   [[0.0001, 0.0001]]
+    FAIL every group's saved lr == initial_lr * scale(499) = *1.000000e+00 (warmup 500, cosine to 0 at 2000)   [[(0.0001, 0.0001), (0.0001, 0.0001)]]
+## NEG wrong group sizes: rc=1 expected FAIL -> OK
+    FAIL optimizer has exactly 3 param groups with (188, 64, 2) params   [[187, 64, 2]]
+    RESULT: 1 FAIL (6 checks) step=500 arm=S4 K=2000
+## NEG executed cfg differs: S6 cfg lacks the far keys: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['loss']]
+    RESULT: 1 FAIL (6 checks) step=500 arm=S6 K=2000
+## NEG executed cfg differs: S5 cfg has head_lr_mult 1.0 (optimizer says 1e-5): rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['training']]
+    RESULT: 1 FAIL (6 checks) step=500 arm=S5 K=2000
+## NEG executed cfg differs: B0b cfg has seed 46: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['data']]
+    RESULT: 1 FAIL (6 checks) step=500 arm=B0b K=2000
+## NEG executed cfg differs: K=4000 yaml in a K=2000 check: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['training']]
+    RESULT: 1 FAIL (6 checks) step=500 arm=B0 K=2000
+## NEG executed cfg has a resume_from: rc=1 expected FAIL -> OK
+    FAIL executed config (ckpt['cfg']) == committed arm yaml   [differs: ['training']]
+    RESULT: 1 FAIL (6 checks) step=500 arm=S2 K=2000
+## NEG step beyond K: rc=1 expected FAIL -> OK
+    FAIL group lr ratios 1 : head : 10 (S5 head 0.1)   []
+    FAIL step is positive and <= K   [got 2100]
+    RESULT: 2 FAIL (6 checks) step=2100 arm=S3 K=2000
+## NEG expected step mismatch (--expect-step 1000, ckpt at 500): rc=1 expected FAIL -> OK
+    FAIL step == 1000   [got 500]
+    RESULT: 1 FAIL (7 checks) step=500 arm=B0 K=2000
+## NEG -F: step2000.pt whose saved step is 1500: rc=1 expected FAIL -> OK
+    FAIL final snapshot step == 2000   [got 1500]
+    RESULT: 1 FAIL (7 checks) step=1500 arm=B0 K=2000
+## POSITIVE -F: step2000.pt saved at 2000: rc=0 expected no FAIL -> OK
+    RESULT: ALL PASS (7 checks) step=2000 arm=B0 K=2000
+## POSITIVE-WAIT: truncated file => WAIT, rc 0: rc=0 expected no FAIL -> OK
+    WAIT checkpoint unreadable/partial (RuntimeError: PytorchStreamReader failed reading zip archive: failed finding central directory): re-run later
+## NEG -F: truncated file => FAIL: rc=1 expected FAIL -> OK
+    FAIL checkpoint unreadable/partial (RuntimeError: PytorchStreamReader failed reading zip archive: failed finding central directory): re-run later
+
+OPTIMIZER-PROBE NEGATIVE-CONTROL SUITE: ALL AS EXPECTED

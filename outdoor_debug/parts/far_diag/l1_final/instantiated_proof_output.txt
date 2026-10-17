@@ -1,0 +1,74 @@
+== 0 load_config round trip
+PASS B0_k2000: train.load_config(yaml) == yaml
+PASS B0b_k2000: train.load_config(yaml) == yaml
+PASS S1_k2000: train.load_config(yaml) == yaml
+PASS S2_k2000: train.load_config(yaml) == yaml
+PASS S3_k2000: train.load_config(yaml) == yaml
+PASS S4_k2000: train.load_config(yaml) == yaml
+PASS S5_k2000: train.load_config(yaml) == yaml
+PASS S6_k2000: train.load_config(yaml) == yaml
+PASS B0_k4000: train.load_config(yaml) == yaml
+PASS B0b_k4000: train.load_config(yaml) == yaml
+PASS S1_k4000: train.load_config(yaml) == yaml
+PASS S2_k4000: train.load_config(yaml) == yaml
+PASS S3_k4000: train.load_config(yaml) == yaml
+PASS S4_k4000: train.load_config(yaml) == yaml
+PASS S5_k4000: train.load_config(yaml) == yaml
+PASS S6_k4000: train.load_config(yaml) == yaml
+== 1 sources: sampler weights (real train._build_multisource, world_size 4, rank 0)
+B0 instantiated sources: [('tartanair', 'VDASemanticsDegradedTartanAirDataset'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('irs', 'VDASemanticsDegradedIRSDataset'), ('spring', 'DegradedSpringDataset'), ('kitti_raw', 'DegradedKITTIRawTrainDataset'), ('nyu_train', 'DegradedNYUTrainDataset')]
+S1 instantiated sources: [('tartanair', 'VDASemanticsDegradedTartanAirDataset'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('irs', 'VDASemanticsDegradedIRSDataset'), ('spring', 'DegradedSpringDataset'), ('kitti_raw', 'DegradedKITTIRawTrainDataset')]
+S2 instantiated sources: [('tartanair', 'VDASemanticsDegradedTartanAirDataset'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('irs', 'VDASemanticsDegradedIRSDataset'), ('spring', 'DegradedSpringDataset'), ('kitti_raw', 'DegradedKITTIRawTrainDataset'), ('nyu_train', 'DegradedNYUTrainDataset')]
+S3 instantiated sources: [('tartanair', 'VDASemanticsDegradedTartanAirDataset'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset'), ('irs', 'VDASemanticsDegradedIRSDataset'), ('spring', 'DegradedSpringDataset'), ('kitti_raw', 'DegradedKITTIRawTrainDataset'), ('nyu_train', 'DegradedNYUTrainDataset')]
+B0 sampler-weight sums: {'tartanair': 310000.0, 'vkitti': 40000.0, 'pointodyssey': 87206.0, 'pointodyssey#2': 12794.0, 'irs': 100000.0, 'spring': 4843.0, 'kitti_raw': 299397.0, 'nyu_train': 170297.0}
+PASS S1 instantiated sources have NO nyu_train / scannetpp_train, all 7 others present, B0's order   [['tartanair', 'vkitti', 'pointodyssey', 'pointodyssey', 'irs', 'spring', 'kitti_raw']]
+CONTROL-OK B0 DOES instantiate nyu_train (the S1 check is not vacuous)
+PASS S1 empirical sampler draw contains no nyu_train   [5981 draws]
+CONTROL-OK B0 empirical draw does contain nyu_train   [1014]
+PASS B0 weight-sum ratio kitti_raw/tartanair == 299397/310000 (sampler built from sampling_mass)   [0.965797 vs 0.965797]
+PASS S2 kitti_raw/tartanair weight-sum ratio == 29940/310000 (kitti /10)   [0.096581]
+PASS S2: all other source weight sums unchanged vs B0
+PASS S3 vkitti/tartanair weight-sum ratio == 400000/310000 (vkitti x10)   [1.290323]
+PASS S3: all other source weight sums unchanged vs B0
+CONTROL-OK B0 vkitti/tartanair is 40000/310000, NOT S3's ratio
+empirical shares of the sampler draws (local sources, scannetpp dropped):
+  B0: tartanair 30.3%, kitti_raw 29.5%, nyu_train 16.7%, irs 10.1%, pointodyssey 9.4%, vkitti 3.6%, spring 0.3%
+  S1: tartanair 35.9%, kitti_raw 35.4%, pointodyssey 11.7%, irs 11.6%, vkitti 4.8%, spring 0.6%
+  S2: tartanair 40.7%, nyu_train 22.3%, irs 13.5%, pointodyssey 13.2%, vkitti 5.2%, kitti_raw 4.3%, spring 0.8%
+  S3: vkitti 28.3%, tartanair 22.6%, kitti_raw 21.7%, nyu_train 12.5%, pointodyssey 7.4%, irs 7.3%, spring 0.2%
+PASS S2 empirical kitti_raw share ratio S2/B0 matches the mass arithmetic (within 12% relative)   [measured 0.144 expected 0.136]
+PASS S3 empirical vkitti share ratio S3/B0 matches the mass arithmetic (within 12% relative)   [measured 7.76 expected 7.40]
+CONTROL-OK a WRONG expectation (kitti share /2 instead of /10) is rejected by the same tolerance
+== 2 S4 lambda: measured SiLog of the real compute_loss, pure log bias e (diff_log == e everywhere): silog = sqrt(e^2 (1 - lambda))
+PASS B0: measured silog 0.21213 == sqrt(e^2 (1-0.5)) 0.21213 from the arm's own loss block
+PASS S4: measured silog 0.27659 == sqrt(e^2 (1-0.15)) 0.27659 from the arm's own loss block
+CONTROL-OK S4 measured silog differs from B0's by > 0.05
+== 3 S5 head lr: real model (local weights) + real train.build_optimizer
+B0 [{'n': 188, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 0}, {'n': 64, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 64}, {'n': 2, 'initial_lr': 0.001, 'lr': 0.001, 'n_head': 0}] len(depth_head_parameters) = 64
+S5 [{'n': 188, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 0}, {'n': 64, 'initial_lr': 1e-05, 'lr': 1e-05, 'n_head': 64}, {'n': 2, 'initial_lr': 0.001, 'lr': 0.001, 'n_head': 0}] len(depth_head_parameters) = 64
+S4 [{'n': 188, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 0}, {'n': 64, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 64}, {'n': 2, 'initial_lr': 0.001, 'lr': 0.001, 'n_head': 0}] len(depth_head_parameters) = 64
+PASS B0: exactly one group holds the depth head; its initial_lr == 1e-4; group sizes (188, 64, 2) as in the c3_n46 checkpoint   [[{'n': 188, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 0}, {'n': 64, 'initial_lr': 0.0001, 'lr': 0.0001, 'n_head': 64}, {'n': 2, 'initial_lr': 0.001, 'lr': 0.001, 'n_head': 0}]]
+PASS S5: that group's initial_lr == 1e-5 (0.1x), the head group holds ALL depth-head params
+PASS S5: every NON-head group has the same initial_lr as B0 (1e-4, 1e-3 gates)
+PASS S4: optimizer groups identical to B0 (S4 must not touch the optimizer)
+CONTROL-OK S5 head group differs from B0's head group
+  S5 step 0 scale 2.0000e-03 group lrs ['2.000e-07', '2.000e-08', '2.000e-06']
+  S5 step 499 scale 1.0000e+00 group lrs ['1.000e-04', '1.000e-05', '1.000e-03']
+  S5 step 1000 scale 7.5000e-01 group lrs ['7.500e-05', '7.500e-06', '7.500e-04']
+  S5 step 1999 scale 1.0966e-06 group lrs ['1.097e-10', '1.097e-11', '1.097e-09']
+PASS S5: head-group lr / group-0 lr == 0.1 at every probed step (the schedule multiplies all groups)
+== 4 S6 far-weighted SiLog: measured effect through the real compute_loss from the arm's own loss block
+PASS B0 (arm yaml, no S6 keys): loss == the ORIGINAL SiLog expression, bit-for-bit   [0.305909]
+PASS S6 (arm yaml): loss == float64 reference with w=4 for gt>=50 m   [0.303048 vs 0.303048]
+PASS S6: far share of |grad| larger than B0's   [0.227 vs 0.068]
+CONTROL-OK S6 loss differs from B0's loss on the same batch   [0.30305 vs 0.30591]
+== 5 seeds (B0 vs B0b): REAL loader, world_size 4, first batches
+first 200 sampler idx: B0 vs B0b identical 0/200; clip ids identical 0/200; B0 vs B0(re-run) identical idx 200/200
+first-2-batch frame checksums (sha256[:16] of the real loader's frame tensors, noise included): B0 ['38b3226d90211b6e', '115ca57d6c175ddb'] | B0 re-run ['38b3226d90211b6e', '115ca57d6c175ddb'] | B0b ['40df0efdcd80dc36', '1c791aa9ad5ed41d']
+PASS B0 vs B0b: first 200 sampler idx differ (<= 5/200 coincide) and clip ids differ
+PASS B0 vs B0b: first-batch frame checksums DIFFER (clips and/or noise)
+CONTROL-OK POSITIVE control: B0 re-run is identical (idx 200/200, checksums equal) -> the comparison can see equality
+same clip (idx 0) frames checksum: B0 c376c9c97a682117 | B0 re-run c376c9c97a682117 | B0b 78cf96882b205290
+PASS same clip, B0 vs B0b: noise checksum DIFFERS
+CONTROL-OK POSITIVE control: same clip, B0 vs B0 re-run identical
+INSTANTIATED PROOF: ALL PASS

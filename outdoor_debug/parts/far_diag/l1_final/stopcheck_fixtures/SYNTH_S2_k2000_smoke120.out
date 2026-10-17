@@ -1,0 +1,24 @@
+ config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+xFormers not available
+xFormers not available
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=46000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[checkpoint] permanent step{N}.pt snapshots at: [120]
+[monitor] step0 outdoor median(pred)/median(GT) = 1.006 (pred 14.27 m, GT 14.18 m)
+e0 step20/120 loss=0.8702 lr=4.00e-06 1.5it/s static=1.0000 sev=0.04
+e0 step40/120 loss=0.8206 lr=8.00e-06 1.6it/s static=0.0000 sev=0.08
+e0 step60/120 loss=0.8016 lr=1.20e-05 1.6it/s static=0.0000 sev=0.12
+e0 step80/120 loss=0.7838 lr=1.60e-05 1.6it/s static=0.0000 sev=0.16
+[monitor] step100 outdoor median(pred)/median(GT) = 0.978 (pred 13.87 m, GT 14.18 m)
+e0 step100/120 loss=0.7944 lr=2.00e-05 1.6it/s static=0.0000 sev=0.2
+e0 step120/120 loss=0.7753 lr=2.40e-05 1.6it/s static=0.0000 sev=0.24

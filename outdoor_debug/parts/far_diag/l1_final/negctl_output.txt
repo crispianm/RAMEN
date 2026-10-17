@@ -1,0 +1,163 @@
+## POSITIVE K=2000: 8 synthetic fixtures (real c3_n46 rows 20..2000, lr rewritten): rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## POSITIVE K=4000: 8 synthetic fixtures: rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## POSITIVE smoke mode (-S 120) on 8 truncated fixtures: rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## POSITIVE-WAIT: a log truncated at step 400 gives WAIT lines, no FAIL: rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## NEG the same truncated log under -F (WAIT becomes FAIL): rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 500 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 520 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 600 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 1000 not printed yet
+## NEG (1) lr never decays (constant 1e-4 after warmup): rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 1.000e-04 expected 7.509e-05
+    [B0] item 1: FAIL table step 1480 lr 1.000e-04 expected 2.693e-05
+    [B0] item 1: FAIL table step 1900 lr 1.000e-04 expected 1.114e-06
+    [B0] item 1: FAIL table step 1980 lr 1.000e-04 expected 4.835e-08
+## NEG (1) lr hits 0 at step 1600: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL table step 1900 lr 0.000e+00 expected 1.114e-06
+    [S3] item 1: FAIL table step 1980 lr 0.000e+00 expected 4.835e-08
+    [S3] item 1: FAIL table step 2000 lr 0.000e+00 expected 1.097e-10
+    [S3] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(1600, 0.0), (1620, 0.0), (1640, 0.0)]
+## NEG (1) lr x2 everywhere (peak 2e-4): rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 8.000e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 1.600e-05 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 4.000e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 2.000e-04 expected 1.000e-04
+## NEG (1) the UNEDITED 12000-step lr values (real cosine of the 12k run) under a K=2000 label: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 9.950e-05 expected 7.509e-05
+    [B0] item 1: FAIL table step 1480 lr 9.820e-05 expected 2.693e-05
+    [B0] item 1: FAIL table step 1900 lr 9.640e-05 expected 1.114e-06
+    [B0] item 1: FAIL table step 1980 lr 9.600e-05 expected 4.835e-08
+## NEG (1) warmup missing (lr starts at 1e-4): rc=1 expected FAIL -> OK
+    [B0b] item 1: FAIL table step 20 lr 1.000e-04 expected 4.000e-06
+    [B0b] item 1: FAIL table step 40 lr 1.000e-04 expected 8.000e-06
+    [B0b] item 1: FAIL table step 100 lr 1.000e-04 expected 2.000e-05
+    [B0b] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 0.0001), (40, 0.0001), (60, 0.0001)]
+## NEG (1) restart-style warmup of 100 steps (lr reaches 1e-4 at 100): rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL table step 20 lr 2.000e-05 expected 4.000e-06
+    [S4] item 1: FAIL table step 40 lr 4.000e-05 expected 8.000e-06
+    [S4] item 1: FAIL table step 100 lr 1.000e-04 expected 2.000e-05
+    [S4] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 2e-05), (40, 4e-05), (60, 6e-05)]
+## NEG (1) a 4000-step schedule in a K=2000 run (cosine too slow): rc=1 expected FAIL -> OK
+    [S5] item 1: FAIL table step 1000 lr 9.510e-05 expected 7.509e-05
+    [S5] item 1: FAIL table step 1480 lr 8.190e-05 expected 2.693e-05
+    [S5] item 1: FAIL table step 1900 lr 6.550e-05 expected 1.114e-06
+    [S5] item 1: FAIL table step 1980 lr 6.200e-05 expected 4.835e-08
+## NEG (2) a [resume] line is present (restart from a checkpoint): rc=1 expected FAIL -> OK
+    [B0] item 2: FAIL 1 [resume] lines (a from-release run must have none): [resume] /projects/b5dh/x/step12000.pt epoch=3 step=12000 best=0.3485
+    RESULT: FAIL (scancel)
+## NEG (2) total printed 12000 (max_steps not overridden): rc=1 expected FAIL -> OK
+    [S1] item 2: FAIL totals printed [12000] (expect 2000)
+    RESULT: FAIL (scancel)
+## NEG (2) snapshot list [12000]: rc=1 expected FAIL -> OK
+    [S2] item 2: FAIL snapshot list: [checkpoint] permanent step{N}.pt snapshots at: [12000] (want [2000])
+    RESULT: FAIL (scancel)
+## NEG (2) [params] shows an unfrozen backbone: rc=1 expected FAIL -> OK
+    [S3] item 2: FAIL [params] total=30.61M trainable=8.55M (unfrozen_backbone=True)
+    RESULT: FAIL (scancel)
+## NEG (3) start probe: monitor step0 ratio 0.58 (collapsed start, e.g. wrong init): rc=1 expected FAIL -> OK
+    [B0] item 3: FAIL monitor step0 ratio 0.58 (release/c3_n46-run reference 1.006 +-0.01: the run starts from the RELEASE, not a collapsed or random init)
+    RESULT: FAIL (scancel)
+## NEG (3) start probe: no monitor step0 line: rc=1 expected FAIL -> OK
+    [S4] item 3: FAIL no `[monitor] step0` line (the start-of-run monitor on the release weights)
+    RESULT: FAIL (scancel)
+## NEG (4) severity always 1 (no ramp): rc=1 expected FAIL -> OK
+    [S5] item 4: FAIL severity ramp min(1,G/500) on 100 rows; mismatches [(20, 1.0), (40, 1.0), (60, 1.0)]
+    RESULT: FAIL (scancel)
+## NEG (5) B0b log carries B0's seed 46000: rc=1 expected FAIL -> OK
+    [B0b] item 5: FAIL [data] seed values [46000] (want [49000] = data.seed 49 x1000)
+    RESULT: FAIL (scancel)
+## NEG (5) B0 log carries B0b's seed 49000: rc=1 expected FAIL -> OK
+    [B0] item 5: FAIL [data] seed values [49000] (want [46000] = data.seed 46 x1000)
+    RESULT: FAIL (scancel)
+## NEG (5) config sha line != yaml sha: rc=1 expected FAIL -> OK
+    [S6] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S6.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG (5) config line names the wrong arm yaml: rc=1 expected FAIL -> OK
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S3.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG (5) config line names the k4000 yaml: rc=1 expected FAIL -> OK
+    [S1] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k4000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG (5) config line missing: rc=1 expected FAIL -> OK
+    [B0] item 5: FAIL no ' config :' line in the log (the sbatch preflight prints it)
+    RESULT: FAIL (scancel)
+## NEG (6) S1 keeps nyu_train/scannetpp_train in the bound line: rc=1 expected FAIL -> OK
+    [S1] item 6: FAIL effective bound line iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10 (want ...yssey=999, pointodyssey=999, irs=80, spring=80, kit
+    RESULT: FAIL (scancel)
+## NEG (6) S1 clip total equals the full mix (94581): rc=1 expected FAIL -> OK
+    [S1] item 6: FAIL S1 train clips 94581 (must be < the full mix's 94581: two sources removed)
+    RESULT: FAIL (scancel)
+## NEG (6) non-S1 clip total differs (94580): rc=1 expected FAIL -> OK
+    [S3] item 6: FAIL train clips 94580 val 3 (c3_n46 run: 94581 / 3)
+    [S3] item 6: FAIL differs from B0: ['[data] train clips=94580 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    RESULT: FAIL (scancel)
+## NEG (6) a non-S1 arm lacks nyu_train in the bound line: rc=1 expected FAIL -> OK
+    [S4] item 6: FAIL effective bound line  upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80 (want ...0, spring=80, kitti_raw=80, nyu_train=10, scannetpp
+    [S4] item 6: FAIL differs from B0: ['[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80']
+    RESULT: FAIL (scancel)
+## NEG (6) world size 2: rc=1 expected FAIL -> OK
+    [S2] item 6: FAIL no `[data] train clips=N val clips=V world_size=4` line
+    [S2] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=2 device=cuda:0 seed=<S>']
+    RESULT: FAIL (scancel)
+## NEG (7) [ts2] line present: rc=1 expected FAIL -> OK
+    [S5] item 7: FAIL [ts2] occurrences 1 (L1 has no TS2 labels)
+    RESULT: FAIL (scancel)
+## NEG (8) non-finite loss warning: rc=1 expected FAIL -> OK
+    [S6] item 8: FAIL 1 non-finite warnings
+    RESULT: FAIL (scancel)
+## NEG (10) B0 loss 2x the c3_n46 reference: rc=1 expected FAIL -> OK
+    [B0] item 10: FAIL mean |loss/ref - 1| over 25 printed rows <= 500 = 1.000 vs the real c3_n46 12k run (same recipe and seed; < 0.15)
+    RESULT: FAIL (scancel)
+## NEG (10) B0b loss 0.5x the reference: rc=1 expected FAIL -> OK
+    [B0b] item 10: FAIL loss mean ratio to the c3_n46 reference = 0.500 (seed 49 band 0.85-1.18)
+    RESULT: FAIL (scancel)
+## NEG -K 4000 applied to the K=2000 fixtures: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 7.510e-05 expected 9.507e-05
+    [B0] item 1: FAIL table step 2000 lr 1.100e-10 expected 6.117e-05
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 3480 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 3900 not printed yet
+## NEG -K 2000 applied to the K=4000 fixtures: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 9.510e-05 expected 7.509e-05
+    [B0] item 1: FAIL table step 1480 lr 8.190e-05 expected 2.693e-05
+    [B0] item 1: FAIL table step 1900 lr 6.550e-05 expected 1.114e-06
+    [B0] item 1: FAIL table step 1980 lr 6.200e-05 expected 4.835e-08
+## NEG (9) S6 metrics lack silog_far_px_frac: rc=1 expected FAIL -> OK
+## NEG (9) B0 metrics carry silog_far_px_frac: rc=1 expected FAIL -> OK
+    [B0] item 9: FAIL 20 rows; silog missing/non-finite at []; silog_far_px_frac presence mismatches (want only in S6) at [100, 200, 300]
+    RESULT: FAIL (scancel)
+## NEG (9) S4 metrics lack silog: rc=1 expected FAIL -> OK
+    [S4] item 9: FAIL 20 rows; silog missing/non-finite at [100, 200, 300]; silog_far_px_frac presence mismatches (want only in S6) at []
+    RESULT: FAIL (scancel)
+## NEG (9) S6 far-pixel fraction 0.0 (far weighting measured to cover no pixel): rc=1 expected FAIL -> OK
+    [S6] item 9: FAIL 20 rows; silog missing/non-finite at []; silog_far_px_frac presence mismatches (want only in S6) at []; far-pixel fraction values [0.0, 0.0, 0.0, 0.0] (S6 must be in (0.001, 0.2))
+    RESULT: FAIL (scancel)
+## NEG (9) S6 far-pixel fraction 0.6 (implausible): rc=1 expected FAIL -> OK
+    [S6] item 9: FAIL 20 rows; silog missing/non-finite at []; silog_far_px_frac presence mismatches (want only in S6) at []; far-pixel fraction values [0.6, 0.6, 0.6, 0.6] (S6 must be in (0.001, 0.2))
+    RESULT: FAIL (scancel)
+## NEG (5) resume_reseed present in the B0b yaml: rc=1 expected FAIL -> OK
+    [B0b] item 5: FAIL config data.seed ['49'] (want [49]), resume_reseed lines 1 (want 0), resume_from ['null'] (want null), lr_restart keys absent
+    [B0b] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoo
+    RESULT: FAIL (scancel)
+## NEG (5) resume_from set in the B0 yaml: rc=1 expected FAIL -> OK
+    [B0] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['/x.pt'] (want null), lr_restart keys absent
+    [B0] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0.yaml sha256 1a0a0751ec2a330d02d788d3f7067ecbc8eef60b4c9c67a9629ddbb658a81111 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG (5) data.seed 47 in the S2 yaml: rc=1 expected FAIL -> OK
+    [S2] item 5: FAIL config data.seed ['47'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys absent
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG (5) lr_restart key in the S4 yaml: rc=1 expected FAIL -> OK
+    [S4] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys present
+    [S4] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S4.yaml sha256 1e8506c0044777a63ee7e06a45b9fd90a64d646e34bf21527707ce1658394048 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    RESULT: FAIL (scancel)
+## NEG the unedited REAL 12000-step log passed as B0 (K=2000): rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 9.950e-05 expected 7.509e-05
+    [B0] item 1: FAIL table step 1480 lr 9.820e-05 expected 2.693e-05
+    [B0] item 1: FAIL table step 1900 lr 9.640e-05 expected 1.114e-06
+    [B0] item 1: FAIL table step 1980 lr 9.600e-05 expected 4.835e-08
+
+NEGATIVE-CONTROL SUITE: ALL AS EXPECTED

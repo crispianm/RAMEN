@@ -1,0 +1,40 @@
+## K=2000: 8 arms identical schedule: True; max |real - closed form| over all 2000 steps = 0.00e+00
+printed step G | lr group0 (1e-4*scale(G-1)) | S5 head group (1e-5*scale) | gate group (1e-3*scale) | note
+     1 | 2.000e-07 | 2.000e-08 | 2.000e-06 | warmup
+    20 | 4.000e-06 | 4.000e-07 | 4.000e-05 | warmup
+    40 | 8.000e-06 | 8.000e-07 | 8.000e-05 | warmup
+   100 | 2.000e-05 | 2.000e-06 | 2.000e-04 | warmup
+   250 | 5.000e-05 | 5.000e-06 | 5.000e-04 | warmup
+   480 | 9.600e-05 | 9.600e-06 | 9.600e-04 | warmup
+   500 | 1.000e-04 | 1.000e-05 | 1.000e-03 | warmup
+   501 | 1.000e-04 | 1.000e-05 | 1.000e-03 | cosine
+   520 | 9.996e-05 | 9.996e-06 | 9.996e-04 | cosine
+   600 | 9.893e-05 | 9.893e-06 | 9.893e-04 | cosine
+  1000 | 7.509e-05 | 7.509e-06 | 7.509e-04 | cosine
+  1480 | 2.693e-05 | 2.693e-06 | 2.693e-04 | cosine
+  1900 | 1.114e-06 | 1.114e-07 | 1.114e-05 | cosine
+  1980 | 4.835e-08 | 4.835e-09 | 4.835e-07 | cosine
+  1999 | 4.386e-10 | 4.386e-11 | 4.386e-09 | cosine
+  2000 | 1.097e-10 | 1.097e-11 | 1.097e-09 | final step
+
+## K=4000: 8 arms identical schedule: True; max |real - closed form| over all 4000 steps = 0.00e+00
+printed step G | lr group0 (1e-4*scale(G-1)) | S5 head group (1e-5*scale) | gate group (1e-3*scale) | note
+     1 | 2.000e-07 | 2.000e-08 | 2.000e-06 | warmup
+    20 | 4.000e-06 | 4.000e-07 | 4.000e-05 | warmup
+    40 | 8.000e-06 | 8.000e-07 | 8.000e-05 | warmup
+   100 | 2.000e-05 | 2.000e-06 | 2.000e-04 | warmup
+   250 | 5.000e-05 | 5.000e-06 | 5.000e-04 | warmup
+   480 | 9.600e-05 | 9.600e-06 | 9.600e-04 | warmup
+   500 | 1.000e-04 | 1.000e-05 | 1.000e-03 | warmup
+   501 | 1.000e-04 | 1.000e-05 | 1.000e-03 | cosine
+   520 | 9.999e-05 | 9.999e-06 | 9.999e-04 | cosine
+   600 | 9.980e-05 | 9.980e-06 | 9.980e-04 | cosine
+  1000 | 9.507e-05 | 9.507e-06 | 9.507e-04 | cosine
+  2000 | 6.117e-05 | 6.117e-06 | 6.117e-04 | cosine
+  3480 | 5.368e-06 | 5.368e-07 | 5.368e-05 | cosine
+  3900 | 2.053e-07 | 2.053e-08 | 2.053e-06 | cosine
+  3980 | 8.882e-09 | 8.882e-10 | 8.882e-08 | cosine
+  3999 | 8.057e-11 | 8.057e-12 | 8.057e-10 | cosine
+  4000 | 2.014e-11 | 2.014e-12 | 2.014e-10 | final step
+
+RESULT: OK
