@@ -1,0 +1,2580 @@
+{
+ "tartanair_version": "1.4.0",
+ "reader": "tartanair.reader.TartanAirImageReader",
+ "entries": [
+  {
+   "env": "AbandonedFactory",
+   "traj": "P000",
+   "depth": "000147_lcam_front_depth.png",
+   "image": "000147_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "7497775f52e2d925e35de9bb1f43cb4be5fa0b5b6cd40c5b8748967e8e19a815",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0f5d8a8be22b6be6c2b2934262c3a9835acebb82c730b6ed5af850bd8400e43a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 10.2578125
+  },
+  {
+   "env": "AbandonedFactory",
+   "traj": "P000",
+   "depth": "000739_lcam_front_depth.png",
+   "image": "000739_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "c40a70b1c586dbe92ec640103880421a06cfbfb739c383f42e330526c823977d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0550cbd4ef303dfbdcbec2c6bf0522047b2cd235af1ab4e8f6d0b7fa023c2bb1",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15000.0
+  },
+  {
+   "env": "AbandonedFactory",
+   "traj": "P000",
+   "depth": "001331_lcam_front_depth.png",
+   "image": "001331_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8415cce9eeedb2bb3ede357c4aa32551cfacc06d06d9351c5272a9cd001c5c8f",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "738869580fcde0f87940ac65ac33adae1fe17e7f219bd508806b13a9faf4b06c",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16296.0
+  },
+  {
+   "env": "AbandonedFactory",
+   "traj": "P001",
+   "depth": "000527_lcam_front_depth.png",
+   "image": "000527_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "4a112b68db140dde3237513bd725d36d6b6ed2da28282e0ff6aa0a784bfb3919",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "7e77b6bf99984be94ac9fef7d3d95a11a4072513264716bb431927c6e36c6d92",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 41.125
+  },
+  {
+   "env": "AmericanDiner",
+   "traj": "P000",
+   "depth": "000028_lcam_front_depth.png",
+   "image": "000028_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "4e6b80ea04955b3ff6ae4217f5c332ac70ee6ff0f50761c5fa66c6aac089c662",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0b6b8443c32b038a44cb271d85f825f04b5e58a001742a06ffcab1fb58716aad",
+   "n_nonfinite": 0,
+   "n_65504": 5,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "AmericanDiner",
+   "traj": "P000",
+   "depth": "000141_lcam_front_depth.png",
+   "image": "000141_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "b086eb52d9a8deaf2018b6e975ff2bf6e15e643bffc8d5cfd2a7d34f22418372",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "8302e0fcfe19f47220f19676a2bee9af08b538b45c6a4cd56bb92f7709789806",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 7.4375
+  },
+  {
+   "env": "AmericanDiner",
+   "traj": "P000",
+   "depth": "000254_lcam_front_depth.png",
+   "image": "000254_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "af0d55cac6239292eb8596c48108b076c538b2894d69a3b905bed8eb41a1519b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f2e53742ab53baa7ab9bd13fa850ff4cfcb39ecacc43b41190fda98a414441e4",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 7.12890625
+  },
+  {
+   "env": "AmericanDiner",
+   "traj": "P002",
+   "depth": "000197_lcam_front_depth.png",
+   "image": "000197_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "90eee6ea23953d893fb08e77367046b708225679b931afe32a0aa32574abc24b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "52acbdae7684f466f5ece3b5cffacdb534f09cb943cbeb56e25cf442272df9d3",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 3.140625
+  },
+  {
+   "env": "AmericanDiner",
+   "traj": "P000",
+   "depth": "000033_lcam_front_depth.png",
+   "image": "000033_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "793bdee36bca5c37e9acbed86b0f4a0d64610ee925cd9b79b9a567b21ee6ea5d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "36683189063925544489060de106c9f34ec9b2f9a89a2c75ced51662f3ed0f1c",
+   "n_nonfinite": 0,
+   "n_65504": 10,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "AmusementPark",
+   "traj": "P000",
+   "depth": "000155_lcam_front_depth.png",
+   "image": "000155_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "d4ff38cc520a6a66b2d451bdbd5c18a70504c5283aefe30c1ae48fcd1f7f974e",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f03245eed844a40279d500c41371e19d100bfb69e4585e705a0e001264875676",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 420.5
+  },
+  {
+   "env": "AmusementPark",
+   "traj": "P000",
+   "depth": "000776_lcam_front_depth.png",
+   "image": "000776_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "9e22711cda20d287fb07939c938b5a9df817f48b95a94e1d00071285c6fe8802",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "9b4cdd5611a86dbefd593791c971ac4e8b66e0571d9c7dd8cd39705df99b3deb",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 434.75
+  },
+  {
+   "env": "AmusementPark",
+   "traj": "P000",
+   "depth": "001397_lcam_front_depth.png",
+   "image": "001397_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "120565a4cbf497a374d309ec2d0a3a27214db852df9ee7bba03d39cf79765c28",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "486185a1c0fe1720dd4671383a522fc115475a2fd5f3b1218ce78fdf19b8a115",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 410.75
+  },
+  {
+   "env": "AmusementPark",
+   "traj": "P001",
+   "depth": "000504_lcam_front_depth.png",
+   "image": "000504_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3f065b5ff8490745cd88ab5fd6f50c37297b70dda185626845abd10be4f7e260",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "65cdc04bb709ea36089df7682e4fee7425c1eb36c6337d71e8e6b802d2c866d6",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 400.5
+  },
+  {
+   "env": "ArchVizTinyHouseDay",
+   "traj": "P000",
+   "depth": "000011_lcam_front_depth.png",
+   "image": "000011_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "23d34bcb41dc25b860f1eec2e34f3ae865398f9e0121be2dfb740e269ddc76ff",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "a4db9375ae4835ee0f038e58c3998d6ba017b5f39b71cbbc72685eb6d84b1482",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16360.0
+  },
+  {
+   "env": "ArchVizTinyHouseDay",
+   "traj": "P000",
+   "depth": "000057_lcam_front_depth.png",
+   "image": "000057_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "d3ac6bf0d4a31efe0c772edb5fc9ac76c60bf1861905e10f589c09b717d9629e",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "84ad7511dd86e6bd4a9cf157223faab0662094f09e6fb5ec43473bcc7e6a1daf",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13656.0
+  },
+  {
+   "env": "ArchVizTinyHouseDay",
+   "traj": "P000",
+   "depth": "000103_lcam_front_depth.png",
+   "image": "000103_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3f138a08bb077276a41a46dfba6c5f92f1dec83cbc7c2ee6ef38c947bd1d5b9d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "4a7a28f98ba380d973c1efecf0faa2af5e100b1da752a95f60b8c4706ac0ab8a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15920.0
+  },
+  {
+   "env": "ArchVizTinyHouseDay",
+   "traj": "P001",
+   "depth": "000059_lcam_front_depth.png",
+   "image": "000059_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "506332aed7506dd78530d4e09c18015a04f012d16a25f09e59e955abc1813363",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f5c5af98a37b47489e61cdf967bb4895f868a11e02738d66886844d5704c3e45",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13736.0
+  },
+  {
+   "env": "ArchVizTinyHouseNight",
+   "traj": "P000",
+   "depth": "000011_lcam_front_depth.png",
+   "image": "000011_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8d32e6645ac1b7988fc1ed28fe6857e61f69ea6e09bb7e1691c15b3a7e2732c4",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0da56f0a462b2e32649fa5e4d8ade5656715038d84c4798ce3821786c4f6a381",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16360.0
+  },
+  {
+   "env": "ArchVizTinyHouseNight",
+   "traj": "P000",
+   "depth": "000057_lcam_front_depth.png",
+   "image": "000057_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f48a3a0c4dd4f02ab622affa2ee767f104b55eb2a3558099241d1f072ae43c06",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "75923c8e097b13e8575958a97e5b75d7dc7d56c49ee0f67c2cf33f6e3470c385",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13656.0
+  },
+  {
+   "env": "ArchVizTinyHouseNight",
+   "traj": "P000",
+   "depth": "000103_lcam_front_depth.png",
+   "image": "000103_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a55edbeb62a654b2a0158412f17d77becee404bdc35b1109f0c86cc1c866c311",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "bc667dca012d397028d88e4cacf5d8d38a1583997a0e9a8080389a5d92555436",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15920.0
+  },
+  {
+   "env": "ArchVizTinyHouseNight",
+   "traj": "P001",
+   "depth": "000059_lcam_front_depth.png",
+   "image": "000059_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "ca0122e74aba6d7368a2ef50a6387b28283cd2008cd8c51a11cd518d3e3f5326",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "1719de88f3f05685f47339e306ac85cde34d51d1b69d94520e37b561e898dd1e",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 81.5625
+  },
+  {
+   "env": "BrushifyMoon",
+   "traj": "P001",
+   "depth": "000506_lcam_front_depth.png",
+   "image": "000506_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "151282ab3da3d71c128bb25773423fc5fbcf4d6d926b9075a31ebb3e98010c96",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "c69b70c0480b46fea5500ccff3a240ac7c5910c9a0311fbccbfdb8dc39bd2413",
+   "n_nonfinite": 0,
+   "n_65504": 120260,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "BrushifyMoon",
+   "traj": "P001",
+   "depth": "002533_lcam_front_depth.png",
+   "image": "002533_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "da966b7a70992b65100724ea4d4adf401a5bc3f72fc49435cc6a8fd71c2736f4",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "aafe1e896b806e32115ae6433cf79c6a38467cd0d94b7f5eaf2227d3eaed1931",
+   "n_nonfinite": 0,
+   "n_65504": 126159,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "BrushifyMoon",
+   "traj": "P001",
+   "depth": "004559_lcam_front_depth.png",
+   "image": "004559_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a4f1d1c7643f847a0630085eecab33cca771b6d3e2fb38e8b87119883cf92eb8",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "ae4474f507580e7e952961e960508bf869285477153f2b491da043aa313ddaf2",
+   "n_nonfinite": 0,
+   "n_65504": 156620,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "BrushifyMoon",
+   "traj": "P002",
+   "depth": "003216_lcam_front_depth.png",
+   "image": "003216_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a5f856d16862035a77429cb8dcd3ac7ec0fe1183cafcdab746e34b08d98257b8",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "df07130facf426270e752886c48ae58fa524073a9befa6b19e7f32cd16621e6d",
+   "n_nonfinite": 0,
+   "n_65504": 104040,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "BrushifyMoon",
+   "traj": "P001",
+   "depth": "000000_lcam_front_depth.png",
+   "image": "000000_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "60b7d954fb722cccc23397b522577f98cc1803fbfff31cef407fa447911967e6",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "46e89d4c9987865209a0bee6de9014594e88d248395981675999c38dbeb7c628",
+   "n_nonfinite": 0,
+   "n_65504": 191759,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "CoalMine",
+   "traj": "P000",
+   "depth": "000059_lcam_front_depth.png",
+   "image": "000059_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5e11f0b8a8c5b372ea0b1d3071e76cbd5fda094a16d30b79d25e3b80cfcb0e4d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "932ca632fc5d272ecb6b53942c2bc86531a5b680541450a55f94f15e2fa1c93f",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 8.7734375
+  },
+  {
+   "env": "CoalMine",
+   "traj": "P000",
+   "depth": "000298_lcam_front_depth.png",
+   "image": "000298_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f8dc250895f87e282b3a974bc6bace1f1591ff2c82ed574bfced52ee2bb2021a",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "35db1231b55d3e84ad6fd09ad30b101ccda8b1e5b5bf0a9f89330fec50af4257",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 9.890625
+  },
+  {
+   "env": "CoalMine",
+   "traj": "P000",
+   "depth": "000536_lcam_front_depth.png",
+   "image": "000536_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "ecbf1301d3daa760bb346880b7d1cd94a1bed0a7a4fc454d7db4eba14c18763e",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "07d6452048ff7a8bab6d64956697623664fff25f6b8384433aac1a17cdc4661f",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 12.671875
+  },
+  {
+   "env": "CoalMine",
+   "traj": "P001",
+   "depth": "000477_lcam_front_depth.png",
+   "image": "000477_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "0d087694d92aa3f7f4243555a14198b434bdde6748b906f541c3a4b63a52186d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "01daff6b0b57946c1952fd12d900f0c3addb606c403675f4fa20b19e7d9e43b1",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 6.6796875
+  },
+  {
+   "env": "ConstructionSite",
+   "traj": "P000",
+   "depth": "000109_lcam_front_depth.png",
+   "image": "000109_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a232330e82c260b4a74b721a8edb5726b65d968035b1c6def88e92184b94c2b3",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f1f6ed1b72589d2ea72b27f1feb4abf0c875bb2df3d50c75fd64e13a126d9930",
+   "n_nonfinite": 0,
+   "n_65504": 109400,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "ConstructionSite",
+   "traj": "P000",
+   "depth": "000547_lcam_front_depth.png",
+   "image": "000547_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "d51ea2e97f8190369181b96e666ae38c7d7ec7a73995602e7f721ba348cf7840",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "64fbb2dbc7f08066b8f03739755febe27e3b78c1f096c817c5a47cbb935de9d3",
+   "n_nonfinite": 0,
+   "n_65504": 2828,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "ConstructionSite",
+   "traj": "P000",
+   "depth": "000984_lcam_front_depth.png",
+   "image": "000984_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8bff971600ca203ab48e00f35dd6218f3956890be38aac740cca6d46e19fd95b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0cae533b967d33d53a85253568bc4dcde062baa419680029fa333fef68b54f48",
+   "n_nonfinite": 0,
+   "n_65504": 65956,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "ConstructionSite",
+   "traj": "P001",
+   "depth": "000527_lcam_front_depth.png",
+   "image": "000527_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5dd3cc8c7713f1e256a1d21f73e0ccb0c10b838d3c04b6278d525fecefc83a74",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "78b0c5323e0f3e7782cc9067f10bb3694736f611371dd9b793be6396d23325d7",
+   "n_nonfinite": 0,
+   "n_65504": 118254,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "ConstructionSite",
+   "traj": "P000",
+   "depth": "000000_lcam_front_depth.png",
+   "image": "000000_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "854b9fcc61f0006b23469b3e5f00e8517e409f8fe7c0e16c3786da6a787a1962",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "2b653a507085afc88cabd32dfa8d5484456d5052ba2d1cfeafb6fbf903e1ecb6",
+   "n_nonfinite": 0,
+   "n_65504": 117714,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "DesertGasStation",
+   "traj": "P000",
+   "depth": "000062_lcam_front_depth.png",
+   "image": "000062_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "cd48e6f2c8c58ba548d431f37dc2d5e947410af2860c605311e1908e6c91b644",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "7ca86cefa7126e274c822a234b0a1f96b4e2b167083f7c740b5ca234eaeff5f6",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 47648.0
+  },
+  {
+   "env": "DesertGasStation",
+   "traj": "P000",
+   "depth": "000311_lcam_front_depth.png",
+   "image": "000311_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "405ecdf8895fd5cfd2f50610391d23af755341e21b92a821e1f3e39d2ccc7f68",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "ca7b7f722c6cbfcc4869ec2b63309f241109a9ea2f6e7bb0ea51a00dc5c0e753",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 59456.0
+  },
+  {
+   "env": "DesertGasStation",
+   "traj": "P000",
+   "depth": "000559_lcam_front_depth.png",
+   "image": "000559_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f9e3dd8e7418bcfc5a6eae1624f9ab071e63d2f4fd2d82530b1f9e89135ab354",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "effe089fde82a0377a1abf8ce3d966abddc12d479f3bf077fe87c48e8d0fa463",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 59936.0
+  },
+  {
+   "env": "DesertGasStation",
+   "traj": "P001",
+   "depth": "000284_lcam_front_depth.png",
+   "image": "000284_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1d62981302446334b7e936002f0c34362595f6360180ed8d8e31d0058ca914d5",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "96095c5b66693d239752696c691efc5409d036486215b339703cf072dad932a2",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 48960.0
+  },
+  {
+   "env": "Downtown",
+   "traj": "P000",
+   "depth": "000279_lcam_front_depth.png",
+   "image": "000279_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "64c34d016e964e9ca88ffe6eba7f5481d41707cd48ade1d9f9b43e9688e3dbfb",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "48697d1f8d985f12c36c00007e9e775b163bae973b6ef445701b709418dc2ef9",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 476.5
+  },
+  {
+   "env": "Downtown",
+   "traj": "P000",
+   "depth": "001399_lcam_front_depth.png",
+   "image": "001399_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5f8c6a0a8ba284ae00d2fe06bb922474745edda1f4753d8aebb2083f6fefdbbc",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "115bd26a593821b0e8029bff1cb8cec926c1812a2ca0fb3657163c7cf66351de",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 454.0
+  },
+  {
+   "env": "Downtown",
+   "traj": "P000",
+   "depth": "002518_lcam_front_depth.png",
+   "image": "002518_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "cb524772d690d606251bf9263a2123144c4d55cb26a4ac48c1999695ea390b8c",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "34a43500e49556319b54b2b843078bb20d75c8eeeebea48e4177e3da461165ec",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 289.5
+  },
+  {
+   "env": "Downtown",
+   "traj": "P001",
+   "depth": "001228_lcam_front_depth.png",
+   "image": "001228_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "4ffbb476f97476a434a79a69d21d66819ed637fdb74b4676d4c5253c5fa861ae",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "8e1a9a8aa418dc14d7154aed50db55cfc7bdbde6771ff7e2d96046de25b37b4e",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 77.5625
+  },
+  {
+   "env": "ForestEnv",
+   "traj": "P000",
+   "depth": "000392_lcam_front_depth.png",
+   "image": "000392_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "104df1191a01ee1976880f84ab25f168203b59a0ec8e461809b812a568234775",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "8d14df44e6d52b53f6c25bc369d691688e5b79341c9b11427211026ce8969ef7",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15800.0
+  },
+  {
+   "env": "ForestEnv",
+   "traj": "P000",
+   "depth": "001963_lcam_front_depth.png",
+   "image": "001963_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f8b8f4172cea4d36e446d14178a8028c91b4f9235d8dfc86174e103dea6e549e",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "14f632291207e2518e4b682fb0543c39acddaf1e99504baa6a5e8d67a96e15e9",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16448.0
+  },
+  {
+   "env": "ForestEnv",
+   "traj": "P000",
+   "depth": "003534_lcam_front_depth.png",
+   "image": "003534_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "aa5064944b8ff9fb7a1abcd6236a8e7914ec95d2b6aff64eb439824433c042a6",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "ae13da43ab9df9198533071e67869f3c864c35d80abd6a6da49ded4375dc9a65",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13128.0
+  },
+  {
+   "env": "ForestEnv",
+   "traj": "P002",
+   "depth": "001591_lcam_front_depth.png",
+   "image": "001591_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3ca77d7ccd036ecf9bc47c48810fc10acec694c32decfa0fe683e5327575482d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "03df8ba4f2e200684697a11a661312c0bc0bbee0414ee8ea01b162bb29d3136d",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15832.0
+  },
+  {
+   "env": "GreatMarsh",
+   "traj": "P000",
+   "depth": "000353_lcam_front_depth.png",
+   "image": "000353_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a0e14ad73cc8cd354e672ae108ccb3037ebca8f5fc279363f81ddbdf6fddb1d5",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f2cf07ea12ae0cfb28a5f7b47fc7ff632ebb9a11013e44406b7009d25c82e919",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 9880.0
+  },
+  {
+   "env": "GreatMarsh",
+   "traj": "P000",
+   "depth": "001768_lcam_front_depth.png",
+   "image": "001768_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "32e8c2572e763b42f35fc28cf3d6892305ca4fc8f70b200447d2b8abe19e9fe2",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "bc2ecb1afe750eea15e54705f4614668e1695a5a7938a5d1f67af971530abcf2",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 9608.0
+  },
+  {
+   "env": "GreatMarsh",
+   "traj": "P000",
+   "depth": "003182_lcam_front_depth.png",
+   "image": "003182_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5492193060a11832cabd523c9951a1d4cb5487965971fbdf11ef4468b25ad02d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "4f51af2ad7fbfe39053709368071a938a7dab2c4e2bcf76ddf079ca4c9fd596d",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 8696.0
+  },
+  {
+   "env": "GreatMarsh",
+   "traj": "P001",
+   "depth": "004318_lcam_front_depth.png",
+   "image": "004318_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "d08847c77839ffaba9ffb1147d4529ba6c803ede1bfb8300c215c6fb9ea5f2da",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "31a1dd4f3787b0e60f2174b91f48a2f5063dae3a17f57ceef29c7e3dd534b777",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 9648.0
+  },
+  {
+   "env": "HongKong",
+   "traj": "P000",
+   "depth": "000068_lcam_front_depth.png",
+   "image": "000068_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "be3aaab79d266a4db2ea6c4a84dc6ab139edb288f90d58f016fa8fab3d82a775",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "976d0edaf0e9e97187602893ec0fe767eb63646d4d43d47dc6231d822cc2b380",
+   "n_nonfinite": 0,
+   "n_65504": 62,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "HongKong",
+   "traj": "P000",
+   "depth": "000340_lcam_front_depth.png",
+   "image": "000340_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "96cb17dbfc2d99a5eb2f61db61960c0e3c7ab3997e61907445453426c470941c",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "5cc3604a0e318a606043ba2522b43190a138ae8e928b282b69b04668d62c81c4",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 3.73828125
+  },
+  {
+   "env": "HongKong",
+   "traj": "P000",
+   "depth": "000612_lcam_front_depth.png",
+   "image": "000612_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "ecdae8d57e9b4089b863c960d66ae8605b2e51fd43d8408e16da84720c34e7d2",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "c4d58926371633713041760f65424a67e1d208ca90a43071e4e8438d89d4ab48",
+   "n_nonfinite": 0,
+   "n_65504": 168,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "HongKong",
+   "traj": "P001",
+   "depth": "000420_lcam_front_depth.png",
+   "image": "000420_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3d43c7c8a8c72a6983ad9bab894545e707fcac8bfbdea0d09ed3715c277b841d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "7cb3fa3e255bdf4a5a68cfde2995246c2a604cd0b2f45c14ead2be75e900c25f",
+   "n_nonfinite": 0,
+   "n_65504": 38,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "HongKong",
+   "traj": "P000",
+   "depth": "000000_lcam_front_depth.png",
+   "image": "000000_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5773f97ae3cde065260e86138b7cb9d1517ff823e7e8bfd77217bd88f192382e",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "6e760e4d5c26cadb2f5598e8bc19e1c1a9210fcce1231566334c5eb09382f01a",
+   "n_nonfinite": 0,
+   "n_65504": 5387,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "Hospital",
+   "traj": "P000",
+   "depth": "000223_lcam_front_depth.png",
+   "image": "000223_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8f074dd016d5201c167e6a1fd5fee44156a9324e45f1583531b88901df8f84c3",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "c903d1bd44acd81b928fa20099237fa520c63ff6d6be87cd520e803c942c72e7",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 22.9375
+  },
+  {
+   "env": "Hospital",
+   "traj": "P000",
+   "depth": "001117_lcam_front_depth.png",
+   "image": "001117_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "74c98ad65ab35deb7ffb3a1568b289ae29a66d6a69d6cc73652cbbc3c6e41c93",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "6ee6b80603e5ba66ff4c80107846e1353f577a1975c159c784b5d49fdedffc0a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 3036.0
+  },
+  {
+   "env": "Hospital",
+   "traj": "P000",
+   "depth": "002011_lcam_front_depth.png",
+   "image": "002011_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "4a86a7119a3150f08ca90216196c2afc8fcee645ce81f7d7ebaec714988e2b30",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "485893d53ea3755770932ed6037e3d92918c3c6205a161d6ccee62a73054ff07",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 5.2578125
+  },
+  {
+   "env": "Hospital",
+   "traj": "P001",
+   "depth": "001186_lcam_front_depth.png",
+   "image": "001186_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "6981216a4de593973bc29e39c1266538e41918d8824ca0671eea22d52d6a6998",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "7c62f5071679f6405853223ad8d5676e2e72d0d8d939f3da838e1c6225334e42",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 1.609375
+  },
+  {
+   "env": "JapaneseCity",
+   "traj": "P000",
+   "depth": "000160_lcam_front_depth.png",
+   "image": "000160_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "28ffff05a245d1f6c0dd80311a8f799ae74a7dea0e0d002438c81d9d5e5369d7",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "20b3da988fc26a7a67d8d5bce68a130968bbe26a499be0f8975cc5b5db18bd21",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 10872.0
+  },
+  {
+   "env": "JapaneseCity",
+   "traj": "P000",
+   "depth": "000800_lcam_front_depth.png",
+   "image": "000800_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "9d0bdcc36aea5929977248f27220e72d285d8b81bfd3546268d93774906a661d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "e7d0c42aa88faa5b2bb3e2cdb4a8066e0a85e3002b8fdbf9785dc29775d7fa74",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13384.0
+  },
+  {
+   "env": "JapaneseCity",
+   "traj": "P000",
+   "depth": "001440_lcam_front_depth.png",
+   "image": "001440_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "6a155be2b7adaaecbec5cb0c7695fcc3f512e8e8fecfdcaf89537c80dd133c22",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "288c2c99bacdbf55a3bd39dfaffc709ac2a89fe371481f8430505206648b32b5",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14936.0
+  },
+  {
+   "env": "JapaneseCity",
+   "traj": "P001",
+   "depth": "000987_lcam_front_depth.png",
+   "image": "000987_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "117c95c30d5e643e9c63c9c114f863dea597f89238b838578e63f603aa69abaa",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "469819aeda384004f8facb27a628812db2e5a2656dde14fe4eaaaeb6b5d83ef2",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16056.0
+  },
+  {
+   "env": "ModernCityDowntown",
+   "traj": "P000",
+   "depth": "000129_lcam_front_depth.png",
+   "image": "000129_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a64a831034edf305aa6400c541528b2535b8eda65123bbb1f39d710ac69248f6",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "e1fb26dfb3a4eb461b7e1399cbfb270b16cbf84967ea4b00d763ed4b7cab962b",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16264.0
+  },
+  {
+   "env": "ModernCityDowntown",
+   "traj": "P000",
+   "depth": "000645_lcam_front_depth.png",
+   "image": "000645_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "685fa33f2a38fb790d425c8450b223f53dfdab94eb54acc3bf6b658cac26333c",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "3fca7f414a6c6b6fa0decc80e8456d2346ef622a72ba3202aae1675b9a1203e3",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 10224.0
+  },
+  {
+   "env": "ModernCityDowntown",
+   "traj": "P000",
+   "depth": "001161_lcam_front_depth.png",
+   "image": "001161_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "c0854ce351041567d907440e5a478049da06ebf31e8b39b15942a11aece35baa",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "e3fcf9dec01c7eecec711f0fff04c96c54f15b6bbcb721413674ef8d5ee7210e",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15240.0
+  },
+  {
+   "env": "ModernCityDowntown",
+   "traj": "P001",
+   "depth": "000835_lcam_front_depth.png",
+   "image": "000835_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a08d3c404e31dcc4199727a4b46abf3f95548881d1f4543aaeab1e99ed1f40ee",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "e67f919535c6c758b38687a0cff083a26af9917353ab75a5bf9825b4df4fd702",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 12056.0
+  },
+  {
+   "env": "NordicHarbor",
+   "traj": "P000",
+   "depth": "000282_lcam_front_depth.png",
+   "image": "000282_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a57c549db2847e16b3a2440bc16a7bfcc9c8e6b682ea8026ff3660cc1cb74ea1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "4e854e127020ff6447dddb773308f47eabe3456f2f2587792025f85dcbf65aed",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13304.0
+  },
+  {
+   "env": "NordicHarbor",
+   "traj": "P000",
+   "depth": "001412_lcam_front_depth.png",
+   "image": "001412_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "e960f69671cb8be1daec8eb536696aa8506d9bcc3398334c45925ed9b2e8c11b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "12b9df44813dba1e51380e8588968469180531cd6152880375142da5cd659da3",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13304.0
+  },
+  {
+   "env": "NordicHarbor",
+   "traj": "P000",
+   "depth": "002541_lcam_front_depth.png",
+   "image": "002541_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1eab344e46afeeb5b62802718081d9b71516589e2537645698563ad211e82313",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "7979e08194f9fb5dd7fcfb91c975f544ba4fbbf1c21948ae1bb3443a1bc24136",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16280.0
+  },
+  {
+   "env": "NordicHarbor",
+   "traj": "P001",
+   "depth": "000819_lcam_front_depth.png",
+   "image": "000819_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8a621df2f0b627830268a2b8ba88327129d9775b4b71b636d49e9cb446369240",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "abd995254e4ee69b637ca559673656a390d149b578848fa51475a8143eca7607",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 128.125
+  },
+  {
+   "env": "Ocean",
+   "traj": "P000",
+   "depth": "000130_lcam_front_depth.png",
+   "image": "000130_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "65427d6a939b0ebdf09f421f457a837ad0f986655621e337009f571caf30b594",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "a890f5a21971e17e482b1f4731f4f7d85da797fc2ce0362ce9f4e8dd778c1970",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15088.0
+  },
+  {
+   "env": "Ocean",
+   "traj": "P000",
+   "depth": "000650_lcam_front_depth.png",
+   "image": "000650_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "aece21675b42777494fa51698cd755105bd2f4404dc575cacbca723817fb04f8",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0ec1bd9ecf8cb97c384dfe6b7f162ab1e263b89bb6670b9428d89e35050d1cd0",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15640.0
+  },
+  {
+   "env": "Ocean",
+   "traj": "P000",
+   "depth": "001170_lcam_front_depth.png",
+   "image": "001170_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "424b9cbd65f23bd3bf01220f3dda56d87e380c4c0bf829bd82651ce761aeaee1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f511be298bd4a13ac8b3e8dffa209e548c77f00d0eeaeba144ab225577aa7616",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15928.0
+  },
+  {
+   "env": "Ocean",
+   "traj": "P001",
+   "depth": "000750_lcam_front_depth.png",
+   "image": "000750_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "6cd48a497489d71e97489018dfbc50686835bf35775b247928c43d8f25a456dd",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "cefabd32a8affb723fa125b03d98af3c52dd05e1f1b4a929b0ef2b38b51ade5a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16384.0
+  },
+  {
+   "env": "Office",
+   "traj": "P000",
+   "depth": "000093_lcam_front_depth.png",
+   "image": "000093_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "90769fd70749577b416d8263ba83a659d8c8d65329d3bb635d894c079dcbd5cc",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "5bb11d61ef4af95a56b447b0b5efca38f94ca405f3bd3b0307a1fb99225f3016",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14472.0
+  },
+  {
+   "env": "Office",
+   "traj": "P000",
+   "depth": "000467_lcam_front_depth.png",
+   "image": "000467_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "76e8568889e7135b8377ed9c511e23f1090c282a5307786675ce31076e5accfd",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "121ee825202ed43fd9389912a860db3966adb2c99e6c076d5015c26641883b25",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 11120.0
+  },
+  {
+   "env": "Office",
+   "traj": "P000",
+   "depth": "000840_lcam_front_depth.png",
+   "image": "000840_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1c40af03f0c2b240a535de45901abb6acd674fb11639ec1967e9c6f4d5024ba6",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "3db3d4600c7eab168a2143ef08160b5d98c3f91a155d131624655014929bffce",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16296.0
+  },
+  {
+   "env": "Office",
+   "traj": "P001",
+   "depth": "000290_lcam_front_depth.png",
+   "image": "000290_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1dcbe13d8493b9624dac2f96b874ed29f9a21f38edfbc0ce01d3e52c86401637",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "4c7f9393a297a5c2e99eb649e72053e993cd9258a0b9e4e1f259df3934839d5e",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 18.109375
+  },
+  {
+   "env": "OldBrickHouseNight",
+   "traj": "P001",
+   "depth": "000039_lcam_front_depth.png",
+   "image": "000039_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "5327e349af3138a6d6f3ed29c7a046022da293ca6587fbaac95d6b4f13fa782b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "5d8220c201df136ded7cd3e3cd01ba14f2674b5ca7af2611349222abfb4397b1",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 6.60546875
+  },
+  {
+   "env": "OldBrickHouseNight",
+   "traj": "P001",
+   "depth": "000199_lcam_front_depth.png",
+   "image": "000199_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "e53d17f355126b00607f89fdc6b252040bbdc4adcd11624006f4f4f7d243c605",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "42df46855f89612f5446a4a9e6ec00b790c19db5f1e51f6842fa1c626e4b4213",
+   "n_nonfinite": 0,
+   "n_65504": 525,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "OldBrickHouseNight",
+   "traj": "P001",
+   "depth": "000358_lcam_front_depth.png",
+   "image": "000358_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "0037fe7108ea0964f36a35eb7330111490c4bef533b2dee3dc62ce2ca8f4bea1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "87a2bc608e1730402b398b9d8e039f12e9790ac040e9baaf53250ef24cb7b717",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 2.9609375
+  },
+  {
+   "env": "OldBrickHouseNight",
+   "traj": "P002",
+   "depth": "000488_lcam_front_depth.png",
+   "image": "000488_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "215b8fcb2bd6bf9962547cee19b452865aec2e1ba39204c0233b6f801509a028",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "5ca5eb36edd15e5053e44ad9eb418004d9871fc6964048c521edf0cb88a716ea",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 5.78125
+  },
+  {
+   "env": "OldBrickHouseNight",
+   "traj": "P001",
+   "depth": "000000_lcam_front_depth.png",
+   "image": "000000_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "15dac8f061abb9771e74160949be8ab2170697a7d11a3b616f58cfdd4cf83999",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "1df1b730ef497402f04892e0ea3e5bfe3e725da0148ea6db94042611cdd48261",
+   "n_nonfinite": 0,
+   "n_65504": 2593,
+   "dmax_finite": 65504.0
+  },
+  {
+   "env": "PolarSciFi",
+   "traj": "P000",
+   "depth": "000096_lcam_front_depth.png",
+   "image": "000096_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "fff6969775275b222e76c308332989d8ae1c8dd9842c5c6887178d8513defe54",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "6a6e9c15180a1902bd7accbd56556179ee2db3b7853be2cade2c92038ee5862d",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16304.0
+  },
+  {
+   "env": "PolarSciFi",
+   "traj": "P000",
+   "depth": "000481_lcam_front_depth.png",
+   "image": "000481_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a8e84db7d99d33d3bb14dad0e178fb61c7725fdb4b1b39d41bd2788d011d8f70",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "8e5740f3a97954d21091504d5bab4b435eebb0206c5be28aed21bc1046366fec",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14904.0
+  },
+  {
+   "env": "PolarSciFi",
+   "traj": "P000",
+   "depth": "000866_lcam_front_depth.png",
+   "image": "000866_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "cb766ae98e8ad3ae778654b954115ef9fe2268f0b9b2a17f63f92007fbeaa9cb",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "53f5fcaca29a9ea86129b3a70100f4b7bc68c24299584d1555fc1434f283bfe5",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16032.0
+  },
+  {
+   "env": "PolarSciFi",
+   "traj": "P001",
+   "depth": "000386_lcam_front_depth.png",
+   "image": "000386_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1f49047b2a79ceac8e1b68f87230cf64dda4d64eb8eaab6b6f2acafbf8a29863",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "312b80fba168a8ee96b3fbd2ce9dab8e4bedcda27cf144f003cf858eae2c9664",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16344.0
+  },
+  {
+   "env": "Prison",
+   "traj": "P000",
+   "depth": "000090_lcam_front_depth.png",
+   "image": "000090_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3dfed91ffbd3fd4db3e29d5998536d86d9f3d4dee6dcf865b39b6ca681f0ab7b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "1a2517adb0a076f8f0f949b3c208166819bbea61934f19f1280dadf188037645",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 178.5
+  },
+  {
+   "env": "Prison",
+   "traj": "P000",
+   "depth": "000453_lcam_front_depth.png",
+   "image": "000453_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "2b2bc7a62ae6e6c9822e6fbde1f33c06837b8c4dc3cf5d1cecf6650d62d0e3f4",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "f60c85c16127008de9ddf543c5510ee97939e79115f4d6ae1011c3b9077f4ade",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 109.375
+  },
+  {
+   "env": "Prison",
+   "traj": "P000",
+   "depth": "000815_lcam_front_depth.png",
+   "image": "000815_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "6c7667fb793d5175c45fa471688959dab502b7668e0337c9bd8753ba7d5abfb1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "c4a8b85f68d00edb76a3955c7d13c0b370d13e689f19cc103ced757166fdf92a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 89.4375
+  },
+  {
+   "env": "Prison",
+   "traj": "P001",
+   "depth": "000709_lcam_front_depth.png",
+   "image": "000709_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1912b5e19035992459520b1850d15298fa6d2560dd7261228162ce7f80cc8cf9",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "31f5981d1822580dce254bcb3bc474a2b1bdca06315d682b851edc837e93d694",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 148.875
+  },
+  {
+   "env": "Restaurant",
+   "traj": "P000",
+   "depth": "000033_lcam_front_depth.png",
+   "image": "000033_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "554fbb8caad8bcba9fafdf934f9e7fa37c20f8e092450b04789f3eff1f3e1cb7",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "09ff2ba993a9f303ecd2732c8ac5d223c4c4eb426d1b26050682ada07d679882",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 12512.0
+  },
+  {
+   "env": "Restaurant",
+   "traj": "P000",
+   "depth": "000166_lcam_front_depth.png",
+   "image": "000166_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "fafa2242bb928f5c6ac75858bd98c9d258290268bfa265a732aef83d08d016a1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "da74668159cd59d7ee53df51c7338fbc70fc70bb174ddd16452617973e2b0845",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 52.34375
+  },
+  {
+   "env": "Restaurant",
+   "traj": "P000",
+   "depth": "000298_lcam_front_depth.png",
+   "image": "000298_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8d5de2312d6c860646435cf6e241d6356f762397a3f5086c06d689c2424a93bb",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "721d9e2223bea1911cb4f13fd8e247c8de87f5a8a4cec847656e88395cfd54bc",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15672.0
+  },
+  {
+   "env": "Restaurant",
+   "traj": "P001",
+   "depth": "000245_lcam_front_depth.png",
+   "image": "000245_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "35361d43889170d2b3a8e8f223f97931e393ac3eb345009334614f9b350faf2f",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "c5716a20adb7c0a4b5bbf069956a9df0beda078d0e20c2ff7127da93c5f67111",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14240.0
+  },
+  {
+   "env": "Rome",
+   "traj": "P000",
+   "depth": "000141_lcam_front_depth.png",
+   "image": "000141_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "775f9bc2aebcf3cf772236ba7ac509e8ebd67fe3de78f97f1224ae0c25a70095",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "3dd15f845a413ba7ec57b7dff8b4f6fd473aaddc31837a43b0751a51f066fcef",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14448.0
+  },
+  {
+   "env": "Rome",
+   "traj": "P000",
+   "depth": "000706_lcam_front_depth.png",
+   "image": "000706_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f54f07940b5cb83d50fac5a42d6ad72882a74b231b3b97bfc48a4afe9ab4fc10",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "93f07ec1ac00fe18cce915c67ece35bd4c7254994f5043c526c84a699b2fd731",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 12992.0
+  },
+  {
+   "env": "Rome",
+   "traj": "P000",
+   "depth": "001271_lcam_front_depth.png",
+   "image": "001271_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "1359070a9faec344e597b2193aa2ad05702f0b04df1f95e15058a830cd4d4aab",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0bacdbd0872b363b2f1b7df9a6854685de25fc048a7acac415d4799590984cf6",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 17.703125
+  },
+  {
+   "env": "Rome",
+   "traj": "P001",
+   "depth": "000606_lcam_front_depth.png",
+   "image": "000606_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "f7dbcb3ba5cf26313fcaed228cf142391278cd9425353848937c2b4184777eb9",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "8bffd16bbf9859049504300dae10df857962645e51040d4cafd406abd8c8f92a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15416.0
+  },
+  {
+   "env": "SeasonalForestWinter",
+   "traj": "P000",
+   "depth": "000225_lcam_front_depth.png",
+   "image": "000225_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "c29a655c1b1fb8ca63569bfd3f8e442f2763bd96bcf8aac67f5016979a11caa1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "ff77c89d541c587a9f03204e317567b16fb99628930d4f38a7a1219a8d73e3f4",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16464.0
+  },
+  {
+   "env": "SeasonalForestWinter",
+   "traj": "P000",
+   "depth": "001125_lcam_front_depth.png",
+   "image": "001125_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "6a9ada3f99b3ce1e5e6c70168e8e7b060321d0fb76b5a9ffb028f2e1f194b4a2",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "9d481608851f0ce7a5283e82cc019ce80df0b80bfff94a01635ea7483b26a2af",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16360.0
+  },
+  {
+   "env": "SeasonalForestWinter",
+   "traj": "P000",
+   "depth": "002025_lcam_front_depth.png",
+   "image": "002025_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "b888b9d25220a8c35873d8cfe3af19c7ce6fee85ad058abcc355c139465f0df6",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "47542aa1a5c54721bb101dcb0db263bace91e0e41a927438fb0f2c1acd41454c",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 13928.0
+  },
+  {
+   "env": "SeasonalForestWinter",
+   "traj": "P001",
+   "depth": "000843_lcam_front_depth.png",
+   "image": "000843_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "15024dc7ced95090fcd43cfd9b0bebe6912b28f574456add62e5ca730856193b",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "09bdf03a791783a54bb582ad00e8f94ac314b05eca05e06aa27af0c39fe2cf9d",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 14376.0
+  },
+  {
+   "env": "ShoreCaves",
+   "traj": "P001",
+   "depth": "000171_lcam_front_depth.png",
+   "image": "000171_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "2b69a6e3a172973df415246b60aa8f337a32b6c0900e4ad0c8f5c1ac7dda8631",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "262b1c34351f911b8b8a59bdbe2de513825a58ceeef16978f5931b38e15c88f4",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 228.75
+  },
+  {
+   "env": "ShoreCaves",
+   "traj": "P001",
+   "depth": "000858_lcam_front_depth.png",
+   "image": "000858_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "91526ef90ca4c1e155014ff290e80421dc8648b2479abdb798b40a83c279e008",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "10699d7a4fe9a80a7a0bc6715c1503efc402cab1e2522edeab96aaebce7138e6",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 229.625
+  },
+  {
+   "env": "ShoreCaves",
+   "traj": "P001",
+   "depth": "001545_lcam_front_depth.png",
+   "image": "001545_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "d2a203543da6d6ff9a43ae232d108dee2b00177b1472f016bd6064f2ace57b29",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "16408b378db1ef8a4e71b3df452c94203795e96d02e462f0a8565124141793d5",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 535.5
+  },
+  {
+   "env": "ShoreCaves",
+   "traj": "P002",
+   "depth": "001158_lcam_front_depth.png",
+   "image": "001158_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "35262d78c762bfb67630ac80ba36d881fac4ca3c592f1998034be11cc616caed",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "a792349fd3fbab1af11a9a9d3f88fd873837e9800ada11991e62c4045b72dced",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 463.5
+  },
+  {
+   "env": "Slaughter",
+   "traj": "P000",
+   "depth": "000172_lcam_front_depth.png",
+   "image": "000172_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "911be30c2af6d8c584911e2cc26ff4e63f4c0cfb1ea2b506aa61e336953f5eb5",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "eb305b5c9a730f8f405af97ce3bfbcc939b36bb861c4ab68f5deb3346990bed8",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 2.126953125
+  },
+  {
+   "env": "Slaughter",
+   "traj": "P000",
+   "depth": "000861_lcam_front_depth.png",
+   "image": "000861_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "b155fe398ef16158f44a94d0d092e9b010d69ebcd10ac0b101764be4b7f767d8",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "0d2569ff8f74d1b8002fd2c6a7b6afc86b5a2764b950106a6a055d78fb3ab73a",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 8.4140625
+  },
+  {
+   "env": "Slaughter",
+   "traj": "P000",
+   "depth": "001549_lcam_front_depth.png",
+   "image": "001549_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "8535fa84c0c46b585704991121613b4e5a5d01dcc282fc631a2a691ed7087dc1",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "76ceb6dc06d7ed775ed5a2f36255cb9c3ff5a8b0f4a8299c9dc94da466ac5089",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15840.0
+  },
+  {
+   "env": "Slaughter",
+   "traj": "P001",
+   "depth": "000557_lcam_front_depth.png",
+   "image": "000557_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "3367614e7b0fa3457f1ca5491dc8d0d10839b8afd88b523a5c9aafab0564b337",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "aca25c0bd2d9200bd9e627be8010f595db3d52257b8dd0879f4011455256994e",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 15576.0
+  },
+  {
+   "env": "WesternDesertTown",
+   "traj": "P000",
+   "depth": "000178_lcam_front_depth.png",
+   "image": "000178_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "92af153b72f8da0b2dd2c1363580bb1fa38801de755852b3de04a9d86a291e78",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "4a619d3dc4d8af816b1f071f3c1df3b391e203caa1d785b6b04f90d81318bb1d",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 11432.0
+  },
+  {
+   "env": "WesternDesertTown",
+   "traj": "P000",
+   "depth": "000891_lcam_front_depth.png",
+   "image": "000891_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "7ac1f34b614831669ff3f3ae9bf79c5e6384a9b2cd776bec18cd62544cccdbdf",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "45e4bf90f2445552525cd0a952bb19ec58bbab297f43f9b7e713db2106ef42aa",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16248.0
+  },
+  {
+   "env": "WesternDesertTown",
+   "traj": "P000",
+   "depth": "001603_lcam_front_depth.png",
+   "image": "001603_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "b33a00efb137757ca2c2b50acd0cd944e8ff180a175652412739a14ea927a449",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "9d7aa9078ba3f9dd4366a20d00fbb3b417a0a1582af93ec483cb229f0ec50912",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 16360.0
+  },
+  {
+   "env": "WesternDesertTown",
+   "traj": "P001",
+   "depth": "001028_lcam_front_depth.png",
+   "image": "001028_lcam_front.png",
+   "depth_dtype": "float32",
+   "depth_shape": [
+    640,
+    640
+   ],
+   "depth_sha256": "a6abbef43dc12371034e99f378333be0020d3b11a2568db77bef9da58985c28d",
+   "rgb_shape": [
+    640,
+    640,
+    3
+   ],
+   "rgb_dtype": "uint8",
+   "rgb_sha256": "65147f0ee64d4d7c0704dee9cb116dc91ee3f9f97feff6c84f4f5794a24936ce",
+   "n_nonfinite": 0,
+   "n_65504": 0,
+   "dmax_finite": 2.955078125
+  }
+ ]
+}

@@ -35,5 +35,11 @@ Held fixed across arms: start checkpoint sha (c3_n46 step12000, SUMS in checkpoi
 ## Gates
 Prereqs before any run: (1) TartanAir task complete: parity test and per-env sky audit (O5) in AND checked by the Auditor before TS v2 starts (O6c); (2) the exact TS v2 rule is written here (per-env seg class ids, saturation-fallback threshold, definition of 'uncertain') after the O5 audit, and the regression tests (M-03 8000 m dome, B2-03 10000.0 edge, per-env finite-sky) pinning it pass on the branch; (3) Isambard seg pull; (4) user + Auditor clear this proposal; (5) Isambard job needs Manager approval (debug track, O2 item 4). An Auditor token is needed only if a result later heads for the paper, a merge or a retrain.
 
-## TS v2 exact rule
-PENDING: to be filled from the per-env sky audit (parts/TA_sky). This proposal is not clearable until this section is complete.
+## TS v2 exact rule (DRAFT from the O5 audit; awaiting Auditor check; parts/TA_sky/TS_v2_PROPOSAL.md + ts_v2_draft.py)
+- saturated = ~isfinite(d) | d >= 1e4.
+- sky = seg-sky class (per-env ids from official seg_label_map.json; skysphere ids included) at ANY depth.
+- uncertain = saturated AND seg says non-sky (or env has no usable sky label): excluded from both sky and valid mask.
+- valid mask = isfinite(d) & d > 0 & d < max_depth & ~sky & ~uncertain.
+- Envs with no usable sky label (CoalMine, HongKong, Ocean, OldBrickHouseNight; ArchVizTinyHouseNight skysphere id absent in sample): saturated px are UNCERTAIN by default (sky=0, mask=0); opt-in flag `fallback_sat_is_sky` off in the screen. No whole env is excluded.
+- Regression tests (tests/test_ts_v2_sky_draft.py, 5 pass): 8000 m dome -> sky=1, mask=0; 10000.0 edge; 65504/inf/NaN; tree quirk; unlabelled-env default; non-positive depth. Official-reader parity: tests/test_tartanair_official_parity.py (118 pass; 117 frames, all 28 local envs, incl. Downtown, GreatMarsh, HongKong, and the 65504 envs).
+- Needs the seg masks at train time on whichever host trains (Isambard: 74-env seg pull, pending).
