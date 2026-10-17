@@ -33,3 +33,41 @@ def ts_v2_sky_valid(depth, seg, sky_ids, max_depth=1.0e4, fallback_sat_is_sky=Fa
     uncertain |= zero_finite
     mask = np.isfinite(d) & (d > 0) & (d < max_depth) & ~sky & ~uncertain
     return sky, mask, uncertain
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# TS v3 guard (Auditor O12.3), NEW function; ts_v2_sky_valid above is unchanged.  Still a DRAFT, not wired into the loader.
+FAR_M = 9.0e3     # far-dome class threshold (median seg-sky stored depth per env >= 9000 m), see far_near_class_74.csv
+
+
+def ts_v2_guarded(depth, seg, sky_ids, far_dome, seg_sky_ok=True, sat_nonsky_is_sky=False, max_depth=1.0e4,
+                  fallback_sat_is_sky=False):
+    """Per-env flags: far_dome (class), seg_sky_ok (visual check: seg-sky is open sky in all informative fixed frames),
+    sat_nonsky_is_sky (visual check: saturated px NOT labelled sky are open sky; default False -> uncertain).
+      seg_sky = isin(seg, sky_ids) (id 0 only where saturated, as in ts_v2_sky_valid)
+      seg_sky_ok False                      -> every seg-sky px is uncertain (never sky)
+      far_dome env, seg_sky_ok True         -> sky = seg_sky & (sat | d >= 9000 m); seg_sky with d < 9000 m -> uncertain
+      near_dome env, seg_sky_ok True        -> sky = seg_sky at any depth (as v2)
+      saturated & ~seg_sky                  -> uncertain, or sky if sat_nonsky_is_sky (or fallback_sat_is_sky in an unlabelled env)
+      mask = finite & d>0 & d<max_depth & ~sky & ~uncertain."""
+    d = np.asarray(depth, np.float32)
+    ids = set(int(i) for i in sky_ids)
+    sat = ~np.isfinite(d) | (d >= SAT_M)
+    seg_sky = np.isin(seg, list(ids - {0})) if ids else np.zeros(d.shape, bool)
+    seg_sky |= (seg == 0) & sat & (0 in ids)
+    zero_finite = (seg == 0) & ~sat & (0 in ids)
+    far_ok = sat | (np.nan_to_num(d, nan=0.0, posinf=1e9) >= FAR_M)
+    if not seg_sky_ok:
+        sky = np.zeros(d.shape, bool); unc = seg_sky.copy()
+    elif far_dome:
+        sky = seg_sky & far_ok; unc = seg_sky & ~far_ok
+    else:
+        sky = seg_sky.copy(); unc = np.zeros(d.shape, bool)
+    nonsky_sat = sat & ~seg_sky
+    if sat_nonsky_is_sky or (fallback_sat_is_sky and not ids):
+        sky |= nonsky_sat
+    else:
+        unc |= nonsky_sat
+    unc |= zero_finite
+    mask = np.isfinite(d) & (d > 0) & (d < max_depth) & ~sky & ~unc
+    return sky, mask, unc
