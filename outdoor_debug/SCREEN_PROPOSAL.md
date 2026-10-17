@@ -1,4 +1,5 @@
-# Pre-declared screen proposal (DRAFT for user + Auditor clearance; no training until cleared)
+# Pre-declared screen proposal
+STATUS: USER CLEARED (Addendum 43, 2026-10-17: "Clear, keep A0b"); the Add.42 deviation (nested hinge arms, A0b added) is ACCEPTED. Clearance is conditional: do not submit until (1) TS v2 rule filled from the audit and Auditor-checked (if materially different from 'seg-sky first, saturation fallback, uncertain excluded', e.g. whole envs excluded, tell the Manager first, the user may need to re-clear); (2) DEV clip-list sha logged; (3) regression tests pass; (4) Isambard 74-env seg pull job approved by Manager and completed. Real far GT (DDAD/AV2) is report-only, exploratory DEV, and does NOT change the decision rule.
 Status: light track (Add. O2), DEV only, TEST closed. Not a paper claim; anything heading for paper/merge/retrain needs a separate pre-declaration + Auditor token.
 
 ## Question
