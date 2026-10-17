@@ -143,3 +143,79 @@ def test_selftest_runs():
     r = DS.selftest()
     assert r["n_scored_frames"] == 6 and r["n_scenes"] == 2
     assert all(0.85 < b["median_pred_over_gt"] < 0.95 for b in r["bins"].values() if b["n_px"])
+
+
+# ----------------------------------------------------------------------------- A3: release-spec branch
+EXACT_LABEL = "released Metric-VDA-S at the registered 378 input (not its default 518), fp16, exploratory DEV, report-only"
+
+
+def _fake_weights(tmp_path, monkeypatch, content=b"fake-weights"):
+    w = tmp_path / "mvda.pth"; w.write_bytes(content)
+    monkeypatch.setitem(DS.RELEASE["metric_vda_s"], "sha256", DS.S.sha256_file(w))
+    return w
+
+
+def test_a3_registered_constants():
+    r = DS.RELEASE["metric_vda_s"]
+    assert DS.RELEASE_LABEL == EXACT_LABEL == r["label"]
+    assert r["sha256"] == "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33" and r["size"] == 116444063
+    assert r["isambard_path"] == "/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth"
+
+
+def test_a3_ours_path_meta_unchanged(tmp_path):
+    torch = pytest.importorskip("torch")
+    ck = tmp_path / "c.pt"
+    torch.save(dict(trainable_ema={"w": torch.zeros(1)}, step=12000, cfg=dict(model=dict(arch="shared_temporal"))), ck)
+    spec, mm = DS.model_meta(str(ck), None, {})
+    assert spec is None                                              # main() then builds spec_prefix + ckpt exactly as before
+    assert list(mm) == ["ckpt"] and list(mm["ckpt"]) == ["path", "sha256", "weights_key", "step", "arch"]
+    assert mm["ckpt"] == dict(path=str(ck), sha256=DS.S.sha256_file(ck), weights_key="trainable_ema", step=12000, arch="shared_temporal")
+    bad = tmp_path / "b.pt"; torch.save(dict(trainable={"w": torch.zeros(1)}), bad)
+    with pytest.raises(AssertionError, match="trainable_ema"):
+        DS.model_meta(str(bad), None, {})
+    st = DS.selftest()
+    assert st["label"] == DS.LABEL and "spec" not in st             # ours selftest label unchanged
+
+
+def test_a3_release_meta_records_sha_path_label(tmp_path, monkeypatch):
+    w = _fake_weights(tmp_path, monkeypatch)
+    spec, mm = DS.model_meta(None, "metric_vda_s", {"metric_vda_s": str(w)})
+    assert spec == "metric_vda_s" and "ckpt" not in mm
+    rw = mm["release_weights"]
+    assert rw["sha256"] == DS.S.sha256_file(w) and rw["path"] == str(w) and rw["size"] == w.stat().st_size and rw["key"] == "metric_vda_s"
+    st = DS.selftest("metric_vda_s")
+    assert st["label"] == EXACT_LABEL and st["spec"] == "metric_vda_s" and st["n_scored_frames"] == 6
+
+
+def test_a3_forced_fail_release(tmp_path, monkeypatch):
+    w = _fake_weights(tmp_path, monkeypatch)
+    with pytest.raises(AssertionError, match="missing"):
+        DS.model_meta(None, "metric_vda_s", {"metric_vda_s": str(tmp_path / "nope.pth")})
+    w.write_bytes(b"tampered")                                         # wrong weights file (sha != registered)
+    with pytest.raises(AssertionError, match="sha"):
+        DS.model_meta(None, "metric_vda_s", {"metric_vda_s": str(w)})
+    with pytest.raises(ValueError, match="unknown release spec"):
+        DS.model_meta(None, "vda_s", {"vda_s": str(w)})
+    with pytest.raises(AssertionError, match="ours"):                  # release spec + an 'ours' checkpoint
+        DS.model_meta("ours.pt", "metric_vda_s", {"metric_vda_s": str(w)})
+    with pytest.raises(ValueError):
+        DS.release_meta("nope", {})
+    w2 = _fake_weights(tmp_path, monkeypatch)
+    monkeypatch.setitem(DS.RELEASE["metric_vda_s"], "label", EXACT_LABEL + " (518)")   # tampered label
+    with pytest.raises(AssertionError, match="label"):
+        DS.release_meta("metric_vda_s", {"metric_vda_s": str(w2)})
+
+
+def test_a3_cli_rejects_spec_plus_ckpt(tmp_path):
+    with pytest.raises(AssertionError, match="ours"):
+        DS.main(["--spec", "metric_vda_s", "--ckpt", "x.pt", "--out", str(tmp_path / "o.json")])
+    with pytest.raises(AssertionError, match="required"):
+        DS.main(["--out", str(tmp_path / "o.json")])
+
+
+def test_a3_shape_assert_fires_on_resampled_pipeline():
+    torch = pytest.importorskip("torch")
+    x = torch.zeros(4, 3, 378, 602)
+    DS.assert_same_hw(torch.zeros(4, 378, 602), x)          # same HxW passes
+    with pytest.raises(AssertionError, match="extra resample"):
+        DS.assert_same_hw(torch.zeros(4, 400, 602), x)               # monkeypatched predict returned a different HxW

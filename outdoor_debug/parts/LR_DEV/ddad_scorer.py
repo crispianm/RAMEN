@@ -29,6 +29,11 @@ SHORT_SIDE = 378
 BINS_M = [(0.0, 20.0), (20.0, 50.0), (50.0, 80.0), (80.0, 120.0), (120.0, 200.0)]   # [lo,hi) except the last, closed [120,200]
 MAX_M = 200.0
 LABEL = "exploratory DEV, report-only (DDAD val LR_DEV; not a held-out test, never enters the decision)"
+# REGISTRATION.md A3 (Auditor O29): release-spec branch. Same frames / bins / pins / 378 input / fp16 / out_hw trick / shape assert as ours:.
+RELEASE_LABEL = "released Metric-VDA-S at the registered 378 input (not its default 518), fp16, exploratory DEV, report-only"
+RELEASE = {"metric_vda_s": dict(   # bench_joint DEPTH_MODELS key -> _vda_released(dev, metric=True): vits, metric=True head, fwd returns METRES (no scale/shift in vda_windows)
+    isambard_path="/projects/b5dh/benchmark/weights/metric_video_depth_anything_vits.pth",
+    sha256="3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33", size=116444063, label=RELEASE_LABEL)}
 assert BINS_M == D.BINS_M or [tuple(map(float, b)) for b in D.BINS_M] == BINS_M
 
 
@@ -140,7 +145,37 @@ def score_clip(acc, scene, frames, predict, root=None, loader=None):
     return n
 
 
-def selftest() -> dict:
+def release_meta(key: str, paths: dict) -> dict:
+    """A3: weights provenance of a released model. Unknown key / missing file / sha != registered -> raises. `paths` = bench_joint.PATHS."""
+    if key not in RELEASE:
+        raise ValueError(f"unknown release spec {key!r}; registered: {sorted(RELEASE)}")
+    r = RELEASE[key]; w = Path(paths[key])
+    assert w.is_file(), f"release weights missing: {w}"
+    sha = S.sha256_file(w)
+    assert sha == r["sha256"], f"release weights sha {sha} != registered {r['sha256']} ({w})"
+    assert r["label"] == RELEASE_LABEL, "release label altered"
+    return dict(spec=key, release_weights=dict(key=key, path=str(w), sha256=sha, size=w.stat().st_size, registered_isambard_path=r["isambard_path"]))
+
+
+def model_meta(ckpt, spec, paths: dict) -> tuple[str, dict]:
+    """-> (bench_joint spec string, meta fragment). ours: path unchanged (trainable_ema assert + ckpt meta); release path via release_meta."""
+    if spec:
+        assert not ckpt, "release --spec must not be combined with --ckpt (an 'ours' checkpoint)"
+        return spec, release_meta(spec, paths)
+    import torch
+    ck = torch.load(ckpt, map_location="cpu", weights_only=False)
+    assert "trainable_ema" in ck, "checkpoint has no trainable_ema (bench_joint.load_ours would silently use 'trainable'); refused"
+    ck_meta = dict(path=str(ckpt), sha256=S.sha256_file(ckpt), weights_key="trainable_ema", step=ck.get("step"),
+                   arch=(ck.get("cfg", {}).get("model", {}) or {}).get("arch"))
+    del ck
+    return None, dict(ckpt=ck_meta)
+
+
+def assert_same_hw(d, x):
+    assert tuple(d.shape[-2:]) == tuple(x.shape[-2:]), f"pipeline depth {tuple(d.shape[-2:])} != model input {tuple(x.shape[-2:])}: an extra resample happened (A1 allows only the sample_prediction upsample)"   # Auditor O26 (1)
+
+
+def selftest(spec=None) -> dict:
     """Synthetic frames only (no DDAD data, no model): smooth depth ramp D at native res, sparse GT = D at random px, stub model = 0.9*D at model res."""
     import torch, torch.nn.functional as F
     rng = np.random.default_rng(0)
@@ -156,6 +191,8 @@ def selftest() -> dict:
             pred_small = F.interpolate(torch.from_numpy(0.9 * field)[None, None], size=(378, 602), mode="bilinear", align_corners=False)[0, 0].numpy()
             score_frame(acc, pred_small, gt, scene)
     r = acc.result()
+    if spec:
+        assert spec in RELEASE; r["label"] = RELEASE_LABEL; r["spec"] = spec
     r["selftest_note"] = "pred=0.9*smooth ramp at 378x602, bilinear back to native: ratios ~0.9 except at image borders (edge clamp)"
     return r
 
@@ -163,6 +200,7 @@ def selftest() -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt"); ap.add_argument("--out")
+    ap.add_argument("--spec", default=None, help="A3: released model = a bench_joint DEPTH_MODELS key registered in RELEASE (metric_vda_s); mutually exclusive with --ckpt")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--precision", default="fp16", choices=["fp16"], help="fp16 autocast only (registered)")
     ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[3]))
@@ -171,8 +209,9 @@ def main(argv=None):
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args(argv)
     if a.selftest:
-        print(json.dumps(selftest(), indent=1)); return
-    assert a.ckpt and a.out, "--ckpt and --out required"
+        print(json.dumps(selftest(a.spec), indent=1)); return
+    assert a.out and (a.ckpt or a.spec), "--out and one of --ckpt / --spec required"
+    if a.spec: assert not a.ckpt, "release --spec must not be combined with --ckpt (an 'ours' checkpoint)"
     out_path = Path(a.out); assert not out_path.exists(), f"{out_path} exists (never overwrite)"
     pins = assert_pins()
     D.read_frame_list(); D.read_pairs()     # the loader's own sha checks too
@@ -182,15 +221,11 @@ def main(argv=None):
     import bench_joint as bj
     bj_sha = S.sha256_file(bj.__file__)
     assert bj_sha == BJ_SHA, f"bench_joint.py sha {bj_sha} != pinned {BJ_SHA}"
-    ck = torch.load(a.ckpt, map_location="cpu", weights_only=False)
-    assert "trainable_ema" in ck, "checkpoint has no trainable_ema (bench_joint.load_ours would silently use 'trainable'); refused"
-    ck_meta = dict(path=str(a.ckpt), sha256=S.sha256_file(a.ckpt), weights_key="trainable_ema", step=ck.get("step"),
-                   arch=(ck.get("cfg", {}).get("model", {}) or {}).get("arch"))
-    del ck
+    bj_spec, mm = model_meta(a.ckpt, a.spec, bj.PATHS)
     dev = a.device
     ac = dict(device_type="cuda", dtype=torch.float16, enabled=dev.startswith("cuda"))
     assert ac["enabled"], "fp16 autocast requires cuda (registered precision)"
-    pipe = bj.build_pipeline(a.spec_prefix + a.ckpt, dev)
+    pipe = bj.build_pipeline(bj_spec or (a.spec_prefix + a.ckpt), dev)
     assert pipe["metric"], "scorer needs a metric model"
     root = D.SCENES_DIR
 
@@ -198,7 +233,7 @@ def main(argv=None):
         x = model_input([root / f["image"] for f in frames]).to(dev)
         with torch.autocast(**ac):
             d, _ = bj.run_pipeline(pipe, x, 0.0, 0.0, tuple(x.shape[-2:]))   # out_hw = model resolution: the A1 bilinear upsample happens in sample_prediction
-        assert tuple(d.shape[-2:]) == tuple(x.shape[-2:]), f"pipeline depth {tuple(d.shape[-2:])} != model input {tuple(x.shape[-2:])}: an extra resample happened (A1 allows only the sample_prediction upsample)"   # Auditor O26 (1)
+        assert_same_hw(d, x)
         if not getattr(predict, "_shape_logged", False):
             print(f"[ddad_scorer] first clip: model input {tuple(x.shape)} -> depth {tuple(d.shape)} (same HxW, identity resample)", flush=True); predict._shape_logged = True
         return d
@@ -209,12 +244,13 @@ def main(argv=None):
         per_scene[sc] = score_clip(acc, sc, frames, predict, root)
         print(f"{sc} scored={per_scene[sc]} {time.time() - t0:.0f}s", flush=True)
     res = acc.result()
+    if a.spec: res["label"] = RELEASE_LABEL
     full = a.limit_scenes is None
     if full:
         assert res["n_scored_frames"] == 395 and res["n_scenes"] == 50, (res["n_scored_frames"], res["n_scenes"])
-    meta = dict(label=LABEL, status="FULL" if full else "PARTIAL (--limit-scenes)", limit_scenes=a.limit_scenes, pins_asserted=full,
+    meta = dict(label=RELEASE_LABEL if a.spec else LABEL, status="FULL" if full else "PARTIAL (--limit-scenes)", limit_scenes=a.limit_scenes, pins_asserted=full,
                 pins=pins, bench_joint_sha256=bj_sha, bench_joint_pinned=BJ_SHA, ddad_scorer_sha256=S.sha256_file(__file__),
-                dataset_module_sha256=S.sha256_file(D.__file__), scorer_module_sha256=S.sha256_file(S.__file__), ckpt=ck_meta,
+                dataset_module_sha256=S.sha256_file(D.__file__), scorer_module_sha256=S.sha256_file(S.__file__), **mm,
                 ramen_commit=bj.git_state(bj.REPO), precision="fp16", short_side=SHORT_SIDE, max_len=D.DDAD_LR_SPEC["max_len"],
                 resolution_rule="A1: bilinear(align_corners=False) pred -> 1936x1216, sampled at projected LIDAR px; GT never resized",
                 alignment="none", host=socket.gethostname(), gpu=torch.cuda.get_device_name(), torch=torch.__version__,
