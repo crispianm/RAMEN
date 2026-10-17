@@ -74,13 +74,13 @@
     [B0] item 5: FAIL [data] seed values [49000] (want [46000] = data.seed 46 x1000)
     RESULT: FAIL (scancel)
 ## NEG (5) config sha line != yaml sha: rc=1 expected FAIL -> OK
-    [S6] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S6.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [S6] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S6.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG (5) config line names the wrong arm yaml: rc=1 expected FAIL -> OK
-    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S3.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S3.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG (5) config line names the k4000 yaml: rc=1 expected FAIL -> OK
-    [S1] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k4000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [S1] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k4000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG (5) config line missing: rc=1 expected FAIL -> OK
     [B0] item 5: FAIL no ' config :' line in the log (the sbatch preflight prints it)
@@ -140,24 +140,220 @@
     RESULT: FAIL (scancel)
 ## NEG (5) resume_reseed present in the B0b yaml: rc=1 expected FAIL -> OK
     [B0b] item 5: FAIL config data.seed ['49'] (want [49]), resume_reseed lines 1 (want 0), resume_from ['null'] (want null), lr_restart keys absent
-    [B0b] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoo
+    [B0b] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/out
     RESULT: FAIL (scancel)
 ## NEG (5) resume_from set in the B0 yaml: rc=1 expected FAIL -> OK
     [B0] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['/x.pt'] (want null), lr_restart keys absent
-    [B0] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0.yaml sha256 1a0a0751ec2a330d02d788d3f7067ecbc8eef60b4c9c67a9629ddbb658a81111 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [B0] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0.yaml sha256 1a0a0751ec2a330d02d788d3f7067ecbc8eef60b4c9c67a9629ddbb658a81111 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG (5) data.seed 47 in the S2 yaml: rc=1 expected FAIL -> OK
     [S2] item 5: FAIL config data.seed ['47'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys absent
-    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG (5) lr_restart key in the S4 yaml: rc=1 expected FAIL -> OK
     [S4] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys present
-    [S4] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S4.yaml sha256 1e8506c0044777a63ee7e06a45b9fd90a64d646e34bf21527707ce1658394048 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1/outdoor_
+    [S4] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S4.yaml sha256 1e8506c0044777a63ee7e06a45b9fd90a64d646e34bf21527707ce1658394048 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
     RESULT: FAIL (scancel)
 ## NEG the unedited REAL 12000-step log passed as B0 (K=2000): rc=1 expected FAIL -> OK
     [B0] item 1: FAIL table step 1000 lr 9.950e-05 expected 7.509e-05
     [B0] item 1: FAIL table step 1480 lr 9.820e-05 expected 2.693e-05
     [B0] item 1: FAIL table step 1900 lr 9.640e-05 expected 1.114e-06
     [B0] item 1: FAIL table step 1980 lr 9.600e-05 expected 4.835e-08
+## NEG[iso] (1) lr x1.05 everywhere (beyond the 1.5% tolerance): rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 4.200e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 8.400e-06 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 2.100e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 1.050e-04 expected 1.000e-04
+## NEG[iso] (1) lr x0.97 everywhere: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 3.880e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 7.760e-06 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 1.940e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 9.700e-05 expected 1.000e-04
+## NEG[iso] (1) warmup 450 (peak reached at step 450): rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL table step 20 lr 4.440e-06 expected 4.000e-06
+    [S4] item 1: FAIL table step 40 lr 8.890e-06 expected 8.000e-06
+    [S4] item 1: FAIL table step 100 lr 2.220e-05 expected 2.000e-05
+    [S4] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 4.44e-06), (40, 8.89e-06), (60, 1.33e-05)]
+## NEG[iso] (1) lr 0 only at the last printed row (step 2000): rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL table step 2000 lr 0.000e+00 expected 1.097e-10
+    [S3] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(2000, 0.0)]
+    [S3] item 1: FAIL lr == 0 on a printed row (no-op schedule bug)
+    RESULT: FAIL (scancel)
+## NEG[iso] (S2) B0 step rows lack ' sev=' (full row regex matches nothing), -F: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 20 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 40 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 100 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 500 not printed yet
+## NEG[iso] (S2) the same, MID-RUN (no -F): FAIL, not WAIT/ok: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL step rows parse: 20 `stepG/T loss=` rows, 20 not matching the full row format (`... lr=... sev=...`); first [20, 40, 60]
+    RESULT: FAIL (scancel)
+## NEG[iso] (S2) only some step rows lack ' sev=' (counts differ), MID-RUN: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL step rows parse: 20 `stepG/T loss=` rows, 10 not matching the full row format (`... lr=... sev=...`); first [40, 80, 120]
+    RESULT: FAIL (scancel)
+## NEG[iso] (S2) header-only log (no step rows), -F: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 20 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 40 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 100 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 500 not printed yet
+## POSITIVE-WAIT (S2): header-only log mid-run: rc=0, item 1 is WAIT and never 'ok' -> OK
+## NEG[iso] (5) resume_reseed in the yaml (log sha line updated to the edited yaml: only the content check can fail): rc=1 expected FAIL -> OK
+    [B0b] item 5: FAIL config data.seed ['49'] (want [49]), resume_reseed lines 1 (want 0), resume_from ['null'] (want null), lr_restart keys absent
+    RESULT: FAIL (scancel)
+## NEG[iso] (5) resume_from set in the yaml (log sha line updated to the edited yaml: only the content check can fail): rc=1 expected FAIL -> OK
+    [B0] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['/x.pt'] (want null), lr_restart keys absent
+    RESULT: FAIL (scancel)
+## NEG[iso] (5) data.seed 47 in the yaml (log sha line updated to the edited yaml: only the content check can fail): rc=1 expected FAIL -> OK
+    [S2] item 5: FAIL config data.seed ['47'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys absent
+    RESULT: FAIL (scancel)
+## NEG[iso] (5) lr_restart key in the yaml (log sha line updated to the edited yaml: only the content check can fail): rc=1 expected FAIL -> OK
+    [S4] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys present
+    RESULT: FAIL (scancel)
+## NEG[iso] (6) B0 (the reference) clip total 94580: rc=1 expected FAIL -> OK
+    [B0] item 6: FAIL train clips 94580 val 3 (c3_n46 run: 94581 / 3)
+    [B0b] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    [S2] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    [S3] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+## NEG[iso] (6) world_size=2 on EVERY arm (no arm differs from the reference): rc=1 expected FAIL -> OK
+    [B0] item 6: FAIL no `[data] train clips=N val clips=V world_size=4` line
+    [B0b] item 6: FAIL no `[data] train clips=N val clips=V world_size=4` line
+    [S1] item 6: FAIL no `[data] train clips=N val clips=V world_size=4` line
+    [S2] item 6: FAIL no `[data] train clips=N val clips=V world_size=4` line
+## NEG[iso] (6) S3 carries an extra [data] line that B0 lacks (clip counts and bound line equal): rc=1 expected FAIL -> OK
+    [S3] item 6: FAIL differs from B0: ['[data] sampler=weighted']
+    RESULT: FAIL (scancel)
+## NEG[iso] (9) complete logs, NO metrics.jsonl at all, -F: rc=1 expected FAIL -> OK
+    [B0] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0_k2000/metrics.jsonl missing
+    [B0b] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0b_k2000/metrics.jsonl missing
+    [S1] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S1_k2000/metrics.jsonl missing
+    [S2] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S2_k2000/metrics.jsonl missing
+## NEG[iso] (9) complete logs, metrics.jsonl with no loss_terms rows, -F: rc=1 expected FAIL -> OK
+    [B0] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
+    [B0b] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
+    [S1] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
+    [S2] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
+## NEG[iso] (10) only 2 reference-comparable loss rows, -F: item 10 itself FAILs: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 100 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 500 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 520 not printed yet
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 600 not printed yet
+## MID POSITIVE: all 8 cut at 400, no FAIL: rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## MID lr x2: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 8.000e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 1.600e-05 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 4.000e-05 expected 2.000e-05
+    [S2] item 1: FAIL 20 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 8e-06), (40, 1.6e-05), (60, 2.4e-05)]
+## MID lr x1.05: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 4.200e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 8.400e-06 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 2.100e-05 expected 2.000e-05
+    [S2] item 1: FAIL 20 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 4.2e-06), (40, 8.4e-06), (60, 1.26e-05)]
+## MID warmup 100: rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL table step 20 lr 2.000e-05 expected 4.000e-06
+    [S4] item 1: FAIL table step 40 lr 4.000e-05 expected 8.000e-06
+    [S4] item 1: FAIL table step 100 lr 1.000e-04 expected 2.000e-05
+    [S4] item 1: FAIL 20 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 2e-05), (40, 4e-05), (60, 6e-05)]
+## MID no monitor step0 line (item 3 FAIL once >= 2 step rows exist, not WAIT): rc=1 expected FAIL -> OK
+    [S4] item 3: FAIL no `[monitor] step0` line (the start-of-run monitor on the release weights)
+    RESULT: FAIL (scancel)
+## MID seed swapped (B0b log carries 46000): rc=1 expected FAIL -> OK
+    [B0b] item 5: FAIL [data] seed values [46000] (want [49000] = data.seed 49 x1000)
+    RESULT: FAIL (scancel)
+## MID [resume] line: rc=1 expected FAIL -> OK
+    [B0] item 2: FAIL 1 [resume] lines (a from-release run must have none): [resume] /x/step12000.pt epoch=3 step=12000 best=0.3
+    RESULT: FAIL (scancel)
+## MID total printed 12000: rc=1 expected FAIL -> OK
+    [S1] item 2: FAIL totals printed [12000] (expect 2000)
+    RESULT: FAIL (scancel)
+## MID B0 loss 2x: rc=1 expected FAIL -> OK
+    [B0] item 10: FAIL mean |loss/ref - 1| over 20 printed rows <= 500 = 1.000 vs the real c3_n46 12k run (same recipe and seed; < 0.15)
+    RESULT: FAIL (scancel)
+## MID B0 (the reference) clip total 94580: rc=1 expected FAIL -> OK
+    [B0] item 6: FAIL train clips 94580 val 3 (c3_n46 run: 94581 / 3)
+    [B0b] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    [S2] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+    [S3] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+## NEG[iso-sub-check] the closed-form check ALONE catches: 4000-cosine in K=2000: rc=1 expected FAIL -> OK
+    [S5] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(640, 9.96e-05), (660, 9.95e-05), (680, 9.94e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: const 1e-4 after warmup: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(620, 0.0001), (640, 0.0001), (660, 0.0001)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: lr 0 at last row only: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(2000, 0.0)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: lr 0 from 1600: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(1600, 0.0), (1620, 0.0), (1640, 0.0)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: lr x0.97: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 3.88e-06), (40, 7.76e-06), (60, 1.16e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: lr x1.05: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 4.2e-06), (40, 8.4e-06), (60, 1.26e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: lr x2: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 8e-06), (40, 1.6e-05), (60, 2.4e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: warmup 100: rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 2e-05), (40, 4e-05), (60, 6e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: warmup 450: rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 4.44e-06), (40, 8.89e-06), (60, 1.33e-05)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the closed-form check ALONE catches: warmup missing: rc=1 expected FAIL -> OK
+    [B0b] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(20, 0.0001), (40, 0.0001), (60, 0.0001)]
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the table check ALONE catches: 4000-cosine in K=2000: rc=1 expected FAIL -> OK
+    [S5] item 1: FAIL table step 1000 lr 9.510e-05 expected 7.509e-05
+    [S5] item 1: FAIL table step 1480 lr 8.190e-05 expected 2.693e-05
+    [S5] item 1: FAIL table step 1900 lr 6.550e-05 expected 1.114e-06
+    [S5] item 1: FAIL table step 1980 lr 6.200e-05 expected 4.835e-08
+## NEG[iso-sub-check] the table check ALONE catches: const 1e-4 after warmup: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL table step 1000 lr 1.000e-04 expected 7.509e-05
+    [B0] item 1: FAIL table step 1480 lr 1.000e-04 expected 2.693e-05
+    [B0] item 1: FAIL table step 1900 lr 1.000e-04 expected 1.114e-06
+    [B0] item 1: FAIL table step 1980 lr 1.000e-04 expected 4.835e-08
+## NEG[iso-sub-check] the table check ALONE catches: lr 0 at last row only: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL table step 2000 lr 0.000e+00 expected 1.097e-10
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the table check ALONE catches: lr 0 from 1600: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL table step 1900 lr 0.000e+00 expected 1.114e-06
+    [S3] item 1: FAIL table step 1980 lr 0.000e+00 expected 4.835e-08
+    [S3] item 1: FAIL table step 2000 lr 0.000e+00 expected 1.097e-10
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the table check ALONE catches: lr x0.97: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 3.880e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 7.760e-06 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 1.940e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 9.700e-05 expected 1.000e-04
+## NEG[iso-sub-check] the table check ALONE catches: lr x1.05: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 4.200e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 8.400e-06 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 2.100e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 1.050e-04 expected 1.000e-04
+## NEG[iso-sub-check] the table check ALONE catches: lr x2: rc=1 expected FAIL -> OK
+    [S2] item 1: FAIL table step 20 lr 8.000e-06 expected 4.000e-06
+    [S2] item 1: FAIL table step 40 lr 1.600e-05 expected 8.000e-06
+    [S2] item 1: FAIL table step 100 lr 4.000e-05 expected 2.000e-05
+    [S2] item 1: FAIL table step 500 lr 2.000e-04 expected 1.000e-04
+## NEG[iso-sub-check] the table check ALONE catches: warmup 100: rc=1 expected FAIL -> OK
+    [S4] item 1: FAIL table step 20 lr 2.000e-05 expected 4.000e-06
+    [S4] item 1: FAIL table step 40 lr 4.000e-05 expected 8.000e-06
+    [S4] item 1: FAIL table step 100 lr 1.000e-04 expected 2.000e-05
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the table check ALONE catches: warmup missing: rc=1 expected FAIL -> OK
+    [B0b] item 1: FAIL table step 20 lr 1.000e-04 expected 4.000e-06
+    [B0b] item 1: FAIL table step 40 lr 1.000e-04 expected 8.000e-06
+    [B0b] item 1: FAIL table step 100 lr 1.000e-04 expected 2.000e-05
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the decay check ALONE catches: const 1e-4 after warmup: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL decay present: max lr over steps >= 1000 = 0.0001 (must be < 8.0e-05)
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the lr==0 check ALONE catches: lr 0 at last row only: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL lr == 0 on a printed row (no-op schedule bug)
+    RESULT: FAIL (scancel)
+## NEG[iso-sub-check] the lr==0 check ALONE catches: lr 0 from 1600: rc=1 expected FAIL -> OK
+    [S3] item 1: FAIL lr == 0 on a printed row (no-op schedule bug)
+    RESULT: FAIL (scancel)
 
 NEGATIVE-CONTROL SUITE: ALL AS EXPECTED

@@ -47,14 +47,17 @@ for spec in sys.argv[1:]:
     txt = open(log, errors="replace").read().splitlines(); blob = "\n".join(txt)
     steps = {int(x.group(1)): (float(x.group(3)), float(x.group(4)), x.group(5)) for l in txt if (x := re.search(r"step(\d+)/(\d+) loss=(\S+) lr=(\S+) .*?sev=(\S+)", l))}
     tot = {int(x.group(2)) for l in txt if (x := re.search(r"step(\d+)/(\d+) loss=", l))}
+    rows = {int(x.group(1)) for l in txt if (x := re.search(r"step(\d+)/\d+ loss=", l))}
+    fmt_bad = sorted(rows - set(steps))   # S2: step rows that exist but do NOT parse with the full row regex (format drift, e.g. no ' sev='): never silently "ok"
     print(f"=== {arm}  {log}  (K={K}{' SMOKE ' + str(SMOKE) if SMOKE else ''}; last printed step {max(steps) if steps else None}) ===")
     # 1 LR
     for g, ref in sorted(TABLE.items()):
         if g > TOTAL: continue
         if g not in steps: out(arm, 1, "WAIT", f"step {g} not printed yet"); continue
         out(arm, 1, "ok" if abs(steps[g][1] / ref - 1) <= 0.015 else "FAIL", f"table step {g} lr {steps[g][1]:.3e} expected {ref:.3e}")
+    out(arm, 1, "FAIL" if fmt_bad else ("ok" if rows else "WAIT"), f"step rows parse: {len(rows)} `stepG/T loss=` rows, {len(fmt_bad)} not matching the full row format (`... lr=... sev=...`); first {fmt_bad[:3]}")
     bad = [(g, lr) for g, (_, lr, _) in sorted(steps.items()) if abs(lr - 1e-4 * scale(g)) > max(0.015 * 1e-4 * scale(g), 2e-12)]
-    out(arm, 1, "FAIL" if bad else "ok", f"{len(steps)} printed lr values vs the closed form (warmup 500, cosine to 0 at {K}); mismatches {bad[:3]}")
+    out(arm, 1, "FAIL" if bad else ("ok" if steps else "WAIT"), f"{len(steps)} printed lr values vs the closed form (warmup 500, cosine to 0 at {K}); mismatches {bad[:3]}")
     if [g for g, (_, lr, _) in steps.items() if lr == 0.0]: out(arm, 1, "FAIL", "lr == 0 on a printed row (no-op schedule bug)")
     late = [lr for g, (_, lr, _) in steps.items() if g >= K // 2 and g <= TOTAL]
     if SMOKE == 0: out(arm, 1, "FAIL" if (late and max(late) > 0.8e-4) else ("ok" if late else "WAIT"), f"decay present: max lr over steps >= {K // 2} = {max(late) if late else 'n/a'} (must be < 8.0e-05)")

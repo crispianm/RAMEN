@@ -45,9 +45,11 @@ def mk_runs(K, smoke=0, name="runs"):
     if root.exists(): shutil.rmtree(root)
     for a in ARMS: metrics(root, a, K, smoke)
     return root
-def run(label, args, want_fail, K=2000, smoke=0, runs=None, cfgd=None, final=True):
-    cmd = ["bash", str(H / "check_first_run_l1.sh"), "-K", str(K)] + (["-F"] if final else []) + (["-S", str(smoke)] if smoke else []) + ["-r", str(runs or FX / f"runs_k{K}")] + (["-c", str(cfgd)] if cfgd else []) + args
+def run(label, args, want_fail, K=2000, smoke=0, runs=None, cfgd=None, final=True, item=None, chk=None):
+    """item=(ARM, N): additionally require the line `[ARM] item N: FAIL` (want_fail) -- so a NEG cannot pass because some OTHER item failed (isolated NEG).  chk: checker script (default the shipped one)."""
+    cmd = ["bash", str(chk or H / "check_first_run_l1.sh"), "-K", str(K)] + (["-F"] if final else []) + (["-S", str(smoke)] if smoke else []) + ["-r", str(runs or FX / f"runs_k{K}")] + (["-c", str(cfgd)] if cfgd else []) + args
     r = subprocess.run(cmd, capture_output=True, text=True); ok = (r.returncode == 1) == want_fail
+    if item is not None: ok = ok and any(l.startswith(f"[{item[0]}] item {item[1]}: FAIL") for l in r.stdout.splitlines())
     print(f"## {label}: rc={r.returncode} expected {'FAIL' if want_fail else 'no FAIL'} -> {'OK' if ok else 'WRONG'}")
     for l in [l for l in r.stdout.splitlines() if "FAIL" in l or "RESULT" in l or "REPORT" in l][:4]: print("   ", l[:250])
     if r.returncode not in (0, 1): print("   STDERR:", r.stderr[-300:])
@@ -124,4 +126,92 @@ for lab, arm, edit in (("resume_reseed present in the B0b yaml", "B0b", lambda t
 shutil.rmtree(cfgd)
 # the unedited REAL 12k log under an L1 name (it IS a from-release log, but with the 12000-step schedule and snapshot list): must FAIL
 allok &= run("NEG the unedited REAL 12000-step log passed as B0 (K=2000)", [f"B0={REAL}"], True)
+
+# ===================== second review (S2, S3): extra negatives, ISOLATED (each must FAIL on the NAMED item), mid-run versions, sub-check isolation =====================
+def I(label, over, item, **kw):   # isolated NEG: complete-log mode (-F) unless final=False
+    global allok; allok &= run("NEG[iso] " + label, args=specs(kw.pop("K", 2000), {k: write(f"IN_{i}.out", v) for i, (k, v) in enumerate(over.items(), 1)}), want_fail=True, item=item, **kw)
+cutn = lambda L, n: [l for l in L if not re.match(r"e\d+ step(\d+)/", l) or int(re.search(r"step(\d+)/", l).group(1)) <= n]
+# --- near-boundary LR (beyond 1.5%, far inside the old-mutant 50%)
+I("(1) lr x1.05 everywhere (beyond the 1.5% tolerance)", {"S2": relr(synth("S2", 2000), lambda g, v: f"{1.05 * v:.2e}")}, ("S2", 1))
+I("(1) lr x0.97 everywhere", {"S2": relr(synth("S2", 2000), lambda g, v: f"{0.97 * v:.2e}")}, ("S2", 1))
+I("(1) warmup 450 (peak reached at step 450)", {"S4": relr(synth("S4", 2000), lambda g, v: f"{1e-4 * min(1.0, g / 450) if g <= 500 else v:.2e}")}, ("S4", 1))
+I("(1) lr 0 only at the last printed row (step 2000)", {"S3": relr(synth("S3", 2000), lambda g, v: "0.00e+00" if g == 2000 else f"{v:.2e}")}, ("S3", 1))
+# --- step rows that no longer parse (S2): format drift must FAIL, with and without -F, never "ok"
+nosev = [re.sub(r" sev=\S+", "", l) for l in synth("B0", 2000)]
+I("(S2) B0 step rows lack ' sev=' (full row regex matches nothing), -F", {"B0": nosev}, ("B0", 1))
+I("(S2) the same, MID-RUN (no -F): FAIL, not WAIT/ok", {"B0": cutn(nosev, 400)}, ("B0", 1), final=False, runs=FX / "runs_k2000")
+half = [re.sub(r" sev=\S+", "", l) if re.match(r"e\d+ step(\d+)/", l) and int(re.search(r"step(\d+)/", l).group(1)) % 40 == 0 else l for l in synth("B0", 2000)]
+I("(S2) only some step rows lack ' sev=' (counts differ), MID-RUN", {"B0": cutn(half, 400)}, ("B0", 1), final=False, runs=FX / "runs_k2000")
+# header only (no step rows): -F FAIL; mid-run WAIT and NEVER an item-1 'ok' line
+hdr = [l for l in synth("B0", 2000) if not re.match(r"e\d+ step", l)]
+I("(S2) header-only log (no step rows), -F", {"B0": hdr}, ("B0", 1))
+r = subprocess.run(["bash", str(H / "check_first_run_l1.sh"), "-K", "2000", "-r", str(FX / "runs_k2000_empty"), f"B0={write('HDR_B0.out', hdr)}"], capture_output=True, text=True)
+okw = r.returncode == 0 and not any(l.startswith("[B0] item 1: ok") for l in r.stdout.splitlines()) and any(l.startswith("[B0] item 1: WAIT") for l in r.stdout.splitlines())
+print(f"## POSITIVE-WAIT (S2): header-only log mid-run: rc=0, item 1 is WAIT and never 'ok' -> {'OK' if okw else 'WRONG'}"); allok &= okw
+# --- yaml edits WITH the log's sha line updated (only the yaml-content check can fail)
+for lab, arm, edit in (("resume_reseed in the yaml", "B0b", lambda s: s.replace("  resume_from: null", "  resume_from: null\n  resume_reseed: 49")),
+                       ("resume_from set in the yaml", "B0", lambda s: s.replace("  resume_from: null", "  resume_from: /x.pt")),
+                       ("data.seed 47 in the yaml", "S2", lambda s: s.replace("\n  seed: 46\n", "\n  seed: 47\n")),
+                       ("lr_restart key in the yaml", "S4", lambda s: s.replace("  resume_from: null", "  resume_from: null\n  lr_restart_step: 12000"))):
+    cd2 = FX / "cfg_neg2"
+    if cd2.exists(): shutil.rmtree(cd2)
+    shutil.copytree(H / "configs/k2000", cd2); pp = cd2 / f"arm_{arm}.yaml"; b4 = pp.read_text(); pp.write_text(edit(b4)); assert pp.read_text() != b4
+    sh = hashlib.sha256(pp.read_bytes()).hexdigest()
+    L = [re.sub(r"sha256 [0-9a-f]{64}", "sha256 " + sh, l) if re.match(r"\s*config :", l) else l for l in synth(arm, 2000)]
+    I(f"(5) {lab} (log sha line updated to the edited yaml: only the content check can fail)", {arm: L}, (arm, 5), cfgd=cd2)
+shutil.rmtree(FX / "cfg_neg2")
+# --- B0 (the REFERENCE) clip counts / world size on every arm / extra [data] line
+I("(6) B0 (the reference) clip total 94580", {"B0": [l.replace("train clips=94581", "train clips=94580") for l in synth("B0", 2000)]}, ("B0", 6))
+allok &= run("NEG[iso] (6) world_size=2 on EVERY arm (no arm differs from the reference)", [f"{a}={write(f'WS_{a}.out', [l.replace('world_size=4', 'world_size=2') for l in synth(a, 2000)])}" for a in ARMS], True, item=("B0", 6))
+I("(6) S3 carries an extra [data] line that B0 lacks (clip counts and bound line equal)", {"S3": synth("S3", 2000, mut=lambda L: L[:16] + ["[data] sampler=weighted"] + L[16:])}, ("S3", 6))
+# --- missing metrics / no loss_terms rows under -F
+emp = FX / "runs_empty_x"; emp.mkdir(exist_ok=True)
+allok &= run("NEG[iso] (9) complete logs, NO metrics.jsonl at all, -F", specs(2000), True, runs=emp, item=("B0", 9))
+nolt = mk_runs(2000, 0, "runs_nolt")
+for a in ARMS: (nolt / f"l1_{a}_k2000/metrics.jsonl").write_text(json.dumps({"event": "val", "step": 2000}) + "\n")
+allok &= run("NEG[iso] (9) complete logs, metrics.jsonl with no loss_terms rows, -F", specs(2000), True, runs=nolt, item=("B0", 9))
+# --- item 10 with fewer than 3 reference rows (under -F WAIT->FAIL on item 10 itself) and item 3 mid-run
+short = [l for l in synth("B0", 2000) if not re.match(r"e\d+ step", l) or int(re.search(r"step(\d+)/", l).group(1)) <= 40]
+I("(10) only 2 reference-comparable loss rows, -F: item 10 itself FAILs", {"B0": short}, ("B0", 10))
+mr = mk_runs(2000, 0, "runs_mid")
+for a in ARMS:
+    pp = mr / f"l1_{a}_k2000/metrics.jsonl"; pp.write_text("".join(l for l in pp.read_text().splitlines(True) if json.loads(l)["step"] <= 400))
+def M(label, over, want_fail, item=None):   # MID-RUN mode: logs cut at step 400, NO -F
+    global allok
+    sp = [f"{a}={write(f'MID_{a}.out', cutn(over.get(a, synth(a, 2000)), 400))}" for a in ARMS]
+    allok &= run("MID " + label, sp, want_fail, runs=mr, final=False, item=item)
+M("POSITIVE: all 8 cut at 400, no FAIL", {}, False)
+M("lr x2", {"S2": relr(synth("S2", 2000), lambda g, v: f"{2 * v:.2e}")}, True, ("S2", 1))
+M("lr x1.05", {"S2": relr(synth("S2", 2000), lambda g, v: f"{1.05 * v:.2e}")}, True, ("S2", 1))
+M("warmup 100", {"S4": relr(synth("S4", 2000), lambda g, v: f"{1e-4 * min(1.0, g / 100) if g <= 500 else v:.2e}")}, True, ("S4", 1))
+M("no monitor step0 line (item 3 FAIL once >= 2 step rows exist, not WAIT)", {"S4": [l for l in synth("S4", 2000) if not l.startswith("[monitor] step0 ")]}, True, ("S4", 3))
+M("seed swapped (B0b log carries 46000)", {"B0b": synth("B0b", 2000, seed=46000)}, True, ("B0b", 5))
+M("[resume] line", {"B0": synth("B0", 2000, mut=lambda L: L[:9] + ["[resume] /x/step12000.pt epoch=3 step=12000 best=0.3"] + L[9:])}, True, ("B0", 2))
+M("total printed 12000", {"S1": [l.replace("/2000 ", "/12000 ") for l in synth("S1", 2000)]}, True, ("S1", 2))
+M("B0 loss 2x", {"B0": [re.sub(r"loss=(\S+)", lambda m: f"loss={2 * float(m.group(1)):.4f}", l) if re.match(r"e\d+ step", l) else l for l in synth("B0", 2000)]}, True, ("B0", 10))
+M("B0 (the reference) clip total 94580", {"B0": [l.replace("train clips=94581", "train clips=94580") for l in synth("B0", 2000)]}, True, ("B0", 6))
+# --- sub-check ISOLATION: each LR sub-check, alone, must catch the LR negatives it is meant to (kills 'check removed' / 'tolerance widened' mutants of a REDUNDANT sub-check)
+CHK0 = (H / "check_first_run_l1.sh").read_text()
+def checker(name, edits):
+    s = CHK0
+    for o_, n_ in edits:
+        if s.count(o_) != 1:   # a sub-check this isolation needs to REMOVE is itself missing/changed in the shipped checker: report, do not crash
+            print(f"## WRONG isolation builder '{name}': sub-check text not found exactly once in check_first_run_l1.sh ({o_[:60]!r}) -> that sub-check was removed or altered"); global allok; allok = False; return None
+        s = s.replace(o_, n_)
+    pth = FX / f"chk_{name}.sh"; pth.write_text(s); return pth
+CF = ("bad = [(g, lr) for", "bad = [] and [(g, lr) for"); TB = ("        if g > TOTAL: continue\n", "        continue\n")
+DC = ('if SMOKE == 0: out(arm, 1, "FAIL" if (late and max(late) > 0.8e-4)', 'if False: out(arm, 1, "FAIL" if (late and max(late) > 0.8e-4)')
+Z0 = ("if [g for g, (_, lr, _) in steps.items() if lr == 0.0]:", "if False:")
+ISO = {"closed-form": checker("cf", [TB, DC, Z0]), "table": checker("tb", [CF, DC, Z0]), "decay": checker("dc", [CF, TB, Z0]), "lr==0": checker("z0", [CF, TB, DC])}
+LRN = {"const 1e-4 after warmup": ("B0", lambda g, v: "1.00e-04" if g > 500 else f"{v:.2e}"), "lr 0 from 1600": ("S3", lambda g, v: "0.00e+00" if g >= 1600 else f"{v:.2e}"),
+       "lr x2": ("S2", lambda g, v: f"{2 * v:.2e}"), "lr x1.05": ("S2", lambda g, v: f"{1.05 * v:.2e}"), "lr x0.97": ("S2", lambda g, v: f"{0.97 * v:.2e}"),
+       "warmup missing": ("B0b", lambda g, v: "1.00e-04" if g <= 500 else f"{v:.2e}"), "warmup 100": ("S4", lambda g, v: f"{1e-4 * min(1.0, g / 100) if g <= 500 else v:.2e}"),
+       "warmup 450": ("S4", lambda g, v: f"{1e-4 * min(1.0, g / 450) if g <= 500 else v:.2e}"), "4000-cosine in K=2000": ("S5", lambda g, v: f"{1e-4 * scale(g, 4000):.2e}"),
+       "lr 0 at last row only": ("S3", lambda g, v: "0.00e+00" if g == 2000 else f"{v:.2e}")}
+MUST = {"closed-form": set(LRN), "table": set(LRN) - {"warmup 450"}, "decay": {"const 1e-4 after warmup"}, "lr==0": {"lr 0 from 1600", "lr 0 at last row only"}}
+for sub, chkp in ISO.items():
+    if chkp is None: continue
+    for lab in sorted(MUST[sub]):
+        arm, f = LRN[lab]; pth = write("ISO.out", relr(synth(arm, 2000), f))
+        allok &= run(f"NEG[iso-sub-check] the {sub} check ALONE catches: {lab}", specs(2000, {arm: pth}), True, chk=chkp, item=(arm, 1), cfgd=H / "configs/k2000")
 print("\nNEGATIVE-CONTROL SUITE:", "ALL AS EXPECTED" if allok else "UNEXPECTED RESULT"); sys.exit(0 if allok else 1)
