@@ -38,3 +38,6 @@ bench_joint commit and DEV clip-list sha for the five-arm screen are logged toge
 
 ## R1b loader commit (2026-10-17T17:36:12Z)
 DDAD loader ddad_lr_dataset.py + tests/test_ddad_lr_dataset.py committed at dc166c4 (10 tests: 4 synthetic, 6 real incl. the 5 sanity frames chosen by the fixed rule; no GT statistic other than the 0<z<=200 units check was computed). Resolution rule as registered: bilinear prediction -> 1936x1216, sampled at projected LIDAR px, GT never resized. OPEN: scorer short_side (provisional 378 copied from KITTI in DDAD_LR_SPEC) must be fixed in R3 before the first score. Local pull check (R4) pending.
+
+## R4 local pull verification (2026-10-17T18:48:47Z)
+data/DEV_LR/ddad_val/ vs the committed val_subset SHA256SUMS: sha256sum -c = 4445 OK, 0 FAILED (mismatch); the other 3555 of the 8000 SUMS lines are non-pruned files that were never pulled (No such file, expected). 4445 = 3950 PNG + 395 LIDAR + 50 + 50. 280 files were re-pulled after rsync exit-255 chunk failures. Cluster parts dir /projects/b5dh/scratch_ddad_20261017/parts (129 files, 257G) deleted after this verification (exact path, per Manager). Output: scratch LR_DEV/verify_local_R4.out. R4 MET; DDAD scoring is still report-only, short_side TBD.
