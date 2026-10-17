@@ -1,0 +1,28 @@
+PASS pins_asserted is true
+PASS scorer sha256
+PASS bench_joint sha256
+PASS combined clip sha
+PASS ckpt weights_key trainable_ema
+PASS ckpt step == 14000
+PASS ckpt sha256 recorded (64 hex)
+PASS host type string contains 'GH200'
+PASS nyuv2_frames == 160
+PASS precision fp16
+PASS no limit_clips/max_frames
+PASS meta.datasets has all four
+PASS kitti present with 7 clips
+PASS kitti abs_rel_unaligned finite
+PASS nyuv2 present with 4 clips
+PASS nyuv2 abs_rel_unaligned finite
+PASS scannetpp present with 31 clips
+PASS scannetpp abs_rel_unaligned finite
+PASS vkitti present with 10 clips
+PASS vkitti abs_rel_unaligned finite
+PASS kitti tae_gtvalid present+finite
+PASS kitti tae present+finite
+PASS scannetpp tae_gtvalid present+finite
+PASS scannetpp tae present+finite
+PASS kitti every clip has finite tae_gtvalid
+PASS scannetpp every clip has finite tae_gtvalid
+PASS primary vkitti far legacy_subsample_median finite
+RESULT: ALL PASS (27 checks) /projects/b5dh/RAMEN_outdoor_screen_scores/A0/scores.json
