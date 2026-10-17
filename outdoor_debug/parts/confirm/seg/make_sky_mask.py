@@ -36,13 +36,15 @@ PROB_THRESH = 0.9
 ERODE_REF_PX, ERODE_REF_SHORT = 8, 900
 LIDAR_REF_PX = 5
 DROP_FRAC = 0.01
+ANY_P = 0.5            # `any` layer per segmenter: argmax is sky OR sky prob >= ANY_P (so certain, which needs p >= 0.9 in both, is a subset BY CONSTRUCTION)
+IOU_MIN = 0.85         # pooled IoU of the two segmenters' `any` masks over all candidate frames; below = mask set REJECTED (stop, NOT CONFIRMED)
 WORK_SHORT = 512
 WORK_MULT = 32
 SEED = 0
 ADE_EXPECT = ("sky", 2)
 CITY_EXPECT = ("sky", 10)
 RULE = dict(prob_thresh=PROB_THRESH, erode_ref_px=ERODE_REF_PX, erode_ref_short=ERODE_REF_SHORT,
-            lidar_ref_px=LIDAR_REF_PX, drop_frac=DROP_FRAC, work_short=WORK_SHORT,
+            lidar_ref_px=LIDAR_REF_PX, drop_frac=DROP_FRAC, any_p=ANY_P, iou_min=IOU_MIN, work_short=WORK_SHORT,
             work_mult=WORK_MULT, seed=SEED, ade_sky=list(ADE_EXPECT), city_sky=list(CITY_EXPECT))
 
 
@@ -99,6 +101,41 @@ def lidar_exclusion(shape, uv, radius=None):
 
 def apply_lidar(mask, uv, radius=None):
     return mask & ~lidar_exclusion(mask.shape, uv, radius)
+
+
+def any_sky(p, margin, any_p=ANY_P):
+    """Per-segmenter `any` layer at IMAGE size. p: sky prob; margin: sky prob minus the largest other-class prob (both bilinearly upsampled).
+    True where sky is the argmax (margin >= 0) or p >= any_p."""
+    return (margin >= 0) | (p >= any_p)
+
+
+def any_layer(pa, ma, pb, mb):
+    """`any` = sky by EITHER segmenter (see any_sky). Returns bool [H,W]."""
+    return any_sky(pa, ma) | any_sky(pb, mb)
+
+
+def iou_counts(pa, ma, pb, mb):
+    """(intersection, union) pixel counts of the two segmenters' own `any_sky` masks on one frame."""
+    a, b = any_sky(pa, ma), any_sky(pb, mb)
+    return int((a & b).sum()), int((a | b).sum())
+
+
+def pooled_iou(counts):
+    """counts: iterable of (inter, union) over ALL candidate frames (kept and dropped). Returns pooled IoU; 1.0 if the union is empty."""
+    i = sum(c[0] for c in counts); u = sum(c[1] for c in counts)
+    return 1.0 if u == 0 else i / u
+
+
+def check_agreement(counts, iou_min=IOU_MIN):
+    """Raise MaskRejected if the pooled IoU is below iou_min (declared stop rule). Returns the IoU."""
+    v = pooled_iou(counts)
+    if v < iou_min:
+        raise MaskRejected(f"pooled segmenter IoU {v:.4f} < {iou_min}: mask set rejected (NOT CONFIRMED, stop before any prediction)")
+    return v
+
+
+class MaskRejected(Exception):
+    pass
 
 
 def is_dropped(mask, drop_frac=DROP_FRAC):
@@ -169,6 +206,14 @@ def oneformer_sky_prob(class_logits, mask_logits, sky_id):
     return oneformer_semantic_scores(class_logits, mask_logits)[:, sky_id:sky_id + 1]
 
 
+def split_sky_margin(P, sky_id):
+    """P [B,C,h,w] class probs -> (p_sky [B,1,h,w], margin [B,1,h,w] = p_sky - max over the other classes)."""
+    import torch
+    p = P[:, sky_id:sky_id + 1]
+    other = torch.cat([P[:, :sky_id], P[:, sky_id + 1:]], 1).amax(1, keepdim=True)
+    return p, p - other
+
+
 class _Seg:
     def __init__(self, repo, revision, expect, kind, device="cpu"):
         import torch
@@ -185,8 +230,8 @@ class _Seg:
             self.processor = OneFormerProcessor.from_pretrained(repo, revision=revision)
         self.model = M.from_pretrained(repo, revision=revision, torch_dtype=torch.float32).to(device).eval()
 
-    def sky_prob(self, img):
-        """img uint8 [H,W,3] -> float32 [H,W] sky prob upsampled bilinear to image size."""
+    def sky_maps(self, img):
+        """img uint8 [H,W,3] -> (p, margin) float32 [H,W]: sky prob and (sky prob - max other-class prob), both upsampled bilinear to image size."""
         torch = self.torch
         from PIL import Image
         import torch.nn.functional as F
@@ -198,16 +243,21 @@ class _Seg:
         with torch.no_grad():
             if self.kind == "segformer":
                 o = self.model(pixel_values=x)
-                p = F.softmax(o.logits.float(), 1)[:, self.sky:self.sky + 1]      # [1,1,h/4,w/4]
+                P = F.softmax(o.logits.float(), 1)                                   # [1,C,h/4,w/4]
             else:
                 # the processor is used ONLY for the task-token ids ('the task is semantic');
                 # pixel_values stay our declared working-res tensor (no processor resize).
                 ti = self.processor(images=Image.fromarray(img).resize((ww, wh), Image.BILINEAR),
                                     task_inputs=["semantic"], return_tensors="pt")["task_inputs"].to(self.device)
                 o = self.model(pixel_values=x, task_inputs=ti)
-                p = oneformer_sky_prob(o.class_queries_logits.float(), o.masks_queries_logits.float(), self.sky)
+                P = oneformer_semantic_scores(o.class_queries_logits.float(), o.masks_queries_logits.float())
+            p, margin = split_sky_margin(P, self.sky)
             p = F.interpolate(p, size=(H, W), mode="bilinear", align_corners=False)
-        return p[0, 0].cpu().numpy().astype(np.float32)
+            margin = F.interpolate(margin, size=(H, W), mode="bilinear", align_corners=False)
+        return p[0, 0].cpu().numpy().astype(np.float32), margin[0, 0].cpu().numpy().astype(np.float32)
+
+    def sky_prob(self, img):
+        return self.sky_maps(img)[0]
 
 
 def main():

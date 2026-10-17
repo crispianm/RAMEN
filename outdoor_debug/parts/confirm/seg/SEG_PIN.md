@@ -1,4 +1,4 @@
-# SEG_PIN (PLAN ONLY; nothing downloaded; Manager HOLD / Auditor O36, Add.47 provisional; segmenter B swapped to OneFormer per Auditor O37)
+# SEG_PIN (weights PINNED 2026-10-17, see the PINNED section at the end; originally written as a plan under the Add.47 hold; segmenter B = OneFormer per Auditor O37)
 
 ## Checkpoints (candidates, to be pinned after the hold lifts)
 | role | HF repo | class | licence (model card field) | licence text | revision | weight/config sha256 | size |

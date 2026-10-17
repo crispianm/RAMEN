@@ -240,6 +240,21 @@ def model_input(paths):
     return torch.from_numpy(np.clip(np.stack(ims), 0, 1)).permute(0, 3, 1, 2).contiguous()
 
 
+def check_mask_meta(m: dict) -> None:
+    """The mask store's sidecar must say OK and carry a pooled segmenter IoU >= 0.85 (R1 M2); anything else refuses to score."""
+    if m.get("status") != "OK":
+        raise RuntimeError(f"mask meta status {m.get('status')!r} != 'OK'")
+    iou = m.get("pooled_iou")
+    if not isinstance(iou, (int, float)) or iou < 0.85:
+        raise RuntimeError(f"mask meta pooled_iou {iou!r} < 0.85: mask set rejected")
+    if not isinstance(m.get("dropped"), list):
+        raise RuntimeError("mask meta has no dropped list")
+
+
+def is_mask_dropped(fid: str, dropped: set) -> bool:
+    return fid in dropped
+
+
 def read_frames_tsv(path) -> list[tuple[str, int, int, int, int]]:
     out = []
     for ln in open(path):
@@ -321,6 +336,9 @@ def main(argv=None):
     ac = dict(device_type="cuda", dtype=torch.float16, enabled=dev.startswith("cuda")); assert ac["enabled"]
     pipe = bj.build_pipeline(bj_spec or (a.spec_prefix + a.ckpt), dev); assert pipe["metric"]
     frames = read_frames_tsv(a.frames); masks = A.MaskStore(a.mask)
+    mmeta = json.load(open(Path(a.mask).with_suffix(".meta.json")))
+    check_mask_meta(mmeta)
+    mask_dropped = set(mmeta["dropped"]); n_mask_dropped = 0
     by_log: dict[str, list] = {}
     for fr in frames:
         by_log.setdefault(fr[0], []).append(fr)
@@ -334,16 +352,20 @@ def main(argv=None):
             d, _ = bj.run_pipeline(pipe, x, 0.0, 0.0, tuple(x.shape[-2:]))
         DS.assert_same_hw(d, x)
         for (i, c, l, dt) in sel["scored"]:
-            cert, anys = masks.get(A.frame_id(log, c))
+            fid = A.frame_id(log, c)
+            cert, anys = masks.get(fid)
             pred = np.asarray(d[i], np.float32)
-            sky.add(pred, cert)
+            if is_mask_dropped(fid, mask_dropped):   # drop rule 1 (mask builder, <1% certain-sky native): out of the PRIMARY P only; the guards use every scored frame (O43 M4)
+                n_mask_dropped += 1
+            else:
+                sky.add(pred, cert)
             score_frame_guard(acc, pred, L.sparse_gt(c, l), log, anys)
         print(f"{log} {len(sel['scored'])} frames {time.time() - t0:.0f}s", flush=True)
     res = acc.result()
     full = True
     meta = dict(label=REF_LABEL if a.spec else LABEL, status="FULL", pins_asserted=full, pins=pins, seed_label=(a.pair if a.ckpt else "reference"), **mm,
                 precision="fp16", short_side=A.SHORT_SIDE, resolution_rule="A1 bilinear pred->2048x1550 sampled at projected LiDAR px; GT never resized; sky = any-sky mask excluded",
-                host=socket.gethostname(), seconds=time.time() - t0, bins_m=bin_labels(), single_seed_note=SINGLE_SEED_NOTE)
+                n_mask_dropped_frames=n_mask_dropped, mask_pooled_iou=mmeta["pooled_iou"], mask_n_candidates=mmeta.get("n_candidates"), host=socket.gethostname(), seconds=time.time() - t0, bins_m=bin_labels(), single_seed_note=SINGLE_SEED_NOTE)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(dict(meta=meta, sky=sky.result(), **res), indent=1, default=float))
     print("wrote", out_path)

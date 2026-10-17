@@ -96,6 +96,7 @@ portalocker==3.2.0
 proglog==0.1.12
 protobuf==7.34.0
 psutil==7.2.2
+pyarrow==21.0.0
 pycparser==3.0
 pycryptodome==3.23.0
 pydantic==2.12.5

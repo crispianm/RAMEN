@@ -274,3 +274,19 @@ def test_compare_pairs_end_to_end():
     assert S.compare_pairs(badguard)["verdict"] == "NOT CONFIRMED"
     with pytest.raises(AssertionError):
         S.compare_pairs({"s50": ok["s50"], "s51": ok["s51"]})
+
+
+def test_phase_rule_r1_picks_aligned_phase_and_ties_go_to_zero():
+    cam = list(range(0, 300 * 50_000_000, 50_000_000))                        # 20 Hz
+    aligned0 = list(range(10_000_000, 150 * 100_000_000, 100_000_000))         # sweeps 10 ms after even cam frames
+    mis0 = list(range(60_000_000, 150 * 100_000_000, 100_000_000))             # sweeps 60 ms after even frames = 10 ms before ODD frames; phase 0 is 40 ms off
+    r0 = A.select_frames(cam, aligned0); r1 = A.select_frames(cam, mis0)
+    assert r0["phase"] == 0 and len(r0["scored"]) == 15
+    assert r1["phase"] == 1 and len(r1["scored"]) == 15 and r1["clip"][0] == cam[1]       # forced-fail case: filed phase-0-only rule would score 0 frames
+    # the filed (phase 0 only) rule on the same log scores nothing, so the test fails if the phase search is removed
+    assert A._select_phase(sorted(cam), np.array(mis0, np.int64), 0)[1] == []
+    # tie (both phases aligned: sweeps every 50 ms) -> 0
+    both = list(range(10_000_000, 300 * 50_000_000, 50_000_000))
+    assert A.select_frames(cam, both)["phase"] == 0
+    import select_av2_frames as Sel
+    assert Sel.select(cam, mis0)[0][0] == cam[1] and Sel.select(cam, aligned0)[0][0] == cam[0]

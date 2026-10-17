@@ -17,9 +17,8 @@ def nearest(lid, t):
     return lid[j], abs(lid[j] - t)
 
 
-def select(cam, lid):
-    cam, lid = sorted(cam), sorted(lid)
-    clip = cam[::CLIP_CAM_STRIDE][:MAX_LEN]
+def _phase(cam, lid, p):
+    clip = cam[p::CLIP_CAM_STRIDE][:MAX_LEN]
     scored, dropped = [], []
     for i in range(0, len(clip), SCORE_CLIP_STRIDE):
         if not lid:
@@ -30,6 +29,13 @@ def select(cam, lid):
         else:
             dropped.append((i, clip[i], dt))
     return clip, scored, dropped
+
+
+def select(cam, lid):
+    """R1 (Auditor O43): phase p in {0,1} = the one with MORE scored frames (ties -> 0); clip = cam[p::2][:160]."""
+    cam, lid = sorted(cam), sorted(lid)
+    r = [_phase(cam, lid, p) for p in (0, 1)]
+    return r[1] if len(r[1][1]) > len(r[0][1]) else r[0]
 
 
 def main(listing_dir, logs_txt, out_frames, out_objs):

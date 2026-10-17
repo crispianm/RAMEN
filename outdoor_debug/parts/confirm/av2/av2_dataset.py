@@ -66,12 +66,8 @@ def nearest_sweep(cam_ts: int, lidar_ts_sorted: np.ndarray) -> tuple[int, int]:
     return int(a[best]), abs(int(a[best]) - cam_ts)
 
 
-def select_frames(cam_ts: list[int], lidar_ts: list[int]) -> dict:
-    """One log. Returns dict(clip=[cam_ts...] (<=MAX_LEN), scored=[(clip_idx, cam_ts, lidar_ts, dt_ns)], dropped=[(clip_idx, cam_ts, dt_ns|None)]).
-    Rule: clip = sorted cam timestamps [::2][:MAX_LEN]; scored candidates = clip indices 0,10,20,...; each is paired with the nearest sweep; |dt| > 25 ms -> dropped."""
-    cam = sorted(int(t) for t in cam_ts)
-    lid = np.array(sorted(int(t) for t in lidar_ts), np.int64)
-    clip = cam[::CLIP_CAM_STRIDE][:MAX_LEN]
+def _select_phase(cam, lid, phase):
+    clip = cam[phase::CLIP_CAM_STRIDE][:MAX_LEN]
     scored, dropped = [], []
     for i in range(0, len(clip), SCORE_CLIP_STRIDE):
         if len(lid) == 0:
@@ -81,7 +77,19 @@ def select_frames(cam_ts: list[int], lidar_ts: list[int]) -> dict:
             scored.append((i, clip[i], lt, dt))
         else:
             dropped.append((i, clip[i], dt))
-    return dict(clip=clip, scored=scored, dropped=dropped)
+    return clip, scored, dropped
+
+
+def select_frames(cam_ts: list[int], lidar_ts: list[int]) -> dict:
+    """One log. Returns dict(clip=[cam_ts...] (<=MAX_LEN), scored=[(clip_idx, cam_ts, lidar_ts, dt_ns)], dropped=[(clip_idx, cam_ts, dt_ns|None)], phase=p).
+    Rule (R1, Auditor O43): for phase p in {0,1}: clip_p = sorted cam timestamps [p::2][:MAX_LEN]; scored candidates = clip indices 0,10,20,...; each is paired with the
+    nearest sweep; |dt| > 25 ms -> dropped.  p = the phase with MORE scored frames; ties -> 0."""
+    cam = sorted(int(t) for t in cam_ts)
+    lid = np.array(sorted(int(t) for t in lidar_ts), np.int64)
+    r = [_select_phase(cam, lid, p) for p in (0, 1)]
+    p = 1 if len(r[1][1]) > len(r[0][1]) else 0
+    clip, scored, dropped = r[p]
+    return dict(clip=clip, scored=scored, dropped=dropped, phase=p)
 
 
 def frame_id(log: str, cam_ts: int) -> str:
