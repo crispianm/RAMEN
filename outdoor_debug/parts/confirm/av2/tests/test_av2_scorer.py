@@ -231,3 +231,17 @@ def test_stdlib_selector_equals_dataset_rule():
         clip, sc, dr = Sel.select(cam, lid)
         r = A.select_frames(cam, lid)
         assert clip == r["clip"] and sc == r["scored"] and dr == r["dropped"]
+
+
+def test_unevaluable_guard_never_passes_and_pairing_is_25ms():
+    import math
+    ln15 = math.log(1.5)
+    assert S.decide(ln15 + 0.1, True, ["[120,200]"]) == "NOT CONFIRMED ([120,200] guard unevaluable)"
+    assert S.decide(0.0, True, ["[120,200]"]) == "REFUTED"
+    assert S.decide(ln15 + 0.1, True) == "CONFIRMED"
+    assert S.decide(ln15 - 0.1, True) == "NOT CONFIRMED"
+    big = {"n_px": 10**6, "absrel_unaligned_pooled": 0.2}; small = {"n_px": 5, "absrel_unaligned_pooled": 0.2}
+    bins_ok = {"[0,20)": big, "[120,200]": small}
+    g = S.guard_check(bins_ok, bins_ok)
+    assert g["[120,200]"]["status"] == "UNEVALUABLE" and g["[0,20)"]["status"] == "PASS"
+    assert A.MAX_PAIR_DT_NS == 25_000_000

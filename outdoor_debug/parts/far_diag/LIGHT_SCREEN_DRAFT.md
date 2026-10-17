@@ -40,7 +40,7 @@ A BETTER-type statement here is a screen hit on exposed data. Anything heading f
 Training: 2000 steps x 7 runs. Measured basis (SCREEN_PROPOSAL, sacct): ~0.72 h per 1000 steps on 4 GH200 => 1.45 h wall = ~1.45 NHR per run; 7 runs ~10 NHR (S6: +1.45). Scoring (by-range + DDAD per arm, measured in the last screen: 480-500 s + 220-240 s on one GH200): ~0.6 NHR across 7 arms if run as single-GPU jobs ~ 0.2 NHR each; the last screen's total for 6 arms was 9.43 NHR incl. scoring, so ~11 NHR for 7 runs. A4 adds ~0.15 NHR.
 
 ## Risks
-1. A 2000-step cosine from the release may not reproduce the compression (G0 covers this; fallback = 4000 steps).
+1. A 2000-step cosine from the release may not reproduce the compression (G0 covers this. DECISION (R+D, Auditor O38 Q2): G0 = STOP AND REPORT. There is no automatic 4000-step fallback; a longer schedule would be a new pre-declaration and a new sweep. Read G0 from B0 and B0b before any arm is scored/read).
 2. One baseline pair understates seed variance (the last screen's A0/A0b spread on NYUv2 was 0.097 vs 0.077); an arm effect below NF is not an effect.
 3. VKITTI is a training set: the primary measures fit, not generalisation; DDAD is exposed and a single real set: a hit may be DDAD-specific (camera/FOV).
 4. S1 and S2 change the mix, so they also change the near-range anchor; a far gain with a near loss is a trade, read with the guards.
@@ -48,4 +48,13 @@ Training: 2000 steps x 7 runs. Measured basis (SCREEN_PROPOSAL, sacct): ~0.72 h 
 6. Several knobs (lambda, head lr) interact with the short schedule; a negative result does not rule them out at 12k steps.
 
 ## Held-out far-GT candidates (report only; NOT acquired, NOT touched; L-2)
-(a) DDAD train split (150 scenes of the same sensor, different scenes from val; same 275 GB tar, no sha published; would need a re-download and its own registration); (b) Argoverse 2 sensor val (LiDAR to ~200 m; large download); (c) Waymo Open / nuScenes are limited to ~75 m / ~50-70 m LiDAR and do not cover >80 m well. None is used by this draft; any would need its own registration and the Manager's approval.
+(a) DDAD train split (150 scenes of the same sensor, different scenes from val; same 275 GB tar, no sha published; would need a re-download and its own registration); (b) [struck: the strict track's held-out set; Track 2 may not name, list, acquire or score it (Auditor O38 L-2)]; (c) Waymo Open / nuScenes are limited to ~75 m / ~50-70 m LiDAR and do not cover >80 m well. None is used by this draft; any would need its own registration and the Manager's approval.
+
+
+## Auditor O38 additions (draft, R+D)
+- Schedule declared numerically for every run: max_steps 2000, warmup 500 steps (linear), cosine to 0 at step 2000; no resume. First-run LR stop check against the closed form (as the confirm spec: compare every printed lr to 1e-4 x scale), with negative controls. B0 and B0b run FIRST and G0 is read before the arms run.
+- G0 vs the fallback: G0 fails => STOP and report (no arm verdicts, no 4000-step stage).
+- B0b seed: no resume, so data.seed 49 through the x1000 scheme is sufficient; a batch proof is required before the run: B0 vs B0b first-N clip ids and a noise checksum DIFFER. S1/S2/S3 change the data mix, so their clip ids legitimately differ from B0's.
+- DDAD as a decision leg: only with the user's explicit word (it changes Add. 43's report-only); if allowed it is labelled 'exposed DEV gate' and exploratory only. Default in this draft: DDAD is report-only.
+- S6 only if declared before the first run (otherwise not run).
+- A4 conditions: A4 filed in REGISTRATION.md first; the patch committed with a new scorer sha; tests including the refusal paths; the first 518 run's shape log; every comparison names both input sizes (378 for ours, 518 for the release row).

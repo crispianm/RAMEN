@@ -164,11 +164,13 @@ class SkyAccumulator:
 
 
 # ----------------------------------------------------------------------------- decision (Auditor O36, single seed)
-def decide(d: float, guards_pass: bool) -> str:
+def decide(d: float, guards_pass: bool, unevaluable=()) -> str:
     if not np.isfinite(d):
         return "INVALID (non-finite d)"
     if d <= 0:
         return "REFUTED"
+    if unevaluable:             # Auditor O37: an unevaluable guard NEVER passes by default (the far guard is the informative leg)
+        return "NOT CONFIRMED (" + ", ".join(sorted(unevaluable)) + " guard unevaluable)"
     if d >= LN_MARGIN and guards_pass:
         return "CONFIRMED"
     return "NOT CONFIRMED"      # 0 < d < ln 1.5, or d >= ln 1.5 with a failed guard
@@ -189,10 +191,10 @@ def guard_check(h_bins: dict, t_bins: dict, tol: float = GUARD_TOL, min_px: int 
 def compare(h: dict, t: dict) -> dict:
     d = math.log(h["sky"]["P_framebalanced_median"] / t["sky"]["P_framebalanced_median"])
     g = guard_check(h["bins"], t["bins"])
-    ok = all(v["status"] != "FAIL" for v in g.values())
+    ok = all(v["status"] == "PASS" for v in g.values())      # UNEVALUABLE is not a pass
     return dict(label=LABEL, single_seed_note=SINGLE_SEED_NOTE, seed=50, d_ln_PH300_over_PTS2=d, ln_margin=LN_MARGIN, P_H300=h["sky"]["P_framebalanced_median"],
                 P_TS2=t["sky"]["P_framebalanced_median"], guards=g, guards_pass=ok,
-                guards_unevaluable=[k for k, v in g.items() if v["status"] == "UNEVALUABLE"], verdict=decide(d, ok),
+                guards_unevaluable=[k for k, v in g.items() if v["status"] == "UNEVALUABLE"], verdict=decide(d, ok, [k for k, v in g.items() if v["status"] == "UNEVALUABLE"]),
                 rule="CONFIRMED iff d>=ln1.5 AND all guards pass; 0<d<ln1.5 NOT CONFIRMED; d<=0 REFUTED")
 
 

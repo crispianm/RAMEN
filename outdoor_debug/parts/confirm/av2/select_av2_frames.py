@@ -6,7 +6,7 @@ LISTING_DIR/<log>.keys : 'datasets/av2/sensor/val/<log>/...<TAB>size' lines.   O
 import bisect, sys
 from pathlib import Path
 
-CLIP_CAM_STRIDE, SCORE_CLIP_STRIDE, MAX_LEN, MAX_PAIR_DT_NS = 2, 10, 160, 50000000
+CLIP_CAM_STRIDE, SCORE_CLIP_STRIDE, MAX_LEN, MAX_PAIR_DT_NS = 2, 10, 160, 25000000
 PFX = "datasets/av2/sensor/val/"
 
 
@@ -58,7 +58,7 @@ def main(listing_dir, logs_txt, out_frames, out_objs):
     with open(out_objs, "w") as f:
         for k, s in objs:
             f.write("%s\t%d\n" % (k, s))
-    print("logs=%d frames=%d dropped(no sweep within 50 ms)=%d objects=%d total_bytes=%d" % (len(logs), len(frames), ndrop, len(objs), sum(s for _, s in objs)))
+    print("logs=%d frames=%d dropped(no sweep within 25 ms)=%d objects=%d total_bytes=%d" % (len(logs), len(frames), ndrop, len(objs), sum(s for _, s in objs)))
 
 
 if __name__ == "__main__":

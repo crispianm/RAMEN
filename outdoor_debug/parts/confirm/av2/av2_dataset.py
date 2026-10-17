@@ -35,7 +35,7 @@ LOG_STRIDE = 3                       # logs: sorted(all 150 val log ids)[::3] ->
 CLIP_CAM_STRIDE = 2                  # clip = every 2nd ring_front_center frame in ascending timestamp order (20 Hz -> 10 Hz)
 SCORE_CLIP_STRIDE = 10               # scored = clip indices 0,10,20,... (within the first MAX_LEN clip frames)
 MAX_LEN = 160                        # window limit as DDAD_LR_SPEC / bench_joint
-MAX_PAIR_DT_NS = 50_000_000          # a scored frame needs a LiDAR sweep within 50 ms (half a sweep period); else dropped and counted
+MAX_PAIR_DT_NS = 25_000_000          # a scored frame needs a LiDAR sweep within 25 ms (Auditor O37); else dropped and counted
 SHORT_SIDE = 378
 AV2_SPEC = dict(max_depth=MAX_DEPTH_M, min_depth=0.0, max_len=MAX_LEN, short_side=SHORT_SIDE)
 S3_VAL_PREFIX = "s3://argoverse/datasets/av2/sensor/val/"
@@ -68,7 +68,7 @@ def nearest_sweep(cam_ts: int, lidar_ts_sorted: np.ndarray) -> tuple[int, int]:
 
 def select_frames(cam_ts: list[int], lidar_ts: list[int]) -> dict:
     """One log. Returns dict(clip=[cam_ts...] (<=MAX_LEN), scored=[(clip_idx, cam_ts, lidar_ts, dt_ns)], dropped=[(clip_idx, cam_ts, dt_ns|None)]).
-    Rule: clip = sorted cam timestamps [::2][:MAX_LEN]; scored candidates = clip indices 0,10,20,...; each is paired with the nearest sweep; |dt| > 50 ms -> dropped."""
+    Rule: clip = sorted cam timestamps [::2][:MAX_LEN]; scored candidates = clip indices 0,10,20,...; each is paired with the nearest sweep; |dt| > 25 ms -> dropped."""
     cam = sorted(int(t) for t in cam_ts)
     lid = np.array(sorted(int(t) for t in lidar_ts), np.int64)
     clip = cam[::CLIP_CAM_STRIDE][:MAX_LEN]
