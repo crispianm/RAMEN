@@ -1,0 +1,141 @@
+======================================== RAMEN v2 ablation
+ Job ID : 7226119   Node: nid010391   Started: Sat Oct 10 11:24:35 AM UTC 2026
+ Config : configs/experiments/dn01_c3rep_20261009_c3_n46.yaml
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+NVIDIA GH200 120GB, 97871 MiB
+ Commit : 0699ee4fac9fb3b71839c8d7ed0b62c2874dc5aa
+{
+  "arch": "vda",
+  "checkpoint_dir": "runs/dn01_c3rep_20261009_c3_n46",
+  "config": "/lus/lfs1aip2/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/configs/experiments/dn01_c3rep_20261009_c3_n46.yaml",
+  "config_sha256": "b8a98b96330613eb2aa8f5bf05f54a77c1f6f81abe948d0cf18dbf8c5b4926c5",
+  "foundation_checkpoint_sha256": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378",
+  "inputs": [
+    {
+      "label": "vendored VDA repo",
+      "path": "/projects/b5dh/repos/Video-Depth-Anything"
+    },
+    {
+      "label": "DA-V2 init checkpoint",
+      "path": "/projects/b5dh/DaBiT/weights/depth_anything_v2_vits.pth"
+    },
+    {
+      "label": "data.sources[0].root",
+      "path": "/projects/b5dh/data/train/tartanair"
+    },
+    {
+      "label": "data.sources[1].root",
+      "path": "/projects/b5dh/data/train/vkitti"
+    },
+    {
+      "label": "data.sources[2].root",
+      "path": "/projects/b5dh/data/train/point_odyssey/train"
+    },
+    {
+      "label": "data.sources[3].root",
+      "path": "/projects/b5dh/data/train/point_odyssey/val"
+    },
+    {
+      "label": "data.sources[4].root",
+      "path": "/projects/b5dh/data/train/irs"
+    },
+    {
+      "label": "data.sources[5].root",
+      "path": "/projects/b5dh/data/train/spring"
+    },
+    {
+      "label": "data.sources[6].root",
+      "path": "/projects/b5dh/data/train/kitti_raw"
+    },
+    {
+      "label": "data.sources[7].root",
+      "path": "/projects/b5dh/data/train/nyuv2/data"
+    },
+    {
+      "label": "data.sources[8].root",
+      "path": "/projects/b5dh/data/train/scannetpp_train"
+    },
+    {
+      "label": "data.val_sources[0].root",
+      "path": "/projects/b5dh/data/train/spring"
+    }
+  ],
+  "loss": {
+    "consistency_weight": 0.0,
+    "distill_weight": 0.0,
+    "enh_weight": 1.0,
+    "frontend_weight": 0.0,
+    "gradient_weight": 0.5,
+    "gram_weight": 0.0,
+    "joint_temporal_depth_space": "metric_disparity",
+    "joint_temporal_mode": "lse",
+    "joint_temporal_ramp": [
+      8000,
+      10000
+    ],
+    "joint_temporal_tau": 0.026,
+    "joint_temporal_weight": 0.0,
+    "log_terms": true,
+    "loss_mode": "vda",
+    "metric_depth_clamp": [
+      0.1,
+      100000.0
+    ],
+    "metric_silog_lambda": 0.5,
+    "metric_silog_weight": 1.0,
+    "metric_weight": 0.0,
+    "profile_weight": 0.0,
+    "silog_weight": 0.0,
+    "sky_hinge_weight": 0.0,
+    "sky_vda_zero_disparity": true,
+    "sky_zero_disparity": false,
+    "ssi_align": "perclip",
+    "ssi_scales": 4,
+    "ssi_trim": 0.0,
+    "ssi_weight": 1.0,
+    "tgm_weight": 10.0
+  },
+  "max_steps": 12000,
+  "seed": 46
+}
+train.py imports OK
+[git] HEAD=0699ee4fac9fb3b71839c8d7ed0b62c2874dc5aa
+[git] HEAD=0699ee4fac9fb3b71839c8d7ed0b62c2874dc5aa
+[git] HEAD=0699ee4fac9fb3b71839c8d7ed0b62c2874dc5aa
+[git] HEAD=0699ee4fac9fb3b71839c8d7ed0b62c2874dc5aa
+xFormers not availablexFormers not available
+
+xFormers not availablexFormers not available
+
+xFormers not available
+xFormers not available
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+xFormers not available
+xFormers not available
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/projects/b5dh/data/train/tartanair_seg/ env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=50000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+[checkpoint] permanent step{N}.pt snapshots at: [6000, 8000, 12000]
+[monitor] step0 outdoor median(pred)/median(GT) = 1.006 (pred 14.27 m, GT 14.18 m)
+e0 step20/12000 loss=0.8702 lr=4.00e-06 1.5it/s static=1.0000 sev=0.04
+e0 step40/12000 loss=0.8206 lr=8.00e-06 1.6it/s static=0.0000 sev=0.08
+e0 step60/12000 loss=0.8016 lr=1.20e-05 1.6it/s static=0.0000 sev=0.12
+e0 step80/12000 loss=0.7838 lr=1.60e-05 1.6it/s static=0.0000 sev=0.16
+[monitor] step100 outdoor median(pred)/median(GT) = 0.978 (pred 13.87 m, GT 14.18 m)
+e0 step100/12000 loss=0.7944 lr=2.00e-05 1.6it/s static=0.0000 sev=0.2
+e0 step120/12000 loss=0.7753 lr=2.40e-05 1.6it/s static=0.0000 sev=0.24
+[warn] non-finite loss at step 60

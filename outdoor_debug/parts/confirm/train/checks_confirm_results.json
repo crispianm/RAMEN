@@ -1,0 +1,185 @@
+{
+ "classes": {
+  "C_TS2": {
+   "rec": [
+    {
+     "split": "train",
+     "type": "tartanair",
+     "cls": "VDASemanticsDegradedTartanAirDataset",
+     "ts2": "TS2Labeller",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "vkitti",
+     "cls": "VDASemanticsDegradedVKITTIDataset",
+     "ts2": "NoneType",
+     "vk": 655.0
+    },
+    {
+     "split": "train",
+     "type": "pointodyssey",
+     "cls": "VDASemanticsDegradedPointOdysseyDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "pointodyssey",
+     "cls": "VDASemanticsDegradedPointOdysseyDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "irs",
+     "cls": "VDASemanticsDegradedIRSDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "spring",
+     "cls": "DegradedSpringDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "kitti_raw",
+     "cls": "DegradedKITTIRawTrainDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "nyu_train",
+     "cls": "DegradedNYUTrainDataset",
+     "ts2": "NoneType",
+     "vk": null
+    }
+   ],
+   "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+  },
+  "C_TS2_H300": {
+   "rec": [
+    {
+     "split": "train",
+     "type": "tartanair",
+     "cls": "VDASemanticsDegradedTartanAirDataset",
+     "ts2": "TS2Labeller",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "vkitti",
+     "cls": "VDASemanticsDegradedVKITTIDataset",
+     "ts2": "NoneType",
+     "vk": 655.0
+    },
+    {
+     "split": "train",
+     "type": "pointodyssey",
+     "cls": "VDASemanticsDegradedPointOdysseyDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "pointodyssey",
+     "cls": "VDASemanticsDegradedPointOdysseyDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "irs",
+     "cls": "VDASemanticsDegradedIRSDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "spring",
+     "cls": "DegradedSpringDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "kitti_raw",
+     "cls": "DegradedKITTIRawTrainDataset",
+     "ts2": "NoneType",
+     "vk": null
+    },
+    {
+     "split": "train",
+     "type": "nyu_train",
+     "cls": "DegradedNYUTrainDataset",
+     "ts2": "NoneType",
+     "vk": null
+    }
+   ],
+   "build_error": "FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt"
+  }
+ },
+ "ts2_clip": {
+  "idx": 0,
+  "video": "Downtown/P008"
+ },
+ "hinge": {
+  "C_TS2": {
+   "10.0": [
+    2.301928758621216,
+    null
+   ],
+   "100.0": [
+    2.50459623336792,
+    null
+   ],
+   "1000.0": [
+    4.02274227142334,
+    null
+   ]
+  },
+  "C_TS2_H300": {
+   "10.0": [
+    2.6420485973358154,
+    0.3401198983192444
+   ],
+   "100.0": [
+    2.614457368850708,
+    0.10986120998859406
+   ],
+   "1000.0": [
+    4.02274227142334,
+    0.0
+   ]
+  }
+ },
+ "lr_prints_checked": 600,
+ "lr": {
+  "C_TS2": {
+   "0": 0.002,
+   "1": 0.004,
+   "19": 0.04,
+   "20": 0.042,
+   "499": 1.0,
+   "500": 1.0,
+   "501": 0.999999981342903,
+   "6000": 0.5341212066823355,
+   "11999": 1.865709703396945e-08
+  },
+  "C_TS2_H300": {
+   "0": 0.002,
+   "1": 0.004,
+   "19": 0.04,
+   "20": 0.042,
+   "499": 1.0,
+   "500": 1.0,
+   "501": 0.999999981342903,
+   "6000": 0.5341212066823355,
+   "11999": 1.865709703396945e-08
+  }
+ }
+}

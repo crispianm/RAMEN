@@ -1,0 +1,48 @@
+## POSITIVE: both synthetic fixtures (real n46 log + edits): rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## NEG seed 49000 (wrong seed): rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 7: FAIL [data] seed values [49000] (want [50000])
+    RESULT: FAIL (scancel)
+## NEG only 3 [ts2] lines: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 4: FAIL [ts2] occurrences=3, with env_table_sha256 f19d0b83: 3 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG [ts2] with wrong sha: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 4: FAIL [ts2] occurrences=4, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG no [ts2] lines in the control: rc=1 expected FAIL -> OK
+    [C_TS2] item 4: FAIL [ts2] occurrences=0, with env_table_sha256 f19d0b83: 0 (expect 4 and 4)
+    RESULT: FAIL (scancel)
+## NEG a [resume] line present: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 2: FAIL resume lines 1 (must be 0: from the released init); totals printed [12000] (expect 12000)
+    RESULT: FAIL (scancel)
+## NEG lr scaled x2 (wrong schedule): rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 1: FAIL 6 printed lr values vs 500-warmup/cosine-12000 closed form; mismatches [(20, 8e-06, 4.000000000000001e-06), (40, 1.6e-05, 8.000000000000001e-06), (60, 2.4e-05, 1.2e-05)]; lr==0 at []
+    [C_TS2_H300] item 1: FAIL table step 20 lr 8.000e-06 expected 4.000e-06
+    [C_TS2_H300] item 1: FAIL table step 40 lr 1.600e-05 expected 8.000e-06
+    [C_TS2_H300] item 1: FAIL table step 100 lr 4.000e-05 expected 2.000e-05
+    RESULT: FAIL (scancel)
+## NEG vkitti bound 656: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 6: FAIL want vkitti=655, tartanair=10000; got: iff depth < bound): tartanair=10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+    [C_TS2_H300] item 7: FAIL differs from reference: ['[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80
+    RESULT: FAIL (scancel)
+## NEG [data] line differs between arms: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 7: FAIL differs from reference: ['[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=81, spring=80, kitti_raw=80
+    RESULT: FAIL (scancel)
+## NEG non-finite warning: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 5: FAIL 1 non-finite warnings in the first 100 steps
+    RESULT: FAIL (scancel)
+## NEG hinge key present in the control: rc=1 expected FAIL -> OK
+    [C_TS2] item 3: FAIL hinge key presence wrong (want False) at steps [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    RESULT: FAIL (scancel)
+## NEG hinge key missing in H300: rc=1 expected FAIL -> OK
+    [C_TS2_H300] item 3: FAIL hinge key presence wrong (want True) at steps [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    RESULT: FAIL (scancel)
+## NEG unedited screen continuation logs: rc=1 expected FAIL -> OK
+    [C_TS2] item 1: FAIL 100 printed lr values vs 500-warmup/cosine-12000 closed form; mismatches [(12020, 2e-05, 0.0), (12040, 4e-05, 0.0), (12060, 6e-05, 0.0)]; lr==0 at []
+    [C_TS2] item 2: FAIL resume lines 1 (must be 0: from the released init); totals printed [14000] (expect 12000)
+    [C_TS2] item 2: FAIL snapshot list: [checkpoint] permanent step{N}.pt snapshots at: [12500, 13000, 13500, 14000]
+    [C_TS2] item 7: FAIL [data] seed values [45000] (want [50000])
+    [C_TS2_H300] item 1: FAIL 100 printed lr values vs 500-warmup/cosine-12000 closed form; mismatches [(12020, 2e-05, 0.0), (12040, 4e-05, 0.0), (12060, 6e-05, 0.0)]; lr==0 at []
+    [C_TS2_H300] item 2: FAIL resume lines 1 (must be 0: from the released init); totals printed [14000] (expect 12000)
+
+NEGATIVE-CONTROL SUITE: ALL AS EXPECTED

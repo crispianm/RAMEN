@@ -1,0 +1,61 @@
+== 1 classes per source (real train._build_multisource -> _make_source, recorder)
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+/home/wg19671/.claude/jobs/a0d391cb/tmp/od/train.py:275: UserWarning: VKITTIDataset: training split includes ['Scene01', 'Scene20'], synthetic re-renders of KITTI-raw drives ['2011_09_26_drive_0009_sync', '2011_10_03_drive_0047_sync'] that are in the KITTI evaluation sets (pass exclude_eval_overlap=True to drop them)
+  ds = cls(root=spec["root"], split=split, val_fraction=vf,
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+ C_TS2: [('tartanair', 'VDASemanticsDegradedTartanAirDataset', 'TS2Labeller'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset', 'NoneType'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset', 'NoneType'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset', 'NoneType'), ('irs', 'VDASemanticsDegradedIRSDataset', 'NoneType'), ('spring', 'DegradedSpringDataset', 'NoneType'), ('kitti_raw', 'DegradedKITTIRawTrainDataset', 'NoneType'), ('nyu_train', 'DegradedNYUTrainDataset', 'NoneType')] build_error=FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt
+  [ok] C_TS2 classes+ts2+bound []
+  [ok] C_TS2 all 8 buildable train sources recorded (scannetpp local split list missing is the known gap) n=8
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+ C_TS2_H300: [('tartanair', 'VDASemanticsDegradedTartanAirDataset', 'TS2Labeller'), ('vkitti', 'VDASemanticsDegradedVKITTIDataset', 'NoneType'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset', 'NoneType'), ('pointodyssey', 'VDASemanticsDegradedPointOdysseyDataset', 'NoneType'), ('irs', 'VDASemanticsDegradedIRSDataset', 'NoneType'), ('spring', 'DegradedSpringDataset', 'NoneType'), ('kitti_raw', 'DegradedKITTIRawTrainDataset', 'NoneType'), ('nyu_train', 'DegradedNYUTrainDataset', 'NoneType')] build_error=FileNotFoundError: ScanNet++ split list not found: /mnt/DATA/DegradedDepth/data/TRAIN/scannetpp_train/splits/sem_test.txt
+  [ok] C_TS2_H300 classes+ts2+bound []
+  [ok] C_TS2_H300 all 8 buildable train sources recorded (scannetpp local split list missing is the known gap) n=8
+IRS Home/RoyalRoom_T1: 964 paired frames in 3 consecutive run(s); dropped 0 frames present in only one of l_/d_, 7 frames in runs shorter than the clip span 32; 29 clips
+[spring] train dir = /mnt/DATA/DegradedDepth/data/TRAIN/spring/extracted/spring/train
+  [ok] NEGATIVE CONTROL a config without ts2 keys must be flagged by the class check [('tartanair.ts2', 'NoneType')]
+== 2 TS2 vs released-rule (no TS2) masks, real Downtown clip, built by train._make_source from the arm config
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+[ts2] TartanAir TS2 sky/mask ON: class=VDASemanticsDegradedTartanAirDataset seg_root=/mnt/DATA/DegradedDepth/claude_outputs/scratch/outdoor_debug_20261016/TA_seg env_table_sha256=f19d0b838252c9a2409498b35f46738d99b3646afba984d6a82ffea3cd610b76
+  [ok] TS2 arm has Labeller, no-TS2 arm does not 
+ clip idx 0 of 576 (Downtown/P008 start 0)
+ seed0: noTS2 sky%=0.000 mask%=100.000 | TS2 sky%=0.036 mask%=99.964 | masks differ=True
+  [ok] seed0 frames+depth identical TS2 vs noTS2 
+  [ok] seed0 C_TS2 and C_TS2_H300 data identical (hinge is loss-only) 
+ seed1: noTS2 sky%=0.000 mask%=100.000 | TS2 sky%=1.612 mask%=98.388 | masks differ=True
+  [ok] seed1 frames+depth identical TS2 vs noTS2 
+  [ok] seed1 C_TS2 and C_TS2_H300 data identical (hinge is loss-only) 
+  [ok] TS2 masks differ from no-TS2 masks on the real clip (at least one seed; static seed may be tiny) 
+  [ok] NEGATIVE CONTROL differs() on two identical no-TS2 samples must say False 
+== 3 hinge through real train._compute_loss_vda (cfg = train.load_config(arm yaml))
+ sky px outside mask in batch: 138420
+  [ok] batch has sky px (else hinge cannot be exercised) 
+/home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/confirm/train/checks_confirm.py:110: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  L = train._compute_loss_vda(p, batch, cfg, False); return float(L), train.term_flush()
+ C_TS2: pred=10m total=2.30193 hinge=None, pred=100m total=2.50460 hinge=None, pred=1000m total=4.02274 hinge=None
+ C_TS2_H300: pred=10m total=2.64205 hinge=0.3401198983192444, pred=100m total=2.61446 hinge=0.10986120998859406, pred=1000m total=4.02274 hinge=0.0
+  [ok] C_TS2 (control): hinge key absent at every pred 
+  [ok] H300 pred=10: hinge == 0.1*ln(300/10) 0.3401198983192444 vs 0.34012
+  [ok] H300 pred=100: hinge == 0.1*ln(3) 0.10986120998859406 vs 0.10986
+  [ok] H300 pred=1000: hinge == 0 (one-sided) 
+  [ok] total loss differs between arms only by the hinge at 10m delta=0.34012
+  [ok] total loss equal at 1000m (hinge inactive) 
+  [ok] NEGATIVE CONTROL wrong-floor expectation (80 m) must NOT match the H300 value 
+  [ok] NEGATIVE CONTROL control must NOT match the H300 value 
+== 4 LR schedule from the real make_lr_scale (arm cfg), lr_group0 = 1e-4*scale; printed lr at step G = 1e-4*scale(G-1)
+ C_TS2: scale(0)=0.002, scale(1)=0.004, scale(19)=0.04, scale(20)=0.042, scale(499)=1, scale(500)=1, scale(501)=1, scale(6000)=0.534121, scale(11999)=1.86571e-08
+ C_TS2_H300: scale(0)=0.002, scale(1)=0.004, scale(19)=0.04, scale(20)=0.042, scale(499)=1, scale(500)=1, scale(501)=1, scale(6000)=0.534121, scale(11999)=1.86571e-08
+  [ok] scale(0)=1/500 (warmup k+1)/W 
+  [ok] scale(499)=1.0 
+  [ok] scale(500)=1.0 (cosine start) 
+  [ok] scale(6000)=0.5*(1+cos(pi*5500/11500)) 
+  [ok] scale(11999)~1.9e-12/1e-4 (cosine to ~0, NOT the restart schedule) 1.866e-08
+  [ok] both arms same schedule 
+  [ok] all 600 lr= prints of job 7226119 reproduce 1e-4*scale(G-1) (lr>1e-9 abs part) worst rel err 0.0044
+  [ok] NEGATIVE CONTROL a wrong schedule (lr_decay 14000) must NOT reproduce the real prints worst rel err 1.000
+  [ok] NEGATIVE CONTROL a restart-key schedule must differ from the plain one at step 6000 
+
+RESULT: ALL CHECKS PASS (incl. negative controls)
