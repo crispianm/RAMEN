@@ -1,0 +1,143 @@
+######## BASELINE (unmutated, must be no FAIL)
+TS2_H80 exit 0 ['RESULT: no FAIL (WAIT/WARN lines may remain)']
+######## ITEM 1 (LR)
+### 1a wrong LR at step 12060 (6.00e-05 -> 7.00e-05, +17%)  (arm TS2, item 1; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 1: FAIL step 12060 lr 7.000e-05 expected 6.000e-05
+
+### 1b constant-LR schedule: step 12200 lr 9.93e-05 -> 1.00e-04 (no decay; should FAIL: S3 cosine vs S2 constant)  (arm TS2, item 1; checker must say FAIL)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+  [TS2] item 1: ok step 12040 lr 4.000e-05 expected 4.000e-05
+  [TS2] item 1: ok step 12060 lr 6.000e-05 expected 6.000e-05
+  [TS2] item 1: ok step 12080 lr 8.000e-05 expected 8.000e-05
+  [TS2] item 1: ok step 12100 lr 1.000e-04 expected 1.000e-04
+  [TS2] item 1: ok step 12120 lr 1.000e-04 expected 1.000e-04
+  [TS2] item 1: ok step 12200 lr 1.000e-04 expected 9.930e-05
+
+### 1c 12200 lr 9.93e-05 -> 9.50e-05 (-4.3%)  (arm TS2, item 1; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 1: FAIL step 12200 lr 9.500e-05 expected 9.930e-05
+
+### 1d no-op restart bug: lr=0 at step 12300  (arm TS2, item 1; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 1: FAIL lr == 0 at steps [12300] (no-op restart bug)
+
+### 1e wrong LR at a step NOT in the table (12420: 9.32e-05 -> 5.00e-05)  (arm TS2_H80, item 1; checker must say FAIL)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2_H80] item 1: ok step 12020 lr 2.000e-05 expected 2.000e-05
+
+### 1f ALL LR step lines deleted from the log (log truncated / never trained)  (arm TS2, item 1; checker must say FAIL-or-WAIT)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 1: WAIT step 12020 not printed yet
+  [TS2] item 1: WAIT step 12040 not printed yet
+  [TS2] item 1: WAIT step 12060 not printed yet
+  [TS2] item 1: WAIT step 12080 not printed yet
+  [TS2] item 1: WAIT step 12100 not printed yet
+  [TS2] item 1: WAIT step 12120 not printed yet
+  [TS2] item 1: WAIT step 12200 not printed yet
+
+######## ITEM 2 (resume + total)
+### 2a [resume] line missing  (arm TS2, item 2; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 2: FAIL resume line MISSING; totals printed [14000] (expect 14000)
+
+### 2b total steps printed 13000 (max_steps wrong)  (arm TS2, item 2; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 2: FAIL resume line found; totals printed [13000] (expect 14000)
+
+### 2c resume at step=0 (fresh start, not the checkpoint)  (arm TS2, item 2; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 2: FAIL resume line MISSING; totals printed [14000] (expect 14000)
+
+### 2d resume from a DIFFERENT checkpoint path (c3_n46 -> c3_n45) at the same step  (arm TS2, item 2; checker must say FAIL)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 2: ok resume line found; totals printed [14000] (expect 14000)
+
+### 2e no step lines AND resume line present (still starting)  (arm TS2, item 2; checker must say WAIT)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 2: WAIT resume line found; totals printed [] (expect 14000)
+
+######## ITEM 3 (hinge key in metrics.jsonl)
+### 3a hinge key present in a NON-H arm (TS2)  (arm TS2, item 3; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 3: FAIL hinge key presence wrong (want False) at steps [12010, 12020, 12030, 12040, 12050]
+
+### 3b hinge key MISSING in an H arm (H80)  (arm TS2_H80, item 3; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2_H80] item 3: FAIL hinge key presence wrong (want True) at steps [12010, 12020, 12030, 12040, 12050]
+
+### 3c negative hinge  (arm TS2_H80, item 3; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2_H80] item 3: FAIL non-finite/negative hinge [0.006313875998273488, 0.014388534488078619, -0.5, 0.0009064334196409618, 0.005325831517552615]
+
+### 3d NaN hinge  (arm TS2_H80, item 3; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2_H80] item 3: FAIL non-finite/negative hinge [0.006313875998273488, 0.014388534488078619, nan, 0.0009064334196409618, 0.005325831517552615]
+
+### 3e hinge exactly 0 all rows (inert hinge)  (arm TS2_H80, item 3; checker must say WARN-not-FAIL (documented))
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2_H80] item 3: WARN hinge exactly 0 in all 5 rows: report as 'hinge inert at this start point' (O18), not as evidence
+
+### 3f H80 arm given H300's metrics (wrong floor, key present, finite)  (arm TS2_H80, item 3; checker must say FAIL if floor checked)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2_H80] item 3: ok 5 rows, hinge key present=True, values [0.02012361625675112, 0.03207558239373611, 0.018427685284405016, 0.004667942351079546, 0.012414280311350012]
+
+### 3g H300 arm given H80's metrics  (arm TS2_H300, item 3; checker must say FAIL if floor checked)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2_H300] item 3: ok 5 rows, hinge key present=True, values [0.006313875998273488, 0.014388534488078619, 0.0067092316505750205, 0.0009064334196409618, 0.005325831517552615]
+
+### 3h metrics.jsonl from a DIFFERENT arm (A0 metrics under H80 name): key absent  (arm TS2_H80, item 3; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2_H80] item 3: FAIL hinge key presence wrong (want True) at steps [12010, 12020, 12030, 12040, 12050]
+
+### 3i only 2 loss_terms rows in window  (arm TS2_H80, item 3; checker must say WAIT)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2_H80] item 3: WAIT only 2 loss_terms rows (need 5)
+
+######## ITEM 5 (non-finite)
+### 5a real-format warn line at step 12035  (arm TS2, item 5; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 5: FAIL 1 non-finite warnings in first 50 steps
+
+### 5b two warns interleaved on one line  (arm TS2, item 5; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 5: FAIL 1 non-finite warnings in first 50 steps
+
+### 5c warn at step 12400 (outside first-50 window: documented as ok)  (arm TS2, item 5; checker must say ok(by design))
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 5: ok 0 non-finite warnings in first 50 steps
+
+### 5d a DIFFERENT non-finite warn text ('non-finite grad') at 12035  (arm TS2, item 5; checker must say FAIL?)
+  exit=0  RESULT=RESULT: no FAIL (WAIT/WARN lines may remain)
+  [TS2] item 5: ok 0 non-finite warnings in first 50 steps
+
+### 5e warn present in A0 (reference arm)  (arm A0, item 5; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [A0] item 5: FAIL 1 non-finite warnings in first 50 steps
+
+######## ITEM 6 (effective bound)
+### 6a vkitti bound 656 in a NON-VK655 arm (TS2)  (arm TS2, item 6; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 6: FAIL want vkitti=655; got: 10000, vkitti=656, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+
+### 6b vkitti bound 655 in the VK655 arm  (arm TS2_VK655, item 6; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2_VK655] item 6: FAIL want vkitti=656; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+
+### 6c bound line absent  (arm TS2, item 6; checker must say WAIT)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 6: WAIT bound line not in log
+
+### 6d vkitti=6550 (prefix match?)  (arm TS2, item 6; checker must say FAIL)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 6: FAIL want vkitti=655; got: 0000, vkitti=6550, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+
+### 6e tartanair bound changed 10000 -> 80 (other source wrong; item only looks at vkitti)  (arm TS2, item 6; checker must say FAIL-if-all-sources-checked)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 6: ok want vkitti=655; got: ir=80, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+
+### 6f vkitti bound 655 but TWO [data] effective lines, 1st right, 2nd wrong (rank mismatch)  (arm TS2, item 6; checker must say FAIL-if-all-lines)
+  exit=1  RESULT=RESULT: FAIL (scancel)
+  [TS2] item 6: ok want vkitti=655; got: 10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80, nyu_train=10, scannetpp_train=10
+

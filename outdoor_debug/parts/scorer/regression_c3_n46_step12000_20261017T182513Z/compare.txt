@@ -1,0 +1,19 @@
+OK    VKITTI far 80-655 pred:gt, legacy-subsample median: new 0.841702 earlier 0.841730 rel 3.41e-05 tol 1e-04  [T_trajectory/trajectory.csv]
+DIFF  VKITTI far 80-655 pred:gt, EXACT pooled median: new 0.863392 earlier 0.841730 rel 2.57e-02 tol 3e-03  [T_trajectory (sampled; exact differs by sampling error)]
+OK    VKITTI near<30 pred:gt legacy median: new 1.100099 earlier 1.100162 rel 5.74e-05 tol 1e-04  [T_trajectory]
+OK    VKITTI absrel_raw >80: new 0.211344 earlier 0.211344 rel 2.63e-16 tol 1e-04  [T_trajectory/baseline_metrics.csv]
+OK    VKITTI absrel_raw 0-10: new 0.143981 earlier 0.143981 rel 1.93e-16 tol 1e-04  [T_trajectory]
+OK    VKITTI absrel_raw 10-30: new 0.169725 earlier 0.169725 rel 3.27e-16 tol 1e-04  [T_trajectory]
+OK    VKITTI absrel_raw 30-80: new 0.201879 earlier 0.201879 rel 2.75e-16 tol 1e-04  [T_trajectory]
+OK    KITTI pooled absrel_raw: new 0.147735 earlier 0.147735 rel 1.88e-16 tol 1e-04  [T_trajectory kitti_dev absrel_raw (base=gt>0.1&~sky)]
+OK    KITTI sky median of frame medians: new 160.512787 earlier 160.497124 rel 9.76e-05 tol 1e-03  [T_trajectory]
+OK    KITTI sky pooled median: new 322.250763 earlier 322.250763 rel 0.00e+00 tol 1e-03  [T_trajectory]
+OK    VKITTI sky median (legacy 200k subsample): new 324.018951 earlier 323.759125 rel 8.03e-04 tol 1e-03  [T_trajectory]
+OK    ScanNet++ pooled absrel_raw: new 0.120830 earlier 0.120830 rel 2.30e-16 tol 1e-04  [T_trajectory scannetpp_dev]
+OK    NYUv2 pooled absrel_raw (160 fr): new 0.094855 earlier 0.094855 rel 2.93e-16 tol 1e-04  [D_baseline baseline_metrics.csv (all)]
+INFO  KITTI per-frame-macro AbsRel unaligned (bj video_macro, clip-macro): new 0.149479   (no earlier clip-macro; D_baseline cap_perframe_macro (frame-macro) = 0.14867)
+INFO  ScanNet++ video_macro abs_rel_unaligned: new 0.120665   (D_baseline cap_perframe_macro 0.12066 (frame-macro))
+INFO  NYUv2 video_macro abs_rel_unaligned (160 fr): new 0.092953   (D_baseline cap_perframe_macro 0.09295 (frame-macro))
+OK    horse sky_top15 median: new 199.590317 earlier 199.590317 rel 0.00e+00 tol 1e-03  [T_trajectory]
+OK    horse treeline median: new 81.552536 earlier 81.552536 rel 0.00e+00 tol 1e-03  [T_trajectory]
+TAE guards (no earlier number): kitti: tae_gtvalid 1.98403859163783, nyuv2: tae_gtvalid None, scannetpp: tae_gtvalid 1.7585652735121227, vkitti: tae_gtvalid None

@@ -1,0 +1,26 @@
+--- baseline (unperturbed)
+ALL EXPECTED DIFFS EXACT: True
+--- PERT1 TS2 gets undeclared key data.clip_stride=9
+## A0 -> TS2  [DEFECT]  (4 differing keys)
+## TS2 -> TS2_H80  [DEFECT]  (4 differing keys)
+## TS2 -> TS2_H300  [DEFECT]  (4 differing keys)
+## TS2 -> TS2_VK655  [DEFECT]  (4 differing keys)
+ALL EXPECTED DIFFS EXACT: False
+--- PERT2 H80 gets undeclared key loss.log_terms_every=11 (also LR-key check?)
+## TS2 -> TS2_H80  [DEFECT]  (4 differing keys)
+ALL EXPECTED DIFFS EXACT: False
+--- PERT3 H300 declared key min_depth wrong value 30.0 (should be 300)
+ALL EXPECTED DIFFS EXACT: True
+--- PERT4 H80 weight 0.1 -> 0.0 (hinge off but 'declared')
+## TS2 -> TS2_H80  [DEFECT]  (2 differing keys)
+ALL EXPECTED DIFFS EXACT: False
+--- PERT5 VK655 bound 656 -> 700
+ALL EXPECTED DIFFS EXACT: True
+--- PERT6 TS2 flag ts2_sky True->False
+ALL EXPECTED DIFFS EXACT: True
+--- PERT7 LR key differs in one arm (H300 lr_decay_steps)
+LR-key identical across 6 arms [DEFECT] training.lr_decay_steps = {'99999', '14000'}
+## TS2 -> TS2_H300  [DEFECT]  (4 differing keys)
+ALL EXPECTED DIFFS EXACT: False
+--- PERT8 A0b seed 49->50
+ALL EXPECTED DIFFS EXACT: True
