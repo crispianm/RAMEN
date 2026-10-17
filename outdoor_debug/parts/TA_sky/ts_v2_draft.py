@@ -15,14 +15,21 @@ SAT_M = 1.0e4
 
 def ts_v2_sky_valid(depth, seg, sky_ids, max_depth=1.0e4, fallback_sat_is_sky=False):
     d = np.asarray(depth, np.float32)
+    sky_ids = set(int(i) for i in sky_ids)
     sat = ~np.isfinite(d) | (d >= SAT_M)
     has_label = len(sky_ids) > 0
-    seg_sky = np.isin(seg, list(sky_ids)) if has_label else np.zeros(d.shape, bool)
+    seg_sky = np.isin(seg, list(sky_ids - {0})) if has_label else np.zeros(d.shape, bool)
+    # id 0 is 'unlabelled' in HongKong/OldBrickHouseNight but AmericanDiner's `sky`: id 0 counts as sky ONLY where saturated;
+    # id 0 with finite depth (< SAT_M) is uncertain (sky=0, mask=0)
+    zero_is_sky_id = 0 in sky_ids
+    seg_sky |= (seg == 0) & sat & zero_is_sky_id
+    zero_finite = (seg == 0) & ~sat & zero_is_sky_id
     sky = seg_sky.copy()
     if has_label or not fallback_sat_is_sky:
         uncertain = sat & ~seg_sky
     else:  # unlabeled env, flagged fallback: saturation == sky
         sky |= sat
         uncertain = np.zeros(d.shape, bool)
+    uncertain |= zero_finite
     mask = np.isfinite(d) & (d > 0) & (d < max_depth) & ~sky & ~uncertain
     return sky, mask, uncertain

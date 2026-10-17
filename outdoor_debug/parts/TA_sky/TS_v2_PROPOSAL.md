@@ -13,8 +13,11 @@ Evidence: SKY_AUDIT_TABLE.md / sky_audit.csv (28 local TRAIN envs, 20 frames eac
 5. `mask = isfinite(d) & d>0 & d<max_depth & ~sky & ~uncertain`.
 Needs seg_lcam_front for every training env (5.8 GB for the 28 local envs; 74-env pull is a separate Manager/Isambard request, no ssh before go) and the per-env sky-id table; the existing sky loss target (disparity 0 on `sky`) and metric mask both consume (sky, mask).
 
+## id-0 guard (AmericanDiner)
+Chosen: keep both sky ids {0, 242} but treat seg id 0 as sky only where saturated (`sat`); id 0 with finite d < 1e4 is uncertain (sky=0, mask=0), so an 'unlabelled' id 0 can never become sky/valid by label alone. Support: over ~400 AmericanDiner frames (every ~4th) id 0 = 419 px, 100% saturated (65504), and id 242 = 0 px, so dropping 0 and using 242 only would lose the only observed sky; HongKong/OldBrickHouseNight have no sky ids so their id 0 stays uncertain (default) as before.
+
 ## Regression test (draft)
-tests/test_ts_v2_sky_draft.py with outdoor_debug/parts/TA_sky/ts_v2_draft.py: M-03 8000 m dome -> sky=1, mask=0; B2-03 depth 10000.0 -> seg-sky: sky=1; non-sky: uncertain, mask=0; 65504/inf/NaN seg-sky -> sky; saturated tree-labelled px -> uncertain; unlabeled env default and flagged fallback; zero/negative depth not valid. 5 tests pass.
+tests/test_ts_v2_sky_draft.py with outdoor_debug/parts/TA_sky/ts_v2_draft.py: M-03 8000 m dome -> sky=1, mask=0; B2-03 depth 10000.0 -> seg-sky: sky=1; non-sky: uncertain, mask=0; 65504/inf/NaN seg-sky -> sky; saturated tree-labelled px -> uncertain; unlabeled env default and flagged fallback; zero/negative depth not valid. 7 tests pass (incl. id-0 saturated -> sky, id-0 finite -> uncertain, HongKong-like env).
 
 ## Caveats
 Sample of 20 frames/env, class-id semantics from seg_label_map.json (id 0 doubles as "unlabelled" in HongKong/OldBrickHouseNight and as AmericanDiner's `sky`); no visual verification of the dome/foreground boundary yet; effect on training numbers not measured.

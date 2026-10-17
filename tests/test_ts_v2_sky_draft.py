@@ -51,3 +51,20 @@ def test_zero_and_negative_depth_not_valid():
     d, s = _frame([0.0, -1.0, 5.0], [3, 3, 3])
     _, mask, _ = m.ts_v2_sky_valid(d, s, {SKY})
     assert mask.tolist() == [[False, False, True]]
+
+
+def test_id0_sky_only_where_saturated():
+    # AmericanDiner-like: sky ids {0, 242}; id 0 saturated -> sky, id 0 finite -> uncertain, 242 -> sky at any depth
+    d, s = _frame([65504.0, np.inf, 10000.0, 30.0, 300.0, 20.0], [0, 0, 0, 0, 242, 3])
+    sky, mask, unc = m.ts_v2_sky_valid(d, s, {0, 242})
+    assert sky.tolist() == [[True, True, True, False, True, False]]
+    assert unc.tolist() == [[False, False, False, True, False, False]]
+    assert mask.tolist() == [[False, False, False, False, False, True]]
+
+
+def test_id0_hongkong_like_env_without_sky_label():
+    d, s = _frame([65504.0, 30.0, 20.0], [0, 0, 3])
+    sky, mask, unc = m.ts_v2_sky_valid(d, s, set())
+    assert not sky.any() and unc.tolist() == [[True, False, False]] and mask.tolist() == [[False, True, True]]
+    sky, mask, unc = m.ts_v2_sky_valid(d, s, set(), fallback_sat_is_sky=True)
+    assert sky.tolist() == [[True, False, False]] and mask.tolist() == [[False, True, True]]
