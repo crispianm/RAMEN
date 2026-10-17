@@ -7,7 +7,7 @@ Per checkpoint (one JSON):
   GUARDS: unaligned pixel-pooled AbsRel and pooled median pred:gt in the bins [0,20) [20,50) [50,80) [80,120) [120,200] m over LiDAR-projected px with the ANY-SKY mask excluded
     (A1: prediction bilinearly resized to native 2048x1550 and sampled at the projected LiDAR px; GT never resized; no alignment, no clamp). Overall AbsRel 0-200.
 Model input mirrors ddad_scorer (A2): bench_joint Resize lower_bound, multiple of 14, INTER_CUBIC, short side 378, fp16 autocast; portrait 2048x1550 -> 504x378 (Resize rounding).
-Decision (single seed 50, Auditor O36): d = ln(P_H300 / P_TS2); CONFIRMED iff d >= ln 1.5 AND all guards pass; 0 < d < ln 1.5 -> NOT CONFIRMED; d <= 0 -> REFUTED.
+Decision (Stage 1, Add. 48): per pair d_i = ln(P_H300 / P_TS2) for pairs s50/s51/s52; CONFIRMED iff all three d_i AND their mean >= ln 1.5 AND all guards pass in every pair; REFUTED iff any d_i <= 0 (Auditor O39); unevaluable guard never passes.
 Usage:  python -I av2_scorer.py --ckpt <ours .pt> | --spec metric_vda_s  --out r.json --root <av2_val dir> --mask <sky_masks.npz> --frames <av2_frames.tsv>
         python -I av2_scorer.py --compare H300.json TS2.json [--out verdict.json]
         python -I av2_scorer.py --selftest
@@ -35,7 +35,8 @@ MIN_SKY_PX = 2000                    # certain-sky px at the model grid for a fr
 LN_MARGIN = math.log(1.5)
 GUARD_TOL = 0.05                     # H300 AbsRel <= (1 + 0.05) * same-seed TS2 AbsRel, per bin
 GUARD_MIN_PX = 20000                 # a bin with fewer pooled px in either arm is reported "UNEVALUABLE" (not silently passed): the verdict says so
-SINGLE_SEED_NOTE = "SINGLE SEED (50): one paired difference cannot size seed noise; the A0/A0b screen pair showed 26% spread on a guard. Sign and magnitude only."
+SINGLE_SEED_NOTE = "Stage 1: THREE paired starts (n46/s50, n47/s51, n48/s52), 2000-step continuations; 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard."
+PAIRS = ("s50", "s51", "s52")           # Stage 1 pairs: c3_n46/seed 50, c3_n47/seed 51, c3_n48/seed 52 (Add. 48)
 LABEL = "confirmatory STRICT (AV2 sensor val, held out); single seed 50; primary = predicted sky depth by design, NOT accuracy"
 REF_LABEL = "REFERENCE row, description only: released Metric-VDA-S at the registered 378 input, fp16; never enters the decision"
 
@@ -188,11 +189,39 @@ def guard_check(h_bins: dict, t_bins: dict, tol: float = GUARD_TOL, min_px: int 
     return out
 
 
+def decide_pairs(ds, guards_pass_all: bool, unevaluable=()) -> str:
+    """Stage 1 (Add. 48): CONFIRMED iff ALL pair d_i >= ln 1.5 AND mean(d) >= ln 1.5 AND all guards pass in every pair.
+    REFUTED iff ANY d_i <= 0 (Auditor O39). An unevaluable guard in any pair never passes (Auditor O37); else NOT CONFIRMED. min/max d_i = pair spread."""
+    ds = list(ds)
+    if len(ds) != len(PAIRS) or not all(np.isfinite(ds)):
+        return "INVALID (need 3 finite pair d values)"
+    mean = float(np.mean(ds))
+    if min(ds) <= 0:                       # Auditor O39: any d_i <= 0 = REFUTED
+        return "REFUTED"
+    if unevaluable:
+        return "NOT CONFIRMED (" + ", ".join(sorted(set(unevaluable))) + " guard unevaluable)"
+    if min(ds) >= LN_MARGIN and mean >= LN_MARGIN and guards_pass_all:
+        return "CONFIRMED"
+    return "NOT CONFIRMED"
+
+
+def compare_pairs(pairs: dict) -> dict:
+    """pairs: {'s50': (h_json, t_json), 's51': ..., 's52': ...}; per-pair compare() plus the Stage 1 rule over the three."""
+    assert tuple(sorted(pairs)) == PAIRS, "need exactly the pairs s50, s51, s52"
+    per = {k: compare(*pairs[k]) for k in PAIRS}
+    ds = [per[k]["d_ln_PH300_over_PTS2"] for k in PAIRS]
+    unev = [f"{k}:{b}" for k in PAIRS for b in per[k]["guards_unevaluable"]]
+    gp = all(per[k]["guards_pass"] for k in PAIRS)
+    return dict(label=LABEL, note=SINGLE_SEED_NOTE, d_per_pair=dict(zip(PAIRS, ds)), d_mean=float(np.mean(ds)), d_min=float(np.min(ds)), ln_margin=LN_MARGIN,
+                guards_pass_all=gp, guards_unevaluable=unev, per_pair=per, verdict=decide_pairs(ds, gp, unev),
+                rule="CONFIRMED iff all 3 pair d >= ln1.5 AND mean d >= ln1.5 AND all guards pass in every pair; REFUTED iff any d_i <= 0; unevaluable guard never passes; else NOT CONFIRMED; min/max d_i = pair spread")
+
+
 def compare(h: dict, t: dict) -> dict:
     d = math.log(h["sky"]["P_framebalanced_median"] / t["sky"]["P_framebalanced_median"])
     g = guard_check(h["bins"], t["bins"])
     ok = all(v["status"] == "PASS" for v in g.values())      # UNEVALUABLE is not a pass
-    return dict(label=LABEL, single_seed_note=SINGLE_SEED_NOTE, seed=50, d_ln_PH300_over_PTS2=d, ln_margin=LN_MARGIN, P_H300=h["sky"]["P_framebalanced_median"],
+    return dict(label=LABEL, single_seed_note=SINGLE_SEED_NOTE, d_ln_PH300_over_PTS2=d, ln_margin=LN_MARGIN, P_H300=h["sky"]["P_framebalanced_median"],
                 P_TS2=t["sky"]["P_framebalanced_median"], guards=g, guards_pass=ok,
                 guards_unevaluable=[k for k, v in g.items() if v["status"] == "UNEVALUABLE"], verdict=decide(d, ok, [k for k, v in g.items() if v["status"] == "UNEVALUABLE"]),
                 rule="CONFIRMED iff d>=ln1.5 AND all guards pass; 0<d<ln1.5 NOT CONFIRMED; d<=0 REFUTED")
@@ -243,15 +272,31 @@ def main(argv=None):
     ap.add_argument("--device", default="cuda"); ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[4]))
     ap.add_argument("--spec-prefix", default="ours:")
     ap.add_argument("--compare", nargs=2, metavar=("H300_JSON", "TS2_JSON"))
+    ap.add_argument("--compare-pairs", nargs=6, metavar=("H300_s50", "TS2_s50", "H300_s51", "TS2_s51", "H300_s52", "TS2_s52"))
+    ap.add_argument("--pair", choices=PAIRS, help="pair label of this run (required with --ckpt): s50 = c3_n46 start/seed 50, s51 = n47/51, s52 = n48/52")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args(argv)
     if a.selftest:
         print(json.dumps(selftest(), indent=1, default=float)); return
+    if a.compare_pairs:
+        js = [json.load(open(p)) for p in a.compare_pairs]
+        pairs = {}
+        for i, k in enumerate(PAIRS):
+            h, t = js[2 * i], js[2 * i + 1]
+            for r in (h, t):
+                assert r["meta"]["pins_asserted"] and r["meta"]["status"] == "FULL" and r["meta"]["seed_label"] == k, f"pair {k}: FULL pinned runs with the pair label"
+            pairs[k] = (h, t)
+        res = compare_pairs(pairs)
+        print(json.dumps(res, indent=1, default=float))
+        if a.out:
+            assert not Path(a.out).exists(); Path(a.out).write_text(json.dumps(res, indent=1, default=float))
+        return
     if a.compare:
         h, t = (json.load(open(p)) for p in a.compare)
         for r in (h, t):
             assert r["meta"]["pins_asserted"] and r["meta"]["status"] == "FULL", "compare needs FULL runs with pins asserted"
-            assert r["meta"]["seed_label"] in ("seed50",), "single-seed (50) rule"
+            assert r["meta"]["seed_label"] in PAIRS, "pair label"
+        assert h["meta"]["seed_label"] == t["meta"]["seed_label"], "a pair shares its start and seed"
         res = compare(h, t)
         print(json.dumps(res, indent=1, default=float))
         if a.out:
@@ -296,7 +341,7 @@ def main(argv=None):
         print(f"{log} {len(sel['scored'])} frames {time.time() - t0:.0f}s", flush=True)
     res = acc.result()
     full = True
-    meta = dict(label=REF_LABEL if a.spec else LABEL, status="FULL", pins_asserted=full, pins=pins, seed_label="seed50" if a.ckpt else "reference", **mm,
+    meta = dict(label=REF_LABEL if a.spec else LABEL, status="FULL", pins_asserted=full, pins=pins, seed_label=(a.pair if a.ckpt else "reference"), **mm,
                 precision="fp16", short_side=A.SHORT_SIDE, resolution_rule="A1 bilinear pred->2048x1550 sampled at projected LiDAR px; GT never resized; sky = any-sky mask excluded",
                 host=socket.gethostname(), seconds=time.time() - t0, bins_m=bin_labels(), single_seed_note=SINGLE_SEED_NOTE)
     out_path.parent.mkdir(parents=True, exist_ok=True)

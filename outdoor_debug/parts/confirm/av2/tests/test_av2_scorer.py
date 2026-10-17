@@ -155,7 +155,7 @@ def test_compare_end_to_end_verdict():
         return dict(sky=dict(P_framebalanced_median=P), bins=_bins(absrel))
     c = S.compare(run(600.0, 0.10), run(150.0, 0.10))
     assert c["verdict"] == "CONFIRMED" and c["d_ln_PH300_over_PTS2"] == pytest.approx(math.log(4))
-    assert "SINGLE SEED" in c["single_seed_note"] and c["seed"] == 50
+    assert "THREE paired starts" in c["single_seed_note"]
     assert S.compare(run(600.0, 0.12), run(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # guard fails
     assert S.compare(run(180.0, 0.10), run(150.0, 0.10))["verdict"] == "NOT CONFIRMED"      # 0<d<ln1.5
     assert S.compare(run(140.0, 0.10), run(150.0, 0.10))["verdict"] == "REFUTED"
@@ -245,3 +245,32 @@ def test_unevaluable_guard_never_passes_and_pairing_is_25ms():
     g = S.guard_check(bins_ok, bins_ok)
     assert g["[120,200]"]["status"] == "UNEVALUABLE" and g["[0,20)"]["status"] == "PASS"
     assert A.MAX_PAIR_DT_NS == 25_000_000
+
+
+def test_stage1_pair_rule():
+    import math
+    ln15 = math.log(1.5)
+    big = ln15 + 0.1
+    assert S.decide_pairs([big, big, big], True) == "CONFIRMED"
+    assert S.decide_pairs([big, big, ln15 - 0.01], True) == "NOT CONFIRMED"          # one pair below the margin even if the mean passes
+    assert S.decide_pairs([big + 1, big + 1, ln15 - 0.01], True) == "NOT CONFIRMED"
+    assert S.decide_pairs([big, big, 0.0], True) == "REFUTED"                          # any d_i <= 0
+    assert S.decide_pairs([big, big, big], False) == "NOT CONFIRMED"                   # a failed guard
+    assert S.decide_pairs([big, big, big], True, ["s51:[120,200]"]) == "NOT CONFIRMED (s51:[120,200] guard unevaluable)"
+    assert S.decide_pairs([big, big], True).startswith("INVALID")
+    assert S.PAIRS == ("s50", "s51", "s52")
+
+
+def test_compare_pairs_end_to_end():
+    def run(P, absrel):
+        return dict(sky=dict(P_framebalanced_median=P), bins=_bins(absrel))
+    ok = {k: (run(600.0, 0.10), run(150.0, 0.10)) for k in S.PAIRS}
+    assert S.compare_pairs(ok)["verdict"] == "CONFIRMED"
+    one_low = dict(ok); one_low["s51"] = (run(170.0, 0.10), run(150.0, 0.10))              # d = ln(170/150) < ln 1.5
+    r = S.compare_pairs(one_low); assert r["verdict"] == "NOT CONFIRMED" and r["d_min"] < r["ln_margin"] <= r["d_mean"]
+    refuted = dict(ok); refuted["s52"] = (run(140.0, 0.10), run(150.0, 0.10))
+    assert S.compare_pairs(refuted)["verdict"] == "REFUTED"
+    badguard = dict(ok); badguard["s50"] = (run(600.0, 0.12), run(150.0, 0.10))
+    assert S.compare_pairs(badguard)["verdict"] == "NOT CONFIRMED"
+    with pytest.raises(AssertionError):
+        S.compare_pairs({"s50": ok["s50"], "s51": ok["s51"]})
