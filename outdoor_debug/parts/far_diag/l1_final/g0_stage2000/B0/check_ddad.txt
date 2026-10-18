@@ -1,0 +1,19 @@
+PASS status FULL
+PASS pins_asserted true
+PASS scorer sha 8e71511b
+PASS bench_joint sha 5d3d048c
+PASS frame list sha b8d9664f
+PASS pairs sha 962d4996
+PASS precision fp16 and short_side 378
+PASS GH200
+PASS no limit_scenes
+PASS 395 frames / 50 scenes
+PASS 0 non-finite pred px
+PASS bin px sum == overall n
+PASS same GT px/frames/scenes per bin as the reference
+PASS all metrics finite
+PASS ckpt sha == independent sha
+PASS ckpt weights_key trainable_ema
+PASS label exact
+PASS shape log: first clip HxW identical
+RESULT: ALL PASS (18 checks)

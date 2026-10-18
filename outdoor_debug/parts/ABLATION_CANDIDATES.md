@@ -128,3 +128,6 @@ B0 7511127 and B0b 7511129 COMPLETED 0:0 (1:29:28 / 1:29:56, ~1.5 NHR each); fin
 
 ### L1 identity control PASSED 2026-10-18 (job 7512230, 3:45, ~0.06 NHR) and baseline rescoring submitted 02:04:43Z
 c3_n46 step12000 on DDAD LR_DEV at 378 with ddad_scorer 8e71511b (clone /projects/b5dh/RAMEN_l1score_114df74a, via the L1 score path, DDAD half): check_ddad_output --scorer-sha 8e71511b ALL PASS (18); vs ddad_ref2 (80916c4f): per-bin n_px/n_frames/n_scenes identical, max abs diff over all bin medians/AbsRel and overall AbsRel = 0.000e+00 (bit-identical): see far_diag/l1_final/identity_control/identity_control_result.txt. SCORE_B0 7512299, SCORE_B0b 7512300 (afterok not needed: training done) submitted from that clone. G0 readout is read only after both complete.
+
+### L1 G0 readout (stage 2000), 2026-10-18 ~02:20Z; identity control had PASSED (7512230)
+SCORE_B0 7512299 / SCORE_B0b 7512300 COMPLETED 0:0 (11:52 / 11:34); check_scores ALL PASS (39) and check_ddad ALL PASS (18) on both. `l1_readout.py --stage 2000 --ddad-gate A --arms B0,B0b`: rc=0, "G0: PASS (both legs, both baselines)": B0 x_V 0.86047 (<= 0.93), x_D[120,200] 0.64277 (<= 0.75); B0b x_V 0.89276, x_D 0.61673. Full output + score files: far_diag/l1_final/g0_stage2000/. Exploratory, unaudited, exposed DEV. Next: arms S1-S5 at 2000 (+ S6 after its GATE 2, which passed on the smoke).

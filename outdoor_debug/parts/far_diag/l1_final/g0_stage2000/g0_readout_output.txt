@@ -1,0 +1,10 @@
+# L1 readout, stage 2000 steps, DDAD gate = A ('exposed DEV gate', exploratory, unaudited)
+G0 B0: VKITTI 80-655 m legacy median 0.86047 (<= 0.93: ok); DDAD [120,200] median 0.64277 (<= 0.75: ok)
+G0 B0b: VKITTI 80-655 m legacy median 0.89276 (<= 0.93: ok); DDAD [120,200] median 0.61673 (<= 0.75: ok)
+G0: PASS (both legs, both baselines)
+
+# verdicts vs B0 (in-sweep baseline), NF from |B0 - B0b|
+
+# description only (exposed; never in a verdict)
+B0   VKITTI exact 0.8773 perclip 0.8504 ratio-of-med 0.9017 bin_absrel 0.2457 | DDAD overall AbsRel 0.1909, [0,20) 1.184/0.201, [20,50) 1.092/0.159, [50,80) 0.930/0.166, [80,120) 0.770/0.262, [120,200] 0.643/0.356  (median pred:gt / AbsRel)
+B0b  VKITTI exact 0.9025 perclip 0.8824 ratio-of-med 0.9245 bin_absrel 0.2472 | DDAD overall AbsRel 0.1906, [0,20) 1.184/0.201, [20,50) 1.093/0.157, [50,80) 0.921/0.164, [80,120) 0.755/0.269, [120,200] 0.617/0.380  (median pred:gt / AbsRel)
