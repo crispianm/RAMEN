@@ -1,0 +1,8 @@
+# AV2 Stage 1 mask build record (T4 analysis steps; GT/image side only; no model prediction on AV2)
+Date: 2026-10-18T02:22:08Z. Code: build_av2_masks.py 718be61453e8 (sha in meta), make_sky_mask.py 31b18f51aed4, av2_dataset.py 52b3eb9c3d63 (T4 granted at 258b88c by Auditor O53). Local GPU (RTX 4090), GPU_LOCK protocol, fp32.
+Data: all 8920 R1 objects copied to this workstation and verified against meta_R1/SHA256SUMS (sha 4ecb4581fd8d7b96...) = 0 mismatches; independent S3 spot check of 30 files straight from the public bucket: 0 mismatches.
+Decode sanity (5 logs, clip_idx 0): DECODE_SANITY_OUTPUT.txt, all ok, GT points ~11.9-13.1k per frame, sweep xyz dtype float16 (disclosed).
+Mask build: status OK; pooled IoU of the two segmenters' any masks over all 792 candidate frames = 0.9575 (>= 0.85); n_kept 792 (all stored); P-dropped (<1% certain-sky native) = 33 frames (excluded from P only); n_certain_px_total 593,599,268.
+sky_masks.npz sha256 de2e9ca4177691ee... (full in the Auditor's record; npz kept in /mnt/DATA/DegradedDepth/data/heldout_av2/masks/ and not committed, 9.9 MB), sky_masks.meta.json (committed here) sha 10285355e791c9e9...
+12-frame panel (fixed stride rule over the sorted frame ids): mask_panel.png (committed). Certain-sky red, any-only blue, P-dropped frames tagged. Visual reading: red covers open sky and cloud; blue fringes at tree/building/wire boundaries; no red on buildings, signs or vehicles in the 12 frames; the one P-dropped frame is a bus-filled view with ~0% sky.
+Pins still UNSET (fill later, pins-only commits): mask_sha, meta_sha, sums_sha, registry_sha, EXPECT_SCORER_SHA, six CKPT_SHA lines.

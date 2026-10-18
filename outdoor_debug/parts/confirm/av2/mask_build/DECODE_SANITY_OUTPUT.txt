@@ -1,0 +1,5 @@
+{'log': '02678d04-cc9f-3148-9f95-1ba66347dff9', 'cam': 315969904449927217, 'ok': True, 'n_valid': 11852, 'xyz_dtypes': ['float16']}
+{'log': '05fa5048-f355-3274-b565-c0ddc547b315', 'cam': 315976471749927218, 'ok': True, 'n_valid': 12579, 'xyz_dtypes': ['float16']}
+{'log': '0b5142c1-420b-3fea-9e98-b87327ae22c6', 'cam': 315968121249927211, 'ok': True, 'n_valid': 11917, 'xyz_dtypes': ['float16']}
+{'log': '0c3bad78-9f1e-395d-a376-2eb7499229fd', 'cam': 315968449949927212, 'ok': True, 'n_valid': 12593, 'xyz_dtypes': ['float16']}
+{'log': '15ec0778-826e-3ed7-9775-54fbf66997f4', 'cam': 315970259949927209, 'ok': True, 'n_valid': 13073, 'xyz_dtypes': ['float16']}
