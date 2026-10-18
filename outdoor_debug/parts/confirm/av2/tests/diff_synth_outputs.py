@@ -10,7 +10,7 @@ for arm in a:
         same = ra.get(k) == rb.get(k)
         print(f"{arm}.{k}: {'IDENTICAL' if same else 'DIFFERENT'}"); bad += not same
     ma, mb = ra["meta"], rb["meta"]
-    ALLOWED = {"pins", "scorer_sha", "ckpt_sha", "registry_sha", "cfg", "cfg_sha256", "seconds", "host", "tag"}
+    ALLOWED = {"pins", "scorer_sha", "ckpt_sha", "registry_sha", "cfg", "cfg_sha256", "seconds", "host", "tag", "mask_git_commit"}
     ck = lambda m: {k: v for k, v in m["ckpt"].items() if k not in ("path", "sha256")}      # temp path / file sha differ per run dir
     if ck(ma) != ck(mb):
         print("  meta.ckpt: UNEXPECTED DIFFERENCE"); bad += 1
