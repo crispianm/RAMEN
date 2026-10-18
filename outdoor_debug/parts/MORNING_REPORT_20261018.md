@@ -1,7 +1,7 @@
-# Overnight report 2026-10-18 (R+D [e52384]); everything below is exploratory, exposed DEV data, unaudited unless a ruling is named; no fix, paper or merge claim.
+# Overnight report 2026-10-18 (R+D [e52384]); everything below is exploratory, exposed DEV data (AV2 Stage 1: held-out confirmatory test under its registration); results audited by the Auditor (O59 for AV2 Stage 1, O60 for L1); no fix, paper or merge claim.
 Reading guards: partly by construction (VKITTI is the same far distribution that the VKITTI probe measures); one baseline pair (B0/B0b) understates seed variance; release-model comparisons only at equal input size (release at its registered 378 beside ours at 378; the release at 518 beside the release at 378, A4 row, never against ours); debug only, not paper.
 
-### L1 (K=2000) eight-arm table: exploratory, exposed DEV, unaudited
+### L1 (K=2000) eight-arm table: exploratory, exposed DEV; readout audited by the Auditor (O60)
 
 Noise floors from |B0-B0b| (dev = |1-x|): NF_p (VKITTI) = 0.03229; NF_d (DDAD [120,200]) = 0.02604; NF_b (DDAD [80,120)) = 0.01518.
 
@@ -18,7 +18,9 @@ Noise floors from |B0-B0b| (dev = |1-x|): NF_p (VKITTI) = 0.03229; NF_d (DDAD [1
 
 Guard cells show the value and (change vs B0). A guard is 'worse than NF' when the change exceeds its NF (KITTI/NYUv2/ScanNet++ abs_rel_unaligned, KITTI/ScanNet++ tae_gtvalid; S1's NYUv2/ScanNet++ guards are reported-only by design).
 
-### AV2 Stage 1 (confirmatory strict, TS2+H300 vs TS2, three pairs): verdict NOT CONFIRMED
+**FIX-CANDIDATE = a hypothesis for a strict test, not a fix; S3's VKITTI leg is partly by construction (more VKITTI training); DDAD overall AbsRel unchanged (0.191); the far gap to the release (0.854 at 378) mostly remains.**
+
+### AV2 Stage 1 (confirmatory strict, TS2+H300 vs TS2, three pairs; audited by the Auditor, O59): verdict NOT CONFIRMED
 
 | pair | P_H300 (m) | P_TS2 (m) | d = ln(P_H300/P_TS2) |
 |---|---|---|---|
@@ -36,7 +38,9 @@ d_mean 0.5425, d_min 0.5149, ln 1.5 = 0.4055. Guards (H300 AbsRel / TS2 AbsRel, 
 
 Verdict string and disclosure (verbatim): NOT CONFIRMED | Stage 1: THREE paired 2000-step continuations (n46/s50, n47/s51, n48/s52); 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard. P measures what the H300 hinge enforces by design (a PASS shows transfer of the hinge's effect, not accuracy; the guards carry the information). TS2+H300 was chosen after the screen on a descriptive sky secondary and was NOT BETTER on its primary (the screen primary).
 
-Reference row (description only; released Metric-VDA-S at the registered 378 input through the same scorer): P (sky median) 582.8 m; per-bin AbsRel (pixel-pooled, unaligned): [0,20) 1.256, [20,50) 0.970, [50,80) 0.716, [80,120) 0.581, [120,200] 0.441; median pred:gt: [0,20) 2.118, [20,50) 1.897, [50,80) 1.553, [80,120) 1.280, [120,200] 0.978. (The AV2 portrait camera makes focal length ambiguous: the high AbsRel is equal across arms.)
+Stage 2 did not run because its pre-clearance required Stage 1 CONFIRMED.
+
+Reference row (GT geometry validated by the Auditor (O59: flat-ground/camera-height check, overlays); description only; no ours-vs-release statement; released Metric-VDA-S at the registered 378 input through the same scorer): P (sky median) 582.8 m; per-bin AbsRel (pixel-pooled, unaligned): [0,20) 1.256, [20,50) 0.970, [50,80) 0.716, [80,120) 0.581, [120,200] 0.441; median pred:gt: [0,20) 2.118, [20,50) 1.897, [50,80) 1.553, [80,120) 1.280, [120,200] 0.978. (The AV2 portrait camera makes focal length ambiguous: the high AbsRel is equal across arms.)
 
 ### Final NHR (sacct elapsed node-hours since 2026-10-17T16:00Z; total 34.33; cap 45)
 | block | NHR |
@@ -64,6 +68,6 @@ Failed starts: the L1 baseline score jobs 7511130/7511131 (failed closed on a sc
 - Registrations/records: AV2_REGISTRATION.md (R1-R4), ABLATION_CANDIDATES.md (job ids logged before reads).
 
 ### Still running / uncommitted at the time of writing
-- The AV2 and L1 mutant re-run on the filled pins is still running locally (about 100 mutants; first run aborted at one stale mutant, 71 killed and 0 survived until then; restarted); the table is committed when it finishes and sent to the Auditor.
+- Mutant re-run on the filled pins: DONE, accepted by the Auditor (O60a): 97 killed / 0 survived, control 147 passed (confirm/av2/MUTANT_TABLE_FILLED_PINS.md, commit f06144a); the L1 mutant record is far_diag/l1_final/MUTANT_TABLE_L1.md (stop check 48/48, optimizer probe 18/18, readout 22/22).
 - Nothing is running on Isambard. The AV2 Stage 2 subset (b5b94e1b) is untouched and Stage 2 did not run.
 - Not committed to the repo: the verdict JSON copy (committed with the mutant table), the local checkpoints of the six Stage 1 runs (workstation: /mnt/DATA/DegradedDepth/checkpoints_v3/confirm1_stage1_20261018; cluster: /projects/b5dh/RAMEN_confirm1_f8ac6d0b/runs).
