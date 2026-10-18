@@ -1,0 +1,57 @@
+ config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK
+[params] total=30.61M trainable=8.55M (unfrozen_backbone=False)
+xFormers not available
+xFormers not available
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+[spring] train dir = /projects/b5dh/data/train/spring/spring/train
+
+[monitor] outdoor VKITTI scale monitor: 4 clips (in-sample drift monitor, never used for selection), every 100 steps, clean_too=True
+[data] train clips=61234 val clips=3 world_size=4 device=cuda:0 seed=46000
+[data] effective train depth upper bound per source (m, valid iff depth < bound): tartanair=10000, vkitti=655, pointodyssey=999, pointodyssey=999, irs=80, spring=80, kitti_raw=80
+[checkpoint] permanent step{N}.pt snapshots at: [2000]
+[monitor] step0 outdoor median(pred)/median(GT) = 1.006 (pred 14.27 m, GT 14.18 m)
+e0 step20/2000 loss=0.8702 lr=4.00e-06 1.5it/s static=1.0000 sev=0.04
+e0 step40/2000 loss=0.8206 lr=8.00e-06 1.6it/s static=0.0000 sev=0.08
+e0 step60/2000 loss=0.8016 lr=1.20e-05 1.6it/s static=0.0000 sev=0.12
+e0 step80/2000 loss=0.7838 lr=1.60e-05 1.6it/s static=0.0000 sev=0.16
+[monitor] step100 outdoor median(pred)/median(GT) = 0.978 (pred 13.87 m, GT 14.18 m)
+e0 step100/2000 loss=0.7944 lr=2.00e-05 1.6it/s static=0.0000 sev=0.2
+e0 step120/2000 loss=0.7753 lr=2.40e-05 1.6it/s static=0.0000 sev=0.24
+e0 step140/2000 loss=0.7653 lr=2.80e-05 1.6it/s static=0.0000 sev=0.28
+e0 step160/2000 loss=0.7538 lr=3.20e-05 1.6it/s static=1.0000 sev=0.32
+e0 step180/2000 loss=0.7687 lr=3.60e-05 1.6it/s static=0.0000 sev=0.36
+[monitor] step200 outdoor median(pred)/median(GT) = 0.902 (pred 12.79 m, GT 14.18 m)
+e0 step200/2000 loss=0.7624 lr=4.00e-05 1.6it/s static=0.0000 sev=0.4
+e0 step220/2000 loss=0.7535 lr=4.40e-05 1.6it/s static=1.0000 sev=0.44
+e0 step240/2000 loss=0.7475 lr=4.80e-05 1.6it/s static=0.0000 sev=0.48
+e0 step260/2000 loss=0.7451 lr=5.20e-05 1.6it/s static=0.0000 sev=0.52
+e0 step280/2000 loss=0.7422 lr=5.60e-05 1.6it/s static=0.0000 sev=0.56
+[monitor] step300 outdoor median(pred)/median(GT) = 0.992 (pred 13.96 m, GT 14.18 m)
+e0 step300/2000 loss=0.7414 lr=6.00e-05 1.6it/s static=0.0000 sev=0.6
+e0 step320/2000 loss=0.7384 lr=6.40e-05 1.6it/s static=0.0000 sev=0.64
+e0 step340/2000 loss=0.7380 lr=6.80e-05 1.6it/s static=0.0000 sev=0.68
+e0 step360/2000 loss=0.7383 lr=7.20e-05 1.6it/s static=0.0000 sev=0.72
+e0 step380/2000 loss=0.7360 lr=7.60e-05 1.6it/s static=0.0000 sev=0.76
+[monitor] step400 outdoor median(pred)/median(GT) = 0.942 (pred 13.36 m, GT 14.18 m)
+e0 step400/2000 loss=0.7383 lr=8.00e-05 1.6it/s static=0.0000 sev=0.8
+[monitor] step500 outdoor median(pred)/median(GT) = 0.878 (pred 12.15 m, GT 14.18 m)
+[monitor] step600 outdoor median(pred)/median(GT) = 1.016 (pred 14.40 m, GT 14.18 m)
+[monitor] step700 outdoor median(pred)/median(GT) = 0.964 (pred 13.27 m, GT 14.18 m)
+[monitor] step800 outdoor median(pred)/median(GT) = 0.949 (pred 13.46 m, GT 14.18 m)
+[monitor] step900 outdoor median(pred)/median(GT) = 0.973 (pred 13.81 m, GT 14.18 m)
+[monitor] step1000 outdoor median(pred)/median(GT) = 0.936 (pred 13.28 m, GT 14.18 m)
+[monitor] step1100 outdoor median(pred)/median(GT) = 1.043 (pred 14.71 m, GT 14.18 m)
+[monitor] step1200 outdoor median(pred)/median(GT) = 0.958 (pred 13.60 m, GT 14.18 m)
+[monitor] step1300 outdoor median(pred)/median(GT) = 1.067 (pred 15.13 m, GT 14.18 m)
+[monitor] step1400 outdoor median(pred)/median(GT) = 0.974 (pred 13.69 m, GT 14.18 m)
+[monitor] step1500 outdoor median(pred)/median(GT) = 0.978 (pred 13.88 m, GT 14.18 m)
+[monitor] step1600 outdoor median(pred)/median(GT) = 0.969 (pred 13.55 m, GT 14.18 m)
+[monitor] step1700 outdoor median(pred)/median(GT) = 0.974 (pred 13.48 m, GT 14.18 m)
+[monitor] step1800 outdoor median(pred)/median(GT) = 0.946 (pred 13.42 m, GT 14.18 m)
+[monitor] step1900 outdoor median(pred)/median(GT) = 0.970 (pred 13.76 m, GT 14.18 m)
+[monitor] step2000 outdoor median(pred)/median(GT) = 0.915 (pred 12.98 m, GT 14.18 m)

@@ -102,6 +102,7 @@ neg("(7) [ts2] line present", {"S5": synth("S5", 2000, mut=lambda L: L[:8] + ["[
 neg("(8) non-finite loss warning", {"S6": synth("S6", 2000) + ["[warn] non-finite loss at step 60"]})
 neg("(10) B0 loss 2x the c3_n46 reference", {"B0": [re.sub(r"loss=(\S+)", lambda m: f"loss={2 * float(m.group(1)):.4f}", l) if re.match(r"e\d+ step", l) else l for l in synth("B0", 2000)]})
 neg("(10) B0b loss 0.5x the reference", {"B0b": [re.sub(r"loss=(\S+)", lambda m: f"loss={0.5 * float(m.group(1)):.4f}", l) if re.match(r"e\d+ step", l) else l for l in synth("B0b", 2000)]})
+neg("(10) B0b loss 1.3x (above the 1.18 upper band) the reference", {"B0b": [re.sub(r"loss=(\S+)", lambda m: f"loss={1.3 * float(m.group(1)):.4f}", l) if re.match(r"e\d+ step", l) else l for l in synth("B0b", 2000)]})
 neg("K mismatch: the K=2000 fixtures checked with -K 4000 (via -K 4000 on K=2000 logs)", {}, K=4000, runs=FX / "runs_k4000") if False else None
 # -K mismatch is a NEG on the whole set (all logs are K=2000, checker told 4000)
 allok &= run("NEG -K 4000 applied to the K=2000 fixtures", specs(2000), True, K=4000, runs=FX / "runs_k4000")
@@ -190,6 +191,28 @@ M("[resume] line", {"B0": synth("B0", 2000, mut=lambda L: L[:9] + ["[resume] /x/
 M("total printed 12000", {"S1": [l.replace("/2000 ", "/12000 ") for l in synth("S1", 2000)]}, True, ("S1", 2))
 M("B0 loss 2x", {"B0": [re.sub(r"loss=(\S+)", lambda m: f"loss={2 * float(m.group(1)):.4f}", l) if re.match(r"e\d+ step", l) else l for l in synth("B0", 2000)]}, True, ("B0", 10))
 M("B0 (the reference) clip total 94580", {"B0": [l.replace("train clips=94581", "train clips=94580") for l in synth("B0", 2000)]}, True, ("B0", 6))
+# --- D1 (Manager): a log read while the trainer is mid-write of its LAST row (no trailing newline) must not FAIL (= scancel a healthy run); complete bad rows still must
+def writeraw(name, text): p = FX / name; p.write_text(text); return p
+def midspecs(trunc=None, midbad=False, a="B0"):
+    sp = []
+    for arm in ARMS:
+        L = cutn(synth(arm, 2000), 400)
+        if arm == a and midbad:
+            L = [re.sub(r" sev=\S+", "", l) if re.match(r"e\d+ step(\d+)/", l) and int(re.search(r"step(\d+)/", l).group(1)) == 100 else l for l in L]
+        txt = "\n".join(L) + "\n"
+        if arm == a and trunc: txt = txt + trunc          # appended partial row WITHOUT a trailing newline
+        sp.append(f"{arm}={writeraw(f'D1_{arm}.out', txt)}")
+    return sp
+allok &= run("D1(a) POSITIVE: all 8 cut at 400 + a truncated final row 'e0 step420/2000 loss=0.7385 lr=1.0' (no newline), mid-run: no FAIL", midspecs(trunc="e0 step420/2000 loss=0.7385 lr=1.0"), False, runs=mr, final=False)
+allok &= run("D1(b) NEG: the same truncated final row PLUS a complete unparsable row (no ' sev=') at step 100 in the middle: still FAIL", midspecs(trunc="e0 step420/2000 loss=0.7385 lr=1.0", midbad=True), True, runs=mr, final=False, item=("B0", 1))
+bf = list(synth("B0", 2000)); last_idx = max(i for i, l in enumerate(bf) if re.match(r"e\d+ step", l)); bf[last_idx] = re.sub(r" sev=\S+", "", bf[last_idx])
+I("D1(c') -F at end of run: the final complete step row (newline-terminated) is unparsable", {"B0": bf}, ("B0", 1))
+fp = "\n".join(synth("B0", 2000)) + "\ne0 step2001/2000 loss=0.7"      # a complete log plus a PARTIAL final line, no trailing newline
+sp = [f"{a}={writeraw(f'D1F_{a}.out', fp if a == 'B0' else chr(10).join(synth(a, 2000)) + chr(10))}" for a in ARMS]
+allok &= run("D1(3) NEG: partial final line (no newline) under -F -> FAIL (no exemption)", sp, True, item=("B0", 0))
+nf = cutn(synth("B0", 2000), 400) + ["[warn] non-finite loss at step 77"]
+sp = [f"{a}={writeraw(f'D1N_{a}.out', (chr(10).join(nf) + chr(10) + 'e0 step420/2000 loss=0.73') if a == 'B0' else chr(10).join(cutn(synth(a, 2000), 400)) + chr(10))}" for a in ARMS]
+allok &= run("D1(4) NEG: a complete [warn] non-finite line just before a partial final line, mid-run -> FAIL", sp, True, runs=mr, final=False, item=("B0", 8))
 # --- sub-check ISOLATION: each LR sub-check, alone, must catch the LR negatives it is meant to (kills 'check removed' / 'tolerance widened' mutants of a REDUNDANT sub-check)
 CHK0 = (H / "check_first_run_l1.sh").read_text()
 def checker(name, edits):

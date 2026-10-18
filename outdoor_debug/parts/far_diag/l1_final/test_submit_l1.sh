@@ -21,7 +21,7 @@ S="$H/submit_l1.sh"
 chk "submit_l1.sh: S6SHA is the Auditor's literal" "$(grep -c "^export S6SHA=$LIT\$" $S)" 1
 chk "submit_l1.sh: no S6SHA derived by sha256sum" "$(grep -E 'S6SHA=.*(sha256sum|\$\()' $S | wc -l)" 0
 chk "submit_l1.sh: the literal gate is called" "$(grep -c 's6_sha_gate.sh "\$S6SHA"' $S)" 1
-chk "submit_l1.sh: no sbatch --dependency from any smoke (SM1/SM5/SM6) to a job" "$(grep -E 'dependency=[a-z]+:[^ ]*\$\{?SM[0-9]' $S | wc -l)" 0
+chk "submit_l1.sh: no sbatch --dependency from any smoke (SM1/SM5/SM6) to a job" "$(grep -E '(dependency[= ]|-d )[a-z]+:[^ ]*\$\{?SM[0-9]' $S | wc -l)" 0
 chk "submit_l1.sh: J_S6 has no dependency" "$(grep -E '^J_S6=.*dependency' $S | wc -l)" 0
 chk "submit_l1.sh: GATE 1 and GATE 2 are explicit steps" "$(grep -c '>>> GATE [12]' $S)" 2
 chk "submit_l1.sh: all smoke probes use --smoke 120" "$(grep -o 'step120.pt --arm S[0-9] -K 2000 --smoke 120' $S | wc -l)" 3
@@ -29,7 +29,9 @@ chk "submit_l1.sh: bash -n" "$(bash -n $S 2>&1 | wc -l)" 0
 # forced-fail: the structure checks must fail on bad variants
 mut() { sed -e "$1" "$S" > "$W/m.sh"; }
 mut 's#^export S6SHA=.*#export S6SHA=$(sha256sum $D/S6_diff.patch | cut -d" " -f1)#'; chk "CONTROL old derived S6SHA is detected" "$(grep -c "^export S6SHA=$LIT\$" $W/m.sh)$(grep -E 'S6SHA=.*(sha256sum|\$\()' $W/m.sh | wc -l)" 01
-mut 's#^B0=$(sbatch --parsable #B0=$(sbatch --parsable --dependency=afterok:$SM1:$SM5 #'; chk "CONTROL B0 afterok smokes is detected" "$(grep -E 'dependency=[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
-mut 's#^J_S6=$(sbatch --parsable #J_S6=$(sbatch --parsable --dependency=afterok:$SM6 #'; chk "CONTROL J_S6 afterok SM6 is detected" "$(grep -E 'dependency=[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
+mut 's#^B0=$(sbatch --parsable #B0=$(sbatch --parsable --dependency=afterok:$SM1:$SM5 #'; chk "CONTROL B0 afterok smokes is detected" "$(grep -E '(dependency[= ]|-d )[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
+mut 's#^J_S6=$(sbatch --parsable #J_S6=$(sbatch --parsable --dependency=afterok:$SM6 #'; chk "CONTROL J_S6 afterok SM6 is detected" "$(grep -E '(dependency[= ]|-d )[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
+mut 's#^J_S6=$(sbatch --parsable #J_S6=$(sbatch --parsable --dependency afterok:$SM6 #'; chk "CONTROL J_S6 '--dependency afterok:' (space form) is detected" "$(grep -E '(dependency[= ]|-d )[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
+mut 's#^J_S6=$(sbatch --parsable #J_S6=$(sbatch --parsable -d afterok:$SM6 #'; chk "CONTROL J_S6 '-d afterok:' form is detected" "$(grep -E '(dependency[= ]|-d )[a-z]+:[^ ]*\$\{?SM[0-9]' $W/m.sh | wc -l)" 1
 mut 's#--smoke 120 --expect-step 120 -F"#--expect-step 120 -F"#'; chk "CONTROL a probe without --smoke is detected" "$(grep -o 'step120.pt --arm S[0-9] -K 2000 --smoke 120' $W/m.sh | wc -l)" 2
 [[ $ok -eq 1 ]] && echo "SUBMIT SUITE: ALL AS EXPECTED ($n checks)" || echo "SUBMIT SUITE: UNEXPECTED RESULT"; exit $((1-ok))

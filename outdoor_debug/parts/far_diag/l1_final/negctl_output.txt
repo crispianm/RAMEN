@@ -74,13 +74,13 @@
     [B0] item 5: FAIL [data] seed values [49000] (want [46000] = data.seed 46 x1000)
     RESULT: FAIL (scancel)
 ## NEG (5) config sha line != yaml sha: rc=1 expected FAIL -> OK
-    [S6] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S6.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [S6] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S6.yaml sha256 0000000000000000000000000000000000000000000000000000000000000000 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG (5) config line names the wrong arm yaml: rc=1 expected FAIL -> OK
-    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S3.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S3.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG (5) config line names the k4000 yaml: rc=1 expected FAIL -> OK
-    [S1] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k4000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [S1] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k4000/arm_S1.yaml sha256 9a18e9b94f831e086b3182b736c17a08f806705052b2a1fbb36c420ec86887bd OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG (5) config line missing: rc=1 expected FAIL -> OK
     [B0] item 5: FAIL no ' config :' line in the log (the sbatch preflight prints it)
@@ -115,6 +115,9 @@
 ## NEG (10) B0b loss 0.5x the reference: rc=1 expected FAIL -> OK
     [B0b] item 10: FAIL loss mean ratio to the c3_n46 reference = 0.500 (seed 49 band 0.85-1.18)
     RESULT: FAIL (scancel)
+## NEG (10) B0b loss 1.3x (above the 1.18 upper band) the reference: rc=1 expected FAIL -> OK
+    [B0b] item 10: FAIL loss mean ratio to the c3_n46 reference = 1.300 (seed 49 band 0.85-1.18)
+    RESULT: FAIL (scancel)
 ## NEG -K 4000 applied to the K=2000 fixtures: rc=1 expected FAIL -> OK
     [B0] item 1: FAIL table step 1000 lr 7.510e-05 expected 9.507e-05
     [B0] item 1: FAIL table step 2000 lr 1.100e-10 expected 6.117e-05
@@ -140,19 +143,19 @@
     RESULT: FAIL (scancel)
 ## NEG (5) resume_reseed present in the B0b yaml: rc=1 expected FAIL -> OK
     [B0b] item 5: FAIL config data.seed ['49'] (want [49]), resume_reseed lines 1 (want 0), resume_from ['null'] (want null), lr_restart keys absent
-    [B0b] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/out
+    [B0b] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0b.yaml sha256 b8f302c8f88c8eda27f99321464222018dd8d2077f006b8b009481b9e8470ae2 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_d
     RESULT: FAIL (scancel)
 ## NEG (5) resume_from set in the B0 yaml: rc=1 expected FAIL -> OK
     [B0] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['/x.pt'] (want null), lr_restart keys absent
-    [B0] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0.yaml sha256 1a0a0751ec2a330d02d788d3f7067ecbc8eef60b4c9c67a9629ddbb658a81111 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [B0] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_B0.yaml sha256 1a0a0751ec2a330d02d788d3f7067ecbc8eef60b4c9c67a9629ddbb658a81111 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG (5) data.seed 47 in the S2 yaml: rc=1 expected FAIL -> OK
     [S2] item 5: FAIL config data.seed ['47'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys absent
-    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [S2] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S2.yaml sha256 b7a0abacf14a5a3fc11b9718cafb0ea398650a7b420fd1b223b4dd19adfc670c OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG (5) lr_restart key in the S4 yaml: rc=1 expected FAIL -> OK
     [S4] item 5: FAIL config data.seed ['46'] (want [46]), resume_reseed lines 0 (want 0), resume_from ['null'] (want null), lr_restart keys present
-    [S4] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S4.yaml sha256 1e8506c0044777a63ee7e06a45b9fd90a64d646e34bf21527707ce1658394048 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdo
+    [S4] item 5: FAIL log config line  config : outdoor_debug/parts/far_diag/l1_final/configs/k2000/arm_S4.yaml sha256 1e8506c0044777a63ee7e06a45b9fd90a64d646e34bf21527707ce1658394048 OK vs sha256 of /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_deb
     RESULT: FAIL (scancel)
 ## NEG the unedited REAL 12000-step log passed as B0 (K=2000): rc=1 expected FAIL -> OK
     [B0] item 1: FAIL table step 1000 lr 9.950e-05 expected 7.509e-05
@@ -222,10 +225,10 @@
     [S3] item 6: FAIL differs from B0: ['[data] sampler=weighted']
     RESULT: FAIL (scancel)
 ## NEG[iso] (9) complete logs, NO metrics.jsonl at all, -F: rc=1 expected FAIL -> OK
-    [B0] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0_k2000/metrics.jsonl missing
-    [B0b] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0b_k2000/metrics.jsonl missing
-    [S1] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S1_k2000/metrics.jsonl missing
-    [S2] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od_l1fix/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S2_k2000/metrics.jsonl missing
+    [B0] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0_k2000/metrics.jsonl missing
+    [B0b] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_B0b_k2000/metrics.jsonl missing
+    [S1] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S1_k2000/metrics.jsonl missing
+    [S2] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) /home/wg19671/.claude/jobs/a0d391cb/tmp/od/outdoor_debug/parts/far_diag/l1_final/stopcheck_fixtures/runs_empty_x/l1_S2_k2000/metrics.jsonl missing
 ## NEG[iso] (9) complete logs, metrics.jsonl with no loss_terms rows, -F: rc=1 expected FAIL -> OK
     [B0] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
     [B0b] item 9: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) no loss_terms rows yet (first at step 100)
@@ -273,6 +276,21 @@
     [B0b] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
     [S2] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
     [S3] item 6: FAIL differs from B0: ['[data] train clips=94581 val clips=3 world_size=4 device=cuda:0 seed=<S>']
+## D1(a) POSITIVE: all 8 cut at 400 + a truncated final row 'e0 step420/2000 loss=0.7385 lr=1.0' (no newline), mid-run: no FAIL: rc=0 expected no FAIL -> OK
+    RESULT: no FAIL (WAIT/WARN lines may remain)
+## D1(b) NEG: the same truncated final row PLUS a complete unparsable row (no ' sev=') at step 100 in the middle: still FAIL: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL step rows parse: 20 `stepG/T loss=` rows, 1 not matching the full row format (`... lr=... sev=...`); first [100]
+    RESULT: FAIL (scancel)
+## NEG[iso] D1(c') -F at end of run: the final complete step row (newline-terminated) is unparsable: rc=1 expected FAIL -> OK
+    [B0] item 1: FAIL (WAIT is a FAIL under -F: the log/metrics must be complete) step 2000 not printed yet
+    [B0] item 1: FAIL step rows parse: 100 `stepG/T loss=` rows, 1 not matching the full row format (`... lr=... sev=...`); first [2000]
+    RESULT: FAIL (scancel)
+## D1(3) NEG: partial final line (no newline) under -F -> FAIL (no exemption): rc=1 expected FAIL -> OK
+    [B0] item 0: FAIL log does not end with a newline under -F (partial final line; the job should be COMPLETED)
+    RESULT: FAIL (scancel)
+## D1(4) NEG: a complete [warn] non-finite line just before a partial final line, mid-run -> FAIL: rc=1 expected FAIL -> OK
+    [B0] item 8: FAIL 1 non-finite warnings
+    RESULT: FAIL (scancel)
 ## NEG[iso-sub-check] the closed-form check ALONE catches: 4000-cosine in K=2000: rc=1 expected FAIL -> OK
     [S5] item 1: FAIL 100 printed lr values vs the closed form (warmup 500, cosine to 0 at 2000); mismatches [(640, 9.96e-05), (660, 9.95e-05), (680, 9.94e-05)]
     RESULT: FAIL (scancel)

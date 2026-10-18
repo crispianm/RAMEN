@@ -1,0 +1,4 @@
+{"event": "loss_terms", "step": 100, "silog": 0.3, "silog_far_px_frac": 0.014}
+{"event": "loss_terms", "step": 200, "silog": 0.3, "silog_far_px_frac": 0.014}
+{"event": "loss_terms", "step": 300, "silog": 0.3, "silog_far_px_frac": 0.014}
+{"event": "loss_terms", "step": 400, "silog": 0.3, "silog_far_px_frac": 0.014}

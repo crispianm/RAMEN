@@ -44,7 +44,13 @@ for spec in sys.argv[1:]:
     arm, _, log = spec.partition("=")
     if arm not in ARMS: print(f"unknown arm {arm}"); sys.exit(2)
     S = SEED[arm]
-    txt = open(log, errors="replace").read().splitlines(); blob = "\n".join(txt)
+    raw = open(log, errors="replace").read(); txt = raw.splitlines()
+    if raw and not raw.endswith("\n"):
+        # D1: mid-run the trainer may be writing its LAST row (no trailing newline): ONLY that single final line is exempt (dropped); every complete line is parsed as before.
+        # Under -F (final pass, job COMPLETED) there is NO exemption: a partial final line is a FAIL.
+        if FINAL: out(arm, 0, "FAIL", "log does not end with a newline under -F (partial final line; the job should be COMPLETED)")
+        txt = txt[:-1]
+    blob = "\n".join(txt)
     steps = {int(x.group(1)): (float(x.group(3)), float(x.group(4)), x.group(5)) for l in txt if (x := re.search(r"step(\d+)/(\d+) loss=(\S+) lr=(\S+) .*?sev=(\S+)", l))}
     tot = {int(x.group(2)) for l in txt if (x := re.search(r"step(\d+)/(\d+) loss=", l))}
     rows = {int(x.group(1)) for l in txt if (x := re.search(r"step(\d+)/\d+ loss=", l))}
