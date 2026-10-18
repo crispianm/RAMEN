@@ -3,7 +3,7 @@
 # L1 scoring of ONE trained run (S3, 4000 steps) on ONE GH200: by-range scorer (VKITTI/KITTI/NYUv2/ScanNet++ DEV, 'exploratory, unaudited') THEN the DDAD val scorer ('exposed DEV gate'). DRAFT, NOT SUBMITTED.
 # Generated from score_template_l1.sbatch by gen_l1.sh. Same clone/commit/host type for all runs. DEV only (no --allow-test). The checkpoint's sha256 is the one the TRAIN job recorded next to it
 # (step<K>.pt.sha256) and must equal the sha computed here (a file swapped in between aborts); the Auditor recomputes it independently later.
-# Pins: scorer.py a8b0731e.., bench_joint.py 5d3d048c.., ddad_scorer.py 80916c4f.., DDAD frame list b8d9664f.., pairs 962d4996.. (all re-checked by the scorers themselves).
+# Pins: scorer.py a8b0731e.., bench_joint.py 5d3d048c.., ddad_scorer.py 8e71511b.., DDAD frame list b8d9664f.., pairs 962d4996.. (all re-checked by the scorers themselves).
 # Output: $SCORE_ROOT/k4000/S3/ {scores.json, check_scores.txt, ddad_scores.json, check_ddad.txt, ...}; refuses to overwrite; a failed check renames the dir *.FAILED_<jobid>. Readout: l1_readout.py --scores-dir $SCORE_ROOT/k4000 --stage 4000 --ddad-gate A.
 # =============================================================================
 #SBATCH --job-name=l1score_S3_k4000
@@ -26,7 +26,7 @@ export SCORE_ROOT="${SCORE_ROOT:-/projects/b5dh/RAMEN_l1_scores}"
 export CKPT="$PROJECT_DIR/runs/l1_${ARM}_k${K}/step${K}.pt"
 export SCORER_SHA="a8b0731e7270b911f92d56eade55b413338b12fd4373aac2b93ae1a7da8171df"
 export BJ_SHA="5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef"
-export DDAD_SCORER_SHA="80916c4f3b2ab0b8999b07e142847f8df157db5da756192f02f6df5dea1ed09f"
+export DDAD_SCORER_SHA="8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503"   # A4 scorer (post cdb86a0): identical to 80916c4f at the default 378 path (Auditor-checked); the reference row ddad_ref2 was produced by 80916c4f
 export DDAD_PAIRS_SHA="962d499612c40bca7d314f8ff16ce1d6c7b03962ae78938f472a101766150245"
 export DDAD_LR_ROOT="/projects/b5dh/scratch_ddad_20261017/DEV_LR"
 export VENV="/projects/b5dh/FocusMamba/.venv"
@@ -62,6 +62,6 @@ python -I "$S" --ckpt "$CKPT" --out "$OUT/scores.json" --datasets kitti,nyuv2,sc
 python -I outdoor_debug/parts/submit/score/check_scores.py "$OUT/scores.json" --expect-step "$K" --expect-ckpt-sha "$CK_SHA" --expect-host-contains GH200 2>&1 | tee "$OUT/check_scores.txt"
 # 2) DDAD val (exposed DEV gate), 378 input, report in the readout's DDAD leg
 python -I "$DS" --ckpt "$CKPT" --out "$OUT/ddad_scores.json" --device cuda 2>&1 | tee "$OUT/ddad_scorer.log"
-python -I outdoor_debug/parts/LR_DEV/check_ddad_output.py "$OUT/ddad_scores.json" --expect-ckpt-sha "$CK_SHA" --reference outdoor_debug/parts/LR_DEV/ddad_ref2/ddad_scores.json --log "$OUT/ddad_scorer.log" 2>&1 | tee "$OUT/check_ddad.txt"
+python -I outdoor_debug/parts/LR_DEV/check_ddad_output.py "$OUT/ddad_scores.json" --expect-ckpt-sha "$CK_SHA" --scorer-sha "$DDAD_SCORER_SHA" --reference outdoor_debug/parts/LR_DEV/ddad_ref2/ddad_scores.json --log "$OUT/ddad_scorer.log" 2>&1 | tee "$OUT/check_ddad.txt"
 ( cd "$OUT" && sha256sum HEAD.txt checkpoint_sha256.txt scores.json scorer.log check_scores.txt ddad_scores.json ddad_scorer.log check_ddad.txt > SHA256SUMS )
 echo "======================================== done $(date -u +%FT%TZ) -> $OUT"

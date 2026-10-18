@@ -8,11 +8,12 @@ OURS_LABEL = "exploratory DEV, report-only (DDAD val LR_DEV; not a held-out test
 REL_LABEL = "released Metric-VDA-S at the registered 378 input (not its default 518), fp16, exploratory DEV, report-only"
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("scores"); ap.add_argument("--expect-ckpt-sha", required=True); ap.add_argument("--reference", required=True)
-    ap.add_argument("--log"); ap.add_argument("--release", action="store_true"); a = ap.parse_args()
+    ap.add_argument("--log"); ap.add_argument("--release", action="store_true")
+    ap.add_argument("--scorer-sha", default=SCORER, help="expected ddad_scorer.py sha256 (default: the A3 scorer 80916c4f; L1 passes the A4 scorer 8e71511b, byte-identical at default 378)"); a = ap.parse_args()
     d = json.load(open(a.scores)); ref = json.load(open(a.reference)); m = d.get("meta", {}); res = []
     def chk(n, ok): res.append((n, bool(ok)))
     chk("status FULL", m.get("status") == "FULL"); chk("pins_asserted true", m.get("pins_asserted") is True)
-    chk("scorer sha 80916c4f", m.get("ddad_scorer_sha256") == SCORER); chk("bench_joint sha 5d3d048c", m.get("bench_joint_sha256") == BJ)
+    chk(f"scorer sha {a.scorer_sha[:8]}", m.get("ddad_scorer_sha256") == a.scorer_sha); chk("bench_joint sha 5d3d048c", m.get("bench_joint_sha256") == BJ)
     p = m.get("pins", {}); chk("frame list sha b8d9664f", p.get("frames_sha256") == FRAMES); chk("pairs sha 962d4996", p.get("pairs_sha256") == PAIRS)
     chk("precision fp16 and short_side 378", m.get("precision") == "fp16" and m.get("short_side") == 378)
     chk("GH200", "GH200" in str(m.get("gpu"))); chk("no limit_scenes", m.get("limit_scenes") is None)
