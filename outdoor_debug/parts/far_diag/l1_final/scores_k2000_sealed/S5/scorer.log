@@ -1,0 +1,59 @@
+xFormers not available
+xFormers not available
+/lus/lfs1aip2/projects/b5dh/FocusMamba/.venv/lib/python3.10/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4381.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+xFormers not available
+xFormers not available
+kitti 2011_09_28_drive_0037_sync frames=79 15s
+kitti 2011_09_26_drive_0005_sync frames=110 34s
+kitti 2011_09_26_drive_0023_sync frames=110 53s
+kitti 2011_10_03_drive_0047_sync frames=110 71s
+kitti 2011_09_26_drive_0020_sync frames=76 83s
+kitti 2011_09_26_drive_0113_sync frames=77 96s
+kitti 2011_09_26_drive_0095_sync frames=110 115s
+nyuv2 kitchen_0003 frames=160 120s
+nyuv2 study_0002 frames=160 125s
+nyuv2 classroom_0001a frames=160 130s
+nyuv2 basement_0001a frames=160 135s
+scannetpp 05993dba6f frames=90 145s
+scannetpp 0d2ee665be frames=90 156s
+scannetpp 1ada7a0617 frames=90 166s
+scannetpp 25f3b7a318 frames=90 177s
+scannetpp 286b55a2bf frames=90 187s
+scannetpp 31a2c91c43 frames=90 198s
+scannetpp 38d58a7a31 frames=90 208s
+scannetpp 3e8bba0176 frames=90 219s
+scannetpp 40aec5fffa frames=90 229s
+scannetpp 518e393115 frames=90 240s
+scannetpp 578511c8a9 frames=90 250s
+scannetpp 5eb31827b7 frames=90 261s
+scannetpp 5f99900f09 frames=90 271s
+scannetpp 6115eddb86 frames=90 282s
+scannetpp 7b6477cb95 frames=90 292s
+scannetpp 825d228aec frames=90 302s
+scannetpp 9277fe2bca frames=90 313s
+scannetpp 99fa5c25e1 frames=90 323s
+scannetpp a8bf42d646 frames=90 334s
+scannetpp ac48a9b736 frames=90 344s
+scannetpp b0a08200c9 frames=90 354s
+scannetpp bde1e479ad frames=90 365s
+scannetpp c4c04e6d6c frames=90 375s
+scannetpp c5439f4607 frames=90 385s
+scannetpp ce175ef813 frames=90 396s
+scannetpp dc9763176c frames=90 406s
+scannetpp e7af285f7d frames=90 416s
+scannetpp f2dc06b1d2 frames=90 427s
+scannetpp f3d64c30f8 frames=90 437s
+scannetpp f717985ed7 frames=90 448s
+scannetpp fb5a96b1a2 frames=90 458s
+vkitti Scene01_overcast frames=64 462s
+vkitti Scene01_sunset frames=64 466s
+vkitti Scene02_overcast frames=64 470s
+vkitti Scene02_sunset frames=64 474s
+vkitti Scene06_overcast frames=64 478s
+vkitti Scene06_sunset frames=64 482s
+vkitti Scene18_overcast frames=64 486s
+vkitti Scene18_sunset frames=64 490s
+vkitti Scene20_overcast frames=64 493s
+vkitti Scene20_sunset frames=64 497s
+wrote /projects/b5dh/RAMEN_l1_scores/k2000/S5/scores.json

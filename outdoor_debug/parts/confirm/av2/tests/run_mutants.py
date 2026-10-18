@@ -89,7 +89,7 @@ MUTANTS = [
     ("D1b", "D1: registry pin may be UNSET at compare", AV2 + "av2_scorer.py", "    if want in (None, UNSET):", "    if want is None:", "UNSET pin accepted"),
     ("D1c", "D1: scoring does not use the registry file's real sha (tautological)", AV2 + "av2_scorer.py", "sums_sha=A.sha256_file(a.sums), registry_sha=reg_sha)", "sums_sha=A.sha256_file(a.sums), registry_sha=PINS[\"registry_sha\"])", "registry pin tautological at scoring"),
     ("D1d", "D1: compare main skips the registry pin", AV2 + "av2_scorer.py", "        check_registry_pin(reg_sha)   ", "        pass   ", "compare without registry pin"),
-    ("D1e", "D1: registry_sha pin filled while the registry is UNSET", AV2 + "av2_scorer.py", "            registry_sha=UNSET,   ", "            registry_sha=\"0\" * 64,   ", "pin filled before the registry"),
+    ("D1e", "D1: PINS.registry_sha is not the sha of the committed registry file (pins filled: mutates the real value)", AV2 + "av2_scorer.py", "registry_sha=\"1289688ffe4ad75a2545bfd40bd4cb36832e501f266220cb71c387d1bc93bb0b\"", "registry_sha=\"0\" * 64", "pin does not match the registry"),
     ("D2a", "D2: pair cfg diff not enforced", AV2 + "av2_scorer.py", "    if not d <= ALLOWED_PAIR_DIFF:", "    if False:", "arms may differ anywhere"),
     ("D2b", "D2: pair cfg check not called in compare_pairs", AV2 + "av2_scorer.py", "        check_pair_cfgs(*pairs[k])   ", "        pass   ", "compare_pairs without cfg check"),
     ("D2c", "D2: pair cfg check not called in --compare", AV2 + "av2_scorer.py", "        check_pair_cfgs(h, t)    ", "        pass    ", "--compare without cfg check"),

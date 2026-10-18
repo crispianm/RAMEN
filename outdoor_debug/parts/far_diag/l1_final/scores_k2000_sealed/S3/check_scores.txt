@@ -1,0 +1,40 @@
+PASS pins_asserted is true
+PASS scorer sha256
+PASS bench_joint sha256
+PASS combined clip sha
+PASS ckpt weights_key trainable_ema
+PASS --expect-step / --expect-ckpt-sha / --expect-host-contains were all passed (strict mode, reviewer finding 3/4)
+PASS ckpt step == 2000
+PASS ckpt sha256
+PASS gpu string contains 'GH200' (gpu field only: the hostname can contain it spuriously)
+PASS nyuv2_frames == 160
+PASS precision fp16
+PASS no limit_clips/max_frames (keys present and null)
+PASS meta.datasets has all four
+PASS kitti clip-key sha256 == R3 pin
+PASS kitti per_video keys == clip_lists keys
+PASS nyuv2 clip-key sha256 == R3 pin
+PASS nyuv2 per_video keys == clip_lists keys
+PASS scannetpp clip-key sha256 == R3 pin
+PASS scannetpp per_video keys == clip_lists keys
+PASS vkitti clip-key sha256 == R3 pin
+PASS vkitti per_video keys == clip_lists keys
+PASS kitti present with 7 clips
+PASS kitti abs_rel_unaligned finite
+PASS nyuv2 present with 4 clips
+PASS nyuv2 abs_rel_unaligned finite
+PASS scannetpp present with 31 clips
+PASS scannetpp abs_rel_unaligned finite
+PASS vkitti present with 10 clips
+PASS vkitti abs_rel_unaligned finite
+PASS kitti tae_gtvalid present+finite
+PASS kitti tae present+finite
+PASS scannetpp tae_gtvalid present+finite
+PASS scannetpp tae present+finite
+PASS kitti every clip has finite tae_gtvalid
+PASS scannetpp every clip has finite tae_gtvalid
+PASS primary vkitti far legacy_subsample_median finite and in (0,2)
+PASS primary legacy_subsample_n == 1000000
+PASS primary mask string == [80,655) GT-side, sentinel excluded
+PASS primary n (exact far px) >= 1e6 and pooled_median finite
+RESULT: ALL PASS (39 checks) /projects/b5dh/RAMEN_l1_scores/k2000/S3/scores.json

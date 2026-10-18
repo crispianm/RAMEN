@@ -1,0 +1,22 @@
+# L1 readout, stage 2000 steps, DDAD gate = A ('exposed DEV gate', exploratory, unaudited)
+G0 B0: VKITTI 80-655 m legacy median 0.86047 (<= 0.93: ok); DDAD [120,200] median 0.64277 (<= 0.75: ok)
+G0 B0b: VKITTI 80-655 m legacy median 0.89276 (<= 0.93: ok); DDAD [120,200] median 0.61673 (<= 0.75: ok)
+G0: PASS (both legs, both baselines)
+
+# verdicts vs B0 (in-sweep baseline), NF from |B0 - B0b|
+S1   NOT                                                            | V: change -0.01471 vs NF_p 0.03229 (no) | D[120,200]: change -0.00523 vs NF_d 0.02604, [80,120) change +0.00633 (no) | gated guards worse than NF: [('kitti', 'tae_gtvalid', 0.03617, 0.01997)] | reported-only guards worse: [('nyuv2', 'abs_rel_unaligned', 0.03189, 0.00201), ('scannetpp', 'abs_rel_unaligned', 0.06767, 0.00221), ('scannetpp', 'tae_gtvalid', 0.30538, 0.01968)]
+S2   DDAD-ONLY                                                      | V: change +0.02168 vs NF_p 0.03229 (no) | D[120,200]: change +0.15464 vs NF_d 0.02604, [80,120) change +0.11116 (leg) | gated guards worse than NF: none
+S3   FIX-CANDIDATE (= CAUSE-IMPLICATED + gated guards within NF)    | V: change +0.09222 vs NF_p 0.03229 (leg) | D[120,200]: change +0.04629 vs NF_d 0.02604, [80,120) change +0.03938 (leg) | gated guards worse than NF: none
+S4   NOT                                                            | V: change +0.00493 vs NF_p 0.03229 (no) | D[120,200]: change -0.00012 vs NF_d 0.02604, [80,120) change -0.00260 (no) | gated guards worse than NF: none
+S5   CAUSE-IMPLICATED (guard fails: FIX-CANDIDATE not granted)      | V: change +0.03952 vs NF_p 0.03229 (leg) | D[120,200]: change +0.02747 vs NF_d 0.02604, [80,120) change +0.02131 (leg) | gated guards worse than NF: [('scannetpp', 'abs_rel_unaligned', 0.00782, 0.00221), ('scannetpp', 'tae_gtvalid', 0.09121, 0.01968)]
+S6   NOT                                                            | V: change +0.01361 vs NF_p 0.03229 (no) | D[120,200]: change -0.04138 vs NF_d 0.02604, [80,120) change -0.00326 (no) | gated guards worse than NF: [('kitti', 'tae_gtvalid', 0.02388, 0.01997)]
+
+# description only (exposed; never in a verdict)
+B0   VKITTI exact 0.8773 perclip 0.8504 ratio-of-med 0.9017 bin_absrel 0.2457 | DDAD overall AbsRel 0.1909, [0,20) 1.184/0.201, [20,50) 1.092/0.159, [50,80) 0.930/0.166, [80,120) 0.770/0.262, [120,200] 0.643/0.356  (median pred:gt / AbsRel)
+B0b  VKITTI exact 0.9025 perclip 0.8824 ratio-of-med 0.9245 bin_absrel 0.2472 | DDAD overall AbsRel 0.1906, [0,20) 1.184/0.201, [20,50) 1.093/0.157, [50,80) 0.921/0.164, [80,120) 0.755/0.269, [120,200] 0.617/0.380  (median pred:gt / AbsRel)
+S1   VKITTI exact 0.8594 perclip 0.8399 ratio-of-med 0.8888 bin_absrel 0.2437 | DDAD overall AbsRel 0.1924, [0,20) 1.188/0.205, [20,50) 1.092/0.158, [50,80) 0.934/0.167, [80,120) 0.777/0.255, [120,200] 0.638/0.362  (median pred:gt / AbsRel)
+S2   VKITTI exact 0.8975 perclip 0.8780 ratio-of-med 0.9349 bin_absrel 0.2345 | DDAD overall AbsRel 0.2040, [0,20) 1.197/0.217, [20,50) 1.093/0.171, [50,80) 0.972/0.202, [80,120) 0.881/0.260, [120,200] 0.797/0.281  (median pred:gt / AbsRel)
+S3   VKITTI exact 0.9760 perclip 0.9422 ratio-of-med 1.0168 bin_absrel 0.2103 | DDAD overall AbsRel 0.1906, [0,20) 1.180/0.198, [20,50) 1.089/0.162, [50,80) 0.938/0.181, [80,120) 0.810/0.254, [120,200] 0.689/0.323  (median pred:gt / AbsRel)
+S4   VKITTI exact 0.8828 perclip 0.8589 ratio-of-med 0.9060 bin_absrel 0.2414 | DDAD overall AbsRel 0.1921, [0,20) 1.187/0.204, [20,50) 1.090/0.158, [50,80) 0.924/0.167, [80,120) 0.768/0.265, [120,200] 0.643/0.356  (median pred:gt / AbsRel)
+S5   VKITTI exact 0.9135 perclip 0.8875 ratio-of-med 0.9550 bin_absrel 0.2272 | DDAD overall AbsRel 0.1935, [0,20) 1.189/0.204, [20,50) 1.094/0.163, [50,80) 0.933/0.175, [80,120) 0.792/0.257, [120,200] 0.670/0.337  (median pred:gt / AbsRel)
+S6   VKITTI exact 0.8815 perclip 0.8647 ratio-of-med 0.9128 bin_absrel 0.2246 | DDAD overall AbsRel 0.2007, [0,20) 1.189/0.208, [20,50) 1.118/0.181, [50,80) 0.964/0.147, [80,120) 0.767/0.252, [120,200] 0.601/0.390  (median pred:gt / AbsRel)
