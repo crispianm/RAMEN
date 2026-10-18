@@ -12,7 +12,7 @@ Registration R1 rules (all fixed before any use on real data):
   inputs: ONLY av2_frames.tsv + the pinned clip table av2_clips.tsv + objects.tsv (A.load_registered_inputs: shas, clip[clip_idx]==cam_ts, files in objects.tsv, files exist). No directory glob.
   segmenter pins are the hard-coded constants SEG_A / SEG_B below (SEG_PIN.md); no CLI sha.
 usage: build_av2_masks.py --root <av2_val data dir> --frames av2_frames.tsv --clips av2_clips.tsv --objects objects.tsv --out sky_masks.npz --seg-a <dir> --seg-b <dir> [--device cuda]"""
-import argparse, json, sys
+import argparse, json, subprocess, sys
 from pathlib import Path
 import numpy as np
 
@@ -75,6 +75,23 @@ def verify_segmenters(dir_a, dir_b, pin_a=None, pin_b=None):
     return out
 
 
+def git_commit():
+    """HEAD commit of the checkout the builder runs from (informational; None if not a git checkout)."""
+    try:
+        r = subprocess.run(["git", "-C", str(HERE), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=20)
+        c = r.stdout.strip()
+        return c if r.returncode == 0 and len(c) == 40 else None
+    except Exception:
+        return None
+
+
+def code_provenance():
+    """N4: the shas of the three files that define the mask (this builder, make_sky_mask.py, av2_dataset.py) + the git commit, written into the meta; the scorer asserts them."""
+    import av2_dataset as A
+    return dict(builder_sha=A.sha256_file(Path(__file__).resolve()), make_sky_mask_sha=A.sha256_file(Path(M.__file__).resolve()),
+                dataset_module_sha=A.sha256_file(Path(A.__file__).resolve()), git_commit=git_commit())
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     for k in ("root", "frames", "clips", "objects", "out", "seg-a", "seg-b"):
@@ -97,7 +114,7 @@ def main(argv=None):
             res[A.frame_id(log, cam)] = frame_masks(pa, ma, pb, mb, L.all_returns_uv(cam, lid))
         dtypes |= L.xyz_dtypes
     meta = assemble(res, out, dict(**segmeta, frames_sha=A.sha256_file(a.frames), clips_sha=A.sha256_file(a.clips), objects_sha=A.sha256_file(a.objects),
-                                   lidar_xyz_dtypes=sorted(dtypes), lidar_exclusion="all returns with z>0, no range cap"))
+                                   lidar_xyz_dtypes=sorted(dtypes), lidar_exclusion="all returns with z>0, no range cap", **code_provenance()))
     print(json.dumps({k: meta[k] for k in ("status", "pooled_iou", "n_candidates", "n_kept")}), "dropped", len(meta["dropped"]))
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Stage-1 scoring runner. Reads the LITERAL expected scorer sha from RUNBOOK_STAGE1.md (line `EXPECT_SCORER_SHA = <64 hex>`), and runs av2_scorer.py with it as --expect-scorer-sha.
+"""Stage-1 scoring runner. Reads the LITERAL expected scorer sha from RUNBOOK_STAGE1.md (line `EXPECT_SCORER_SHA = <64 hex>`), and runs av2_scorer.py with it as --expect-scorer-sha and with the runbook itself as --registry
+(its CKPT_SHA table = the six registered Stage 1 checkpoint shas; the scorer refuses while any is UNSET). Scoring runs also need --sums <$DEST/meta_R1/SHA256SUMS>.
 The runner NEVER hashes the scorer itself (the pin must come from outside the file); a placeholder / malformed literal is refused before anything runs; a literal that does not match the
 scorer file makes the scorer itself refuse.
 usage: run_score.py RUNBOOK_STAGE1.md -- <av2_scorer.py arguments>"""
@@ -23,7 +24,7 @@ def main(argv=None):
     if len(argv) < 2 or argv[1] != "--":
         raise SystemExit(__doc__)
     sha = read_expected_sha(Path(argv[0]).read_text())
-    cmd = [sys.executable, "-I", str(HERE / "av2_scorer.py"), *argv[2:], "--expect-scorer-sha", sha]
+    cmd = [sys.executable, "-I", str(HERE / "av2_scorer.py"), *argv[2:], "--expect-scorer-sha", sha, "--registry", str(Path(argv[0]).resolve())]
     return subprocess.call(cmd)
 
 

@@ -6,7 +6,8 @@ no depth statistic used for any choice; pass/fail only. The exact checks per fra
   3. the paired sweep reads; its x,y,z are finite for every row used; dtype recorded;
   4. sparse GT: shape (2048, 1550) float32, at least one valid return, every valid value in (0, 200] m, no inf;
   5. the pose chain finds city_SE3_egovehicle at the EXACT camera and lidar timestamps (A.Log.city_T_ego raises otherwise).
-usage: decode_sanity.py ROOT FRAMES_TSV [N=5]"""
+The 5 logs must be logs 1-5 of the registered stage-1 list (av2_val_logs_selected50.txt == av2_val_logs_stage1_50.txt, sorted), asserted against LOGS_TXT.
+usage: decode_sanity.py ROOT FRAMES_TSV [N=5] LOGS_TXT"""
 import sys
 from pathlib import Path
 import numpy as np
@@ -32,9 +33,13 @@ def check_frame(root, log, cam, lid) -> dict:
     return dict(log=log, cam=cam, ok=True, n_valid=int(v.size), xyz_dtypes=sorted(L.xyz_dtypes))
 
 
-def main(root, frames, n=5):
+def main(root, frames, n=5, logs_txt=None):
+    if not logs_txt:
+        raise SystemExit("decode_sanity: LOGS_TXT (the registered log list) is required")
     rows = A.read_frames_tsv(frames)
     logs = sorted({r[0] for r in rows})[: int(n)]
+    registered = [l.strip() for l in open(logs_txt) if l.strip()][: int(n)]
+    assert logs == registered, f"decode-sanity logs {logs} != the first {n} of the registered list {registered}"
     out = []
     for log in logs:
         r0 = [r for r in rows if r[0] == log and r[4] == 0]
@@ -46,4 +51,5 @@ def main(root, frames, n=5):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    a = sys.argv[1:]
+    main(a[0], a[1], int(a[2]), a[3])

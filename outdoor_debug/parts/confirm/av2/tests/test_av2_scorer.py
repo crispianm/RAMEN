@@ -155,7 +155,7 @@ def test_guard_5pct_relative_per_bin():
 def _run(P, absrel, arm, seed="s50", stage=1, ckpt=None):
     return dict(sky=dict(P_framebalanced_median=P, kept_frame_ids=["f1", "f2"], dropped_frame_ids=[], frame_mask_px=[5000, 6000]), bins=_bins(absrel),
                 n_scored_frames=2, n_lidar_px_valid_before_sky=100, n_lidar_px_sky_excluded=10,
-                meta=dict(arm=arm, ckpt_sha=ckpt or f"sha_{arm}", seed_label=seed, stage=stage))
+                meta=dict(arm=arm, ckpt_sha=ckpt or f"sha_{arm}", seed_label=seed, stage=stage, pins=dict(frames_sha="f"), scorer_sha="s" * 64, registry_sha="r" * 64))
 
 
 def test_compare_end_to_end_verdict():
@@ -208,7 +208,7 @@ def test_registered_pins_match_constants():
 
 def test_compare_pairs_end_to_end():
     def run(P, absrel, arm, k):
-        return _run(P, absrel, arm, seed=k)
+        return _run(P, absrel, arm, seed=k, ckpt=f"sha_{arm}_{k}")
     def mk(**ov):
         d = {k: (run(600.0, 0.10, "H300", k), run(150.0, 0.10, "TS2", k)) for k in S.PAIRS}
         d.update(ov); return d
@@ -392,7 +392,7 @@ def test_phase_rule_r1_picks_aligned_phase_and_ties_go_to_zero():
 
 # ------------------------------------------------------------------ runner (O45: expected scorer sha is a literal committed in the runbook)
 def _runner_args(tmp_path):
-    return ["--ckpt", "x.pt", "--pair", "s50", "--arm", "H300", "--out", str(tmp_path / "o.json"), "--root", "r", "--mask", "m", "--frames", "f", "--clips", "c", "--objects", "o", "--logs", "l"]
+    return ["--ckpt", "x.pt", "--pair", "s50", "--arm", "H300", "--out", str(tmp_path / "o.json"), "--root", "r", "--mask", "m", "--frames", "f", "--clips", "c", "--objects", "o", "--logs", "l", "--sums", "s"]
 
 
 def test_runbook_placeholder_is_refused_by_the_runner(tmp_path):
@@ -420,3 +420,54 @@ def test_runner_with_wrong_registered_sha_makes_the_scorer_refuse(tmp_path):
     assert "refusing to run" not in p.stderr and p.returncode != 0          # passes the scorer-sha gate, then fails later on the dummy paths
     src = (here / "run_score.py").read_text()
     assert "sha256" not in src and "hashlib" not in src                      # the runner never hashes the scorer
+
+
+# ---------------------------------------------------------------- N4 / pins: the in-file code pins equal the actual files; the RUNBOOK table agrees
+def test_pins_equal_actual_file_shas():
+    here = Path(__file__).resolve().parents[1]
+    repo = here.parents[3]
+    actual = dict(dataset_module_sha=here / "av2_dataset.py", builder_sha=here / "build_av2_masks.py", make_sky_mask_sha=here.parent / "seg" / "make_sky_mask.py",
+                  ddad_scorer_sha=repo / "outdoor_debug" / "parts" / "LR_DEV" / "ddad_scorer.py")
+    for k, f in actual.items():
+        assert S.PINS[k] == A.sha256_file(f), f"PINS.{k} is not the sha of {f}"
+    assert S.PINS["ddad_scorer_sha"] == "8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503"
+    rb = (here / "RUNBOOK_STAGE1.md").read_text()
+    for k in actual:
+        assert S.PINS[k] in rb, f"RUNBOOK_STAGE1.md pin table does not carry PINS.{k}"
+    for k in ("mask_sha", "meta_sha", "sums_sha"):
+        assert S.PINS[k] == S.UNSET                                              # these fill after the mask build / download
+
+
+def test_registered_rule_literal_equals_the_builders_rule():
+    import json as _json, make_sky_mask as M
+    assert S.REGISTERED_RULE == _json.loads(_json.dumps(M.RULE))
+    assert (S.REGISTERED_RULE["prob_thresh"], S.REGISTERED_RULE["erode_ref_px"], S.REGISTERED_RULE["lidar_ref_px"], S.REGISTERED_RULE["drop_frac"], S.REGISTERED_RULE["any_p"],
+            S.REGISTERED_RULE["iou_min"], S.REGISTERED_RULE["work_short"], S.REGISTERED_RULE["seed"]) == (0.9, 8, 5, 0.01, 0.5, 0.85, 512, 0)
+
+
+def test_check_mask_provenance_unit():
+    good = dict(rule=dict(S.REGISTERED_RULE), builder_sha="a" * 64, make_sky_mask_sha="b" * 64, dataset_module_sha="c" * 64)
+    S.check_mask_provenance(good)
+    for bad in (dict(good, rule=dict(S.REGISTERED_RULE, prob_thresh=0.8)), dict(good, rule=None), {k: v for k, v in good.items() if k != "builder_sha"}, dict(good, make_sky_mask_sha="short")):
+        with pytest.raises(AssertionError):
+            S.check_mask_provenance(bad)
+
+
+def test_runbook_registry_table_is_present_and_unset_until_the_runs_exist():
+    rb = (Path(__file__).resolve().parents[1] / "RUNBOOK_STAGE1.md").read_text()
+    reg = S.parse_registry(rb)
+    assert sorted(reg) == sorted((p, a) for p in S.PAIRS for a in ("H300", "TS2"))
+    assert all(v == S.UNSET or len(v) == 64 for v in reg.values())
+    if S.UNSET in reg.values():                                                  # as long as any is UNSET no run can be accepted
+        with pytest.raises(AssertionError, match="UNSET"):
+            S.assert_registered_ckpt(reg, "s50", "H300", "a" * 64)
+
+
+def test_runner_passes_the_runbook_as_registry_and_the_literal_sha(tmp_path, monkeypatch):
+    import subprocess, run_score as R
+    rb = tmp_path / "rb.md"; rb.write_text("EXPECT_SCORER_SHA = " + "a" * 64 + "\n")
+    seen = {}
+    monkeypatch.setattr(subprocess, "call", lambda cmd: seen.setdefault("cmd", cmd) and 0)
+    R.main([str(rb), "--", "--compare-pairs", "x"])
+    cmd = seen["cmd"]
+    assert cmd[cmd.index("--expect-scorer-sha") + 1] == "a" * 64 and cmd[cmd.index("--registry") + 1] == str(rb.resolve())

@@ -1,0 +1,33 @@
+== real start checkpoint c3_n46 step12000 (step12000.pt) sha256 f5c7c8f98fe0c9f9.. pair s50
+  facts: step 12000 | cfg: data.seed 46 resume_from None hinge w/min 0.0 None
+  assert_ckpt_facts(step): REFUSED: checkpoint step 12000 != registered 14000
+  assert_ckpt_cfg(real start cfg, s50, H300): REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  assert_ckpt_cfg(real start cfg, s50, TS2): REFUSED: pair s50: cfg data.seed/resume_reseed 46/None != 50
+  derived arm cfg (s50, H300) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm TS2: REFUSED: arm TS2: cfg carries the hinge (weight 0.1, min_depth 300.0)
+  derived arm cfg (s50, TS2) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm H300: REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  declared stage1 yaml arm_S1_n46_H300: assert_ckpt_cfg: PASSED
+  declared stage1 yaml arm_S1_n46_TS2: assert_ckpt_cfg: PASSED
+== real start checkpoint c3_n47 step12000 (step12000.pt) sha256 2ee98b7ee25bd6d5.. pair s51
+  facts: step 12000 | cfg: data.seed 47 resume_from None hinge w/min 0.0 None
+  assert_ckpt_facts(step): REFUSED: checkpoint step 12000 != registered 14000
+  assert_ckpt_cfg(real start cfg, s51, H300): REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  assert_ckpt_cfg(real start cfg, s51, TS2): REFUSED: pair s51: cfg data.seed/resume_reseed 47/None != 51
+  derived arm cfg (s51, H300) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm TS2: REFUSED: arm TS2: cfg carries the hinge (weight 0.1, min_depth 300.0)
+  derived arm cfg (s51, TS2) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm H300: REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  declared stage1 yaml arm_S1_n47_H300: assert_ckpt_cfg: PASSED
+  declared stage1 yaml arm_S1_n47_TS2: assert_ckpt_cfg: PASSED
+== real start checkpoint c3_n48 step12000 (step12000.pt) sha256 bf053bd38fdb97d5.. pair s52
+  facts: step 12000 | cfg: data.seed 48 resume_from None hinge w/min 0.0 None
+  assert_ckpt_facts(step): REFUSED: checkpoint step 12000 != registered 14000
+  assert_ckpt_cfg(real start cfg, s52, H300): REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  assert_ckpt_cfg(real start cfg, s52, TS2): REFUSED: pair s52: cfg data.seed/resume_reseed 48/None != 52
+  derived arm cfg (s52, H300) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm TS2: REFUSED: arm TS2: cfg carries the hinge (weight 0.1, min_depth 300.0)
+  derived arm cfg (s52, TS2) from the REAL start cfg + declared overrides: assert_ckpt_facts(14000) + assert_ckpt_cfg: PASSED
+     same cfg scored as --arm H300: REFUSED: arm H300: cfg sky_hinge_weight/min_depth 0.0/None != 0.1/300.0
+  declared stage1 yaml arm_S1_n48_H300: assert_ckpt_cfg: PASSED
+  declared stage1 yaml arm_S1_n48_TS2: assert_ckpt_cfg: PASSED

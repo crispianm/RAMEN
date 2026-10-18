@@ -11,13 +11,15 @@ Decision (Stage 1, Add. 48): per pair d_i = ln(P_H300 / P_TS2) for pairs s50/s51
 Inputs (Auditor O45): the model clip and the scored frames come ONLY from the pinned av2_clips.tsv + av2_frames.tsv (cross-checked against objects.tsv); the data dir is never globbed.
 The scorer's OWN sha256 is pinned OUTSIDE the file: --expect-scorer-sha <literal from RUNBOOK_STAGE1.md> is REQUIRED and compared with the sha of the running file.
 Usage:  python -I av2_scorer.py --ckpt <ours .pt> --pair s50|s51|s52|stage2 --arm TS2|H300 | --spec metric_vda_s  --out r.json --root <av2_val dir> --mask <sky_masks.npz>
-            --frames <av2_frames.tsv> --clips <av2_clips.tsv> --objects <objects.tsv> --logs <logs.txt> --expect-scorer-sha <sha256>
-        python -I av2_scorer.py --compare H300.json TS2.json [--out verdict.json]
+            --frames <av2_frames.tsv> --clips <av2_clips.tsv> --objects <objects.tsv> --logs <logs.txt> --sums <$DEST/meta_R1/SHA256SUMS>
+            --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256>      (use run_score.py: it adds --expect-scorer-sha and --registry from the runbook)
+        python -I av2_scorer.py --compare H300.json TS2.json --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256> [--out verdict.json]
+        python -I av2_scorer.py --compare-pairs <6 jsons> --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256> [--out verdict.json]
         python -I av2_scorer.py --selftest
 """
 from __future__ import annotations
 
-import argparse, json, math, socket, sys, time
+import argparse, json, math, re, socket, sys, time
 from pathlib import Path
 import numpy as np
 
@@ -31,10 +33,21 @@ UNSET = "UNSET"
 # ---- pins: filled in the registration BEFORE the first prediction. UNSET makes assert_pins fail (a scorer with unset pins cannot run on real data).
 # The scorer's OWN sha is NOT in this dict (it cannot contain its own hash): it is passed from outside as --expect-scorer-sha (check_scorer_sha).
 PINS = dict(logs_sha="f7f508f958e8e9d173772677d239c7a53165a0fb67520a68a4bfcf134592e370", **A.REGISTERED_SHAS,        # frames_sha, clips_sha, objects_sha
-            mask_sha=UNSET, meta_sha=UNSET, dataset_module_sha=UNSET, ddad_scorer_sha=UNSET, sums_sha=UNSET,
+            mask_sha=UNSET, meta_sha=UNSET, sums_sha=UNSET,                                                      # fill after the mask build / download
+            dataset_module_sha="52b3eb9c3d63479cb8efe5a61f15078fbbcb68b349c2771a2b2609f7a9fd31ae",      # av2_dataset.py (test_pins_equal_actual_file_shas)
+            ddad_scorer_sha="8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503",       # outdoor_debug/parts/LR_DEV/ddad_scorer.py
+            builder_sha="718be61453e894356f3c10b3111af688840f5bdb1911cc0e2729cf1cad5ae2bc",            # build_av2_masks.py
+            make_sky_mask_sha="31b18f51aed452f575019eee1ad463ee3b6d277ba9945ee505a1baaea16f29e1",       # seg/make_sky_mask.py
             segmenter_a_sha="a3dbf2d7a9912203078f304d88df8cfee9fd752ca2d2413f82036bdb02c5e7df",
             segmenter_b_sha="876855252aa674c7ad6e920c268d6722add811a927806372811faa724f19856c",
             bench_joint_sha="5d3d048ce7b26fb53e1e6a5aadf8265cb92c19dafc7340bc2e04cc6bcdf6e7ef")
+# N4: the registered mask RULE (AV2_REGISTRATION.md R1; literal copy, NOT imported from make_sky_mask.py): the mask meta's `rule` must equal this dict exactly.
+REGISTERED_RULE = dict(prob_thresh=0.9, erode_ref_px=8, erode_ref_short=900, lidar_ref_px=5, drop_frac=0.01, any_p=0.5, iou_min=0.85, work_short=512, work_mult=32, seed=0,
+                       ade_sky=["sky", 2], city_sky=["sky", 10])
+# N1: the declared Stage 1 training facts per pair label (outdoor_debug/parts/confirm/stage1: arms_stage1.py VALUES, SUBMIT.md). The checkpoint's OWN cfg must match them.
+START_N = dict(s50="46", s51="47", s52="48")
+START_FMT = "/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n{n}/step12000.pt"
+HINGE_W, HINGE_MIN = 0.1, 300.0
 EXPECT_STEP = 14000                  # registration 'Pins': checkpoint step 14000 (read from the checkpoint file)
 HOST_GPU = "GH200"                   # registration 'Pins': host type GH200 (substring of the CUDA device name)
 IOU_MIN = 0.85                       # R1 M2: the mask meta's pooled segmenter IoU must be >= this
@@ -89,12 +102,111 @@ def check_scorer_sha(expected: str | None, path=None) -> str:
 
 
 def assert_ckpt_facts(ck_meta: dict, pair: str) -> dict:
-    """Registered checkpoint facts: step == 14000 (read from the checkpoint file by ddad_scorer.model_meta); the seed is carried by the pair label (s50/s51/s52 -> 50/51/52; stage2 -> 50)."""
+    """Registered checkpoint facts: step == 14000 (read from the checkpoint file by ddad_scorer.model_meta); the seed is carried by the pair label (s50/s51/s52 -> 50/51/52; stage2 -> 50).
+    The label is cross-checked against the checkpoint's own cfg and the registered sha by assert_ckpt_cfg / assert_registered_ckpt (N1)."""
     if ck_meta.get("step") != EXPECT_STEP:
         raise AssertionError(f"checkpoint step {ck_meta.get('step')!r} != registered {EXPECT_STEP}")
     if pair not in SEED_OF:
         raise AssertionError(f"pair label {pair!r} not in {sorted(SEED_OF)}")
     return dict(ckpt_step=ck_meta["step"], expected_seed=SEED_OF[pair])
+
+
+def _tartanair_ts2(cfg: dict):
+    return [bool(s.get("ts2_sky")) for s in (cfg.get("data", {}) or {}).get("sources", []) if s.get("type") == "tartanair"]
+
+
+def assert_ckpt_cfg(cfg, pair: str, arm: str) -> dict:
+    """N1: a CLI label must never decide d. The checkpoint's own resolved cfg (train.py saves it as ck['cfg']) must match the declared Stage 1 facts of (pair, arm):
+    H300: loss.sky_hinge_weight 0.1 AND sky_hinge_min_depth 300; TS2: weight 0 / absent and NO sky_hinge_min_depth; both: TS2 labels on the TartanAir source (ts2_sky), data.seed ==
+    training.resume_reseed == pair seed (50/51/52), training.resume_from == the declared start checkpoint path of that pair (n46/n47/n48), max_steps 14000. Missing cfg / key -> raises."""
+    if pair not in START_N:
+        raise AssertionError(f"pair {pair!r}: only {sorted(START_N)} have declared training facts (Stage 2 needs a new scorer version)")
+    if arm not in ARMS:
+        raise AssertionError(f"arm {arm!r} not in {ARMS}")
+    if not isinstance(cfg, dict) or not all(isinstance(cfg.get(k), dict) for k in ("loss", "training", "data")):
+        raise AssertionError("checkpoint has no resolved cfg with loss/training/data sections: refused")
+    loss, tr, data = cfg["loss"], cfg["training"], cfg["data"]
+    seed = SEED_OF[pair]
+    if arm == "H300":
+        if loss.get("sky_hinge_weight") != HINGE_W or loss.get("sky_hinge_min_depth") != HINGE_MIN:
+            raise AssertionError(f"arm H300: cfg sky_hinge_weight/min_depth {loss.get('sky_hinge_weight')!r}/{loss.get('sky_hinge_min_depth')!r} != {HINGE_W}/{HINGE_MIN}")
+    else:
+        if loss.get("sky_hinge_weight", 0) not in (0, 0.0) or "sky_hinge_min_depth" in loss:
+            raise AssertionError(f"arm TS2: cfg carries the hinge (weight {loss.get('sky_hinge_weight')!r}, min_depth {loss.get('sky_hinge_min_depth')!r})")
+    if data.get("seed") != seed or tr.get("resume_reseed") != seed:
+        raise AssertionError(f"pair {pair}: cfg data.seed/resume_reseed {data.get('seed')!r}/{tr.get('resume_reseed')!r} != {seed}")
+    want_start = START_FMT.format(n=START_N[pair])
+    if tr.get("resume_from") != want_start:
+        raise AssertionError(f"pair {pair}: cfg resume_from {tr.get('resume_from')!r} != {want_start}")
+    if tr.get("max_steps") != EXPECT_STEP:
+        raise AssertionError(f"cfg max_steps {tr.get('max_steps')!r} != {EXPECT_STEP}")
+    if _tartanair_ts2(cfg) != [True]:
+        raise AssertionError(f"cfg: TartanAir ts2_sky must be true on exactly one tartanair source (got {_tartanair_ts2(cfg)})")
+    return dict(cfg_checked=True, cfg_sky_hinge_weight=loss.get("sky_hinge_weight"), cfg_sky_hinge_min_depth=loss.get("sky_hinge_min_depth"), cfg_data_seed=data["seed"],
+                cfg_resume_reseed=tr["resume_reseed"], cfg_resume_from=tr["resume_from"])
+
+
+def load_ckpt_cfg(path):
+    import torch
+    ck = torch.load(path, map_location="cpu", weights_only=False)
+    cfg = ck.get("cfg") if isinstance(ck, dict) else None
+    del ck
+    return cfg
+
+
+REGISTRY_KEYS = [(p, a) for p in PAIRS for a in ("H300", "TS2")]
+
+
+def parse_registry(text: str) -> dict:
+    """N1 (Auditor): the registered Stage 1 checkpoint table in RUNBOOK_STAGE1.md: six lines `CKPT_SHA <pair> <arm> = <64 hex | UNSET>`, exactly once each."""
+    found = re.findall(r"^CKPT_SHA\s+(\S+)\s+(\S+)\s*=\s*(\S+)\s*$", text, re.M)
+    reg = {}
+    for p, a, v in found:
+        if (p, a) not in REGISTRY_KEYS or (p, a) in reg:
+            raise AssertionError(f"registry: unexpected or duplicate line CKPT_SHA {p} {a}")
+        if v != UNSET and not re.fullmatch(r"[0-9a-f]{64}", v):
+            raise AssertionError(f"registry: CKPT_SHA {p} {a} = {v!r} is neither UNSET nor 64 lowercase hex")
+        reg[(p, a)] = v
+    if sorted(reg) != sorted(REGISTRY_KEYS):
+        raise AssertionError(f"registry: need exactly the six lines {REGISTRY_KEYS}, found {sorted(reg)}")
+    return reg
+
+
+def assert_registered_ckpt(reg: dict, pair: str, arm: str, ckpt_sha: str) -> str:
+    """The run's checkpoint sha must be THE registered one for (pair, arm); the registry must be complete (no UNSET) with six distinct shas."""
+    unset = [k for k, v in reg.items() if v == UNSET]
+    if unset:
+        raise AssertionError(f"registered checkpoint list has UNSET entries {unset}: the Stage 1 runs have not been registered")
+    if len(set(reg.values())) != len(reg):
+        raise AssertionError("registered checkpoint list: the six shas are not distinct")
+    if (pair, arm) not in reg:
+        raise AssertionError(f"({pair}, {arm}) is not a registered Stage 1 run")
+    if reg[(pair, arm)] != ckpt_sha:
+        raise AssertionError(f"checkpoint sha {ckpt_sha} != registered {reg[(pair, arm)]} for ({pair}, {arm})")
+    return reg[(pair, arm)]
+
+
+def load_registry(path) -> tuple[dict, str]:
+    if not path:
+        raise SystemExit("--registry <RUNBOOK_STAGE1.md> is required (the registered checkpoint sha list)")
+    return parse_registry(Path(path).read_text()), A.sha256_file(path)
+
+
+def check_runs_against_registry(runs, reg: dict) -> None:
+    """compare / compare-pairs: every run's ckpt sha is the registered one for its (pair label, arm)."""
+    for r in runs:
+        m = r["meta"]
+        assert_registered_ckpt(reg, m.get("seed_label"), m.get("arm"), m.get("ckpt_sha"))
+
+
+def check_mask_provenance(m: dict, rule=None) -> None:
+    """N4: the mask meta's rule dict must equal the registered rule exactly, and it must record the shas of the three builder files (plus the commit if available)."""
+    want = REGISTERED_RULE if rule is None else rule
+    if m.get("rule") != want:
+        raise AssertionError(f"mask meta rule {m.get('rule')} != registered {want}")
+    for k in ("builder_sha", "make_sky_mask_sha", "dataset_module_sha"):
+        if not isinstance(m.get(k), str) or len(m[k]) != 64:
+            raise AssertionError(f"mask meta has no {k}: the mask was built by unrecorded code")
 
 
 def assert_host(gpu_name: str) -> str:
@@ -288,6 +400,9 @@ def check_pair_runs(h: dict, t: dict) -> None:
         raise AssertionError("the two arms must use different checkpoints (ckpt sha equal or missing)")
     if h["meta"].get("seed_label") != t["meta"].get("seed_label") or h["meta"].get("stage") != t["meta"].get("stage"):
         raise AssertionError("a pair shares its pair label and stage")
+    for k in ("pins", "scorer_sha"):                      # N2: both arms were scored with the same pinned inputs and the same scorer file
+        if not h["meta"].get(k) or h["meta"].get(k) != t["meta"].get(k):
+            raise AssertionError(f"arms differ in (or lack) meta.{k}: both runs must carry identical pins and scorer_sha")
     for k in ("kept_frame_ids", "dropped_frame_ids", "frame_mask_px"):
         if h["sky"].get(k) != t["sky"].get(k):
             raise AssertionError(f"arms differ in sky.{k}: the frame/mask sets must be identical across the two arms")
@@ -316,7 +431,15 @@ def compare_pairs(pairs: dict) -> dict:
     for k in PAIRS:
         for r in pairs[k]:
             assert r["meta"].get("stage") == 1 and r["meta"].get("seed_label") == k, f"pair {k}: runs must carry stage 1 and the pair label"
+    allruns = [r for k in PAIRS for r in pairs[k]]
+    for key in ("pins", "scorer_sha", "registry_sha"):          # N2: all six runs share pins, scorer file and registry
+        vals = {json.dumps(r["meta"].get(key), sort_keys=True) for r in allruns}
+        if len(vals) != 1 or "null" in vals:
+            raise AssertionError(f"the six runs differ in (or lack) meta.{key}")
     per = {k: compare(*pairs[k], stage=1) for k in PAIRS}
+    shas = [r["meta"].get("ckpt_sha") for r in allruns]
+    if len(set(shas)) != 6 or not all(shas):
+        raise AssertionError(f"Stage 1 needs 6 DISTINCT checkpoint shas (3 pairs x 2 arms); got {len(set(shas))} distinct of {len(shas)}")
     ds = [per[k]["d_ln_PH300_over_PTS2"] for k in PAIRS]
     unev = [f"{k}:{b}" for k in PAIRS for b in per[k]["guards_unevaluable"]]
     gp = all(per[k]["guards_pass"] for k in PAIRS)
@@ -400,6 +523,8 @@ def main(argv=None):
     ap.add_argument("--ckpt"); ap.add_argument("--spec", default=None); ap.add_argument("--out")
     ap.add_argument("--root"); ap.add_argument("--mask"); ap.add_argument("--frames"); ap.add_argument("--clips"); ap.add_argument("--objects"); ap.add_argument("--logs")
     ap.add_argument("--expect-scorer-sha", help="REQUIRED for a scoring run: the literal sha256 of the final committed av2_scorer.py (from RUNBOOK_STAGE1.md)")
+    ap.add_argument("--sums", help="REQUIRED for a scoring run: the download's SHA256SUMS file (= $DEST/meta_R1/SHA256SUMS), pinned as PINS.sums_sha")
+    ap.add_argument("--registry", help="REQUIRED with --ckpt, --compare, --compare-pairs: RUNBOOK_STAGE1.md (its CKPT_SHA table = the six registered Stage 1 checkpoint shas)")
     ap.add_argument("--device", default="cuda"); ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[4]))
     ap.add_argument("--spec-prefix", default="ours:")
     ap.add_argument("--compare", nargs=2, metavar=("H300_JSON", "TS2_JSON"))
@@ -410,6 +535,9 @@ def main(argv=None):
     a = ap.parse_args(argv)
     if a.selftest:
         print(json.dumps(selftest(), indent=1, default=float)); return
+    if a.compare_pairs or a.compare:
+        check_scorer_sha(a.expect_scorer_sha)                                  # N2: the verdict is also produced by the pinned scorer file
+        reg, reg_sha = load_registry(a.registry)
     if a.compare_pairs:
         js = [json.load(open(p)) for p in a.compare_pairs]
         pairs = {}
@@ -418,6 +546,9 @@ def main(argv=None):
             for r in (h, t):
                 assert r["meta"]["pins_asserted"] and r["meta"]["status"] == "FULL" and r["meta"]["seed_label"] == k, f"pair {k}: FULL pinned runs with the pair label"
             pairs[k] = (h, t)
+        for r in js:
+            assert r["meta"].get("registry_sha") == reg_sha, "run was scored against a different registry file than the one given now"
+        check_runs_against_registry(js, reg)
         res = compare_pairs(pairs)
         print(json.dumps(res, indent=1, default=float))
         if a.out:
@@ -429,12 +560,16 @@ def main(argv=None):
             assert r["meta"]["pins_asserted"] and r["meta"]["status"] == "FULL", "compare needs FULL runs with pins asserted"
             assert r["meta"]["seed_label"] in PAIR_LABELS, "pair label"
         assert h["meta"]["seed_label"] == t["meta"]["seed_label"], "a pair shares its start and seed"
+        assert h["meta"]["seed_label"] in START_N, "--compare is only defined for the Stage 1 pair labels here; Stage 2 needs a new scorer version (new registration + sha)"
+        for r in (h, t):
+            assert r["meta"].get("registry_sha") == reg_sha, "run was scored against a different registry file than the one given now"
+        check_runs_against_registry([h, t], reg)
         res = compare(h, t, stage=2 if h["meta"]["seed_label"] == "stage2" else 1)
         print(json.dumps(res, indent=1, default=float))
         if a.out:
             assert not Path(a.out).exists(); Path(a.out).write_text(json.dumps(res, indent=1, default=float))
         return
-    assert a.out and (a.ckpt or a.spec) and a.root and a.mask and a.frames and a.clips and a.objects and a.logs
+    assert a.out and (a.ckpt or a.spec) and a.root and a.mask and a.frames and a.clips and a.objects and a.logs and a.sums, "--sums (the download's SHA256SUMS) and the other inputs are required"
     assert not (a.ckpt and a.spec)
     scorer_sha = check_scorer_sha(a.expect_scorer_sha)                       # D1: pinned OUTSIDE the file
     if a.ckpt:
@@ -446,15 +581,29 @@ def main(argv=None):
     sys.path.insert(0, str(Path(a.repo).resolve()))
     import bench_joint as bj
     import ddad_scorer as DS
+    ckreg, reg_sha = load_registry(a.registry) if a.ckpt else ({}, None)       # N1: parsed here, enforced right after the checkpoint is read
     mmeta, meta_sha = load_mask_meta(a.mask, a.frames)                       # check_mask_meta + frames_sha == sha(frames tsv)
+    check_mask_provenance(mmeta)                                             # N4: rule == registered RULE, builder shas recorded
+    seg_dir = HERE.parent / "seg"
+    on_disk = dict(builder_sha=A.sha256_file(HERE / "build_av2_masks.py"), make_sky_mask_sha=A.sha256_file(seg_dir / "make_sky_mask.py"), dataset_module_sha=A.sha256_file(A.__file__))
+    for k, v in on_disk.items():
+        if mmeta[k] != v:
+            raise AssertionError(f"mask meta {k} {mmeta[k]} != sha of the file on disk {v}: the mask was built by different code than the one scoring")
     actual = dict(logs_sha=A.sha256_file(a.logs), frames_sha=A.sha256_file(a.frames), clips_sha=A.sha256_file(a.clips), objects_sha=A.sha256_file(a.objects),
                   mask_sha=A.sha256_file(a.mask), meta_sha=meta_sha, dataset_module_sha=A.sha256_file(A.__file__), ddad_scorer_sha=A.sha256_file(DS.__file__),
+                  builder_sha=mmeta["builder_sha"], make_sky_mask_sha=mmeta["make_sky_mask_sha"],
                   bench_joint_sha=A.sha256_file(bj.__file__), segmenter_a_sha=mmeta["segmenter_a_sha"], segmenter_b_sha=mmeta["segmenter_b_sha"],
-                  sums_sha=A.sha256_file(Path(a.root).parent / "SHA256SUMS"))
+                  sums_sha=A.sha256_file(a.sums))
     pins = assert_pins(actual)
     reg = A.load_registered_inputs(a.frames, a.clips, a.objects, a.root, registered={k: PINS[k] for k in ("frames_sha", "clips_sha", "objects_sha")})
     bj_spec, mm = DS.model_meta(a.ckpt, a.spec, bj.PATHS)
-    facts = dict(assert_ckpt_facts(mm["ckpt"], a.pair), arm=a.arm, ckpt_sha=mm["ckpt"]["sha256"]) if a.ckpt else dict(arm="reference", ckpt_sha=None)
+    if a.ckpt:
+        facts = dict(assert_ckpt_facts(mm["ckpt"], a.pair), arm=a.arm, ckpt_sha=mm["ckpt"]["sha256"])
+        facts.update(assert_ckpt_cfg(load_ckpt_cfg(a.ckpt), a.pair, a.arm))          # N1: the cfg stored IN the checkpoint decides, not the CLI labels
+        assert_registered_ckpt(ckreg, a.pair, a.arm, facts["ckpt_sha"])               # N1: and the sha must be the registered one for this pair+arm
+        facts["registry_sha"] = reg_sha
+    else:
+        facts = dict(arm="reference", ckpt_sha=None)
     gpu = assert_host(gpu_name())
     dev = a.device
     ctx = lambda: autocast_ctx(dev)                                            # raises on a non-cuda device (registered fp16)
@@ -480,7 +629,7 @@ def main(argv=None):
     meta = dict(label=REF_LABEL if a.spec else (LABEL_STAGE1 if stage == 1 else LABEL_STAGE2), status="FULL", pins_asserted=True, pins=pins, scorer_sha=scorer_sha,
                 seed_label=(a.pair if a.ckpt else "reference"), stage=(stage if a.ckpt else None), host_gpu=gpu, **facts, **mm,
                 precision="fp16", short_side=A.SHORT_SIDE, resolution_rule="A1 bilinear pred->2048x1550 sampled at projected LiDAR px; GT never resized; sky = any-sky mask excluded",
-                n_mask_dropped_frames=n_mask_dropped, mask_pooled_iou=mmeta["pooled_iou"], mask_n_candidates=mmeta.get("n_candidates"), mask_segmenters=dict(a=mmeta.get("segmenter_a"), b=mmeta.get("segmenter_b")),
+                n_mask_dropped_frames=n_mask_dropped, mask_pooled_iou=mmeta["pooled_iou"], mask_n_candidates=mmeta.get("n_candidates"), mask_builder_shas={k: mmeta[k] for k in on_disk}, mask_git_commit=mmeta.get("git_commit"), mask_segmenters=dict(a=mmeta.get("segmenter_a"), b=mmeta.get("segmenter_b")),
                 lidar_xyz_dtypes=sorted(dtypes | set(mmeta.get("lidar_xyz_dtypes", []))), host=socket.gethostname(), seconds=time.time() - t0, bins_m=bin_labels(),
                 disclosure=(STAGE1_NOTE if stage == 1 else STAGE2_NOTE) if a.ckpt else REF_LABEL)
     out_path.parent.mkdir(parents=True, exist_ok=True)
