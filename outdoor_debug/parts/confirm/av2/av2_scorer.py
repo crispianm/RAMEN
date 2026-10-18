@@ -12,9 +12,9 @@ Inputs (Auditor O45): the model clip and the scored frames come ONLY from the pi
 The scorer's OWN sha256 is pinned OUTSIDE the file: --expect-scorer-sha <literal from RUNBOOK_STAGE1.md> is REQUIRED and compared with the sha of the running file.
 Usage:  python -I av2_scorer.py --ckpt <ours .pt> --pair s50|s51|s52|stage2 --arm TS2|H300 | --spec metric_vda_s  --out r.json --root <av2_val dir> --mask <sky_masks.npz>
             --frames <av2_frames.tsv> --clips <av2_clips.tsv> --objects <objects.tsv> --logs <logs.txt> --sums <$DEST/meta_R1/SHA256SUMS>
-            --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256>      (use run_score.py: it adds --expect-scorer-sha and --registry from the runbook)
-        python -I av2_scorer.py --compare H300.json TS2.json --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256> [--out verdict.json]
-        python -I av2_scorer.py --compare-pairs <6 jsons> --registry RUNBOOK_STAGE1.md --expect-scorer-sha <sha256> [--out verdict.json]
+            --registry av2_stage1_ckpts.txt --expect-scorer-sha <sha256>   (use run_score.py: it adds --expect-scorer-sha from the runbook and --registry av2_stage1_ckpts.txt)
+        python -I av2_scorer.py --compare H300.json TS2.json --registry av2_stage1_ckpts.txt --expect-scorer-sha <sha256> --run-shas av2_stage1_run_shas.txt [--out verdict.json]
+        python -I av2_scorer.py --compare-pairs <6 jsons> --registry av2_stage1_ckpts.txt --expect-scorer-sha <sha256> --run-shas av2_stage1_run_shas.txt [--out verdict.json]
         python -I av2_scorer.py --selftest
 """
 from __future__ import annotations
@@ -34,6 +34,7 @@ UNSET = "UNSET"
 # The scorer's OWN sha is NOT in this dict (it cannot contain its own hash): it is passed from outside as --expect-scorer-sha (check_scorer_sha).
 PINS = dict(logs_sha="f7f508f958e8e9d173772677d239c7a53165a0fb67520a68a4bfcf134592e370", **A.REGISTERED_SHAS,        # frames_sha, clips_sha, objects_sha
             mask_sha=UNSET, meta_sha=UNSET, sums_sha=UNSET,                                                      # fill after the mask build / download
+            registry_sha=UNSET,                                    # D1: sha256 of av2_stage1_ckpts.txt; filled AFTER the six runs exist and the six CKPT_SHA lines are committed (RUNBOOK_STAGE1.md order)
             dataset_module_sha="52b3eb9c3d63479cb8efe5a61f15078fbbcb68b349c2771a2b2609f7a9fd31ae",      # av2_dataset.py (test_pins_equal_actual_file_shas)
             ddad_scorer_sha="8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503",       # outdoor_debug/parts/LR_DEV/ddad_scorer.py
             builder_sha="718be61453e894356f3c10b3111af688840f5bdb1911cc0e2729cf1cad5ae2bc",            # build_av2_masks.py
@@ -48,6 +49,9 @@ REGISTERED_RULE = dict(prob_thresh=0.9, erode_ref_px=8, erode_ref_short=900, lid
 START_N = dict(s50="46", s51="47", s52="48")
 START_FMT = "/projects/b5dh/RAMEN_train_dn01_c3rep_20261009/runs/dn01_c3rep_20261009_c3_n{n}/step12000.pt"
 HINGE_W, HINGE_MIN = 0.1, 300.0
+SKY_VDA_ZD = True                    # D2: declared in all six stage1 yamls AND in the c3_n46/47/48 start checkpoints (VideoDepthLoss sees the sky at disparity 0 in BOTH arms); must be identical in both arms
+# D2: the ONLY cfg paths in which the two arms of a pair may differ (recursive key diff of the stored ck['cfg']): the hinge keys and the checkpoint dir.
+ALLOWED_PAIR_DIFF = frozenset({"loss.sky_hinge_weight", "loss.sky_hinge_min_depth", "training.checkpoint_dir"})
 EXPECT_STEP = 14000                  # registration 'Pins': checkpoint step 14000 (read from the checkpoint file)
 HOST_GPU = "GH200"                   # registration 'Pins': host type GH200 (substring of the CUDA device name)
 IOU_MIN = 0.85                       # R1 M2: the mask meta's pooled segmenter IoU must be >= this
@@ -133,6 +137,10 @@ def assert_ckpt_cfg(cfg, pair: str, arm: str) -> dict:
     else:
         if loss.get("sky_hinge_weight", 0) not in (0, 0.0) or "sky_hinge_min_depth" in loss:
             raise AssertionError(f"arm TS2: cfg carries the hinge (weight {loss.get('sky_hinge_weight')!r}, min_depth {loss.get('sky_hinge_min_depth')!r})")
+    if loss.get("sky_hinge_max_depth") is not None:                      # D2: train.py:1231 reads it (upper side of a two-sided band); the declared design has none
+        raise AssertionError(f"cfg loss.sky_hinge_max_depth {loss.get('sky_hinge_max_depth')!r} must be absent or null")
+    if loss.get("sky_vda_zero_disparity") is not SKY_VDA_ZD:             # D2: the declared value (true in both arms); the pair diff additionally forbids it differing between the arms
+        raise AssertionError(f"cfg loss.sky_vda_zero_disparity {loss.get('sky_vda_zero_disparity')!r} != declared {SKY_VDA_ZD}")
     if data.get("seed") != seed or tr.get("resume_reseed") != seed:
         raise AssertionError(f"pair {pair}: cfg data.seed/resume_reseed {data.get('seed')!r}/{tr.get('resume_reseed')!r} != {seed}")
     want_start = START_FMT.format(n=START_N[pair])
@@ -152,6 +160,118 @@ def load_ckpt_cfg(path):
     cfg = ck.get("cfg") if isinstance(ck, dict) else None
     del ck
     return cfg
+
+
+def cfg_canonical(cfg) -> str:
+    """D2: canonical json of the full stored ck['cfg'] (sorted keys, no spaces); raises on a non-json value (tuples become lists, as in the run json)."""
+    return json.dumps(cfg, sort_keys=True, separators=(",", ":"))
+
+
+def cfg_sha256(cfg) -> str:
+    import hashlib
+    return hashlib.sha256(cfg_canonical(cfg).encode()).hexdigest()
+
+
+def cfg_diff(a, b, prefix="") -> set:
+    """D2: recursive key diff: the set of dotted paths at which a and b differ (a key present in only one side counts; lists and scalars are compared as whole values)."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        out = set()
+        for k in set(a) | set(b):
+            path = f"{prefix}.{k}" if prefix else str(k)
+            if k not in a or k not in b:
+                out.add(path)
+            else:
+                out |= cfg_diff(a[k], b[k], path)
+        return out
+    return set() if (a == b and type(a) is type(b)) else {prefix}
+
+
+def check_run_cfg(r: dict) -> dict:
+    """D2/D3 at compare: the run json carries the full stored cfg; its hash matches meta.cfg_sha256; the cfg satisfies the declared facts of (meta.seed_label, meta.arm)
+    (so a forged arm label contradicts the cfg's own hinge fields), and the cfg_* facts in the meta equal the ones re-derived from the cfg."""
+    m = r["meta"]
+    cfg = m.get("cfg")
+    if cfg is None or not m.get("cfg_sha256"):
+        raise AssertionError("run has no stored cfg / cfg_sha256 in its meta")
+    if cfg_sha256(cfg) != m["cfg_sha256"]:
+        raise AssertionError("meta.cfg does not hash to meta.cfg_sha256")
+    facts = assert_ckpt_cfg(cfg, m.get("seed_label"), m.get("arm"))
+    for k, v in facts.items():
+        if m.get(k) != v:
+            raise AssertionError(f"meta.{k} {m.get(k)!r} != {v!r} re-derived from the stored cfg")
+    return facts
+
+
+def check_pair_cfgs(h: dict, t: dict) -> set:
+    """D2: the two cfgs of a pair differ ONLY in the declared hinge keys plus the checkpoint dir."""
+    for r in (h, t):
+        check_run_cfg(r)
+    def norm(c):                                                  # absent == null for sky_hinge_max_depth (assert_ckpt_cfg already forbids a value)
+        c = json.loads(json.dumps(c)); c["loss"].pop("sky_hinge_max_depth", None) if c["loss"].get("sky_hinge_max_depth") is None else None
+        return c
+    d = cfg_diff(norm(h["meta"]["cfg"]), norm(t["meta"]["cfg"]))
+    if not d <= ALLOWED_PAIR_DIFF:
+        raise AssertionError(f"the two arms' cfgs differ outside the declared hinge keys + checkpoint dir: {sorted(d - ALLOWED_PAIR_DIFF)}")
+    return d
+
+
+def check_registry_pin(reg_sha: str, pins=None) -> None:
+    """D1: the registry file's sha must equal PINS.registry_sha (refused while UNSET); asserted at scoring (via assert_pins) AND at compare."""
+    want = (PINS if pins is None else pins).get("registry_sha")
+    if want in (None, UNSET):
+        raise AssertionError("pin registry_sha is UNSET: the registry file av2_stage1_ckpts.txt has not been filled and pinned")
+    if reg_sha != want:
+        raise AssertionError(f"registry file sha {reg_sha} != pinned registry_sha {want}")
+
+
+def check_run_provenance(r: dict, expect_scorer_sha: str, pins=None) -> None:
+    """D4: every run was produced by THE pinned scorer file and under exactly the current PINS."""
+    m = r["meta"]
+    if m.get("scorer_sha") != expect_scorer_sha:
+        raise AssertionError(f"run meta.scorer_sha {m.get('scorer_sha')} != --expect-scorer-sha {expect_scorer_sha}")
+    reg = PINS if pins is None else pins
+    p = m.get("pins")
+    if not isinstance(p, dict) or set(p) != set(reg):
+        raise AssertionError("run meta.pins is missing or has other keys than the current PINS")
+    assert_pins(p, reg)                                   # refuses UNSET and any differing value
+
+
+def write_run_sha(out_path) -> str:
+    """D3: sha256 of a written run json -> `<out>.sha256` (sha256sum format) and stdout; the RUNBOOK commits the six lines (av2_stage1_run_shas.txt)."""
+    out_path = Path(out_path)
+    h = A.sha256_file(out_path)
+    side = out_path.with_name(out_path.name + ".sha256")
+    side.write_text(f"{h}  {out_path.name}\n")
+    print(f"sha256 {h}  {out_path.name}", flush=True)
+    return h
+
+
+def load_run_shas(path) -> dict:
+    if not path:
+        raise SystemExit("--run-shas <file> is required (the committed sha256 of every run json, sha256sum format: `<64 hex>  <name>`)")
+    out = {}
+    for ln in Path(path).read_text().splitlines():
+        if not ln.strip() or ln.lstrip().startswith("#"):
+            continue
+        m = re.fullmatch(r"([0-9a-f]{64})\s+\*?(\S+)", ln.strip())
+        if not m or m.group(2) in out:
+            raise AssertionError(f"run-shas: malformed or duplicate line {ln!r}")
+        out[m.group(2)] = m.group(1)
+    return out
+
+
+def check_run_shas(paths, listing: dict, exact: bool = False) -> None:
+    """D3: every run json is listed in the committed shas file and hashes to the listed value (a json edited after it was written is refused); exact: the listing has no other names."""
+    names = [Path(p).name for p in paths]
+    if len(set(names)) != len(names):
+        raise AssertionError("run json basenames are not unique")
+    for p, n in zip(paths, names):
+        if n not in listing:
+            raise AssertionError(f"run json {n} is not in the committed run-shas file")
+        if A.sha256_file(p) != listing[n]:
+            raise AssertionError(f"run json {n}: sha256 {A.sha256_file(p)} != committed {listing[n]}")
+    if exact and set(listing) != set(names):
+        raise AssertionError(f"run-shas file lists {sorted(set(listing) ^ set(names))} beyond/besides the given runs")
 
 
 REGISTRY_KEYS = [(p, a) for p in PAIRS for a in ("H300", "TS2")]
@@ -362,6 +482,10 @@ def decide(d: float, guards_pass: bool, unevaluable=()) -> str:
 
 def guard_check(h_bins: dict, t_bins: dict, tol: float = GUARD_TOL, min_px: int = GUARD_MIN_PX) -> dict:
     """Per bin: H300 AbsRel <= (1+tol) * TS2 AbsRel (same seed). Bins with < min_px in either arm -> status UNEVALUABLE (reported; the verdict line says so)."""
+    want = bin_labels()
+    for tag, b in (("H300", h_bins), ("TS2", t_bins)):             # D6: an empty / short / extra / renamed bin table would make all() vacuously True
+        if not isinstance(b, dict) or list(b) != want:
+            raise AssertionError(f"guard bins of arm {tag} {list(b) if isinstance(b, dict) else b!r} != the five registered labels {want}")
     out = {}
     for lab in h_bins:
         h, t = h_bins[lab], t_bins[lab]
@@ -436,6 +560,8 @@ def compare_pairs(pairs: dict) -> dict:
         vals = {json.dumps(r["meta"].get(key), sort_keys=True) for r in allruns}
         if len(vals) != 1 or "null" in vals:
             raise AssertionError(f"the six runs differ in (or lack) meta.{key}")
+    for k in PAIRS:
+        check_pair_cfgs(*pairs[k])                                 # D2/D3: stored cfgs agree with the arm labels and differ only in the declared keys
     per = {k: compare(*pairs[k], stage=1) for k in PAIRS}
     shas = [r["meta"].get("ckpt_sha") for r in allruns]
     if len(set(shas)) != 6 or not all(shas):
@@ -524,7 +650,8 @@ def main(argv=None):
     ap.add_argument("--root"); ap.add_argument("--mask"); ap.add_argument("--frames"); ap.add_argument("--clips"); ap.add_argument("--objects"); ap.add_argument("--logs")
     ap.add_argument("--expect-scorer-sha", help="REQUIRED for a scoring run: the literal sha256 of the final committed av2_scorer.py (from RUNBOOK_STAGE1.md)")
     ap.add_argument("--sums", help="REQUIRED for a scoring run: the download's SHA256SUMS file (= $DEST/meta_R1/SHA256SUMS), pinned as PINS.sums_sha")
-    ap.add_argument("--registry", help="REQUIRED with --ckpt, --compare, --compare-pairs: RUNBOOK_STAGE1.md (its CKPT_SHA table = the six registered Stage 1 checkpoint shas)")
+    ap.add_argument("--registry", help="REQUIRED with --ckpt, --spec, --compare, --compare-pairs: av2_stage1_ckpts.txt (its CKPT_SHA table = the six registered Stage 1 checkpoint shas; its sha is PINS.registry_sha)")
+    ap.add_argument("--run-shas", help="REQUIRED with --compare / --compare-pairs: the committed file listing the sha256 of every run json (`<64 hex>  <name>`, written as <out>.sha256 by each scoring run)")
     ap.add_argument("--device", default="cuda"); ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[4]))
     ap.add_argument("--spec-prefix", default="ours:")
     ap.add_argument("--compare", nargs=2, metavar=("H300_JSON", "TS2_JSON"))
@@ -538,8 +665,13 @@ def main(argv=None):
     if a.compare_pairs or a.compare:
         check_scorer_sha(a.expect_scorer_sha)                                  # N2: the verdict is also produced by the pinned scorer file
         reg, reg_sha = load_registry(a.registry)
+        check_registry_pin(reg_sha)                                            # D1: the registry file is THE pinned one (refuses while PINS.registry_sha is UNSET)
+        run_listing = load_run_shas(a.run_shas)                                # D3: required
     if a.compare_pairs:
+        check_run_shas(a.compare_pairs, run_listing, exact=True)
         js = [json.load(open(p)) for p in a.compare_pairs]
+        for r in js:
+            check_run_provenance(r, a.expect_scorer_sha)                       # D4
         pairs = {}
         for i, k in enumerate(PAIRS):
             h, t = js[2 * i], js[2 * i + 1]
@@ -555,8 +687,10 @@ def main(argv=None):
             assert not Path(a.out).exists(); Path(a.out).write_text(json.dumps(res, indent=1, default=float))
         return
     if a.compare:
+        check_run_shas(a.compare, run_listing)
         h, t = (json.load(open(p)) for p in a.compare)
         for r in (h, t):
+            check_run_provenance(r, a.expect_scorer_sha)                       # D4
             assert r["meta"]["pins_asserted"] and r["meta"]["status"] == "FULL", "compare needs FULL runs with pins asserted"
             assert r["meta"]["seed_label"] in PAIR_LABELS, "pair label"
         assert h["meta"]["seed_label"] == t["meta"]["seed_label"], "a pair shares its start and seed"
@@ -564,6 +698,7 @@ def main(argv=None):
         for r in (h, t):
             assert r["meta"].get("registry_sha") == reg_sha, "run was scored against a different registry file than the one given now"
         check_runs_against_registry([h, t], reg)
+        check_pair_cfgs(h, t)                                                  # D2/D3
         res = compare(h, t, stage=2 if h["meta"]["seed_label"] == "stage2" else 1)
         print(json.dumps(res, indent=1, default=float))
         if a.out:
@@ -581,7 +716,7 @@ def main(argv=None):
     sys.path.insert(0, str(Path(a.repo).resolve()))
     import bench_joint as bj
     import ddad_scorer as DS
-    ckreg, reg_sha = load_registry(a.registry) if a.ckpt else ({}, None)       # N1: parsed here, enforced right after the checkpoint is read
+    ckreg, reg_sha = load_registry(a.registry)                                 # N1: parsed here, enforced right after the checkpoint is read; D1: its sha is PINS.registry_sha (assert_pins below)
     mmeta, meta_sha = load_mask_meta(a.mask, a.frames)                       # check_mask_meta + frames_sha == sha(frames tsv)
     check_mask_provenance(mmeta)                                             # N4: rule == registered RULE, builder shas recorded
     seg_dir = HERE.parent / "seg"
@@ -593,13 +728,15 @@ def main(argv=None):
                   mask_sha=A.sha256_file(a.mask), meta_sha=meta_sha, dataset_module_sha=A.sha256_file(A.__file__), ddad_scorer_sha=A.sha256_file(DS.__file__),
                   builder_sha=mmeta["builder_sha"], make_sky_mask_sha=mmeta["make_sky_mask_sha"],
                   bench_joint_sha=A.sha256_file(bj.__file__), segmenter_a_sha=mmeta["segmenter_a_sha"], segmenter_b_sha=mmeta["segmenter_b_sha"],
-                  sums_sha=A.sha256_file(a.sums))
+                  sums_sha=A.sha256_file(a.sums), registry_sha=reg_sha)
     pins = assert_pins(actual)
     reg = A.load_registered_inputs(a.frames, a.clips, a.objects, a.root, registered={k: PINS[k] for k in ("frames_sha", "clips_sha", "objects_sha")})
     bj_spec, mm = DS.model_meta(a.ckpt, a.spec, bj.PATHS)
     if a.ckpt:
         facts = dict(assert_ckpt_facts(mm["ckpt"], a.pair), arm=a.arm, ckpt_sha=mm["ckpt"]["sha256"])
-        facts.update(assert_ckpt_cfg(load_ckpt_cfg(a.ckpt), a.pair, a.arm))          # N1: the cfg stored IN the checkpoint decides, not the CLI labels
+        ck_cfg = load_ckpt_cfg(a.ckpt)
+        facts.update(assert_ckpt_cfg(ck_cfg, a.pair, a.arm))                          # N1: the cfg stored IN the checkpoint decides, not the CLI labels
+        facts.update(cfg=json.loads(cfg_canonical(ck_cfg)), cfg_sha256=cfg_sha256(ck_cfg))          # D2: the full stored cfg + its hash go into the run meta (compare diffs the pair's cfgs)
         assert_registered_ckpt(ckreg, a.pair, a.arm, facts["ckpt_sha"])               # N1: and the sha must be the registered one for this pair+arm
         facts["registry_sha"] = reg_sha
     else:
@@ -635,6 +772,7 @@ def main(argv=None):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(dict(meta=meta, sky=sky.result(), **res), indent=1, default=float))
     print("wrote", out_path)
+    write_run_sha(out_path)                                                    # D3: commit this sha (RUNBOOK_STAGE1.md section 7)
 
 
 if __name__ == "__main__":

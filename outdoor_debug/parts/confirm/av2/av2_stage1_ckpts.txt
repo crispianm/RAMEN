@@ -1,0 +1,10 @@
+# AV2 Stage 1 checkpoint registry (D1). Own file so that its sha256 can be pinned as PINS.registry_sha in av2_scorer.py without a cycle.
+# Order of filling (RUNBOOK_STAGE1.md): 1 six Stage 1 trainings -> 2 fill these six lines (sha256 of the six step-14000 checkpoints), commit
+#   -> 3 PINS.registry_sha = sha256 of THIS file -> 4 commit av2_scorer.py (its sha is now final) -> 5 EXPECT_SCORER_SHA in RUNBOOK_STAGE1.md, commit WITHOUT touching av2_scorer.py.
+# The scorer refuses while any line is UNSET or PINS.registry_sha is UNSET. Only CKPT_SHA lines are parsed; edit nothing else after step 3 (any byte changes the sha).
+CKPT_SHA s50 H300 = UNSET
+CKPT_SHA s50 TS2 = UNSET
+CKPT_SHA s51 H300 = UNSET
+CKPT_SHA s51 TS2 = UNSET
+CKPT_SHA s52 H300 = UNSET
+CKPT_SHA s52 TS2 = UNSET

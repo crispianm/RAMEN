@@ -122,7 +122,8 @@ def run_scorer(w, monkeypatch, arm, out, pair="s50", step=14000, pins=None, mask
         reg.write_text("EXPECT_SCORER_SHA = <not used here>\n" + registry_text(ent))
     w["last_registry"] = reg
     mask = mask or w["mask"]
-    monkeypatch.setattr(S, "PINS", dict(compute_pins(w, mask) if pins is None else pins))
+    pp = dict(compute_pins(w, mask) if pins is None else pins); pp.setdefault("registry_sha", sha(reg))           # D1: the registry file's sha is pinned like every other input
+    monkeypatch.setattr(S, "PINS", pp)
     monkeypatch.setattr(S, "gpu_name", lambda: gpu)
     monkeypatch.setattr(S, "autocast_ctx", (lambda dev: contextlib.nullcontext()) if patch_autocast else ORIG_AUTOCAST)
     monkeypatch.setattr(bj, "build_pipeline", lambda spec, dev: dict(metric=True, spec=spec))
@@ -246,12 +247,18 @@ def test_compare_runs_and_disclosure_per_stage(runs):
     assert c1["verdict"].startswith("NOT CONFIRMED")                  # synthetic bins are UNEVALUABLE (< 20,000 px): never a pass
 
 
+def _set_cfg(r, pair):
+    """Give a (copied) run json the declared stored cfg of (pair, its arm), with a matching hash and cfg_* facts."""
+    m = r["meta"]; c = declared_cfg(pair, m["arm"])
+    m.update(S.assert_ckpt_cfg(c, pair, m["arm"]), cfg=c, cfg_sha256=S.cfg_sha256(c))
+
+
 def _pairs(runs):
     out = {}
     for i, k in enumerate(S.PAIRS):
         h, t = json.loads(json.dumps(runs["H300"])), json.loads(json.dumps(runs["TS2"]))
         for r in (h, t):
-            r["meta"]["seed_label"] = k
+            r["meta"]["seed_label"] = k; _set_cfg(r, k)
         h["meta"]["ckpt_sha"] += str(i); t["meta"]["ckpt_sha"] += str(i)
         out[k] = (h, t)
     return out
@@ -321,33 +328,56 @@ def test_N2_compare_pairs_asserts_identical_pins_scorer_and_six_distinct_shas(ru
         S.compare_pairs(dup)
 
 
+def _env(monkeypatch, tmp_path, files, name="run_shas.txt"):
+    """Compare environment: PINS := the pins the runs were scored with (a real run's meta.pins), and a committed-style run-shas file listing every given json."""
+    monkeypatch.setattr(S, "PINS", dict(json.load(open(files[0]))["meta"]["pins"]))
+    rs = tmp_path / name
+    rs.write_text("".join(f"{sha(f)}  {Path(f).name}\n" for f in files))
+    return rs
+
+
+def _forged(src, tmp_path, fn, name=None):
+    """Copy of a run json with fn(json) applied; written under tmp_path (same basename unless given)."""
+    j = json.load(open(src)); fn(j)
+    dst = tmp_path / (name or Path(src).name); dst.write_text(json.dumps(j))
+    return dst
+
+
+def _six_files(paths):
+    return [str(paths[(p, a)]) for p in S.PAIRS for a in ("H300", "TS2")]
+
+
 def test_N2_main_compare_pairs_requires_expect_sha_registry_and_registered_shas(six, world, monkeypatch, capsys, tmp_path):
     paths, reg = six
-    files = [str(paths[(p, a)]) for p in S.PAIRS for a in ("H300", "TS2")]
+    files = _six_files(paths)
+    rs = _env(monkeypatch, tmp_path, files)
+    pin_reg = lambda: monkeypatch.setitem(S.PINS, "registry_sha", sha(reg))
     good = sha(S.__file__)
-    S.main(["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", good])                                      # positive control
+    S.main(["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", good, "--run-shas", str(rs)])                  # positive control
     res = json.loads(capsys.readouterr().out)
     assert res["verdict"].startswith("NOT CONFIRMED") and set(res["d_per_pair"]) == set(S.PAIRS)
     with pytest.raises(SystemExit, match="expect-scorer-sha"):
-        S.main(["--compare-pairs", *files, "--registry", str(reg)])
+        S.main(["--compare-pairs", *files, "--registry", str(reg), "--run-shas", str(rs)])
     with pytest.raises(AssertionError, match="scorer sha"):
-        S.main(["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", "0" * 64])
+        S.main(["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", "0" * 64, "--run-shas", str(rs)])
     with pytest.raises(SystemExit, match="registry"):
-        S.main(["--compare-pairs", *files, "--expect-scorer-sha", good])
+        S.main(["--compare-pairs", *files, "--expect-scorer-sha", good, "--run-shas", str(rs)])
     other = tmp_path / "other.md"; other.write_text(reg.read_text() + "# edited after scoring\n")
-    with pytest.raises(AssertionError, match="different registry"):                  # a registry file that is not the one the runs were scored against
-        S.main(["--compare-pairs", *files, "--registry", str(other), "--expect-scorer-sha", good])
+    with pytest.raises(AssertionError, match="pinned registry_sha"):                  # D1: a registry file that is not THE pinned one (also not the one the runs were scored against)
+        S.main(["--compare-pairs", *files, "--registry", str(other), "--expect-scorer-sha", good, "--run-shas", str(rs)])
     # a run json whose checkpoint sha is not the registered one for its pair+arm (six still distinct, same registry file, same pins): only the registry check can see it
-    forged = tmp_path / "forged_s51_H300.json"
-    j = json.load(open(paths[("s51", "H300")])); j["meta"]["ckpt_sha"] = "9" * 64; forged.write_text(json.dumps(j))
+    f1 = tmp_path / "f1"; f1.mkdir()
+    forged = _forged(paths[("s51", "H300")], f1, lambda j: j["meta"].__setitem__("ckpt_sha", "9" * 64))
     ff = list(files); ff[2] = str(forged)
+    rs2 = _env(monkeypatch, tmp_path, ff, "run_shas2.txt")                           # the forged json is listed (the registry check, not the run-shas check, must catch it)
     with pytest.raises(AssertionError, match="registered"):
-        S.main(["--compare-pairs", *ff, "--registry", str(reg), "--expect-scorer-sha", good])
+        S.main(["--compare-pairs", *ff, "--registry", str(reg), "--expect-scorer-sha", good, "--run-shas", str(rs2)])
     with pytest.raises(AssertionError, match="registered"):
-        S.main(["--compare", ff[2], ff[3], "--registry", str(reg), "--expect-scorer-sha", good])
+        S.main(["--compare", ff[2], ff[3], "--registry", str(reg), "--expect-scorer-sha", good, "--run-shas", str(rs2)])
+    rs = _env(monkeypatch, tmp_path, files)
     with pytest.raises(SystemExit, match="expect-scorer-sha"):
-        S.main(["--compare", files[0], files[1], "--registry", str(reg)])
-    S.main(["--compare", files[0], files[1], "--registry", str(reg), "--expect-scorer-sha", good])                                  # positive control for --compare
+        S.main(["--compare", files[0], files[1], "--registry", str(reg), "--run-shas", str(rs)])
+    S.main(["--compare", files[0], files[1], "--registry", str(reg), "--expect-scorer-sha", good, "--run-shas", str(rs)])                # positive control for --compare
     assert "d_ln_PH300_over_PTS2" in json.loads(capsys.readouterr().out)
 
 
@@ -511,7 +541,6 @@ def test_N1_main_refuses_ts2_checkpoint_scored_as_H300_and_other_label_cfg_misma
     c = declared_cfg("s50", "H300"); c["training"]["resume_from"] = S.START_FMT.format(n="47")
     _refuses(world, monkeypatch, tmp_path, AssertionError, "resume_from", cfg=c)                                        # wrong start checkpoint
     _refuses(world, monkeypatch, tmp_path, AssertionError, "no resolved cfg", cfg=None)                                # no cfg in the checkpoint
-    _refuses(world, monkeypatch, tmp_path, AssertionError, "stage2", pair="stage2", cfg_pair="s50") if False else None
 
 
 def test_N1_registry_parse_and_refusals(world, monkeypatch, tmp_path):
@@ -664,3 +693,130 @@ def test_P19_builder_main_verifies_segmenter_weights_before_building(world, tmp_
         B.main(["--root", str(world["root"]), "--frames", str(world["frames"]), "--clips", str(world["clips"]), "--objects", str(world["objects"]), "--out", str(out),
                 "--seg-a", str(badA), "--seg-b", str(world["segB"])])
     assert not out.exists() and not out.with_suffix(".meta.json").exists()
+
+
+# ------------------------------------------------------------------ Auditor O53 / final check of 258b88c: D1-D4 (refusals only)
+def test_D1_scoring_refuses_a_registry_that_is_not_the_pinned_file(world, monkeypatch, tmp_path):
+    _refuses(world, monkeypatch, tmp_path, AssertionError, "pin registry_sha", pins=dict(compute_pins(world), registry_sha="7" * 64))     # registry changed / arbitrary tmp registry
+    _refuses(world, monkeypatch, tmp_path, AssertionError, "pin registry_sha is UNSET", pins=dict(compute_pins(world), registry_sha=S.UNSET))
+
+
+def test_D2_meta_records_the_full_cfg_and_its_hash(runs):
+    for arm in ("H300", "TS2"):
+        m = runs[arm]["meta"]
+        assert m["cfg"] == declared_cfg("s50", arm) and m["cfg_sha256"] == S.cfg_sha256(declared_cfg("s50", arm))
+    assert runs["H300"]["meta"]["cfg_sha256"] != runs["TS2"]["meta"]["cfg_sha256"]
+
+
+def test_D2_scoring_refuses_hinge_max_depth_and_zero_disparity_flip(world, monkeypatch, tmp_path):
+    c = declared_cfg("s50", "H300"); c["loss"]["sky_hinge_max_depth"] = 310.0
+    _refuses(world, monkeypatch, tmp_path, AssertionError, "sky_hinge_max_depth", cfg=c)                                 # attack A3
+    c = declared_cfg("s50", "TS2"); c["loss"]["sky_vda_zero_disparity"] = False
+    out = tmp_path / "o3.json"
+    with pytest.raises(AssertionError, match="sky_vda_zero_disparity"):
+        run_scorer(world, monkeypatch, "TS2", out, cfg=c)
+    c = declared_cfg("s50", "H300"); c["loss"]["sky_hinge_max_depth"] = None                                              # null is allowed
+    run_scorer(world, monkeypatch, "H300", tmp_path / "ok.json", cfg=c)
+
+
+def test_D3_run_json_sha_is_printed_and_written(runs, world, capfd):
+    for arm in ("H300", "TS2"):
+        side = world["tmp"] / f"{arm}.json.sha256"
+        assert side.read_text() == f"{sha(world['tmp'] / (arm + '.json'))}  {arm}.json\n"
+
+
+def _forge_all(paths, tmp_path, fn, sub):
+    d = tmp_path / sub; d.mkdir()
+    return [str(_forged(p, d, lambda j, p=p: fn(j))) for p in paths]
+
+
+def _cmp(files, reg, rs, good=None):
+    return ["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", good or sha(S.__file__), "--run-shas", str(rs)]
+
+
+def test_D1_D2_D3_D4_compare_pairs_forced_fails(six, world, monkeypatch, capsys, tmp_path):
+    paths, reg = six
+    files = _six_files(paths)
+    rs = _env(monkeypatch, tmp_path, files)
+    S.main(_cmp(files, reg, rs)); capsys.readouterr()                                                                      # positive control
+    # D1: PINS.registry_sha still UNSET -> compare refuses
+    monkeypatch.setitem(S.PINS, "registry_sha", S.UNSET)
+    with pytest.raises(AssertionError, match="has not been filled"):
+        S.main(_cmp(files, reg, rs))
+    rs = _env(monkeypatch, tmp_path, files)
+    # D3: no --run-shas / json edited after its sha was committed / json not listed / listing with a stranger
+    with pytest.raises(SystemExit, match="run-shas"):
+        S.main(["--compare-pairs", *files, "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__)])
+    with pytest.raises(SystemExit, match="run-shas"):
+        S.main(["--compare", files[0], files[1], "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__)])
+    ed = _forged(paths[("s52", "TS2")], tmp_path, lambda j: j["sky"].__setitem__("P_framebalanced_median", 1.0), name="edited.json")
+    ff = list(files); ff[5] = str(ed)
+    with pytest.raises(AssertionError, match="not in the committed"):
+        S.main(_cmp(ff, reg, rs))
+    (tmp_path / "e2").mkdir(); ed2 = _forged(paths[("s52", "TS2")], tmp_path / "e2", lambda j: j["sky"].__setitem__("P_framebalanced_median", 1.0))      # same name, different content
+    ff = list(files); ff[5] = str(ed2)
+    with pytest.raises(AssertionError, match="sha256"):
+        S.main(_cmp(ff, reg, rs))
+    with pytest.raises(AssertionError, match="sha256"):                                                                    # same through --compare
+        S.main(["--compare", files[0], str(ed2), "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs)])
+    rs_extra = tmp_path / "extra.txt"; rs_extra.write_text(rs.read_text() + "a" * 64 + "  stranger.json\n")
+    with pytest.raises(AssertionError, match="beyond/besides"):
+        S.main(_cmp(files, reg, rs_extra))
+    S.main(["--compare", files[0], files[1], "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs_extra)]); capsys.readouterr()   # --compare tolerates a longer listing
+    # D3 / attack A4: arm + ckpt_sha swapped between the two jsons of pair s51, files given in swapped order; the registry check sees consistent labels, only the stored cfg contradicts
+    hj, tj = (json.load(open(paths[("s51", a)])) for a in ("H300", "TS2"))
+    d = tmp_path / "a4"; d.mkdir()
+    hj["meta"]["arm"], hj["meta"]["ckpt_sha"], tj["meta"]["arm"], tj["meta"]["ckpt_sha"] = "TS2", tj["meta"]["ckpt_sha"], "H300", hj["meta"]["ckpt_sha"]
+    (d / "six_s51_H300.json").write_text(json.dumps(tj)); (d / "six_s51_TS2.json").write_text(json.dumps(hj))      # file names keep the arm they now claim
+    ff = list(files); ff[2], ff[3] = str(d / "six_s51_H300.json"), str(d / "six_s51_TS2.json")
+    rs_a4 = _env(monkeypatch, tmp_path, ff, "a4.txt")
+    with pytest.raises(AssertionError, match="arm H300|arm TS2"):
+        S.main(_cmp(ff, reg, rs_a4))
+    with pytest.raises(AssertionError, match="arm H300|arm TS2"):
+        S.main(["--compare", ff[2], ff[3], "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs_a4)])
+    rs = _env(monkeypatch, tmp_path, files)
+    # D2: a pair whose cfgs differ outside the declared keys (hash recomputed by the forger, listing updated)
+    def lr(j):
+        j["meta"]["cfg"]["training"]["learning_rate"] = 0.5; j["meta"]["cfg_sha256"] = S.cfg_sha256(j["meta"]["cfg"])
+    f2 = _forged(paths[("s50", "TS2")], tmp_path / "e2", lr)
+    ff = list(files); ff[1] = str(f2)
+    rs_lr = _env(monkeypatch, tmp_path, ff, "lr.txt")
+    with pytest.raises(AssertionError, match="outside the declared"):
+        S.main(_cmp(ff, reg, rs_lr))
+    with pytest.raises(AssertionError, match="outside the declared"):                                                      # same through --compare (single pair)
+        S.main(["--compare", files[0], str(f2), "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs_lr)])
+    # D4: all six carry another scorer_sha (identical across runs: only the expect-sha check can see it) / other pins (identical in all six)
+    sc = _forge_all(files, tmp_path, lambda j: j["meta"].__setitem__("scorer_sha", "c" * 64), "sc")
+    rs_sc = _env(monkeypatch, tmp_path, sc, "sc.txt"); monkeypatch.setitem(S.PINS, "registry_sha", json.load(open(files[0]))["meta"]["pins"]["registry_sha"])
+    with pytest.raises(AssertionError, match="scorer_sha"):
+        S.main(_cmp(sc, reg, rs_sc))
+    pn = _forge_all(files, tmp_path, lambda j: j["meta"]["pins"].__setitem__("frames_sha", "d" * 64), "pn")
+    rs_pn = tmp_path / "pn.txt"; rs_pn.write_text("".join(f"{sha(f)}  {Path(f).name}\n" for f in pn))
+    monkeypatch.setattr(S, "PINS", dict(json.load(open(files[0]))["meta"]["pins"]))
+    with pytest.raises(AssertionError, match="pin frames_sha"):
+        S.main(_cmp(pn, reg, rs_pn))
+    ex = _forge_all(files, tmp_path, lambda j: j["meta"]["pins"].__setitem__("extra", "x"), "ex")
+    rs_ex = tmp_path / "ex.txt"; rs_ex.write_text("".join(f"{sha(f)}  {Path(f).name}\n" for f in ex))
+    with pytest.raises(AssertionError, match="other keys"):
+        S.main(_cmp(ex, reg, rs_ex))
+    # same checks through --compare (D4 on the single-pair path)
+    with pytest.raises(AssertionError, match="scorer_sha"):
+        S.main(["--compare", sc[0], sc[1], "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs_sc)])
+
+
+def test_nit6_compare_refuses_stage2_labelled_runs(six, monkeypatch, tmp_path):
+    paths, reg = six
+    def st2(j):
+        j["meta"]["seed_label"] = "stage2"; j["meta"]["stage"] = 2
+    fs = _forge_all([paths[("s50", "H300")], paths[("s50", "TS2")]], tmp_path, st2, "st2")
+    rs = _env(monkeypatch, tmp_path, fs)
+    with pytest.raises(AssertionError, match="Stage 1 pair labels"):
+        S.main(["--compare", *fs, "--registry", str(reg), "--expect-scorer-sha", sha(S.__file__), "--run-shas", str(rs)])
+
+
+def test_D6_empty_guard_tables_are_refused_through_compare_pairs_main(six, monkeypatch, tmp_path):
+    paths, reg = six
+    fs = _forge_all(_six_files(paths), tmp_path, lambda j: j.__setitem__("bins", {}), "nb")
+    rs = _env(monkeypatch, tmp_path, fs)
+    with pytest.raises(AssertionError, match="five registered labels"):
+        S.main(_cmp(fs, reg, rs))

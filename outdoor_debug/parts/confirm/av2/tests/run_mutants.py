@@ -36,7 +36,7 @@ MUTANTS = [
     ("D8c", "D8: out-of-range / inf accepted", AV2 + "av2_scorer.py", "    if iou < 0.0 or iou > 1.0:", "    if False:", "check_mask_meta accepts inf and 1.0000001"),
     ("R1", "O45: runner accepts a placeholder / non-hex sha", AV2 + "run_score.py", '    if not re.fullmatch(r"[0-9a-f]{64}", m[0]):', "    if False:", "run_score passes the placeholder on"),
     ("R2", "O45: runner passes no --expect-scorer-sha", AV2 + "run_score.py", ', "--expect-scorer-sha", sha, "--registry"', ', "--registry"', "scorer gets no expected sha"),
-    ("R3", "N1: runner passes no --registry", AV2 + "run_score.py", ', "--registry", str(Path(argv[0]).resolve())]', "]", "scorer gets no registry"),
+    ("R3", "N1: runner passes no --registry", AV2 + "run_score.py", ', "--registry", str(REGISTRY)]', "]", "scorer gets no registry"),
     ("D9a", "D9: safetensors presence not refused", AV2 + "build_av2_masks.py", "        if st:\n", "        if False:\n", "safetensors allowed"),
     ("D9b", "D9: use_safetensors not forwarded", SEG + "make_sky_mask.py", "kw = {} if use_safetensors is None else dict(use_safetensors=use_safetensors)", "kw = {}", "_Seg ignores use_safetensors"),
     ("D9c", "D9: weights sha not verified", AV2 + "build_av2_masks.py", "    if h != expected:", "    if False:", "verify_seg_sha never fails"),
@@ -64,7 +64,7 @@ MUTANTS = [
     ("P18", "survivor: builder image shape", AV2 + "build_av2_masks.py", "            assert img.shape[:2] == A.NATIVE_HW, f\"{log}:{cam}: image {img.shape} != native {A.NATIVE_HW}\"", "            pass", "builder native-shape assert off"),
     ("P19", "survivor: builder main without verify_segmenters", AV2 + "build_av2_masks.py", "    segmeta = verify_segmenters(a.seg_a, a.seg_b)\n", "    segmeta = dict(segmenter_a_sha=SEG_A['bin_sha'], segmenter_b_sha=SEG_B['bin_sha'], segmenter_a=dict(SEG_A), segmenter_b=dict(SEG_B))\n", "main skips verify_segmenters"),
     # ---- new code of this round (N1-N4, decode-sanity log assert)
-    ("N1a", "N1: cfg check not called in main", AV2 + "av2_scorer.py", "        facts.update(assert_ckpt_cfg(load_ckpt_cfg(a.ckpt), a.pair, a.arm))", "        facts.update(dict(cfg_checked=True, cfg_sky_hinge_weight=None, cfg_sky_hinge_min_depth=None, cfg_data_seed=None))", "TS2 ckpt scored as H300 accepted"),
+    ("N1a", "N1: cfg check not called in main", AV2 + "av2_scorer.py", "        facts.update(assert_ckpt_cfg(ck_cfg, a.pair, a.arm))", "        facts.update(dict(cfg_checked=True, cfg_sky_hinge_weight=None, cfg_sky_hinge_min_depth=None, cfg_data_seed=None))", "TS2 ckpt scored as H300 accepted"),
     ("N1b", "N1: registered-sha check not called in main", AV2 + "av2_scorer.py", "        assert_registered_ckpt(ckreg, a.pair, a.arm, facts[\"ckpt_sha\"])", "        pass", "ckpt sha not compared with the registry"),
     ("N1c", "N1: H300 hinge facts not asserted", AV2 + "av2_scorer.py", "        if loss.get(\"sky_hinge_weight\") != HINGE_W or loss.get(\"sky_hinge_min_depth\") != HINGE_MIN:", "        if False:", "H300 cfg unchecked"),
     ("N1d", "N1: TS2 control may carry the hinge", AV2 + "av2_scorer.py", "        if loss.get(\"sky_hinge_weight\", 0) not in (0, 0.0) or \"sky_hinge_min_depth\" in loss:", "        if False:", "TS2 cfg unchecked"),
@@ -78,17 +78,48 @@ MUTANTS = [
     ("N2c", "N2: check_pair_runs pins/scorer_sha", AV2 + "av2_scorer.py", "        if not h[\"meta\"].get(k) or h[\"meta\"].get(k) != t[\"meta\"].get(k):", "        if False:", "arms with different scorer sha accepted"),
     ("N2d", "N2: --expect-scorer-sha not required for compare", AV2 + "av2_scorer.py", "    if a.compare_pairs or a.compare:\n        check_scorer_sha(a.expect_scorer_sha)", "    if a.compare_pairs or a.compare:\n        pass", "compare without expected sha"),
     ("N2e", "N2: registry not applied in compare-pairs main", AV2 + "av2_scorer.py", "        check_runs_against_registry(js, reg)", "        pass", "unregistered runs compared"),
-    ("N3", "N3: SHA256SUMS read from the old implicit location", AV2 + "av2_scorer.py", "sums_sha=A.sha256_file(a.sums))", "sums_sha=A.sha256_file(Path(a.root).parent / \"SHA256SUMS\"))", "--sums ignored"),
+    ("S3", "N3: SHA256SUMS read from the old implicit location", AV2 + "av2_scorer.py", "sums_sha=A.sha256_file(a.sums), registry_sha", "sums_sha=A.sha256_file(Path(a.root).parent / \"SHA256SUMS\"), registry_sha", "--sums ignored"),
     ("N4a", "N4: mask meta rule not compared", AV2 + "av2_scorer.py", "    if m.get(\"rule\") != want:", "    if False:", "tampered rule accepted"),
     ("N4b", "N4: recorded code shas not compared with the files", AV2 + "av2_scorer.py", "        if mmeta[k] != v:", "        if False:", "mask built by other code accepted"),
     ("N4c", "N4: builder does not record the code shas", AV2 + "build_av2_masks.py", "lidar_exclusion=\"all returns with z>0, no range cap\", **code_provenance()))", "lidar_exclusion=\"all returns with z>0, no range cap\"))", "meta without code shas"),
     ("N4d", "N4: builder_sha pin wrong", AV2 + "av2_scorer.py", "builder_sha=\"718be614", "builder_sha=\"0000000", "pin differs from the file"),
-    ("N6", "decode-sanity logs not compared with the registered list", AV2 + "decode_sanity.py", "    assert logs == registered,", "    assert True or logs == registered,", "logs 1-5 unchecked"),
+    ("DS6", "decode-sanity logs not compared with the registered list", AV2 + "decode_sanity.py", "    assert logs == registered,", "    assert True or logs == registered,", "logs 1-5 unchecked"),
+    # ---- Auditor O53 / final check of 258b88c: D1-D6 (new code of this round)
+    ("D1a", "D1: registry file sha vs pin not compared at compare", AV2 + "av2_scorer.py", "    if reg_sha != want:", "    if False:", "arbitrary registry accepted at compare"),
+    ("D1b", "D1: registry pin may be UNSET at compare", AV2 + "av2_scorer.py", "    if want in (None, UNSET):", "    if want is None:", "UNSET pin accepted"),
+    ("D1c", "D1: scoring does not use the registry file's real sha (tautological)", AV2 + "av2_scorer.py", "sums_sha=A.sha256_file(a.sums), registry_sha=reg_sha)", "sums_sha=A.sha256_file(a.sums), registry_sha=PINS[\"registry_sha\"])", "registry pin tautological at scoring"),
+    ("D1d", "D1: compare main skips the registry pin", AV2 + "av2_scorer.py", "        check_registry_pin(reg_sha)   ", "        pass   ", "compare without registry pin"),
+    ("D1e", "D1: registry_sha pin filled while the registry is UNSET", AV2 + "av2_scorer.py", "            registry_sha=UNSET,   ", "            registry_sha=\"0\" * 64,   ", "pin filled before the registry"),
+    ("D2a", "D2: pair cfg diff not enforced", AV2 + "av2_scorer.py", "    if not d <= ALLOWED_PAIR_DIFF:", "    if False:", "arms may differ anywhere"),
+    ("D2b", "D2: pair cfg check not called in compare_pairs", AV2 + "av2_scorer.py", "        check_pair_cfgs(*pairs[k])   ", "        pass   ", "compare_pairs without cfg check"),
+    ("D2c", "D2: pair cfg check not called in --compare", AV2 + "av2_scorer.py", "        check_pair_cfgs(h, t)    ", "        pass    ", "--compare without cfg check"),
+    ("D2d", "D2: sky_hinge_max_depth allowed", AV2 + "av2_scorer.py", "    if loss.get(\"sky_hinge_max_depth\") is not None:", "    if False:", "max_depth 310 accepted"),
+    ("D2e", "D2: sky_vda_zero_disparity not asserted", AV2 + "av2_scorer.py", "    if loss.get(\"sky_vda_zero_disparity\") is not SKY_VDA_ZD:", "    if False:", "zero-disparity flip accepted"),
+    ("D2f", "D2: cfg hash not verified", AV2 + "av2_scorer.py", "    if cfg_sha256(cfg) != m[\"cfg_sha256\"]:", "    if False:", "edited cfg with stale hash accepted"),
+    ("D2g", "D2: cfg not stored in the meta", AV2 + "av2_scorer.py", "        facts.update(cfg=json.loads(cfg_canonical(ck_cfg)), cfg_sha256=cfg_sha256(ck_cfg))", "        pass", "meta without cfg"),
+    ("D2h", "D2: cfg_diff not recursive", AV2 + "av2_scorer.py", "                out |= cfg_diff(a[k], b[k], path)", "                pass", "nested differences invisible"),
+    ("D3a", "D3: arm label not re-asserted against the stored cfg", AV2 + "av2_scorer.py", "    facts = assert_ckpt_cfg(cfg, m.get(\"seed_label\"), m.get(\"arm\"))", "    facts = {k: m.get(k) for k in ('cfg_checked', 'cfg_sky_hinge_weight', 'cfg_sky_hinge_min_depth', 'cfg_data_seed', 'cfg_resume_reseed', 'cfg_resume_from')}", "forged arm label accepted"),
+    ("D3b", "D3: meta cfg_* facts not compared with the cfg", AV2 + "av2_scorer.py", "        if m.get(k) != v:\n            raise AssertionError(f\"meta.{k}", "        if False:\n            raise AssertionError(f\"meta.{k}", "contradicting meta fact accepted"),
+    ("D3c", "D3: run-shas not checked (compare-pairs)", AV2 + "av2_scorer.py", "        check_run_shas(a.compare_pairs, run_listing, exact=True)", "        pass", "edited json accepted"),
+    ("D3d", "D3: run-shas not checked (compare)", AV2 + "av2_scorer.py", "        check_run_shas(a.compare, run_listing)", "        pass", "edited json accepted (--compare)"),
+    ("D3e", "D3: json sha not compared with the listing", AV2 + "av2_scorer.py", "        if A.sha256_file(p) != listing[n]:", "        if False:", "wrong sha accepted"),
+    ("D3f", "D3: listing may hold strangers", AV2 + "av2_scorer.py", "    if exact and set(listing) != set(names):", "    if False:", "extra listed runs accepted"),
+    ("D3g", "D3: --run-shas optional", AV2 + "av2_scorer.py", "    if not path:\n        raise SystemExit(\"--run-shas", "    if False:\n        raise SystemExit(\"--run-shas", "missing listing accepted"),
+    ("D3h", "D3: run json sha not written", AV2 + "av2_scorer.py", "    write_run_sha(out_path)    ", "    pass    ", "no sha256 sidecar"),
+    ("D3i", "D3: unlisted run json accepted", AV2 + "av2_scorer.py", "        if n not in listing:", "        if False:", "unlisted json accepted"),
+    ("D4-scorer", "D4: meta.scorer_sha vs expect not checked", AV2 + "av2_scorer.py", "    if m.get(\"scorer_sha\") != expect_scorer_sha:", "    if False:", "run by another scorer accepted"),
+    ("D4-pins", "D4: meta.pins vs PINS value check removed", AV2 + "av2_scorer.py", "    assert_pins(p, reg)    ", "    pass    ", "other pin values accepted"),
+    ("D4-keys", "D4: meta.pins key set not compared", AV2 + "av2_scorer.py", "    if not isinstance(p, dict) or set(p) != set(reg):", "    if not isinstance(p, dict):", "extra / missing pin keys accepted"),
+    ("D4-cmpp", "D4: provenance not checked (compare-pairs)", AV2 + "av2_scorer.py", "        for r in js:\n            check_run_provenance(r, a.expect_scorer_sha)   ", "        for r in js:\n            pass   ", "compare-pairs without provenance"),
+    ("D4-cmp", "D4: provenance not checked (compare)", AV2 + "av2_scorer.py", "            check_run_provenance(r, a.expect_scorer_sha)                       # D4\n            assert r[", "            pass\n            assert r[", "--compare without provenance"),
+    ("D6a", "D6: guard bin labels not checked", AV2 + "av2_scorer.py", "        if not isinstance(b, dict) or list(b) != want:", "        if False:", "empty guard table passes vacuously"),
+    ("D6b", "D6: only the first arm's bins checked", AV2 + "av2_scorer.py", "    for tag, b in ((\"H300\", h_bins), (\"TS2\", t_bins)):", "    for tag, b in ((\"H300\", h_bins),):", "TS2 bins unchecked"),
+    ("NIT6", "nit 6: --compare accepts non-Stage-1 label", AV2 + "av2_scorer.py", "        assert h[\"meta\"][\"seed_label\"] in START_N,", "        assert True or h[\"meta\"][\"seed_label\"] in START_N,", "stage2 labels accepted by --compare"),
 ]
 
 
 def run(py, cwd):
-    p = subprocess.run([py, "-m", "pytest", "-q", "-rfE", "--tb=line", "-p", "no:cacheprovider", AV2 + "tests", "tests/test_sky_mask.py"], cwd=cwd, capture_output=True, text=True)
+    p = subprocess.run([py, "-m", "pytest", "-q", "-rfE", "--tb=line", "-p", "no:cacheprovider", "--deselect", AV2 + "tests/test_av2_scorer.py::test_pins_equal_actual_file_shas", AV2 + "tests", "tests/test_sky_mask.py"], cwd=cwd, capture_output=True, text=True)
     return p.returncode, p.stdout + p.stderr
 
 

@@ -1,5 +1,5 @@
 """SYNTHETIC-only tests for av2_dataset.py / av2_scorer.py (no AV2 payload exists or is read). Includes forced-fail cases."""
-import math, sys
+import math, re, sys
 from pathlib import Path
 import numpy as np
 import pytest
@@ -152,7 +152,28 @@ def test_guard_5pct_relative_per_bin():
     assert S.guard_check(h, t)["[120,200]"]["status"] == "UNEVALUABLE"
 
 
+STAGE1_CFG = Path(__file__).resolve().parents[2] / "stage1" / "configs"
+
+
+def _cfg(pair, arm):
+    import yaml
+    return yaml.safe_load(open(STAGE1_CFG / f"arm_S1_{dict(s50='n46', s51='n47', s52='n48')[pair]}_{arm}.yaml"))
+
+
+def _with_cfg(r):
+    """Stage-1-labelled synthetic run: the declared stored cfg of (pair, arm) + hash + re-derived cfg_* facts."""
+    m = r["meta"]
+    if m["seed_label"] in S.START_N:
+        c = _cfg(m["seed_label"], m["arm"])
+        m.update(S.assert_ckpt_cfg(c, m["seed_label"], m["arm"]), cfg=c, cfg_sha256=S.cfg_sha256(c))
+    return r
+
+
 def _run(P, absrel, arm, seed="s50", stage=1, ckpt=None):
+    return _with_cfg(_run0(P, absrel, arm, seed, stage, ckpt))
+
+
+def _run0(P, absrel, arm, seed="s50", stage=1, ckpt=None):
     return dict(sky=dict(P_framebalanced_median=P, kept_frame_ids=["f1", "f2"], dropped_frame_ids=[], frame_mask_px=[5000, 6000]), bins=_bins(absrel),
                 n_scored_frames=2, n_lidar_px_valid_before_sky=100, n_lidar_px_sky_excluded=10,
                 meta=dict(arm=arm, ckpt_sha=ckpt or f"sha_{arm}", seed_label=seed, stage=stage, pins=dict(frames_sha="f"), scorer_sha="s" * 64, registry_sha="r" * 64))
@@ -354,7 +375,7 @@ def test_unevaluable_guard_never_passes_and_pairing_is_25ms():
     assert S.decide(ln15 + 0.1, True) == "CONFIRMED"
     assert S.decide(ln15 - 0.1, True) == "NOT CONFIRMED"
     big = {"n_px": 10**6, "absrel_unaligned_pooled": 0.2}; small = {"n_px": 5, "absrel_unaligned_pooled": 0.2}
-    bins_ok = {"[0,20)": big, "[120,200]": small}
+    bins_ok = {lab: (small if lab == "[120,200]" else big) for lab in S.bin_labels()}
     g = S.guard_check(bins_ok, bins_ok)
     assert g["[120,200]"]["status"] == "UNEVALUABLE" and g["[0,20)"]["status"] == "PASS"
     assert A.MAX_PAIR_DT_NS == 25_000_000
@@ -454,8 +475,7 @@ def test_check_mask_provenance_unit():
 
 
 def test_runbook_registry_table_is_present_and_unset_until_the_runs_exist():
-    rb = (Path(__file__).resolve().parents[1] / "RUNBOOK_STAGE1.md").read_text()
-    reg = S.parse_registry(rb)
+    reg = S.parse_registry((Path(__file__).resolve().parents[1] / "av2_stage1_ckpts.txt").read_text())
     assert sorted(reg) == sorted((p, a) for p in S.PAIRS for a in ("H300", "TS2"))
     assert all(v == S.UNSET or len(v) == 64 for v in reg.values())
     if S.UNSET in reg.values():                                                  # as long as any is UNSET no run can be accepted
@@ -470,4 +490,159 @@ def test_runner_passes_the_runbook_as_registry_and_the_literal_sha(tmp_path, mon
     monkeypatch.setattr(subprocess, "call", lambda cmd: seen.setdefault("cmd", cmd) and 0)
     R.main([str(rb), "--", "--compare-pairs", "x"])
     cmd = seen["cmd"]
-    assert cmd[cmd.index("--expect-scorer-sha") + 1] == "a" * 64 and cmd[cmd.index("--registry") + 1] == str(rb.resolve())
+    assert cmd[cmd.index("--expect-scorer-sha") + 1] == "a" * 64 and cmd[cmd.index("--registry") + 1] == str(Path(R.__file__).resolve().parent / "av2_stage1_ckpts.txt")
+
+
+# ---------------------------------------------------------------- D6: the guard table must be exactly the five registered bins
+def test_D6_guard_check_refuses_empty_short_extra_or_renamed_bins():
+    ok = _bins(0.1)
+    assert len(S.guard_check(ok, ok)) == 5
+    for bad in ({}, {k: v for k, v in list(ok.items())[:4]}, dict(ok, **{"[200,300]": ok["[0,20)"]}), {("[0,21)" if k == "[0,20)" else k): v for k, v in ok.items()}, list(ok.items())):
+        for pair in ((bad, ok), (ok, bad)):
+            with pytest.raises(AssertionError, match="five registered labels"):
+                S.guard_check(*pair)
+    with pytest.raises(AssertionError, match="five registered labels"):
+        S.guard_check({}, {})                                                  # the vacuous all([]) pass
+    h, t = _run(600.0, 0.1, "H300"), _run(150.0, 0.1, "TS2"); h["bins"] = {}; t["bins"] = {}
+    with pytest.raises(AssertionError, match="five registered labels"):
+        S.compare(h, t, stage=1)
+
+
+# ---------------------------------------------------------------- D1: registry in its own pinned file
+def test_D1_registry_is_its_own_file_pinned_by_sha_in_the_order_of_the_runbook():
+    here = Path(__file__).resolve().parents[1]
+    f = here / "av2_stage1_ckpts.txt"
+    reg = S.parse_registry(f.read_text())
+    assert not re.search(r"^CKPT_SHA\s", (here / "RUNBOOK_STAGE1.md").read_text(), re.M)      # the runbook holds no registry lines any more
+    assert "registry_sha" in S.PINS
+    if S.PINS["registry_sha"] == S.UNSET:
+        pass
+    else:                                                                       # filled pin: it is the file's sha and the registry is complete
+        assert S.PINS["registry_sha"] == A.sha256_file(f) and S.UNSET not in reg.values()
+    if S.UNSET in reg.values():                                                 # acyclic order: registry first, pin second
+        assert S.PINS["registry_sha"] == S.UNSET
+    rb = (here / "RUNBOOK_STAGE1.md").read_text()
+    assert "train -> registry" in rb and "dryrun_ckpt_facts.py" in rb
+
+
+def test_D1_check_registry_pin_refuses_unset_and_mismatch():
+    S.check_registry_pin("a" * 64, {"registry_sha": "a" * 64})
+    with pytest.raises(AssertionError, match="has not been filled"):
+        S.check_registry_pin("a" * 64, {"registry_sha": S.UNSET})
+    with pytest.raises(AssertionError, match="has not been filled"):
+        S.check_registry_pin("a" * 64, {})
+    with pytest.raises(AssertionError, match="pinned registry_sha"):
+        S.check_registry_pin("a" * 64, {"registry_sha": "b" * 64})
+    with pytest.raises(AssertionError, match="registry_sha is UNSET"):
+        S.check_registry_pin("a" * 64)                                          # the real PINS: still UNSET
+
+
+# ---------------------------------------------------------------- D2: cfg hash, recursive diff, forbidden keys
+def test_D2_cfg_diff_is_recursive_and_exact():
+    a = {"x": {"y": 1, "z": [1, 2]}, "k": 1}
+    assert S.cfg_diff(a, {"x": {"y": 1, "z": [1, 2]}, "k": 1}) == set()
+    assert S.cfg_diff(a, {"x": {"y": 2, "z": [1, 2]}, "k": 1}) == {"x.y"}
+    assert S.cfg_diff(a, {"x": {"y": 1, "z": [1, 3]}, "k": 1}) == {"x.z"}
+    assert S.cfg_diff(a, {"x": {"y": 1}, "k": 1, "n": 0}) == {"x.z", "n"}
+    assert S.cfg_diff({"v": 1}, {"v": True}) == {"v"} and S.cfg_diff({"v": 1}, {"v": 1.0}) == {"v"}       # type changes count
+    assert S.cfg_sha256(a) == S.cfg_sha256({"k": 1, "x": {"z": [1, 2], "y": 1}}) != S.cfg_sha256({"k": 2, "x": a["x"]})
+
+
+def test_D2_declared_pair_cfgs_differ_only_in_hinge_keys_and_checkpoint_dir():
+    for p in S.PAIRS:
+        h, t = _run(600.0, 0.1, "H300", seed=p), _run(150.0, 0.1, "TS2", seed=p)
+        assert S.check_pair_cfgs(h, t) == S.ALLOWED_PAIR_DIFF
+        assert h["meta"]["cfg"]["loss"]["sky_vda_zero_disparity"] is True and t["meta"]["cfg"]["loss"]["sky_vda_zero_disparity"] is True
+
+
+def test_D2_forced_fails_each_refuses():
+    import copy
+    def pair(fn_h=None, fn_t=None, rehash=True):
+        h, t = _run(600.0, 0.1, "H300"), _run(150.0, 0.1, "TS2")
+        for r, fn in ((h, fn_h), (t, fn_t)):
+            if fn:
+                fn(r["meta"]["cfg"])
+                if rehash:
+                    r["meta"]["cfg_sha256"] = S.cfg_sha256(r["meta"]["cfg"])
+        return h, t
+    # a pair that differs in anything else (learning rate, data seed ...)
+    for fn, m in ((lambda c: c["training"].__setitem__("learning_rate", 0.5), "outside the declared"), (lambda c: c["model"].__setitem__("lora_rank", 8), "outside the declared"),
+                  (lambda c: c["loss"].__setitem__("tgm_weight", 1.0), "outside the declared")):
+        with pytest.raises(AssertionError, match=m):
+            S.check_pair_cfgs(*pair(fn_t=fn))
+    # forbidden keys (scorer-level facts, both arms)
+    with pytest.raises(AssertionError, match="sky_hinge_max_depth"):
+        S.check_pair_cfgs(*pair(fn_h=lambda c: c["loss"].__setitem__("sky_hinge_max_depth", 310.0)))
+    with pytest.raises(AssertionError, match="sky_vda_zero_disparity"):
+        S.check_pair_cfgs(*pair(fn_t=lambda c: c["loss"].__setitem__("sky_vda_zero_disparity", False)))
+    with pytest.raises(AssertionError, match="sky_vda_zero_disparity"):
+        S.check_pair_cfgs(*pair(fn_h=lambda c: c["loss"].pop("sky_vda_zero_disparity")))
+    S.check_pair_cfgs(*pair(fn_h=lambda c: c["loss"].__setitem__("sky_hinge_max_depth", None)))                    # null is allowed
+    # hash does not match the stored cfg
+    with pytest.raises(AssertionError, match="cfg_sha256"):
+        S.check_pair_cfgs(*pair(fn_t=lambda c: c["training"].__setitem__("learning_rate", 0.5), rehash=False))
+    # no cfg stored at all
+    h, t = pair(); del h["meta"]["cfg"]
+    with pytest.raises(AssertionError, match="no stored cfg"):
+        S.check_pair_cfgs(h, t)
+    # two arms that do not differ in the hinge keys (e.g. one cfg under both labels) are refused as well
+    h, t = _run(600.0, 0.1, "H300"), _run(150.0, 0.1, "TS2")
+    t["meta"]["cfg"] = copy.deepcopy(h["meta"]["cfg"]); t["meta"]["cfg_sha256"] = h["meta"]["cfg_sha256"]
+    with pytest.raises(AssertionError, match="arm TS2"):
+        S.check_pair_cfgs(h, t)
+
+
+# ---------------------------------------------------------------- D3: arm label re-asserted against the cfg; run json shas
+def test_D3_forged_arm_label_contradicts_the_stored_cfg():
+    h, t = _run(600.0, 0.1, "H300"), _run(150.0, 0.1, "TS2")
+    h["meta"]["arm"], t["meta"]["arm"] = "TS2", "H300"                          # arm + ckpt labels swapped between the two jsons (attack A4); cfgs keep their hinge fields
+    with pytest.raises(AssertionError, match="arm H300|arm TS2"):
+        S.check_run_cfg(h)
+    h2 = _run(600.0, 0.1, "H300"); h2["meta"]["cfg_sky_hinge_weight"] = 0.0     # a meta fact that contradicts the stored cfg
+    with pytest.raises(AssertionError, match="re-derived"):
+        S.check_run_cfg(h2)
+
+
+def test_D3_run_shas_listing(tmp_path):
+    a, b = tmp_path / "a.json", tmp_path / "b.json"; a.write_text("{}"); b.write_text("[]")
+    ha, hb = A.sha256_file(a), A.sha256_file(b)
+    lf = tmp_path / "l.txt"; lf.write_text(f"# c\n{ha}  a.json\n{hb} *b.json\n")
+    L = S.load_run_shas(lf)
+    S.check_run_shas([a, b], L, exact=True)
+    S.check_run_shas([a], L)
+    with pytest.raises(AssertionError, match="beyond/besides"):
+        S.check_run_shas([a], L, exact=True)
+    with pytest.raises(AssertionError, match="not in the committed"):
+        S.check_run_shas([a, tmp_path / "c.json"], L)
+    a.write_text("{ }")                                                         # edited after the sha was committed
+    with pytest.raises(AssertionError, match="sha256"):
+        S.check_run_shas([a, b], L)
+    with pytest.raises(SystemExit, match="run-shas"):
+        S.load_run_shas(None)
+    for bad in (f"{ha}  a.json\n{ha}  a.json\n", "zz  a.json\n"):
+        lf.write_text(bad)
+        with pytest.raises(AssertionError, match="malformed or duplicate"):
+            S.load_run_shas(lf)
+    with pytest.raises(AssertionError, match="unique"):
+        S.check_run_shas([a, tmp_path / "x" / "a.json"], {"a.json": ha})
+
+
+# ---------------------------------------------------------------- D4: scorer sha and pins of every run
+def test_D4_run_provenance():
+    pins = dict(frames_sha="f", x="y")
+    r = {"meta": dict(scorer_sha="s" * 64, pins=dict(pins))}
+    S.check_run_provenance(r, "s" * 64, pins)
+    with pytest.raises(AssertionError, match="scorer_sha"):
+        S.check_run_provenance(r, "t" * 64, pins)
+    for bad in (dict(frames_sha="OTHER", x="y"), dict(frames_sha="f"), dict(frames_sha="f", x="y", z="w"), None):
+        with pytest.raises(AssertionError, match="pins|pin "):
+            S.check_run_provenance({"meta": dict(scorer_sha="s" * 64, pins=bad)}, "s" * 64, pins)
+    with pytest.raises(AssertionError, match="UNSET"):
+        S.check_run_provenance({"meta": dict(scorer_sha="s" * 64, pins=dict(frames_sha=S.UNSET, x="y"))}, "s" * 64, dict(frames_sha=S.UNSET, x="y"))
+
+
+def test_code_sha_pins_are_the_runbook_literals():
+    """The in-file code-sha PINS equal the literals in RUNBOOK_STAGE1.md (independent of the file contents, so an edit of a pinned file is caught by its own dedicated test, not by this one)."""
+    rb = (Path(__file__).resolve().parents[1] / "RUNBOOK_STAGE1.md").read_text()
+    for k in ("dataset_module_sha", "builder_sha", "make_sky_mask_sha", "ddad_scorer_sha", "bench_joint_sha", "segmenter_a_sha", "segmenter_b_sha", "frames_sha", "clips_sha", "objects_sha", "logs_sha"):
+        assert S.PINS[k] in rb, f"PINS.{k} is not the literal in RUNBOOK_STAGE1.md"
