@@ -14,12 +14,12 @@ for N in 46 47 48; do for A in TS2 H300; do sed "s/UNSET_PIN_COMMIT/$SHA/" $D/TR
 ### Block 1: two smokes (50 real steps, 4 GPU, 25 min limit): n47 TS2 (seed 51, control path) and n48 H300 (seed 52, hinge path)
 SM1=$(sbatch --parsable --time=00:25:00 --job-name=confirm1_smoke_S1_n47_TS2  --export=ALL,SMOKE=1,PROJECT_DIR=$CL $S/TRAIN_S1_n47_TS2.sbatch)
 SM2=$(sbatch --parsable --time=00:25:00 --job-name=confirm1_smoke_S1_n48_H300 --export=ALL,SMOKE=1,PROJECT_DIR=$CL $S/TRAIN_S1_n48_H300.sbatch)
-### gate: both COMPLETED 0:0 (sacct), then (python3 only):
-$D/check_first_run_stage1.sh -s -r runs S1_n47_TS2=logs/confirm1_smoke_S1_n47_TS2_$SM1.out S1_n48_H300=logs/confirm1_smoke_S1_n48_H300_$SM2.out     # no FAIL
+### >>> GATE (explicit step, BY HAND; Block 2 is NOT submitted before it PASSES; NO sbatch --dependency from either smoke to any full job): both smokes COMPLETED 0:0 (sacct), then (python3 only):
+$D/check_first_run_stage1.sh -s -r runs S1_n47_TS2=logs/confirm1_smoke_S1_n47_TS2_$SM1.out S1_n48_H300=logs/confirm1_smoke_S1_n48_H300_$SM2.out     # no FAIL; ANY FAIL => STOP and report, do not submit Block 2
 
-### Block 2: the six fulls (3 h limit each), held behind the smokes
+### Block 2 (ONLY AFTER THE GATE PASSED; separate step): the six fulls (3 h limit each), NO --dependency on the smokes
 for N in 46 47 48; do for A in TS2 H300; do
-  sbatch --parsable --dependency=afterok:$SM1:$SM2 --export=ALL,PROJECT_DIR=$CL $S/TRAIN_S1_n${N}_${A}.sbatch
+  sbatch --parsable --export=ALL,PROJECT_DIR=$CL $S/TRAIN_S1_n${N}_${A}.sbatch
 done; done
 ### once every log shows step >= 12100 (about 5-10 min after start; items 3 needs the 5 loss_terms rows 12010..12050; LR rows 12020..12120):
 # $D/check_first_run_stage1.sh -r runs S1_n46_TS2=logs/confirm1_S1_n46_TS2_<id>.out S1_n46_H300=logs/confirm1_S1_n46_H300_<id>.out S1_n47_TS2=... S1_n47_H300=... S1_n48_TS2=... S1_n48_H300=...   (any FAIL -> scancel that job and report)
