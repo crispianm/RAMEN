@@ -4,7 +4,7 @@ Python for every step: `~/.venvs/ramen_seg2/bin/python -I` on the machine that h
 Never glob the data dir; the clip and the scored frames come ONLY from the three registered tables below.
 
 ## 0. Literals that must be filled / checked before any real data is opened
-EXPECT_SCORER_SHA = <FILLED_AFTER_FINAL_COMMIT>
+EXPECT_SCORER_SHA = c1f40a66a1643148b3cd6977942594db565846a4e55831cd99b4aa9e8369f98c
 
 `EXPECT_SCORER_SHA` must be replaced by the literal sha256 of the final committed `av2_scorer.py` (`git show <final commit>:outdoor_debug/parts/confirm/av2/av2_scorer.py | sha256sum`), committed in this file BEFORE data is opened. The runner (`run_score.py`) reads this line (it refuses a placeholder or anything that is not 64 hex characters), passes it as `--expect-scorer-sha`, and never hashes the scorer itself; the scorer compares it with the sha of the file it is running from and refuses on mismatch. The scorer's own sha is NOT in its in-file PINS (a file cannot contain its own hash).
 
