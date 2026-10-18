@@ -1,0 +1,7 @@
+fields compared: 11 | max abs diff over all bin metrics + overall AbsRel: 0.000e+00 at overall overall_absrel_0_200
+[0,20) median new 1.201141 ref 1.201141 | AbsRel new 0.220507 ref 0.220507
+[20,50) median new 1.122924 ref 1.122924 | AbsRel new 0.177921 ref 0.177921
+[50,80) median new 0.942737 ref 0.942737 | AbsRel new 0.147205 ref 0.147205
+[80,120) median new 0.742456 ref 0.742456 | AbsRel new 0.271375 ref 0.271375
+[120,200] median new 0.574079 ref 0.574079 | AbsRel new 0.422590 ref 0.422590
+COUNTS IDENTICAL: True | MAX DIFF <= 1e-4: True | IDENTITY CONTROL: PASS
