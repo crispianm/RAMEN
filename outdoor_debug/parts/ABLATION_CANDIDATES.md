@@ -110,3 +110,6 @@ AV2 and every strict-track held-out set are not touched. Cap: 45 NHR actual for 
 Stop rules: first-run stop check (check_first_run_l1.sh, B0 first) at step >= 200 of every run; any FAIL = scancel and report.
 ```
 
+
+### L1 smokes submitted 2026-10-18T00:17:51Z (Isambard `date -u`), pin 7c37df5224a79582d0ee7e81cb0a094b201d3a61, clone /projects/b5dh/RAMEN_l1_7c37df52 (clean, no git diff.* config), sbatch copies /projects/b5dh/l1_sbatch_7c37df52 (all carry the pin; S6 literal gate OK 298cac3b)
+Jobs: l1_smoke_S1 7511060, l1_smoke_S5 7511061, l1_smoke_S6 7511062 (120 steps, 4 GPU, 25 min limit). Nothing depends on them via sbatch. Next: GATE 1 (S1/S5 -F stop check + optimizer probe --smoke 120) before B0/B0b; GATE 2 (S6) before the S6 full job. NHR before this block: sacct elapsed-based 10.83 node-hours since 2026-10-17T16:00Z (all jobs incl. DDAD refs, A4 runs); cap check 10.83 + 0.3 smokes + 9.3 Stage 1 reserve = 20.4 <= 45.
