@@ -122,8 +122,10 @@ def test_pins_fire():
         S.assert_pins({"a": "x"}, reg)                                        # missing
     with pytest.raises(AssertionError, match="UNSET"):
         S.assert_pins({}, {"a": S.UNSET})
-    with pytest.raises(AssertionError, match="UNSET"):
-        S.assert_pins({k: ("z" if v == S.UNSET else v) for k, v in S.PINS.items()})                               # the draft scorer has unset pins and refuses real runs
+    for k in S.PINS:                                                                                             # filled pins (pin fill 2/3): any single UNSET pin in a copy still refuses
+        bad = dict(S.PINS); bad[k] = S.UNSET
+        with pytest.raises(AssertionError, match="UNSET"):
+            S.assert_pins(dict(S.PINS), bad)
     assert "scorer_sha" not in S.PINS                                         # D1: the scorer's own sha is pinned OUTSIDE the file (--expect-scorer-sha)
     assert {"meta_sha", "clips_sha", "objects_sha", "frames_sha"} <= set(S.PINS)
 
@@ -456,7 +458,7 @@ def test_pins_equal_actual_file_shas():
     for k in actual:
         assert S.PINS[k] in rb, f"RUNBOOK_STAGE1.md pin table does not carry PINS.{k}"
     for k in ("mask_sha", "meta_sha", "sums_sha"):
-        assert S.PINS[k] == S.UNSET                                              # these fill after the mask build / download
+        assert S.PINS[k] != S.UNSET and len(S.PINS[k]) == 64                       # filled: frozen mask set (Auditor O57), SHA256SUMS of the R1 list
 
 
 def test_registered_rule_literal_equals_the_builders_rule():
@@ -533,8 +535,12 @@ def test_D1_check_registry_pin_refuses_unset_and_mismatch():
         S.check_registry_pin("a" * 64, {})
     with pytest.raises(AssertionError, match="pinned registry_sha"):
         S.check_registry_pin("a" * 64, {"registry_sha": "b" * 64})
-    with pytest.raises(AssertionError, match="registry_sha is UNSET"):
-        S.check_registry_pin("a" * 64)                                          # the real PINS: still UNSET
+    with pytest.raises(AssertionError, match="pinned registry_sha"):
+        S.check_registry_pin("a" * 64)                                          # the real PINS (filled): a wrong registry sha is refused
+    reg = Path(__file__).resolve().parents[1] / "av2_stage1_ckpts.txt"
+    S.check_registry_pin(A.sha256_file(reg))                                    # the committed registry file IS the pinned one
+    lines = [l for l in reg.read_text().splitlines() if l.startswith("CKPT_SHA ")]
+    assert len(lines) == 6 and all(len(l.split(" = ")[1]) == 64 for l in lines) and len({l.split(" = ")[1] for l in lines}) == 6
 
 
 # ---------------------------------------------------------------- D2: cfg hash, recursive diff, forbidden keys

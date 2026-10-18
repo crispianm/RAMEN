@@ -20,9 +20,9 @@ EXPECT_SCORER_SHA = <FILLED_AFTER_FINAL_COMMIT>
 | `av2_dataset.py` | 52b3eb9c3d63479cb8efe5a61f15078fbbcb68b349c2771a2b2609f7a9fd31ae | scorer PINS.dataset_module_sha (= the mask meta's `dataset_module_sha`; test_pins_equal_actual_file_shas) |
 | `build_av2_masks.py` | 718be61453e894356f3c10b3111af688840f5bdb1911cc0e2729cf1cad5ae2bc | PINS.builder_sha = mask meta `builder_sha` (N4) |
 | `seg/make_sky_mask.py` | 31b18f51aed452f575019eee1ad463ee3b6d277ba9945ee505a1baaea16f29e1 | PINS.make_sky_mask_sha = mask meta `make_sky_mask_sha` (N4) |
-| `av2_stage1_ckpts.txt` (six CKPT_SHA lines) | filled after the six runs (step 3 above); PINS.registry_sha is `UNSET` until then | scorer PINS.registry_sha, asserted at scoring AND at compare |
+| `av2_stage1_ckpts.txt` (six CKPT_SHA lines, filled in pin fill 1/3 after the N7 dry run on the real files) | registry_sha 1289688ffe4ad75a2545bfd40bd4cb36832e501f266220cb71c387d1bc93bb0b (pin fill 2/3) | scorer PINS.registry_sha, asserted at scoring and at compare |
 | `outdoor_debug/parts/LR_DEV/ddad_scorer.py` | 8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503 | PINS.ddad_scorer_sha |
-| `sky_masks.npz` / `sky_masks.meta.json` / `SHA256SUMS` | filled after the mask build / download (PINS.mask_sha, meta_sha, sums_sha are `UNSET` until then; the scorer refuses while any is UNSET) | scorer PINS |
+| `sky_masks.npz` / `sky_masks.meta.json` / `SHA256SUMS` (FROZEN mask set, Auditor O57; filled in pin fill 2/3) | mask_sha de2e9ca4177691ee6e3b904481e4177346192afdf617f24eb2c147c93258f1b1; meta_sha 10285355e791c9e9032ecb5b00d51c412065e7741b698f0f19a493966e4fa073; sums_sha (meta_R1/SHA256SUMS) 4ecb4581fd8d7b96f451fcdc234e953c139a8163842ca8afe3eb4706d777a963 | scorer PINS (mask_sha, meta_sha, sums_sha) |
 
 The scorer also asserts, from the mask meta: `rule` == the registered RULE dict (prob 0.9, erosion 8 px @ 900 ref, LiDAR 5 px @ 900 ref, drop 0.01, any_p 0.5, IoU 0.85, work short 512, mult 32, seed 0, ADE sky id 2, Cityscapes sky id 10) and the recorded `builder_sha` / `make_sky_mask_sha` / `dataset_module_sha` equal both the PINS and the files on disk (the git commit is recorded too, informational).
 

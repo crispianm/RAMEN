@@ -33,8 +33,9 @@ UNSET = "UNSET"
 # ---- pins: filled in the registration BEFORE the first prediction. UNSET makes assert_pins fail (a scorer with unset pins cannot run on real data).
 # The scorer's OWN sha is NOT in this dict (it cannot contain its own hash): it is passed from outside as --expect-scorer-sha (check_scorer_sha).
 PINS = dict(logs_sha="f7f508f958e8e9d173772677d239c7a53165a0fb67520a68a4bfcf134592e370", **A.REGISTERED_SHAS,        # frames_sha, clips_sha, objects_sha
-            mask_sha=UNSET, meta_sha=UNSET, sums_sha=UNSET,                                                      # fill after the mask build / download
-            registry_sha=UNSET,                                    # D1: sha256 of av2_stage1_ckpts.txt; filled AFTER the six runs exist and the six CKPT_SHA lines are committed (RUNBOOK_STAGE1.md order)
+            mask_sha="de2e9ca4177691ee6e3b904481e4177346192afdf617f24eb2c147c93258f1b1", meta_sha="10285355e791c9e9032ecb5b00d51c412065e7741b698f0f19a493966e4fa073",   # frozen mask set (Auditor O57)
+            sums_sha="4ecb4581fd8d7b96f451fcdc234e953c139a8163842ca8afe3eb4706d777a963",                          # meta_R1/SHA256SUMS of the R1 object list (verified 0 mismatches)
+            registry_sha="1289688ffe4ad75a2545bfd40bd4cb36832e501f266220cb71c387d1bc93bb0b",                                    # D1: sha256 of av2_stage1_ckpts.txt; filled AFTER the six runs exist and the six CKPT_SHA lines are committed (RUNBOOK_STAGE1.md order)
             dataset_module_sha="52b3eb9c3d63479cb8efe5a61f15078fbbcb68b349c2771a2b2609f7a9fd31ae",      # av2_dataset.py (test_pins_equal_actual_file_shas)
             ddad_scorer_sha="8e71511b1192a1a15797a71482c40b547bac7d905641b7d2f145ad1da079a503",       # outdoor_debug/parts/LR_DEV/ddad_scorer.py
             builder_sha="718be61453e894356f3c10b3111af688840f5bdb1911cc0e2729cf1cad5ae2bc",            # build_av2_masks.py
