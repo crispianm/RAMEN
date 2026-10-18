@@ -1,0 +1,154 @@
+{
+ "label": "confirmatory STRICT, Stage 1 (AV2 sensor val, held out); three paired starts s50/s51/s52; primary = predicted sky depth by design, NOT accuracy",
+ "stage": 1,
+ "disclosure": "Stage 1: THREE paired 2000-step continuations (n46/s50, n47/s51, n48/s52); 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard. P measures what the H300 hinge enforces by design (a PASS shows transfer of the hinge's effect, not accuracy; the guards carry the information). TS2+H300 was chosen after the screen on a descriptive sky secondary and was NOT BETTER on its primary (the screen primary).",
+ "d_per_pair": {
+  "s50": 0.5149167843272181,
+  "s51": 0.5352375696863836,
+  "s52": 0.577195860352633
+ },
+ "d_mean": 0.5424500714554116,
+ "d_min": 0.5149167843272181,
+ "ln_margin": 0.4054651081081644,
+ "guards_pass_all": false,
+ "guards_unevaluable": [],
+ "per_pair": {
+  "s50": {
+   "label": "confirmatory STRICT, Stage 1 (AV2 sensor val, held out); three paired starts s50/s51/s52; primary = predicted sky depth by design, NOT accuracy",
+   "stage": 1,
+   "disclosure": "Stage 1: THREE paired 2000-step continuations (n46/s50, n47/s51, n48/s52); 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard. P measures what the H300 hinge enforces by design (a PASS shows transfer of the hinge's effect, not accuracy; the guards carry the information). TS2+H300 was chosen after the screen on a descriptive sky secondary and was NOT BETTER on its primary (the screen primary).",
+   "d_ln_PH300_over_PTS2": 0.5149167843272181,
+   "ln_margin": 0.4054651081081644,
+   "P_H300": 444.6427917480469,
+   "P_TS2": 265.6964416503906,
+   "guards": {
+    "[0,20)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9809462196225802,
+     "n_px_H300": 3092580,
+     "n_px_TS2": 3092580
+    },
+    "[20,50)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9965327250003788,
+     "n_px_H300": 3920073,
+     "n_px_TS2": 3920073
+    },
+    "[50,80)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9941159993803326,
+     "n_px_H300": 1330834,
+     "n_px_TS2": 1330834
+    },
+    "[80,120)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9952605823740902,
+     "n_px_H300": 664051,
+     "n_px_TS2": 664051
+    },
+    "[120,200]": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9997762468240079,
+     "n_px_H300": 358089,
+     "n_px_TS2": 358089
+    }
+   },
+   "guards_pass": true,
+   "guards_unevaluable": [],
+   "verdict": "CONFIRMED",
+   "rule": "CONFIRMED iff d>=ln1.5 AND all guards pass; 0<d<ln1.5 NOT CONFIRMED; d<=0 REFUTED"
+  },
+  "s51": {
+   "label": "confirmatory STRICT, Stage 1 (AV2 sensor val, held out); three paired starts s50/s51/s52; primary = predicted sky depth by design, NOT accuracy",
+   "stage": 1,
+   "disclosure": "Stage 1: THREE paired 2000-step continuations (n46/s50, n47/s51, n48/s52); 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard. P measures what the H300 hinge enforces by design (a PASS shows transfer of the hinge's effect, not accuracy; the guards carry the information). TS2+H300 was chosen after the screen on a descriptive sky secondary and was NOT BETTER on its primary (the screen primary).",
+   "d_ln_PH300_over_PTS2": 0.5352375696863836,
+   "ln_margin": 0.4054651081081644,
+   "P_H300": 449.33726501464844,
+   "P_TS2": 263.10052490234375,
+   "guards": {
+    "[0,20)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0046169452096545,
+     "n_px_H300": 3092580,
+     "n_px_TS2": 3092580
+    },
+    "[20,50)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0168792498769306,
+     "n_px_H300": 3920073,
+     "n_px_TS2": 3920073
+    },
+    "[50,80)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0247501846078784,
+     "n_px_H300": 1330834,
+     "n_px_TS2": 1330834
+    },
+    "[80,120)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0283763987314274,
+     "n_px_H300": 664051,
+     "n_px_TS2": 664051
+    },
+    "[120,200]": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.9721819461648693,
+     "n_px_H300": 358089,
+     "n_px_TS2": 358089
+    }
+   },
+   "guards_pass": true,
+   "guards_unevaluable": [],
+   "verdict": "CONFIRMED",
+   "rule": "CONFIRMED iff d>=ln1.5 AND all guards pass; 0<d<ln1.5 NOT CONFIRMED; d<=0 REFUTED"
+  },
+  "s52": {
+   "label": "confirmatory STRICT, Stage 1 (AV2 sensor val, held out); three paired starts s50/s51/s52; primary = predicted sky depth by design, NOT accuracy",
+   "stage": 1,
+   "disclosure": "Stage 1: THREE paired 2000-step continuations (n46/s50, n47/s51, n48/s52); 3 pairs size the pair-to-pair spread only roughly; the A0/A0b screen pair showed 26% spread on a guard. P measures what the H300 hinge enforces by design (a PASS shows transfer of the hinge's effect, not accuracy; the guards carry the information). TS2+H300 was chosen after the screen on a descriptive sky secondary and was NOT BETTER on its primary (the screen primary).",
+   "d_ln_PH300_over_PTS2": 0.577195860352633,
+   "ln_margin": 0.4054651081081644,
+   "P_H300": 426.0826721191406,
+   "P_TS2": 239.23289489746094,
+   "guards": {
+    "[0,20)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.995854902254937,
+     "n_px_H300": 3092580,
+     "n_px_TS2": 3092580
+    },
+    "[20,50)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0297797913598996,
+     "n_px_H300": 3920073,
+     "n_px_TS2": 3920073
+    },
+    "[50,80)": {
+     "status": "FAIL",
+     "absrel_ratio_H300_over_TS2": 1.0521351372661396,
+     "n_px_H300": 1330834,
+     "n_px_TS2": 1330834
+    },
+    "[80,120)": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 1.0394937181168569,
+     "n_px_H300": 664051,
+     "n_px_TS2": 664051
+    },
+    "[120,200]": {
+     "status": "PASS",
+     "absrel_ratio_H300_over_TS2": 0.972391901894965,
+     "n_px_H300": 358089,
+     "n_px_TS2": 358089
+    }
+   },
+   "guards_pass": false,
+   "guards_unevaluable": [],
+   "verdict": "NOT CONFIRMED",
+   "rule": "CONFIRMED iff d>=ln1.5 AND all guards pass; 0<d<ln1.5 NOT CONFIRMED; d<=0 REFUTED"
+  }
+ },
+ "verdict": "NOT CONFIRMED",
+ "rule": "CONFIRMED iff all 3 pair d >= ln1.5 AND mean d >= ln1.5 AND all guards pass in every pair; REFUTED iff any d_i <= 0; unevaluable guard never passes; else NOT CONFIRMED; min/max d_i = pair spread"
+}
