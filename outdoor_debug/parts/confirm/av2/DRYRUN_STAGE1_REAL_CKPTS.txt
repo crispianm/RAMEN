@@ -1,0 +1,10 @@
+s50 TS2: sha256 e456cc4c195d10bb8ff170e11ba1cac55fbf507531c66b9290ff61e883874847 step 14000 cfg_sha256 bfa9a1f3ade9ed73 | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s50 H300: sha256 81fda101ba71a950dc3ce3b05cb611c5c319eedc4fb3562280b32a9a6861fd90 step 14000 cfg_sha256 0c74b8fa22f1f757 | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s51 TS2: sha256 d87fc83919b7c62ba3180e8521c5206f4222e7fa949f5ac78b390659349597d2 step 14000 cfg_sha256 984c73c71fa3a18d | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s51 H300: sha256 352ab4ad881b151c4d3b95b0e2ba96476e19f6b74d7ddacfc9ac532d5650d6eb step 14000 cfg_sha256 d3a70c642454c515 | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s52 TS2: sha256 64412d451131a49f300b3186ba8e7891285ff5e222186de3a1089e7f99a95292 step 14000 cfg_sha256 7d056b12a4df3e10 | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s52 H300: sha256 2e38f44ed36bf16b825368ba1d1bb03310f3aeff9e1a817eeb8015fb7951fff7 step 14000 cfg_sha256 660eed233e0b23ab | real-file facts PASS | negative controls: other-arm label refused=True, other-pair label refused=True
+s50: H300 vs TS2 stored-cfg differing keys = ['loss.sky_hinge_min_depth', 'loss.sky_hinge_weight', 'training.checkpoint_dir'] -> within the allowed set
+s51: H300 vs TS2 stored-cfg differing keys = ['loss.sky_hinge_min_depth', 'loss.sky_hinge_weight', 'training.checkpoint_dir'] -> within the allowed set
+s52: H300 vs TS2 stored-cfg differing keys = ['loss.sky_hinge_min_depth', 'loss.sky_hinge_weight', 'training.checkpoint_dir'] -> within the allowed set
+N7 DRY RUN: ALL PASS
