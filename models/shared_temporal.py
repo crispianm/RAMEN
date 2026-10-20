@@ -24,7 +24,10 @@ import torch.nn.functional as F
 WIDTHS = {"full": dict(stem_channels=16, down_channels_0=32, down_channels_1=64, output_mid_channels=32),
           "slim": dict(stem_channels=8, down_channels_0=16, down_channels_1=32, output_mid_channels=16),
           # DN-01 design (c) c2: the 2x-wide SECOND restorer block (1,248,882 params; temp2 full is 321,618)
-          "wide2x": dict(stem_channels=32, down_channels_0=64, down_channels_1=128, output_mid_channels=64)}
+          "wide2x": dict(stem_channels=32, down_channels_0=64, down_channels_1=128, output_mid_channels=64),
+          # RAMEN-L only (experimental restorer scale-up of the gated SECOND block; unused by every Tables 1/2 config)
+          "wide3x": dict(stem_channels=48, down_channels_0=96, down_channels_1=192, output_mid_channels=96),
+          "wide4x": dict(stem_channels=64, down_channels_0=128, down_channels_1=256, output_mid_channels=128)}
 
 
 class _Gate(nn.Module):

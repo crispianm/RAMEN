@@ -1,0 +1,7 @@
+extends: ramen_l_c3_n46.yaml
+
+# RAMEN-L, restorer NOT scaled: the gated second block stays at wide2x (1.25 M params), exactly as in RAMEN-S (encoder-only change).
+model:
+  st_stage2_width: wide2x
+training:
+  checkpoint_dir: runs/ramen_l_c3_n46_r2x

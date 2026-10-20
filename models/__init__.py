@@ -110,7 +110,9 @@ def build_model(cfg: dict):
                       post_wiener=bool(m.get("post_wiener", False)),
                       frontend_depth_branch=bool(m.get("frontend_depth_branch", False)),
                       frontend_depth_grad=str(m.get("frontend_depth_grad", "branch")),
-                      frontend_trunk_grad=float(m.get("frontend_trunk_grad", 1.0)))
+                      frontend_trunk_grad=float(m.get("frontend_trunk_grad", 1.0)),
+                      checkpoint_sha256=m.get("vda_checkpoint_sha256"),            # RAMEN-L: refuse a released file whose sha256 differs
+                      encoder_grad_ckpt=bool(m.get("vda_encoder_grad_ckpt", False)))  # RAMEN-L: recompute the frozen trunk in backward
         if m.get("shared_temporal"):   # DN-01 final-v2 shared-temporal arms (models/shared_temporal.py)
             from .shared_temporal import SharedTemporalNet
             return SharedTemporalNet(net, width=str(m.get("st_width", "full")), inject=bool(m.get("st_inject", True)),

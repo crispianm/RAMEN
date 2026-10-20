@@ -1,0 +1,7 @@
+extends: ramen_l_smoke.yaml
+
+# RAMEN-L smoke with the second restorer block at wide2x (fallback if the wide4x smoke runs out of memory). Not a result.
+model:
+  st_stage2_width: wide2x
+training:
+  checkpoint_dir: runs/ramen_l_smoke_r2x

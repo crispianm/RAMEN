@@ -1,0 +1,20 @@
+extends: dn01_c3rep_20261009_c3_n46.yaml
+
+# RAMEN-L (EXPERIMENTAL, no paper claims): the Tables 1/2 recipe (C3 data mix, seed 46, 12000 steps, loss weights, LR schedule,
+# batch 1 x accum 4 x 4 GPUs) with ONLY these differences from dn01_c3rep_20261009_c3_n46.yaml:
+#   * encoder + init = the released Metric-Video-Depth-Anything-LARGE (ViT-L), frozen; DPT head + motion modules start from it
+#   * the gated second restorer block is scaled up (st_stage2_width wide4x; wide2x = unscaled, see ramen_l_c3_n46_r2x.yaml)
+#   * vda_encoder_grad_ckpt: recompute the frozen trunk in backward (numerically identical; the ViT-L trunk with naive attention
+#     does not fit 32 frames x 518^2 per GPU otherwise)
+# The weights are NEVER part of the repository: ${RAMEN_WEIGHTS}/<file> is expanded at run time and the sha256 below is enforced.
+# Licence note: the Video-Depth-Anything-Large checkpoints are released under CC-BY-NC-4.0 (non-commercial); a RAMEN-L checkpoint inherits it.
+model:
+  vda_encoder: vitl
+  vda_init: released
+  metric: true
+  vda_checkpoint_path: ${RAMEN_WEIGHTS}/metric_video_depth_anything_vitl.pth
+  vda_checkpoint_sha256: 24eba25342e7ee0f054be25da6a852ebd7cfa40cd6bf41a353ecb6abfe24e620
+  vda_encoder_grad_ckpt: true
+  st_stage2_width: wide4x
+training:
+  checkpoint_dir: runs/ramen_l_c3_n46
