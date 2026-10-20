@@ -2,13 +2,17 @@
 """RAMEN-L submit preflight (experimental ViT-L variant). Reads files and the git state, optionally builds the model on CPU.
 Exit 2 and `REFUSED: ...` lines on any failure; `PREFLIGHT OK` otherwise. Every expected value below is a literal in THIS file.
 
-  python3 -I scripts/ramen_l_preflight.py --config configs/experiments/ramen_l_c3_n46.yaml [--smoke] --pin <40hex> \
+  python3 -I scripts/ramen_l_preflight.py --config configs/experiments/ramen_l_c3_n46.yaml [--smoke | --resume] --pin <40hex> \
       --out-dir runs/ramen_l_c3_n46 [--weights /path/to/metric_video_depth_anything_vitl.pth] [--build] [--no-git]
 
 Checks: (1) HEAD == pin and a clean tree; (2) the released Metric-VDA-L file: size + sha256; (3) the RESOLVED config equals the resolved
 Tables 1/2 config (dn01_c3rep_20261009_c3_n46) except for an allow-listed set of keys (nothing else may differ: data mix, seed, loss, LR, batch);
 (4) the config pins the same weights sha; (5) every path the config names exists; (6) the output dir is absent; (7) --build: the ViT-L model
-builds from the file (strict load), embed_dim 1024 / 24 blocks / DPT width 256, trainable parameter count == the literal for the chosen restorer."""
+builds from the file (strict load), embed_dim 1024 / 24 blocks / DPT width 256, trainable parameter count == the literal for the chosen restorer.
+--resume (second segment of a run that hit the wall limit; config = <full config stem>_resume.yaml or --full-config): the out dir MUST exist and hold last.pt; the only
+config difference from the full config is training.resume_from == <checkpoint_dir>/last.pt (relative, inside the out dir); last.pt must be a resumable checkpoint
+(optimizer, rng, ema, trainable, cfg, step, micro), 500 <= step <= 11500 and a multiple of 500, with ViT-L-shaped tensors, and its saved cfg must resolve to the
+SAME config as the committed full config (both segments are one recipe)."""
 import argparse, hashlib, json, os, re, subprocess, sys
 from pathlib import Path
 
@@ -46,9 +50,64 @@ def flat(d, p=""):
     return out
 
 
+def _rel_inside(p, d):
+    """True if p is a relative path of the form <d>/<name> without parent references."""
+    return isinstance(p, str) and not p.startswith(("/", "~", "$")) and ".." not in Path(p).parts and Path(p).parent == Path(d)
+
+
+def check_resume(a, cfg, fc, R, train):
+    """--resume: every refusal is appended through R. Returns a short note for the OK line."""
+    out = a.out_dir
+    if not out:
+        R("--resume needs --out-dir"); return ""
+    rf = fc.get("training.resume_from")
+    if rf != f"{out}/last.pt" or not _rel_inside(rf, out):
+        R(f"training.resume_from {rf!r} must be the relative path '{out}/last.pt' inside the out dir")
+    full_path = Path(a.full_config) if a.full_config else Path(re.sub(r"_resume(\.ya?ml)$", r"\1", a.config))
+    if str(full_path) == str(a.config):
+        R("resume config must be named <full config>_resume.yaml or --full-config must be given"); return ""
+    full = train.load_config(full_path)
+    ff = flat(full)
+    d = {k for k in set(fc) | set(ff) if fc.get(k) != ff.get(k)}
+    if d - {"training.resume_from"}:
+        R("resume config differs from the full config beyond training.resume_from: " + ", ".join(sorted(d - {"training.resume_from"})))
+    if ff.get("training.resume_from"):
+        R("the full config itself carries training.resume_from")
+    od = REPO / out
+    last = REPO / (rf or "")
+    if not od.is_dir():
+        R(f"--resume: out dir {out} does not exist"); return ""
+    if not last.is_file():
+        R(f"--resume: {out}/last.pt does not exist"); return ""
+    import torch
+    try:
+        ck = torch.load(last, map_location="cpu", weights_only=False)
+    except Exception as e:
+        R(f"last.pt unreadable: {type(e).__name__}: {str(e)[:100]}"); return ""
+    miss = [k for k in ("optimizer", "rng", "ema", "step", "micro", "cfg") if k not in ck] + ([] if ("trainable" in ck or "trainable_ema" in ck) else ["trainable"])
+    if miss:
+        R(f"last.pt is not a resumable checkpoint (train.py needs optimizer and rng): missing {miss}"); return ""
+    step = int(ck["step"])
+    if not a.allow_any_step and not (500 <= step <= 12000 - 500 and step % 500 == 0):
+        R(f"last.pt step {step}: must be a multiple of 500 in [500, 11500] (12000 = already finished)")
+    if a.expect_step is not None and step != a.expect_step:
+        R(f"last.pt step {step} != --expect-step {a.expect_step}")
+    sj = lambda d_: json.dumps(d_, sort_keys=True)
+    if sj(ck["cfg"]) not in (sj(full), sj(cfg)):
+        bk = ck["cfg"]; dk = sorted(k for k in set(flat(bk)) | set(ff) if flat(bk).get(k) != ff.get(k))
+        R(f"last.pt saved cfg does not resolve to the committed full config (nor to this resume config); differing keys {dk[:6]}")
+    tr = ck.get("trainable_ema", ck.get("trainable")) or {}
+    p0 = next((v for k, v in tr.items() if k.endswith("projects.0.weight")), None)
+    if p0 is None or list(p0.shape) != [256, 1024, 1, 1]:
+        R(f"last.pt trainable tensors are not ViT-L shaped (DPT projects.0 {None if p0 is None else list(p0.shape)})")
+    return f" resume_step={step}"
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", required=True); ap.add_argument("--smoke", action="store_true"); ap.add_argument("--pin"); ap.add_argument("--out-dir")
+    ap.add_argument("--config", required=True); ap.add_argument("--smoke", action="store_true"); ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--full-config", help="resume mode: the committed full config the checkpoint was trained with (default: --config with a trailing _resume removed)"); ap.add_argument("--expect-step", type=int, help="resume mode: last.pt must be at exactly this step")
+    ap.add_argument("--allow-any-step", action="store_true", help="CONTROL ONLY: skip the step range / multiple-of-500 rule"); ap.add_argument("--pin"); ap.add_argument("--out-dir")
     ap.add_argument("--weights"); ap.add_argument("--build", action="store_true"); ap.add_argument("--no-git", action="store_true", help="CONTROL ONLY")
     ap.add_argument("--no-paths", action="store_true", help="CONTROL ONLY: skip the data-path existence checks"); ap.add_argument("--weights-size", type=int, default=WEIGHTS_SIZE, help="CONTROL ONLY")
     ap.add_argument("--base-resolved-sha", default=BASE_RESOLVED_SHA, help="CONTROL ONLY"); ap.add_argument("--weights-sha", default=WEIGHTS_SHA, help="CONTROL ONLY")
@@ -85,7 +144,9 @@ def main(argv=None):
         R(f"resolved Tables 1/2 config sha {bsha} != literal {a.base_resolved_sha} (the baseline config drifted)")
     fc, fb = flat(cfg), flat(base)
     diff = {k for k in set(fc) | set(fb) if fc.get(k) != fb.get(k)}
-    allowed = ALLOWED_DIFF | (SMOKE_DIFF if a.smoke else set())
+    if a.resume and a.smoke:
+        R("--resume and --smoke are exclusive")
+    allowed = ALLOWED_DIFF | (SMOKE_DIFF if a.smoke else set()) | ({"training.resume_from"} if a.resume else set())
     if diff - allowed:
         R("keys differ from the Tables 1/2 recipe outside the allow-list: " + ", ".join(f"{k}: {fb.get(k)!r} -> {fc.get(k)!r}" for k in sorted(diff - allowed)))
     if not a.smoke and (SMOKE_DIFF & diff):
@@ -113,8 +174,13 @@ def main(argv=None):
         for k in ("root", "gt_root", "extra_root"):
             if isinstance(s.get(k), str) and not Path(s[k]).exists():
                 R(f"data.sources[{i}].{k} does not exist: {s[k]}")
-    if a.out_dir and (REPO / a.out_dir).exists():
+    resume_note = ""
+    if a.resume:
+        resume_note = check_resume(a, cfg, fc, R, train)
+    elif a.out_dir and (REPO / a.out_dir).exists():
         R(f"output dir {a.out_dir} already exists")
+    elif fc.get("training.resume_from"):
+        R("training.resume_from is set but --resume was not given")
     n_params = None
     if a.build and not bad:
         import torch
@@ -136,7 +202,7 @@ def main(argv=None):
         for b in bad:
             print("REFUSED: " + b)
         return 2
-    print(f"PREFLIGHT OK (ramen-l) config={a.config} smoke={a.smoke} stage2={fc['model.st_stage2_width']} weights_sha={a.weights_sha[:12]} trainable_params={n_params}")
+    print(f"PREFLIGHT OK (ramen-l) config={a.config} smoke={a.smoke} resume={a.resume}{resume_note} stage2={fc['model.st_stage2_width']} weights_sha={a.weights_sha[:12]} trainable_params={n_params}")
     return 0
 
 

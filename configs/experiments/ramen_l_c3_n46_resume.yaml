@@ -1,0 +1,7 @@
+extends: ramen_l_c3_n46.yaml
+
+# RAMEN-L segment 2: continue the same run from its last resumable checkpoint after the wall limit. ONLY training.resume_from is added;
+# checkpoint_dir is inherited, so the run directory (metrics, throughput, step snapshots) continues. train.py creates the directory with
+# exist_ok, restores weights, optimizer, EMA, step counter and RNG, and keeps the closed-form LR schedule on the global step.
+training:
+  resume_from: runs/ramen_l_c3_n46/last.pt
