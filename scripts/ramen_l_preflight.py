@@ -27,6 +27,12 @@ SMOKE_DIFF = {"training.max_steps", "training.lr_decay_steps", "training.checkpo
 WANT = {"model.vda_encoder": "vitl", "model.vda_init": "released", "model.metric": True, "model.shared_temporal": True, "model.st_depth_input": "restored",
         "data.seed": 46, "training.warmup_steps": 500, "training.batch_size": 1, "training.grad_accum": 4, "training.learning_rate": 0.0001,
         "model.vda_encoder_grad_ckpt": True}
+# --profile ft: the depth-only VDA-L fine-tune (configs/experiments/vdal_ft_n46.yaml). Baseline = the paper's VDA-S FT config, no restorer, no st_stage2_width.
+FT_BASE_CFG = "configs/experiments/dn01_c3rep_20261009_ft_n46.yaml"
+FT_BASE_RESOLVED_SHA = "2b9b6546657b74f0fd937cd12710e560e75bfa9a4809f0d65b0726ba0e68ad79"   # sha256 of json.dumps(load_config(FT_BASE_CFG), sort_keys=True)
+FT_ALLOWED_DIFF = ALLOWED_DIFF - {"model.st_stage2_width"}
+FT_WANT = {k: v for k, v in WANT.items() if k not in ("model.shared_temporal", "model.st_depth_input")}
+FT_TRAINABLE = 80021697                                          # DPT head incl. motion modules of Metric-VDA-L; nothing else is trainable
 STAGE2 = {"wide2x", "wide3x", "wide4x"}
 # trainable parameters per restorer width: DPT head (incl. 49.07 M motion modules) 80,021,697 + temp2 321,618 + block2 + two scalar gates
 TRAINABLE = {"wide2x": 80021697 + 321618 + 1248882 + 2, "wide3x": 80021697 + 321618 + 2784402 + 2, "wide4x": 80021697 + 321618 + 4928178 + 2}
@@ -109,9 +115,13 @@ def main(argv=None):
     ap.add_argument("--full-config", help="resume mode: the committed full config the checkpoint was trained with (default: --config with a trailing _resume removed)"); ap.add_argument("--expect-step", type=int, help="resume mode: last.pt must be at exactly this step")
     ap.add_argument("--allow-any-step", action="store_true", help="CONTROL ONLY: skip the step range / multiple-of-500 rule"); ap.add_argument("--pin"); ap.add_argument("--out-dir")
     ap.add_argument("--weights"); ap.add_argument("--build", action="store_true"); ap.add_argument("--no-git", action="store_true", help="CONTROL ONLY")
+    ap.add_argument("--profile", choices=("ft",), default=None, help="ft = depth-only VDA-L fine-tune (baseline: the VDA-S FT config); default = RAMEN-L vs Tables 1/2")
     ap.add_argument("--no-paths", action="store_true", help="CONTROL ONLY: skip the data-path existence checks"); ap.add_argument("--weights-size", type=int, default=WEIGHTS_SIZE, help="CONTROL ONLY")
     ap.add_argument("--base-resolved-sha", default=BASE_RESOLVED_SHA, help="CONTROL ONLY"); ap.add_argument("--weights-sha", default=WEIGHTS_SHA, help="CONTROL ONLY")
     a = ap.parse_args(argv)
+    ft = a.profile == "ft"
+    if ft and a.base_resolved_sha == BASE_RESOLVED_SHA:
+        a.base_resolved_sha = FT_BASE_RESOLVED_SHA
     bad = []
     R = bad.append
     if not a.no_git:
@@ -138,7 +148,7 @@ def main(argv=None):
     sys.path.insert(0, str(REPO)); sys.dont_write_bytecode = True
     import train
     cfg = train.load_config(Path(a.config))
-    base = train.load_config(REPO / BASE_CFG)
+    base = train.load_config(REPO / (FT_BASE_CFG if ft else BASE_CFG))
     bsha = hashlib.sha256(json.dumps(base, sort_keys=True).encode()).hexdigest()
     if bsha != a.base_resolved_sha:
         R(f"resolved Tables 1/2 config sha {bsha} != literal {a.base_resolved_sha} (the baseline config drifted)")
@@ -146,15 +156,18 @@ def main(argv=None):
     diff = {k for k in set(fc) | set(fb) if fc.get(k) != fb.get(k)}
     if a.resume and a.smoke:
         R("--resume and --smoke are exclusive")
-    allowed = ALLOWED_DIFF | (SMOKE_DIFF if a.smoke else set()) | ({"training.resume_from"} if a.resume else set())
+    allowed = (FT_ALLOWED_DIFF if ft else ALLOWED_DIFF) | (SMOKE_DIFF if a.smoke else set()) | ({"training.resume_from"} if a.resume else set())
     if diff - allowed:
         R("keys differ from the Tables 1/2 recipe outside the allow-list: " + ", ".join(f"{k}: {fb.get(k)!r} -> {fc.get(k)!r}" for k in sorted(diff - allowed)))
     if not a.smoke and (SMOKE_DIFF & diff):
         R("a full run may not change " + ", ".join(sorted(SMOKE_DIFF & diff)))
-    for k, v in WANT.items():
+    for k, v in (FT_WANT if ft else WANT).items():
         if fc.get(k) != v:
             R(f"config {k} = {fc.get(k)!r}, want {v!r}")
-    if fc.get("model.st_stage2_width") not in STAGE2:
+    if ft:
+        if fc.get("model.st_stage2_width") is not None or fc.get("model.shared_temporal"):
+            R("ft profile: model.st_stage2_width / model.shared_temporal must be absent (no restorer)")
+    elif fc.get("model.st_stage2_width") not in STAGE2:
         R(f"model.st_stage2_width {fc.get('model.st_stage2_width')!r} not in {sorted(STAGE2)}")
     if fc.get("model.vda_checkpoint_sha256") != a.weights_sha:
         R(f"config model.vda_checkpoint_sha256 {fc.get('model.vda_checkpoint_sha256')!r} != the preflight literal")
@@ -190,19 +203,19 @@ def main(argv=None):
             bcfg["model"]["st_temp2_init"] = None
         bcfg["model"]["vda_checkpoint_path"] = str(wpath)             # the file whose sha256 was just verified
         m = build_model(bcfg)
-        c = m.vda.core
+        c = m.core if ft else m.vda.core
         assert (c.pretrained.embed_dim, len(c.pretrained.blocks), c.head.scratch.output_conv1.in_channels) == (1024, 24, 256), "not a ViT-L model"
         n_params = sum(p.numel() for p in m.trainable_parameters())
-        want = TRAINABLE[fc["model.st_stage2_width"]]
+        want = FT_TRAINABLE if ft else TRAINABLE[fc["model.st_stage2_width"]]
         if n_params != want:
-            R(f"trainable parameters {n_params} != literal {want} for {fc['model.st_stage2_width']}")
+            R(f"trainable parameters {n_params} != literal {want} for {'ft' if ft else fc['model.st_stage2_width']}")
         if any(p.requires_grad for p in c.pretrained.parameters()):
             R("encoder is not frozen")
     if bad:
         for b in bad:
             print("REFUSED: " + b)
         return 2
-    print(f"PREFLIGHT OK (ramen-l) config={a.config} smoke={a.smoke} resume={a.resume}{resume_note} stage2={fc['model.st_stage2_width']} weights_sha={a.weights_sha[:12]} trainable_params={n_params}")
+    print(f"PREFLIGHT OK (ramen-l) config={a.config} smoke={a.smoke} resume={a.resume}{resume_note} {'profile=ft' if ft else 'stage2=' + str(fc['model.st_stage2_width'])} weights_sha={a.weights_sha[:12]} trainable_params={n_params}")
     return 0
 
 

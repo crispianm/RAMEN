@@ -74,3 +74,39 @@ def test_baseline_drift_refuses(fake, capsys):
     w, sha, size = fake
     assert run("ramen_l_c3_n46.yaml", w, P.WEIGHTS_SHA, size, "--base-resolved-sha", "0" * 64) == 2
     assert "drifted" in capsys.readouterr().out
+
+
+# ---- --profile ft (depth-only VDA-L fine-tune) ----
+def run_ft(cfg, w, sha, size, *extra):
+    return P.main(["--profile", "ft", "--config", str(ROOT / "configs/experiments" / cfg), "--no-git", "--no-paths", "--weights", str(w), "--weights-sha", sha, "--weights-size", str(size), *extra])
+
+
+def test_ft_profile_positive(fake, monkeypatch, capsys):
+    w, sha, size = fake
+    tmp = ROOT / "configs/experiments" / "_tmp_ft_ctrl.yaml"
+    tmp.write_text(f"extends: vdal_ft_n46.yaml\nmodel:\n  vda_checkpoint_sha256: {sha}\n")
+    try:
+        assert run_ft(tmp.name, w, sha, size) == 0
+        assert "PREFLIGHT OK" in capsys.readouterr().out
+    finally:
+        tmp.unlink()
+
+
+@pytest.mark.parametrize("override,needle", [
+    ("data:\n  seed: 47\n", "outside the allow-list"),          # seed drift
+    ("model:\n  vda_encoder: vits\n", "vda_encoder"),             # wrong encoder
+])
+def test_ft_profile_forced_fails(fake, override, needle, capsys):
+    w, sha, size = fake
+    tmp = ROOT / "configs/experiments" / "_tmp_ft_neg.yaml"
+    tmp.write_text("extends: vdal_ft_n46.yaml\n" + override)
+    try:
+        assert run_ft(tmp.name, w, P.WEIGHTS_SHA, size) == 2
+        assert needle in capsys.readouterr().out
+    finally:
+        tmp.unlink()
+
+
+def test_ft_profile_rejects_ramen_l_config(fake, capsys):
+    w, sha, size = fake
+    assert run_ft("ramen_l_c3_n46.yaml", w, P.WEIGHTS_SHA, size) == 2   # the Tables 1/2-based config is not an FT config

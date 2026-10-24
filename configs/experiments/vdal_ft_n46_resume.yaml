@@ -1,0 +1,6 @@
+extends: vdal_ft_n46.yaml
+
+# VDA-L FT segment 2: continue the same run from its last resumable checkpoint after the wall limit. ONLY training.resume_from is added;
+# checkpoint_dir is inherited, so the run directory continues (same mechanism as ramen_l_c3_n46_resume.yaml).
+training:
+  resume_from: runs/vdal_ft_n46/last.pt
