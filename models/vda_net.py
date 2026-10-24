@@ -61,11 +61,14 @@ never treated as such.
 """
 from __future__ import annotations
 
+import hashlib
+import os
 from pathlib import Path
 import sys
 
 import torch
 import torch.nn as nn
+from torch.utils.checkpoint import checkpoint
 
 _DEFAULT_VDA_REPO = "/mnt/DATA/DegradedDepth/competition/Video-Depth-Anything"
 _DEFAULT_DA_V2_CHECKPOINT = "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/depth_anything_v2_vits.pth"
@@ -78,6 +81,60 @@ _MODEL_CONFIGS = {
     "vitb": {"encoder": "vitb", "features": 128, "out_channels": [96, 192, 384, 768]},
     "vitl": {"encoder": "vitl", "features": 256, "out_channels": [256, 512, 1024, 1024]},
 }
+
+
+# RAMEN-L: expected encoder-side shapes, checked after construction so a wrong ``vda_encoder`` can never
+# train silently (embed_dim of the DINOv2 trunk, DPT ``features``, DPT ``out_channels``, number of blocks).
+_ENCODER_DIMS = {"vits": (384, 12), "vitb": (768, 12), "vitl": (1024, 24)}
+
+
+def _check_encoder_dims(core, encoder: str) -> None:
+    """RAMEN-L: the built trunk/head must be the encoder asked for (a vits/vitl mix-up fails here, not in a loss
+    curve). Skipped for the attributes a scripted test double does not have."""
+    pre, emb, nb = core.pretrained, None, None
+    emb, nb = getattr(pre, "embed_dim", None), getattr(pre, "blocks", None)
+    if emb is not None and nb is not None:
+        want_emb, want_nb = _ENCODER_DIMS[encoder]
+        assert emb == want_emb and len(nb) == want_nb, f"encoder {encoder}: trunk is embed_dim={emb}, blocks={len(nb)}"
+    oc = getattr(getattr(getattr(core, "head", None), "scratch", None), "output_conv1", None)
+    if oc is not None:
+        assert oc.in_channels == _MODEL_CONFIGS[encoder]["features"], f"encoder {encoder}: DPT head width {oc.in_channels}"
+
+
+def sha256_file(path, chunk: int = 1 << 22) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(chunk), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def verify_sha256(path, expected: str | None, what: str) -> None:
+    """Refuse (raise) when ``expected`` is set and the file's sha256 differs; an unset pin is allowed (older configs)."""
+    if not expected:
+        return
+    got = sha256_file(path)
+    if got != str(expected).lower():
+        raise RuntimeError(f"REFUSED: {what} sha256 {got} != pinned {expected} ({path})")
+
+
+def _install_block_checkpointing(blocks) -> None:
+    """RAMEN-L: recompute each frozen DINOv2 block in the backward pass instead of storing its activations. The
+    depth loss reaches the restorer through the encoder (st_depth_input=restored), so a ViT-L trunk on 32 frames of
+    518x518 would otherwise store ~24 blocks of naive (B,H,N,N) attention. Numerically identical to the stored
+    activations (no dropout, same autocast); active only while grad is enabled AND the block input needs grad.
+    Patched once on the block CLASS and switched per instance, so deepcopies (EMA) keep working."""
+    cls = type(blocks[0])
+    if not getattr(cls, "_ramen_ckpt_patched", False):
+        orig = cls.forward
+
+        def forward(self, x):
+            if getattr(self, "_ramen_ckpt", False) and torch.is_grad_enabled() and isinstance(x, torch.Tensor) and x.requires_grad:
+                return checkpoint(orig, self, x, use_reentrant=False)
+            return orig(self, x)
+        cls.forward, cls._ramen_ckpt_patched = forward, True
+    for b in blocks:
+        b._ramen_ckpt = True
 
 
 def refuse_lora(trainable: dict, where: str) -> None:
@@ -112,12 +169,14 @@ class VDANet(nn.Module):
                  lora_rank: int = 0, lora_alpha: float = 16.0, input_adapter: str = "none",
                  frontend: str = "none", frontend_checkpoint: str | None = None, freeze_depth_head: bool = False,
                  post_wiener: bool = False, frontend_depth_branch: bool = False,
-                 frontend_depth_grad: str = "branch", frontend_trunk_grad: float = 1.0):
+                 frontend_depth_grad: str = "branch", frontend_trunk_grad: float = 1.0,
+                 checkpoint_sha256: str | None = None, encoder_grad_ckpt: bool = False):
         super().__init__()
         if encoder not in _MODEL_CONFIGS:
             raise ValueError(f"Unknown VDA encoder={encoder!r}")
         if init not in {"da_v2", "released", "random"}:
             raise ValueError(f"Unknown VDA init={init!r}")
+        repo = os.path.expandvars(repo) if repo else repo
         if repo and not Path(repo).is_dir():
             # TOOL-11's OVDA bug reappearing on VDA: a checkpoint's own saved cfg bakes in
             # the training machine's vda_repo path (e.g. Isambard's /projects/b5dh/...),
@@ -133,6 +192,7 @@ class VDANet(nn.Module):
         from video_depth_anything.video_depth import VideoDepthAnything
 
         self.core = VideoDepthAnything(**_MODEL_CONFIGS[encoder], metric=metric)
+        _check_encoder_dims(self.core, encoder)
         # infer.py's StreamingDepth.step reads PATCH_SIZE off any wrapped model to pad
         # non-patch-multiple frames (TOOL-08) -- read from the encoder itself (DA-V2/DINOv2,
         # patch_size=14 for all of vits/vitb/vitl) rather than hardcoding, same principle as
@@ -142,11 +202,16 @@ class VDANet(nn.Module):
         if init == "released":
             if checkpoint_path is None:
                 raise ValueError("init='released' requires checkpoint_path")
+            checkpoint_path = os.path.expandvars(str(checkpoint_path))   # RAMEN-L: configs name weights as ${RAMEN_WEIGHTS}/<file>
             if not Path(checkpoint_path).is_file():   # TOOL-11 again: a cfg baked on another host (DN-01 FR)
+                if encoder != "vits":                 # RAMEN-L: never fall back to the ViT-S file for another encoder
+                    raise FileNotFoundError(f"released {encoder} checkpoint not found: {checkpoint_path!r} "
+                                            "(set RAMEN_WEIGHTS or model.vda_checkpoint_path)")
                 local = _DEFAULT_RELEASED[bool(metric)]
                 print(f"[VDANet] configured vda_checkpoint_path={checkpoint_path!r} does not exist on this host -- "
                       f"falling back to the local released copy {local}", file=sys.stderr)
                 checkpoint_path = local
+            verify_sha256(checkpoint_path, checkpoint_sha256, f"released {encoder} checkpoint")
             sd = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
             self.core.load_state_dict(sd, strict=True)
         elif init == "da_v2":
@@ -177,6 +242,8 @@ class VDANet(nn.Module):
         self.encoder_name = encoder
         for p in self.core.pretrained.parameters():
             p.requires_grad_(False)
+        if encoder_grad_ckpt:
+            _install_block_checkpointing(self.core.pretrained.blocks)
         self.core.pretrained.eval()
         for p in self.core.head.parameters():
             p.requires_grad_(not freeze_depth_head)   # DN-01 FR: the released metric head stays frozen

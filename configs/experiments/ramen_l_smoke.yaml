@@ -1,0 +1,9 @@
+extends: ramen_l_c3_n46.yaml
+
+# RAMEN-L smoke: 120 optimizer steps of the full recipe (worst-case restorer wide4x) to measure memory and s/step. Not a result.
+training:
+  max_steps: 120
+  lr_decay_steps: 120
+  checkpoint_at_steps:
+  - 120
+  checkpoint_dir: runs/ramen_l_smoke

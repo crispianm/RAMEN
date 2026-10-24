@@ -1,0 +1,7 @@
+extends: ramen_l_c3_n46.yaml
+
+# RAMEN-L, smaller restorer scale-up: the gated second block at wide3x (2.78 M params) instead of wide4x (4.93 M).
+model:
+  st_stage2_width: wide3x
+training:
+  checkpoint_dir: runs/ramen_l_c3_n46_r3x
