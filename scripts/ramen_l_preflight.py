@@ -109,6 +109,17 @@ def check_resume(a, cfg, fc, R, train):
     return f" resume_step={step}"
 
 
+def metric_loss_problems(cfg):
+    """ft profile: the run must carry a metric SiLog term (a Sept VDA-L FT without one lost its metric scale)."""
+    out = []
+    w = (cfg.get("loss") or {}).get("metric_silog_weight")
+    if not (isinstance(w, (int, float)) and not isinstance(w, bool) and w > 0):
+        out.append(f"ft profile: loss.metric_silog_weight = {w!r}, must be > 0 (no metric SiLog loss: the model would lose its metric scale)")
+    if not any(s.get("metric_supervision") is True for s in (cfg.get("data") or {}).get("sources") or []):
+        out.append("ft profile: no data.sources[] has metric_supervision: true (no metric-supervised source: the model would lose its metric scale)")
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True); ap.add_argument("--smoke", action="store_true"); ap.add_argument("--resume", action="store_true")
@@ -147,7 +158,14 @@ def main(argv=None):
             R(f"weights sha256 {g} != pinned {a.weights_sha}")
     sys.path.insert(0, str(REPO)); sys.dont_write_bytecode = True
     import train
-    cfg = train.load_config(Path(a.config))
+    if ft:
+        try:
+            cfg = train.load_config(Path(a.config))
+        except ValueError as e:   # e.g. train.check_metric_supervision: metric_supervision without loss.metric_silog_weight > 0
+            print(f"REFUSED: ft profile: config does not load (loss.metric_silog_weight / data.sources[].metric_supervision?): {e}")
+            return 2
+    else:
+        cfg = train.load_config(Path(a.config))
     base = train.load_config(REPO / (FT_BASE_CFG if ft else BASE_CFG))
     bsha = hashlib.sha256(json.dumps(base, sort_keys=True).encode()).hexdigest()
     if bsha != a.base_resolved_sha:
@@ -167,6 +185,8 @@ def main(argv=None):
     if ft:
         if fc.get("model.st_stage2_width") is not None or fc.get("model.shared_temporal"):
             R("ft profile: model.st_stage2_width / model.shared_temporal must be absent (no restorer)")
+        for m in metric_loss_problems(cfg):
+            R(m)
     elif fc.get("model.st_stage2_width") not in STAGE2:
         R(f"model.st_stage2_width {fc.get('model.st_stage2_width')!r} not in {sorted(STAGE2)}")
     if fc.get("model.vda_checkpoint_sha256") != a.weights_sha:

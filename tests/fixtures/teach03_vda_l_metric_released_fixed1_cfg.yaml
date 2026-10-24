@@ -1,0 +1,94 @@
+data:
+  clip_stride: 32
+  degrade: true
+  degrade_mode: full
+  frame_stride: 1
+  image_size:
+  - 518
+  - 518
+  max_clips_per_video: null
+  max_depth: 80.0
+  num_frames: 32
+  num_workers: 8
+  seed: 42
+  sources:
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/tartanair
+    type: tartanair
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/vkitti
+    type: vkitti
+    variants:
+    - clone
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/irs
+    type: irs
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/point_odyssey/train
+    type: pointodyssey
+  uniform_sampler: true
+  val_batch_size: 1
+  val_clips_per_source: 20
+  val_degrade_severity: 1.0
+  val_sources:
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/tartanair
+    type: tartanair
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/vkitti
+    type: vkitti
+    variants:
+    - clone
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/irs
+    type: irs
+  - resize_mode: vda
+    root: /projects/b5dh/data/train/point_odyssey/val
+    type: pointodyssey
+loss:
+  consistency_weight: 0.0
+  distill_weight: 0.0
+  enh_weight: 0.0
+  frontend_weight: 0.0
+  gradient_weight: 0.5
+  gram_weight: 0.0
+  loss_mode: vda
+  metric_weight: 0.0
+  profile_weight: 0.0
+  silog_weight: 0.0
+  sky_zero_disparity: false
+  ssi_scales: 4
+  ssi_trim: 0.0
+  tgm_weight: 10.0
+model:
+  arch: vda
+  device: cuda
+  metric: true
+  vda_checkpoint_path: /projects/b5dh/checkpoints/teachers/metric_video_depth_anything_vitl.pth
+  vda_encoder: vitl
+  vda_init: released
+  vda_repo: /projects/b5dh/repos/Video-Depth-Anything
+training:
+  batch_size: 1
+  checkpoint_at_steps:
+  - 0
+  - 1000
+  - 2000
+  - 5000
+  checkpoint_dir: runs/teach03_vda_l_metric_released_fixed1_s42
+  checkpoint_every_steps: 500
+  ema_decay: 0.0
+  grad_accum: 16
+  grad_clip: 1.0
+  learning_rate: 1.0e-05
+  lr_decay_steps: 5000
+  max_epochs: 1000
+  max_steps: 5000
+  precision: bf16
+  renorm_lr_scale: 1.0
+  severity_max_cap: 1.0
+  severity_warmup_steps: 0
+  val_every_steps: 1000
+  val_max_batches: 80
+  warmup_steps: 200
+  weight_decay: 0.0
