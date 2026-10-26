@@ -6,7 +6,7 @@ import numpy as np, torch, triton, triton.language as tl
 import bench_joint as bj
 from evaluation import depth_probe as dp
 from bench import agf_f32, agf_triton, _k
-CK = "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt"
+CK = os.environ.get("RAMEN_CKPT", "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt")
 NCLIP = int(os.environ.get("NCLIP", 3))
 PARAMS = {"agf0.2t0.06": (0.2, 0.06), "agf0.5t0.12": (0.5, 0.12)}
 

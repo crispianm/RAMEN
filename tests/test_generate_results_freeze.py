@@ -25,13 +25,13 @@ from repro import verify as V  # noqa: E402
 
 CFG = C.load(REPO / "configs" / "paper_results.yaml")
 # The clean-frame non-inferiority RULE (Auditor R1 ruling 4, vs the RELEASED Metric-VDA-S) is no longer attached to tab:clean (commit I: descriptive, no verdict); readings.clean_verdict stays unit-tested on this local copy.
-CLEAN_READING = {"kind": "clean_noninferiority", "reference_model": "metric_vda_s", "subjects": ["ramen_s45", "ramen_s45_tag"], "datasets": ["kitti", "bonn", "scannetpp"], "rel_tol": 0.05,
+CLEAN_READING = {"kind": "clean_noninferiority", "reference_model": "metric_vda_s", "subjects": ["earlier_s45", "earlier_s45_tag"], "datasets": ["kitti", "bonn", "scannetpp"], "rel_tol": 0.05,
                  "ratio_metrics": ["abs_rel_aligned", "abs_rel_unaligned", "tae_gtvalid"], "abs_metrics": {"delta1_aligned": 0.01}, "report_only": ["tof"],
                  "sentence_preserved": "clean-frame accuracy is preserved (within 5% of Metric-VDA-S; development clips)", "sentence_differs": "differs on clean frames"}
 
 
 def _clean_item():
-    return {**CFG["items"]["tab:clean"], "models": ["ramen_s45", "ramen_s45_tag", "metric_vda_s", "ft_n46"], "reading": CLEAN_READING,
+    return {**CFG["items"]["tab:clean"], "models": ["earlier_s45", "earlier_s45_tag", "metric_vda_s", "ft_n46"], "reading": CLEAN_READING,
             "metrics": ["abs_rel_aligned", "abs_rel_unaligned", "delta1_aligned", "tae_gtvalid", "tof"]}
 
 
@@ -241,7 +241,7 @@ def test_gh200_map_complete_vs_config_path_keys():
     assert keys - set(GH) - lo == set(), "a path key neither mapped nor local-only would silently fall back to a local path on the GH200"
     assert set(GH) <= keys and lo <= keys
     assert all(v and v.startswith("/projects/b5dh/") for v in GH.values())                  # every value comes from layout_table.tsv, none null/guessed
-    assert lo == {"claude_outputs/scratch/paper_repro/latency_ladder/session_2", "qualitative/12b_ramen_figures", "efficiency_primary.txt", "claude_outputs/reports/P1_READ_20261012/P1_TABLE.md"}
+    assert lo == {"claude_outputs/scratch/paper_repro/latency_ladder/session_2", "qualitative/12b_ramen_figures", "efficiency_primary.txt", "claude_outputs/reports/P1_READ_20261012/P1_TABLE.md", "checkpoints_release/ramen.pt", "checkpoints_release/ramen_l.pt"}
     assert len(GH) == 20                                                                          # 19 at H; results_v3/bfix_s12 dropped in I (no item references the seed-45 read any more); +2 at I2: the TRAIN outputs dav2a_n46 / daacm_n46 (not in layout_table.tsv: pinned by sha256 in the yaml, Auditor Add.22)
 
 
@@ -274,7 +274,7 @@ def test_gh200_resolution_through_map_and_refusal(monkeypatch):
     cfg2 = copy.deepcopy(CFG)
     del cfg2["host_paths"]["gh200"][k]
     assert any("neither mapped" in e for e in C.validate(cfg2))
-    cfg2["models"]["ramen_s45"]["ckpt"]["path"] = "somewhere/else.pt"
+    cfg2["models"]["earlier_s45"]["ckpt"]["path"] = "somewhere/else.pt"
     with pytest.raises(C.UnmappedPath):
         P.plan(cfg2, ["tab:p1"])                                                         # a gh200 unit with an unmapped path key is refused at plan time
     monkeypatch.setenv("DATA_ROOT", "/cli")
@@ -318,8 +318,8 @@ def _clean_vals(ramen_scale=1.0, d1=0.0, tag_scale=None):
     v = {}
     for d in ("kitti", "bonn", "scannetpp"):
         v[("metric_vda_s", d)] = dict(base)
-        v[("ramen_s45", d)] = {**{k: x * ramen_scale for k, x in base.items() if k != "delta1_aligned"}, "delta1_aligned": 0.90 + d1, "tof": 0.9}
-        v[("ramen_s45_tag", d)] = {**{k: x * (tag_scale or ramen_scale) for k, x in base.items() if k != "delta1_aligned"}, "delta1_aligned": 0.90 + d1, "tof": 0.1}
+        v[("earlier_s45", d)] = {**{k: x * ramen_scale for k, x in base.items() if k != "delta1_aligned"}, "delta1_aligned": 0.90 + d1, "tof": 0.9}
+        v[("earlier_s45_tag", d)] = {**{k: x * (tag_scale or ramen_scale) for k, x in base.items() if k != "delta1_aligned"}, "delta1_aligned": 0.90 + d1, "tof": 0.1}
         v[("ft_n46", d)] = dict(base)
     return v
 
@@ -329,37 +329,37 @@ def test_clean_reading_preserved_boundary_and_tof_ignored():
     res = _rows(_clean_vals(ramen_scale=1.05, d1=-0.01))                       # exactly at the limits (tOF very different: not part of the sentence)
     R.apply_reading(item, res)
     sv = res["verdict"]["subjects"]
-    assert sv["ramen_s45"]["preserved"] and sv["ramen_s45_tag"]["preserved"]
-    assert sv["ramen_s45"]["sentence"] == "clean-frame accuracy is preserved (within 5% of Metric-VDA-S; development clips)"
-    assert not any(sv["ramen_s45"]["improves"].values())
+    assert sv["earlier_s45"]["preserved"] and sv["earlier_s45_tag"]["preserved"]
+    assert sv["earlier_s45"]["sentence"] == "clean-frame accuracy is preserved (within 5% of Metric-VDA-S; development clips)"
+    assert not any(sv["earlier_s45"]["improves"].values())
     v = {(r["model"], r["dataset"]): r["verdict"] for r in res["rows"]}
-    assert v[("ramen_s45", "kitti")] == "within-tolerance" and v[("metric_vda_s", "kitti")] == "reference" and v[("ft_n46", "kitti")].startswith("comparator")
+    assert v[("earlier_s45", "kitti")] == "within-tolerance" and v[("metric_vda_s", "kitti")] == "reference" and v[("ft_n46", "kitti")].startswith("comparator")
 
 
 def test_clean_reading_differs_one_dataset_one_metric_and_tag_separately():
     item = _clean_item()
     vals = _clean_vals()
-    vals[("ramen_s45", "bonn")]["tae_gtvalid"] = 1.0501                          # just over 1.05x on one dataset
-    vals[("ramen_s45_tag", "scannetpp")]["delta1_aligned"] = 0.8899              # just under -0.01
+    vals[("earlier_s45", "bonn")]["tae_gtvalid"] = 1.0501                          # just over 1.05x on one dataset
+    vals[("earlier_s45_tag", "scannetpp")]["delta1_aligned"] = 0.8899              # just under -0.01
     res = _rows(vals)
     R.apply_reading(item, res)
     sv = res["verdict"]["subjects"]
-    assert not sv["ramen_s45"]["preserved"] and sv["ramen_s45"]["sentence"].startswith("differs on clean frames") and "bonn/tae_gtvalid" in sv["ramen_s45"]["sentence"]
-    assert not sv["ramen_s45_tag"]["preserved"] and "scannetpp/delta1_aligned" in sv["ramen_s45_tag"]["failing"][0]
-    assert any(r["verdict"].startswith("differs: tae_gtvalid") for r in res["rows"] if (r["model"], r["dataset"]) == ("ramen_s45", "bonn"))
+    assert not sv["earlier_s45"]["preserved"] and sv["earlier_s45"]["sentence"].startswith("differs on clean frames") and "bonn/tae_gtvalid" in sv["earlier_s45"]["sentence"]
+    assert not sv["earlier_s45_tag"]["preserved"] and "scannetpp/delta1_aligned" in sv["earlier_s45_tag"]["failing"][0]
+    assert any(r["verdict"].startswith("differs: tae_gtvalid") for r in res["rows"] if (r["model"], r["dataset"]) == ("earlier_s45", "bonn"))
 
 
 def test_clean_reading_improves_needs_all_datasets_and_nan_fails():
     item = _clean_item()
     res = _rows(_clean_vals(ramen_scale=0.9, d1=0.02))
     R.apply_reading(item, res)
-    assert all(res["verdict"]["subjects"]["ramen_s45"]["improves"].values())
+    assert all(res["verdict"]["subjects"]["earlier_s45"]["improves"].values())
     vals = _clean_vals(ramen_scale=0.9, d1=0.02)
-    vals[("ramen_s45", "kitti")]["abs_rel_aligned"] = 0.0951                      # 4.9% better on one dataset only
-    vals[("ramen_s45", "bonn")]["tae_gtvalid"] = float("nan")
+    vals[("earlier_s45", "kitti")]["abs_rel_aligned"] = 0.0951                      # 4.9% better on one dataset only
+    vals[("earlier_s45", "bonn")]["tae_gtvalid"] = float("nan")
     res = _rows(vals)
     R.apply_reading(item, res)
-    s = res["verdict"]["subjects"]["ramen_s45"]
+    s = res["verdict"]["subjects"]["earlier_s45"]
     assert not s["improves"]["abs_rel_aligned"] and not s["preserved"]
 
 
@@ -397,10 +397,10 @@ def test_verdict_column_in_csv(tmp_path):
 
 def test_real_config_clean_models_and_labels():
     it = CFG["items"]["tab:clean"]
-    assert it["models"] == ["ramen_s45", "ramen_s45_tag", "ft_n46"] and it["cells"] == ["b0s0"] and it["split"] == "dev"      # released Metric-VDA-S removed (Add.38a)
+    assert it["models"] == ["earlier_s45", "earlier_s45_tag", "ft_n46"] and it["cells"] == ["b0s0"] and it["split"] == "dev"      # released Metric-VDA-S removed (Add.38a)
     assert "reading" not in it                                                                                               # descriptive: no verdict (Auditor AUD-FTONLY-S0 item 4)
     assert "development clips (seen during development)" in it["label"] and "seed 46" in it["label"] and "DESCRIPTIVE" in it["label"] and "no verdict" in it["label"]
-    res = {"rows": [{"model": "ramen_s45", "dataset": "kitti", "cell": "b0s0", "n_clips": 1, "metrics": {m: 0.1 for m in it["metrics"]}, "macro_mismatch": []}], "mean": []}
+    res = {"rows": [{"model": "earlier_s45", "dataset": "kitti", "cell": "b0s0", "n_clips": 1, "metrics": {m: 0.1 for m in it["metrics"]}, "macro_mismatch": []}], "mean": []}
     R.apply_reading(it, res)
     assert "verdict" not in res and "verdict" not in res["rows"][0]
 
@@ -520,14 +520,14 @@ def test_p1_cross_host_comparison_table(tmp_path):
     assert len(tab) == 2 * 3 * 3 and tab[("raw", "kitti", "full")]["AbsRel_al"] == (0.0924, 4)
     rows = []
     for (var, ds, arm), cols in tab.items():
-        mid = ("ramen_s45_tag" if var == "tag" else "ramen_s45") + "@" + arm
+        mid = ("earlier_s45_tag" if var == "tag" else "earlier_s45") + "@" + arm
         for cell in ("llvar", "st_llvar"):
             m = {name: cols[c][0] for c, (name, cl) in V.P1_COLS.items() if cl == cell}
             rows.append({"model": mid, "dataset": ds, "cell": cell, "metrics": m})
     res = {"rows": rows}
     rep = V.compare_p1(res, tab)
     assert rep["status"] == "PASS" and rep["n_compared"] > 100
-    next(r for r in rows if r["model"] == "ramen_s45@full" and r["dataset"] == "kitti" and r["cell"] == "llvar")["metrics"]["abs_rel_aligned"] *= 1.02      # 2% > cross-host 0.5%
+    next(r for r in rows if r["model"] == "earlier_s45@full" and r["dataset"] == "kitti" and r["cell"] == "llvar")["metrics"]["abs_rel_aligned"] *= 1.02      # 2% > cross-host 0.5%
     assert V.compare_p1(res, tab)["status"] == "FAIL"
 
 
@@ -541,7 +541,7 @@ def test_comparison_items_have_no_released_model_and_no_seed45():
     for iid in MAIN + ("tab:clean", "tab:casc", "tab:casc_tag", "tab:casc_night", "tab:casc_night_tag"):
         ms = set(CFG["items"][iid]["models"])
         assert not (ms & RELEASED), iid
-        assert not (ms & {"ramen_s45", "ramen_s45_tag"}) or iid == "tab:clean", iid
+        assert not (ms & {"earlier_s45", "earlier_s45_tag"}) or iid == "tab:clean", iid
         for m in ms:
             assert "released" not in CFG["models"][m]["label"].lower() or m in ("metric_vda_s",), (iid, m)
     for iid in MAIN:
@@ -763,12 +763,13 @@ def test_s2_pf_commands_use_the_perframe_spec_with_the_isambard_path(monkeypatch
 def test_s2_no_earlier_item_or_model_changed_vs_ifig10():
     import subprocess, yaml
     try:
-        old = yaml.safe_load(subprocess.run(["git", "show", "d75ccc3f5d616d471abdde1b882e659fb923fba3:configs/paper_results.yaml"], cwd=str(Path(__file__).resolve().parents[1]), capture_output=True, text=True, check=True).stdout)
+        old = yaml.safe_load(subprocess.run(["git", "show", "d75ccc3f5d616d471abdde1b882e659fb923fba3:configs/paper_results.yaml"], cwd=str(Path(__file__).resolve().parents[1]), capture_output=True, text=True, check=True).stdout.replace("ramen_s45", "earlier_s45"))   # ramen_s45 -> earlier_s45 rename (release port)
     except Exception:
         pytest.skip("Ifig10 commit not available in this checkout")
+    nolabel = lambda k, v: {a: b for a, b in v.items() if a != "label"} if k.startswith("earlier_s45") else v    # the earlier_s45 labels were reworded
     for sec in ("items", "models", "datasets", "tag", "vendored"):
-        assert all(CFG[sec][k] == v for k, v in old[sec].items()), sec
-    assert set(CFG["items"]) - set(old["items"]) == set(PF_ITEMS) and set(CFG["models"]) - set(old["models"]) == set(PF_SHA) | {m + "_tag" for m in PF_SHA}
+        assert all((nolabel(k, CFG[sec][k]) == nolabel(k, v)) if sec == "models" else CFG[sec][k] == v for k, v in old[sec].items()), sec
+    assert set(CFG["items"]) - set(old["items"]) == set(PF_ITEMS) and set(CFG["models"]) - set(old["models"]) == set(PF_SHA) | {m + "_tag" for m in PF_SHA} | {"ramen", "ramen_l"}
     assert {k: v for k, v in CFG["host_paths"]["gh200"].items() if k not in old["host_paths"]["gh200"]}.keys().__len__() == 2
     assert {k: v for k, v in old["host_paths"]["gh200"].items()} == {k: CFG["host_paths"]["gh200"][k] for k in old["host_paths"]["gh200"]}
     assert CFG["smoke"]["models"][:len(old["smoke"]["models"])] == old["smoke"]["models"] and CFG["smoke"]["models"][len(old["smoke"]["models"]):] == PF_SMOKE_MODELS

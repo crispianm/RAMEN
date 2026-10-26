@@ -4,11 +4,11 @@
   "figures_package": "/mnt/DATA/DegradedDepth/claude_outputs/session_evidence/c3_figures_package_20261012",
   "figures_render_script_sha256_prefix": "9dd2196930c7231f",
   "c3": {
-    "name": "C3 seed 45 (bfix_C3_B step12000)",
-    "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt",
-    "ckpt_gh200": "/projects/b5dh/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt",
-    "sha256": "c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9"
+    "name": "RAMEN (ramen.pt)",
+    "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt",
+    "sha256": "898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd"
   },
+
   "released": {
     "name": "released Metric-VDA-S",
     "spec": "metric_vda_s",

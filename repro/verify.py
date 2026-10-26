@@ -169,7 +169,7 @@ def compare_p1(result: dict, table: dict, same_host: bool = False) -> dict:
     idx = {(r["model"], r["dataset"], r["cell"]): r["metrics"] for r in result["rows"]}
     rows, fails = [], []
     for (var, ds, arm), cols in sorted(table.items()):
-        mid = ("ramen_s45_tag" if var == "tag" else "ramen_s45") + "@" + arm
+        mid = ("earlier_s45_tag" if var == "tag" else "earlier_s45") + "@" + arm
         for col, (ref, dec) in cols.items():
             if col not in P1_COLS:
                 continue

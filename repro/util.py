@@ -17,7 +17,7 @@ def item_stem(item_id: str) -> str:
 
 def slug(spec: str) -> str:
     """bench_joint._slug, copied (importing bench_joint pulls torch/cv2). Kept byte-identical in behaviour; tests pin it."""
-    return spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("/", "_").replace(".pt", "")
+    return spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("l15d:", "l15d-").replace("/", "_").replace(".pt", "")
 
 
 def sha256_file(p, chunk: int = 1 << 20) -> str:

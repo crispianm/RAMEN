@@ -4,7 +4,7 @@
 Layout (paper-teaser layout, paper_cvpr2027/figures/make_figures.py::fig_teaser):
   row 1: Degraded input | Released Metric-VDA-S depth | C3 + TAG depth | Change: released | Change: C3 + TAG
   row 2: (blank)        | y-t slice: released        | y-t slice: C3 + TAG | (blank) | (blank)
-Clip rgbd_bonn_balloon_tracking (DEV), static low-light blur cell st_llb3 (one still repeated, fresh noise per frame), C3 seed 45 step12000 (c9decd90) with TAG agf0.2t0.06.
+Clip rgbd_bonn_balloon_tracking (DEV), static low-light blur cell st_llb3 (one still repeated, fresh noise per frame), RAMEN (ramen.pt, 898c50da) with TAG agf0.2t0.06.
 
   python3 -B render_cover.py --out /mnt/DATA/DegradedDepth/qualitative/13_status_cover                       # real run (4090), after the paper renders
   python3 -B render_cover.py --smoke --device cpu --max-frames 10 --out <scratch>                             # CPU plumbing smoke (NOT a figure)
@@ -90,7 +90,7 @@ def main():
     porcelain = subprocess.check_output(["git", "-C", cfg["eval_clone"], "status", "--porcelain"], text=True).strip()
     assert clone_head == cfg["eval_commit"] and not porcelain, f"eval clone not at {cfg['eval_commit']} or not clean"
     c3 = cfg["c3"]
-    assert Path(c3["ckpt"]).exists() and sha(c3["ckpt"]) == c3["sha256"], "C3 checkpoint missing or sha mismatch"
+    assert Path(c3["ckpt"]).exists() and sha(c3["ckpt"]) == c3["sha256"], "RAMEN checkpoint missing or sha mismatch"
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     specs = {"released": cfg["released"]["spec"], "c3": f"ours:{c3['ckpt']}"}

@@ -5,9 +5,22 @@ This project includes vendored third-party code, each directory with its own LIC
 
   vendor/vda_eval/       Video Depth Anything temporal alignment error script (unmodified)
                          https://github.com/DepthAnything/Video-Depth-Anything -- Apache-2.0
-  vendor/pocketdvdnet/   PocketDVDNet model file (unmodified), https://github.com/crispianm/PocketDVDNet
-                         -- GPL-3.0 (see vendor/pocketdvdnet/LICENSE). The restorer used by RAMEN
+  vendor/pocketdvdnet/   PocketDVDNet model file, https://github.com/crispianm/PocketDVDNet -- Apache-2.0
+                         (vendored copy relicensed from GPL-3.0 with the approval of its creator, who is the
+                         author of this repository). The restorer used by RAMEN
                          (models/restoration.py, models/shared_temporal.py) imports it.
+
+Vendored directories and licences (complete list):
+
+  | Directory               | What                                              | Licence    |
+  |-------------------------|---------------------------------------------------|------------|
+  | vendor/vda_eval/        | Video Depth Anything eval_tae.py (unmodified)     | Apache-2.0 |
+  | vendor/pocketdvdnet/    | PocketDVDNet model file                           | Apache-2.0 |
+
+Not vendored in this release: depth_pro, depth_anything_3, vdpnet.
+
+Model weights: ramen.pt (RAMEN) is Apache-2.0. ramen_l.pt (RAMEN-L) is derived from Metric-Video-Depth-Anything-Large
+and is CC-BY-NC-4.0 (non-commercial). See README.md, CHECKPOINTS.md and RAMEN_L.md.
 
 RAMEN also loads, at run time and from a path you provide, the Video-Depth-Anything code base and the
 Depth Anything V2 / Depth Anything AC weights; these are not redistributed here and keep their upstream

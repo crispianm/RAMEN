@@ -1,7 +1,7 @@
 # RAMEN-L (experimental)
 
 RAMEN-L is the Tables 1/2 RAMEN recipe built on the released **Metric-Video-Depth-Anything-Large** (ViT-L) instead of the Small
-model. It is an experiment: no result from it is part of the paper and this branch is not a release.
+model. The trained model is released as `ramen_l.pt` (CC-BY-NC-4.0, see Licence below; load with `models.load_ramen`). The Metric-VDA-L fine-tuned baseline is not released.
 
 ## What differs from RAMEN-S
 
@@ -23,8 +23,8 @@ into a directory and `export RAMEN_WEIGHTS=<that directory>`.
 * size 1538348216 bytes
 * sha256 `24eba25342e7ee0f054be25da6a852ebd7cfa40cd6bf41a353ecb6abfe24e620` (enforced by the config and by the preflight)
 
-**Licence.** Video-Depth-Anything-Large is released under CC-BY-NC-4.0 (non-commercial; the Small model is Apache-2.0). A RAMEN-L
-checkpoint derived from it inherits that restriction.
+**Licence.** Video-Depth-Anything-Large is released under CC-BY-NC-4.0 (non-commercial; the Small model is Apache-2.0). `ramen_l.pt` is derived from it and is
+CC-BY-NC-4.0 (non-commercial); the code in this repository is Apache-2.0, and `ramen.pt` (RAMEN, Small) is Apache-2.0.
 
 ## Run
 

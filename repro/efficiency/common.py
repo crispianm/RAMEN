@@ -22,8 +22,16 @@ SCRATCH = Path("/mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro")
 DEFAULT_CACHE = SCRATCH / "effic_input_cache"
 DEFAULT_OUT = SCRATCH / "effic_runs"
 
-RAMEN_CKPT = Path("/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt")
-RAMEN_CKPT_SHA = "c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9"
+RAMEN_CKPT = Path(os.environ.get("RAMEN_CKPT", str(REPO_ROOT / "checkpoints_release" / "ramen.pt")))
+RAMEN_CKPT_SHA = "898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd"
+# RAMEN_DISPLAY: False = time the depth path only (spec ours:<ramen.pt>, which needs a scorer whose ours: loader ignores the display head, i.e. the pinned
+# eval clone); True = depth + display head (spec l15d:<ramen.pt>, needs this repo's bench_joint). One switch, nothing else changed.
+RAMEN_DISPLAY = os.environ.get("RAMEN_DISPLAY", "0") == "1"
+
+
+def ramen_spec(display: bool | None = None) -> str:
+    display = RAMEN_DISPLAY if display is None else display
+    return f"{'l15d' if display else 'ours'}:{RAMEN_CKPT}"
 
 # DEV set of (b): dataset -> expected number of DEV clips (a count mismatch is a FAIL, never silently accepted)
 DEV_DATASETS = {"kitti": 7, "bonn": 13, "scannetpp": 31}

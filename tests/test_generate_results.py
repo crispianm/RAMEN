@@ -24,8 +24,8 @@ CFG = yaml.safe_load("""
 schema_version: 1
 tag: {alpha: 0.2, tau: 0.06, token: agf0.2t0.06}
 models:
-  ramen: {label: RAMEN, spec: "ours:{ckpt}", ckpt: {path: /x/step12000.pt, sha256: c9decd90}}
-  ramen_tag: {label: RAMEN+TAG, spec: "ours:{ckpt}", tag: true, ckpt: {path: /x/step12000.pt, sha256: c9decd90}}
+  ramen: {label: RAMEN, spec: "ours:{ckpt}", ckpt: {path: /x/step12000.pt, sha256: 898c50da}}
+  ramen_tag: {label: RAMEN+TAG, spec: "ours:{ckpt}", tag: true, ckpt: {path: /x/step12000.pt, sha256: 898c50da}}
   mvda: {label: MVDA, spec: metric_vda_s}
 datasets:
   kitti: {n_clips: 3, manifest_sha256: 7024ba29}
@@ -91,8 +91,9 @@ def test_spec_resolution_and_tag():
 
 def test_slug_matches_bench_joint():
     assert slug("ours:/projects/b5dh/RAMEN/x/step12000.pt+agf0.2t0.06") == "ours-_projects_b5dh_RAMEN_x_step12000+agf0.2t0.06"
+    assert slug("l15d:/x/ramen.pt") == "l15d-_x_ramen"
     src = (Path(__file__).resolve().parents[1] / "bench_joint.py").read_text()
-    assert 'spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("/", "_").replace(".pt", "")' in src
+    assert 'spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("l15d:", "l15d-").replace("/", "_").replace(".pt", "")' in src
 
 
 def test_plan_dedup_and_derived_base():

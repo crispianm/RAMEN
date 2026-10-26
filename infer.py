@@ -15,10 +15,12 @@ torch.compile of the backbone. `--selftest` exercises the pipeline on synthetic 
 """
 from __future__ import annotations
 import argparse
+import os
 import sys
 import threading
 import time
 from collections import deque
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -70,8 +72,11 @@ def load(ckpt: str, device: str):
     ovda_repo = os.environ.get("OVDA_REPO")
     if ovda_repo and str(ck["cfg"].get("model", {}).get("arch")) == "ovda":
         ck["cfg"]["model"]["ovda_repo"] = ovda_repo
-    model = build_model(ck["cfg"]).eval().to(device)
-    load_d3_checkpoint(model, ck)                                  # same path as the eval harness
+    cfg = ck["cfg"]
+    if cfg.get("model", {}).get("shared_temporal"):                # trainable_ema carries all of temp2; st_temp2_init is a training-host path (same override as bench_joint.load_ours)
+        cfg = {**cfg, "model": {**cfg["model"], "st_temp2_init": None}}
+    model = build_model(cfg).eval().to(device)
+    load_d3_checkpoint(model, ck, depth_only=True)                 # streaming is depth-only: ramen.pt's display head is ignored ON PURPOSE (--save-rgb uses load_ramen)
     sz = ck["cfg"].get("data", {}).get("image_size", 518)
     res = int(sz[0] if isinstance(sz, (list, tuple)) else sz)
     return model, res
@@ -488,9 +493,44 @@ def selftest(streamer, res, device, n=40):
           f"median {fps:.1f} FPS ({1000*np.median(ts):.1f} ms/frame on {device})")
 
 
+DEFAULT_CKPT = os.environ.get("RAMEN_CKPT", str(Path(__file__).resolve().parent / "checkpoints_release" / "ramen.pt"))
+
+
+def save_rgb_offline(ckpt: str, video: str, out_dir: str, device: str, res: int = 0, window: int = 32, max_frames: int = 0):
+    """--save-rgb: offline pass with the FULL model (``load_ramen``); writes the display-head output (restored RGB, PNG) and depth (npy) per frame.
+    Windows of ``window`` frames, as the scorer path (evaluation.l15_spec.ours_l15). Streaming mode never calls this."""
+    from models import load_ramen
+    net = load_ramen(ckpt, device)
+    os.makedirs(out_dir, exist_ok=True)
+    cap = cv2.VideoCapture(video)
+    frames = []
+    while max_frames == 0 or len(frames) < max_frames:
+        ok, bgr = cap.read()
+        if not ok:
+            break
+        frames.append(bgr)
+    cap.release()
+    r = res or 518
+    n = 0
+    with torch.no_grad():
+        for i in range(0, len(frames), window):
+            chunk = frames[i:i + window]
+            x = torch.stack([to_tensor(f, r, device) for f in chunk])        # (T,3,H,W)
+            rgb = x.permute(1, 0, 2, 3)[None]
+            r_depth, restored = net.restore_decoupled(rgb)                   # depth <- depth_restorer ; output <- rgb_restorer
+            d, _ = net._depth_and_feats(net.consume(rgb, r_depth))
+            for t in range(len(chunk)):
+                np.save(os.path.join(out_dir, f"depth_{n:05d}.npy"), d[0, 0, t].float().cpu().numpy())
+                img = (restored[0, :, t].clamp(0, 1).permute(1, 2, 0).float().cpu().numpy() * 255).round().astype(np.uint8)
+                cv2.imwrite(os.path.join(out_dir, f"rgb_{n:05d}.png"), img[:, :, ::-1])
+                n += 1
+    print(f"[save-rgb] wrote {n} frames (depth_*.npy + rgb_*.png) to {out_dir}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", required=True)
+    ap.add_argument("--ckpt", default=DEFAULT_CKPT, help="default checkpoints_release/ramen.pt (RAMEN); env RAMEN_CKPT overrides")
+    ap.add_argument("--save-rgb", metavar="DIR", default=None, help="offline: run the video given by --camera with the full model, write display-head RGB + depth to DIR (not streaming)")
     ap.add_argument("--camera", default="0", help="webcam index or video path")
     ap.add_argument("--window", type=int, default=16, help="temporal window T (train was 16)")
     ap.add_argument("--res", type=int, default=0, help="0 = use checkpoint's train resolution")
@@ -500,6 +540,9 @@ def main():
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
 
+    if a.save_rgb:
+        save_rgb_offline(a.ckpt, a.camera, a.save_rgb, a.device, a.res)
+        return
     dt = {"bf16": torch.bfloat16, "fp16": torch.float16, "fp32": torch.float32}[a.dtype]
     model, train_res = load(a.ckpt, a.device)
     res = a.res or train_res

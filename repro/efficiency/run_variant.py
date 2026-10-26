@@ -7,7 +7,7 @@ sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 CLONE = "/mnt/DATA/DegradedDepth/claude_outputs/scratch/c3_diag_20261009/eval_clone"
-CK = "/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt"
+CK = os.environ.get("RAMEN_CKPT", "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt")
 sys.path.insert(0, CLONE)
 import torch, torch.nn.functional as F
 import patches
