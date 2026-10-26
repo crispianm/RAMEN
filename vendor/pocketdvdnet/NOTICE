@@ -10,7 +10,7 @@ File:     models/pocketdvdnet.py -> pocketdvdnet.py (verbatim)
 License:  Apache-2.0 (LICENSE = the Apache-2.0 text). The upstream repo was GPL-3.0 at commit 46b6e9d; the creator of PocketDVDNet
           (also the author of this repository) approved relicensing this vendored copy under Apache-2.0 (2026-10-26).
 Weights:  NOT vendored (checkpoints stay external). v1.0 paper checkpoint `checkpoints/pocketdvdnet.pt`,
-          sha256 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f, copied to
-          crispwork /mnt/DATA/DegradedDepth/RAMEN/checkpoints/pocketdvdnet_v1.0.pt and
-          Isambard /projects/b5dh/benchmark/weights/pocketdvdnet_v1.0.pt.
+          sha256 78320cdac1054adbc6895adb678a60dd874f572f1503060df8fb678ae6c2b78f;
+          obtain it from the public PocketDVDNet repository https://github.com/crispianm/PocketDVDNet
+          (download location of the v1.0 file: see that repository's README).
 The published recipe equals PocketDVDNetRecipe's defaults (643,236 parameters).

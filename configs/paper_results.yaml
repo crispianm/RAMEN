@@ -434,9 +434,9 @@ items:
     kind: bench
     host: gh200                              # Addendum 30: all numbers from the GH200
     previous_host: "4090"                    # informational (planner delta vs freeze draft v1)
-    title: "Clean-frame check (b0s0), development clips: RAMEN (seed 45) next to Metric-VDA-S FT (seed 46), DESCRIPTIVE"
+    title: "Clean-frame check (b0s0), development clips: earlier checkpoint (seed 45) next to Metric-VDA-S FT (seed 46), DESCRIPTIVE"
     paper_ref: "tab:clean"
-    models: [earlier_s45, earlier_s45_tag, ft_n46]                  # released Metric-VDA-S REMOVED (Add.38a); RAMEN row = seed 45 (caption says so); ft_n46 labelled "Metric-VDA-S FT (seed 46)"
+    models: [earlier_s45, earlier_s45_tag, ft_n46]                  # released Metric-VDA-S REMOVED (Add.38a); earlier-checkpoint row = seed 45 (caption says so); ft_n46 labelled "Metric-VDA-S FT (seed 46)"
     datasets: [kitti, bonn, scannetpp]                          # DEV: KITTI 7 / Bonn 13 / ScanNet++ 31 clips
     cells: [b0s0]                            # bench_joint CELLS[0] = blur 0 x AWGN 0 (no degradation, no draws)
     split: dev
@@ -447,7 +447,7 @@ items:
     reference: null                          # no released clean read exists: regenerate-only, no --verify
     # NO `reading:` block. The pre-declared non-inferiority verdict (Auditor R1 ruling 4) was against the RELEASED Metric-VDA-S; the FT n46 clean values were already known (J8) when the reference
     # was changed to ft_n46, so a verdict against FT would not be pre-declared. Auditor AUD-FTONLY-S0 item 4 (option 1): the table is DESCRIPTIVE, no verdict column and no verdict sentence.
-    label: "development clips (seen during development); GH200; regenerate-only; DESCRIPTIVE: no verdict, no pass/fail sentence (the comparator was chosen after its values were known). RAMEN = seed 45; comparator row 'Metric-VDA-S FT (seed 46)' (a different seed)"
+    label: "development clips (seen during development); GH200; regenerate-only; DESCRIPTIVE: no verdict, no pass/fail sentence (the comparator was chosen after its values were known). earlier checkpoint = seed 45; comparator row 'Metric-VDA-S FT (seed 46)' (a different seed)"
   tab:static_diag:
     kind: bench
     host: gh200                              # = the host of tab:static, so each st_llvar unit is scored ONCE on ONE host (units shared with tab:static)

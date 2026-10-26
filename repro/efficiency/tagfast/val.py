@@ -1,6 +1,7 @@
+import os
 import sys, os, json, time
 sys.dont_write_bytecode = True
-WT = "/mnt/DATA/DegradedDepth/RAMEN/.claude/worktrees/paper-repro"
+WT = os.environ.get("RAMEN_SCORER_WORKTREE", ".")
 sys.path.insert(0, WT); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np, torch, triton, triton.language as tl
 import bench_joint as bj

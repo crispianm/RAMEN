@@ -767,8 +767,9 @@ def test_s2_no_earlier_item_or_model_changed_vs_ifig10():
     except Exception:
         pytest.skip("Ifig10 commit not available in this checkout")
     nolabel = lambda k, v: {a: b for a, b in v.items() if a != "label"} if k.startswith("earlier_s45") else v    # the earlier_s45 labels were reworded
+    noclean = lambda k, v: {a: b for a, b in v.items() if a not in ("title", "label")} if k == "tab:clean" else v    # tab:clean title/label reworded to "earlier checkpoint (seed 45)"
     for sec in ("items", "models", "datasets", "tag", "vendored"):
-        assert all((nolabel(k, CFG[sec][k]) == nolabel(k, v)) if sec == "models" else CFG[sec][k] == v for k, v in old[sec].items()), sec
+        assert all((nolabel(k, CFG[sec][k]) == nolabel(k, v)) if sec == "models" else (noclean(k, CFG[sec][k]) == noclean(k, v)) if sec == "items" else CFG[sec][k] == v for k, v in old[sec].items()), sec
     assert set(CFG["items"]) - set(old["items"]) == set(PF_ITEMS) and set(CFG["models"]) - set(old["models"]) == set(PF_SHA) | {m + "_tag" for m in PF_SHA} | {"ramen", "ramen_l"}
     assert {k: v for k, v in CFG["host_paths"]["gh200"].items() if k not in old["host_paths"]["gh200"]}.keys().__len__() == 2
     assert {k: v for k, v in old["host_paths"]["gh200"].items()} == {k: CFG["host_paths"]["gh200"][k] for k in old["host_paths"]["gh200"]}

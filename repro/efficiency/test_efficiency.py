@@ -1,5 +1,5 @@
 """CPU-only tests (no GPU, no scorer import, no model). Run:
-  /home/wg19671/FocusMamba/.venv/bin/python -B -m pytest repro/efficiency/test_efficiency.py --basetemp /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/pt_effic -p no:cacheprovider
+  python -B -m pytest repro/efficiency/test_efficiency.py --basetemp <tmpdir> -p no:cacheprovider
 """
 from __future__ import annotations
 

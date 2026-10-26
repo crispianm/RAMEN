@@ -1,7 +1,7 @@
 {
   "task": "VAL-01",
   "purpose": "Determine empirically whether Metric-VDA-S's raw head output (as produced by THIS repo's own models/vda_net.py::VDANet.forward()) is depth-like or disparity-like -- pre-registered before running, per Fable/Opus's ruling.",
-  "checkpoint_path": "/home/wg19671/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
+  "checkpoint_path": "Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
   "checkpoint_sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
   "pre_registration": {
     "hypothesis_under_test": "models/vda_net.py's VDANet.forward() docstring assumption: metric=True's raw output is depth-like (metres), not disparity",

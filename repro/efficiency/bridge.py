@@ -12,6 +12,7 @@ RAMEN+TAG rows are GATED separately per setting: B1 (numpy reference TAG) vs B2 
 nothing is retuned (no gate/tolerance/stack option exists to retune). Host label '4090' in every output. Input default = the verified cache."""
 from __future__ import annotations
 
+import os
 import datetime as dt
 import json
 import subprocess
@@ -26,7 +27,7 @@ from repro.efficiency import legs as L  # noqa: E402
 HOST = "4090"
 LABEL = "efficiency bridge, DEV, RTX 4090, N=1; PRIMARY@fp16 vs S0@fp16"
 DEFAULT_PRIMARY_FILE = Path(__file__).with_name("efficiency_primary.txt")
-DEFAULT_LOCK = Path("/home/wg19671/.claude/jobs/a0d391cb/tmp/GPU_LOCK")
+DEFAULT_LOCK = Path(os.environ.get("RAMEN_GPU_LOCK", Path(__file__).resolve().parents[2] / "GPU_LOCK"))
 LOCK_TAG = "bridge-r1"
 BRIDGE_IDS = ("B1", "B2", "B3", "B4")
 TAG_SETTINGS = {"agf0.2t0.06": "(0.2, 0.06)", "agf0.5t0.12": "(0.5, 0.12)"}

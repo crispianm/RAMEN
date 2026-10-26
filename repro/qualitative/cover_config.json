@@ -5,7 +5,7 @@
   "figures_render_script_sha256_prefix": "9dd2196930c7231f",
   "c3": {
     "name": "RAMEN (ramen.pt)",
-    "ckpt": "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt",
+    "ckpt": "checkpoints_release/ramen.pt",
     "sha256": "898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd"
   },
 

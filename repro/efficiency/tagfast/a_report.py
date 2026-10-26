@@ -1,7 +1,8 @@
+import os
 import sys, json, numpy as np, torch
 sys.dont_write_bytecode = True
-sys.path.insert(0, "/mnt/DATA/DegradedDepth/RAMEN/.claude/worktrees/paper-repro")
-import subprocess; print("scorer HEAD", subprocess.check_output(["git","-C","/mnt/DATA/DegradedDepth/RAMEN/.claude/worktrees/paper-repro","rev-parse","HEAD"],text=True).strip())
+sys.path.insert(0, os.environ.get("RAMEN_SCORER_WORKTREE", "."))
+import subprocess; print("scorer HEAD", subprocess.check_output(["git","-C",os.environ.get("RAMEN_SCORER_WORKTREE", "."),"rev-parse","HEAD"],text=True).strip())
 from evaluation.depth_probe import depth_agf, depth_agf_torch
 from repro.tag_fast import agf_v2, agf_v3, Agf3Stream
 rng = np.random.default_rng(20261013)

@@ -29,7 +29,7 @@ sys.path.insert(0, str(EFF))
 
 SCRATCH = Path("/mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro")
 DEFAULT_OUT = SCRATCH / "latency_ladder"
-GPU_LOCK = Path("/home/wg19671/.claude/jobs/a0d391cb/tmp/GPU_LOCK")
+GPU_LOCK = Path(os.environ.get("RAMEN_GPU_LOCK", REPO_ROOT / "GPU_LOCK"))
 DEPTH_DIR = SCRATCH / "fasttag_b/run/depth"
 MIN_HARNESS_COMMIT = "c524643"
 

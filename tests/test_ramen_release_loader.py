@@ -1,6 +1,7 @@
 """RAMEN release loader: a composed ckpt (rgb_restorer) must NOT load silently through load_d3_checkpoint / ours:; load_ramen round-trips v2 and v3 packs (CPU, tiny synthetic nets built on the headc-b a1h arm; skipped without the VDA-S weights)."""
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -12,9 +13,10 @@ sys.path.insert(0, str(ROOT))
 import train  # noqa: E402
 
 ARM = "dn01_v3_headc_b_a1h"
-LOCAL = {"vda_repo": "/mnt/DATA/DegradedDepth/competition/Video-Depth-Anything",
-         "vda_checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/metric_video_depth_anything_vits.pth",
-         "da_v2_checkpoint_path": "/mnt/DATA/DegradedDepth/RAMEN/checkpoints/depth_anything_v2_vits.pth", "st_temp2_init": None}
+_CK = Path(os.environ.get("RAMEN_TEST_CKPT_DIR", "checkpoints"))
+LOCAL = {"vda_repo": os.environ.get("RAMEN_TEST_VDA_REPO", "Video-Depth-Anything"),
+         "vda_checkpoint_path": str(_CK / "metric_video_depth_anything_vits.pth"),
+         "da_v2_checkpoint_path": str(_CK / "depth_anything_v2_vits.pth"), "st_temp2_init": None}
 needs_all = pytest.mark.skipif(not Path(LOCAL["vda_checkpoint_path"]).is_file() or not Path(LOCAL["vda_repo"]).is_dir(),
                                reason="Metric-VDA-S weights / VDA repo not on this host")
 
@@ -117,12 +119,12 @@ def test_streaming_load_ignores_training_host_temp2_init_path(tmp_path):
     """infer.load (streaming --selftest path) must not try to read cfg model.st_temp2_init (a training-host path)."""
     import infer
     n = _mk(st_stage2_width="wide2x"); _jitter(n, 1)
-    cfg = _cfg(ARM, st_stage2_width="wide2x"); cfg["model"]["st_temp2_init"] = "/projects/nonexistent/temp2_distilled.pt"
+    cfg = _cfg(ARM, st_stage2_width="wide2x"); cfg["model"]["st_temp2_init"] = "nonexistent/temp2_distilled.pt"
     p = tmp_path / "s.pt"
     torch.save({"cfg": cfg, "trainable_ema": torch.nn.ModuleDict(n.trainable_modules()).state_dict(), "step": 1}, p)
     model, res = infer.load(str(p), "cpu")
     assert res == 518 or res > 0 and not model.training
-    cfg2 = {**cfg, "model": {**cfg["model"], "st_temp2_init": "/projects/nonexistent/temp2_distilled.pt"}}
+    cfg2 = {**cfg, "model": {**cfg["model"], "st_temp2_init": "nonexistent/temp2_distilled.pt"}}
     from models import build_model
     with pytest.raises(Exception):                       # forced-fail control: WITHOUT the override the build reads the missing path
         build_model(cfg2)

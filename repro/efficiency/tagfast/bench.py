@@ -1,5 +1,6 @@
+import os
 import sys, time, torch, triton, triton.language as tl
-sys.path.insert(0, "/mnt/DATA/DegradedDepth/RAMEN/.claude/worktrees/paper-repro")
+sys.path.insert(0, os.environ.get("RAMEN_SCORER_WORKTREE", "."))
 from evaluation.depth_probe import depth_agf_torch
 AMIN, TAU, BETA = 0.2, 0.06, 0.5
 

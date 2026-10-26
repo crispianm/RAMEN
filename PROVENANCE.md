@@ -1,15 +1,14 @@
 # Provenance of commit labels
 
-This repository is a single commit. The paper, its tables and its figure captions cite earlier commits of the development repository (for example the scorer commit in `configs/paper_results.yaml` and the commit labels in table captions). Those commits are **not** in this repository's history; they are preserved in an archive.
+This repository's `main` is an orphan reproducibility history: it does not contain the development history. The paper, its tables and its figure captions cite earlier commits of the development repository (for example the scorer commit in `configs/paper_results.yaml` and the commit labels in table captions). Those commits are **not** in this repository's history; they are preserved in an archive.
 
 ## Where the archive is
 
 | Item | Value |
 |---|---|
-| Archive repository / branch | `crispianm/D3`, branch `ramen-archive-20261016` |
+| Archive | bundles below (not hosted in this repository; available from the authors on request) |
 | Full mirror bundle of the previous `crispianm/RAMEN` (all refs) | `ramen_full_20261016.bundle`, sha256 `026380f72a4cb56c0ca3203716997086d1f9e24b17ac42ef4903f1557c79ab59` |
 | Bundle of the local-only development branches | `ramen_local_only_20261016.bundle`, sha256 `9098a62f071b264d0bc74bcf1866f08e7f9d325d22bc040c90966c99ccb7a1f2` |
-| Removed files at their original paths | `ramen_scratch/` in the same branch |
 
 To make an old commit resolvable in a clone of this repository (needed for the scorer clone used by `generate_results.py`):
 
