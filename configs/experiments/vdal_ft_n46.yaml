@@ -1,0 +1,18 @@
+extends: dn01_c3rep_20261009_ft_n46.yaml
+
+# VDA-L FT (depth-only metric fine-tune, ViT-L; EXPERIMENTAL): the paper's VDA-S FT recipe (dn01_c3rep_20261009_ft_n46: seed 46, 12000 steps,
+# data mix, loss, LR schedule, batch 1 x accum 4 x 4 GPUs) with ONLY the same ViT-S -> ViT-L changes RAMEN-L made (see ramen_l_c3_n46.yaml):
+#   * encoder + init = the released Metric-Video-Depth-Anything-LARGE (ViT-L), frozen; DPT head + motion modules start from it
+#   * vda_encoder_grad_ckpt: recompute the frozen trunk in backward (numerically identical; saves memory)
+#   * no st_stage2_width: this FT has no restorer
+# The weights are NEVER part of the repository: ${RAMEN_WEIGHTS}/<file> is expanded at run time and the sha256 below is enforced.
+# Licence note: the Video-Depth-Anything-Large checkpoints are released under CC-BY-NC-4.0 (non-commercial); a checkpoint trained from them inherits it.
+model:
+  vda_encoder: vitl
+  vda_init: released
+  metric: true
+  vda_checkpoint_path: ${RAMEN_WEIGHTS}/metric_video_depth_anything_vitl.pth
+  vda_checkpoint_sha256: 24eba25342e7ee0f054be25da6a852ebd7cfa40cd6bf41a353ecb6abfe24e620
+  vda_encoder_grad_ckpt: true
+training:
+  checkpoint_dir: runs/vdal_ft_n46
