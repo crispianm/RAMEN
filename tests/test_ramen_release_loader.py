@@ -126,3 +126,25 @@ def test_streaming_load_ignores_training_host_temp2_init_path(tmp_path):
     from models import build_model
     with pytest.raises(Exception):                       # forced-fail control: WITHOUT the override the build reads the missing path
         build_model(cfg2)
+
+
+@needs_all
+def test_streaming_selftest_fails_early_with_known_issue_forced_fail(tmp_path):
+    """StreamingDepth on a SharedTemporalNet must raise the clear known-issue message, not AttributeError(PATCH_SIZE)."""
+    import infer
+    n = _mk(st_stage2_width="wide2x")
+    assert not hasattr(n, "PATCH_SIZE")                                  # forced-fail control: this is what used to raise AttributeError in step()
+    with pytest.raises(NotImplementedError, match="streaming mode is not yet supported for ramen.pt"):
+        infer.StreamingDepth(n, 4, "cpu", None)
+
+
+def test_default_ckpt_resolution_and_missing_message(tmp_path, monkeypatch):
+    import ramen_ckpt
+    monkeypatch.delenv("RAMEN_CKPT", raising=False)
+    assert ramen_ckpt.default_ckpt() == str(ROOT / "checkpoints_release" / "ramen.pt")
+    monkeypatch.setenv("RAMEN_CKPT", "/x/y.pt")
+    assert ramen_ckpt.default_ckpt() == "/x/y.pt"
+    with pytest.raises(SystemExit, match="Download links: TODO"):
+        ramen_ckpt.require_ckpt(str(tmp_path / "nope.pt"))
+    f = tmp_path / "a.pt"; f.write_bytes(b"0")
+    assert ramen_ckpt.require_ckpt(str(f)) == str(f)

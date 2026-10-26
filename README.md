@@ -13,6 +13,17 @@ RAMEN starts from Metric Video Depth Anything (Small). A small video restorer is
 
 Checkpoints will be released with the paper (see [CHECKPOINTS.md](CHECKPOINTS.md) for the file list and the sha256 pins used by the evaluation). Download links: TODO (none exist yet). Both files hold the depth path and the display head (the denoised video output). **Load them with `models.load_ramen(path)`**; `load_d3_checkpoint` and the `ours:` scorer spec refuse such a file (they would silently drop the display head), and the scorer spec for them is `l15d:<path>`. Offline: `python infer.py --ckpt checkpoints_release/ramen.pt --camera clip.mp4 --save-rgb out/` writes depth and display-head RGB. Streaming mode (`infer.py` without `--save-rgb`) is depth-only.
 
+**Known issue.** Streaming mode (`infer.py` without `--save-rgb`, and `--selftest`) is not yet supported for `ramen.pt` / `ramen_l.pt`; it exits early with a message saying so. The clip mode reproduces the tables.
+
+**Running `infer.py`.** The checkpoint is resolved as `--ckpt` > `RAMEN_CKPT` env > `<repo>/checkpoints_release/ramen.pt`. If the file is missing, the script prints where to put it (download links: TODO, none exist yet) instead of a stack trace.
+
+```
+python infer.py --camera clip.mp4 --save-rgb out/                                   # default: <repo>/checkpoints_release/ramen.pt
+python infer.py --ckpt /path/to/ramen.pt --camera clip.mp4 --save-rgb out/          # explicit
+RAMEN_CKPT=/path/to/ramen.pt python infer.py --camera clip.mp4 --save-rgb out/      # environment
+python infer.py --camera clip.mp4 --save-rgb out/ --ckpt checkpoints_release/ramen_l.pt   # RAMEN-L
+```
+
 ## Installation
 
 ```bash

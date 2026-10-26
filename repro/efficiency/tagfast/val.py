@@ -6,7 +6,9 @@ import numpy as np, torch, triton, triton.language as tl
 import bench_joint as bj
 from evaluation import depth_probe as dp
 from bench import agf_f32, agf_triton, _k
-CK = os.environ.get("RAMEN_CKPT", "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt")
+CK = os.environ.get("RAMEN_CKPT") or os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), "checkpoints_release", "ramen.pt")
+if not os.path.isfile(CK):
+    sys.exit(f"[ramen] checkpoint not found: {CK}\n  Download ramen.pt to <repo>/checkpoints_release/ramen.pt or set RAMEN_CKPT=PATH (download links: TODO, none exist yet; see README.md).")
 NCLIP = int(os.environ.get("NCLIP", 3))
 PARAMS = {"agf0.2t0.06": (0.2, 0.06), "agf0.5t0.12": (0.5, 0.12)}
 

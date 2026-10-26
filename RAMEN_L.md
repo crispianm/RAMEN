@@ -3,6 +3,8 @@
 RAMEN-L is the Tables 1/2 RAMEN recipe built on the released **Metric-Video-Depth-Anything-Large** (ViT-L) instead of the Small
 model. The trained model is released as `ramen_l.pt` (CC-BY-NC-4.0, see Licence below; load with `models.load_ramen`). The Metric-VDA-L fine-tuned baseline is not released.
 
+**Known issue.** Streaming mode is not yet supported for `ramen_l.pt` (nor `ramen.pt`); `infer.py` exits early with a message saying so. The clip mode reproduces the tables (`python infer.py --ckpt checkpoints_release/ramen_l.pt --camera clip.mp4 --save-rgb out/`).
+
 ## What differs from RAMEN-S
 
 * Encoder and initialisation: the released Metric-VDA-L (frozen DINOv2 ViT-L; the DPT head and motion modules start from it).

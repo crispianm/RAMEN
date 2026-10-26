@@ -7,7 +7,9 @@ sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 CLONE = "/mnt/DATA/DegradedDepth/claude_outputs/scratch/c3_diag_20261009/eval_clone"
-CK = os.environ.get("RAMEN_CKPT", "/mnt/DATA/DegradedDepth/checkpoints_release/ramen.pt")
+CK = os.environ.get("RAMEN_CKPT") or os.path.join(os.path.dirname(os.path.dirname(HERE)), "checkpoints_release", "ramen.pt")
+if not os.path.isfile(CK):
+    sys.exit(f"[ramen] checkpoint not found: {CK}\n  Download ramen.pt to <repo>/checkpoints_release/ramen.pt or set RAMEN_CKPT=PATH (download links: TODO, none exist yet; see README.md).")
 sys.path.insert(0, CLONE)
 import torch, torch.nn.functional as F
 import patches

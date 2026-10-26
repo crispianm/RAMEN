@@ -82,6 +82,10 @@ def load(ckpt: str, device: str):
     return model, res
 
 
+STREAMING_KNOWN_ISSUE = ("Known issue: streaming mode is not yet supported for ramen.pt / ramen_l.pt (SharedTemporalNet). "
+                         "Clip mode reproduces the tables; use `--save-rgb DIR` (offline) or the scorer / bench_joint paths instead.")
+
+
 class StreamingDepth:
     """Per-frame encode → ring-buffered token window → temporal → decode-newest-only.
 
@@ -92,6 +96,9 @@ class StreamingDepth:
     def __init__(self, model, window: int, device: str, dtype):
         if window < 1:
             raise ValueError("window must be at least 1")
+        from models.shared_temporal import SharedTemporalNet
+        if isinstance(model, SharedTemporalNet):
+            raise NotImplementedError(STREAMING_KNOWN_ISSUE)
         self.m, self.win, self.dev, self.dt = model, window, device, dtype
         self.reset()
 
@@ -493,7 +500,8 @@ def selftest(streamer, res, device, n=40):
           f"median {fps:.1f} FPS ({1000*np.median(ts):.1f} ms/frame on {device})")
 
 
-DEFAULT_CKPT = os.environ.get("RAMEN_CKPT", str(Path(__file__).resolve().parent / "checkpoints_release" / "ramen.pt"))
+from ramen_ckpt import default_ckpt, require_ckpt
+DEFAULT_CKPT = default_ckpt()
 
 
 def save_rgb_offline(ckpt: str, video: str, out_dir: str, device: str, res: int = 0, window: int = 32, max_frames: int = 0):
@@ -539,6 +547,7 @@ def main():
     ap.add_argument("--compile", action="store_true")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
+    require_ckpt(a.ckpt)
 
     if a.save_rgb:
         save_rgb_offline(a.ckpt, a.camera, a.save_rgb, a.device, a.res)
@@ -547,7 +556,10 @@ def main():
     model, train_res = load(a.ckpt, a.device)
     res = a.res or train_res
     maybe_compile(model, a.compile)
-    streamer = StreamingDepth(model, a.window, a.device, dt)
+    try:
+        streamer = StreamingDepth(model, a.window, a.device, dt)
+    except NotImplementedError as e:
+        sys.exit(f"[infer] {e}")
     print(f"[infer] {a.ckpt}  res={res}  window={a.window}  {a.dtype}  {a.device}")
 
     if a.selftest:
