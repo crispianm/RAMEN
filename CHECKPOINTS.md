@@ -4,8 +4,8 @@ Checkpoints will be released with the paper; `ramen.pt` is Apache-2.0 and `ramen
 
 | Model | Role | Training config | sha256 (first 16) | Download |
 |---|---|---|---|---|
-| **RAMEN** (`ramen.pt`, Apache-2.0) | released: seed-46 depth path + S3000 display head; load with `models.load_ramen` | `dn01_c3rep_20261009_c3_n46` + display-head fine-tune | `898c50da69841b5c` | TODO at release |
-| **RAMEN-L** (`ramen_l.pt`, CC-BY-NC-4.0 from Video-Depth-Anything-Large) | released: RAMEN-L depth path + the same display head (pack v3); load with `models.load_ramen` | `ramen_l_c3_n46` + display-head fine-tune | `9484ef5bf41a3ba6` | TODO at release |
+| **RAMEN** (`ramen.pt`, Apache-2.0) | released: seed-46 depth path + display head fine-tuned for 1500 steps from S3000 (restorer only); load with `models.load_ramen` | `dn01_c3rep_20261009_c3_n46` + display-head fine-tune | `334623ec4fe04158` | TODO at release |
+| **RAMEN-L** (`ramen_l.pt`, CC-BY-NC-4.0 from Video-Depth-Anything-Large) | released: RAMEN-L depth path + the same display head tensors (pack v3); load with `models.load_ramen` | `ramen_l_c3_n46` + display-head fine-tune | `cad96e2c1c5219ac` | TODO at release |
 | RAMEN depth path, seed 46, step 12000 (not a release file) | multi-seed; the depth path inside `ramen.pt` | `dn01_c3rep_20261009_c3_n46` | `f5c7c8f98fe0c9f9` | TODO at release |
 | RAMEN, seed 47, step 12000 | multi-seed | `dn01_c3rep_20261009_c3_n47` | `2ee98b7ee25bd6d5` | TODO at release |
 | RAMEN, seed 48, step 12000 | multi-seed | `dn01_c3rep_20261009_c3_n48` | `bf053bd38fdb97d5` | TODO at release |

@@ -6,7 +6,7 @@
   "c3": {
     "name": "RAMEN (ramen.pt)",
     "ckpt": "checkpoints_release/ramen.pt",
-    "sha256": "898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd"
+    "sha256": "334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47"
   },
 
   "released": {

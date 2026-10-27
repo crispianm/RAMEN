@@ -18,7 +18,7 @@ models:                                              # registry; items refer to 
     tag: false                                       # true -> spec + "+agf0.2t0.06"
     ckpt:                                            # optional for pure-name specs; REQUIRED when spec has {ckpt}
       path: checkpoints_v3/.../step12000.pt          # relative to DATA_ROOT unless absolute
-      sha256: 898c50da...                            # full 64 hex (a >=8 hex prefix is accepted with a WARNING)
+      sha256: 334623ec...                            # full 64 hex (a >=8 hex prefix is accepted with a WARNING)
       download: "https://..."                        # URL or "huggingface:org/repo/file"
     reference_spec: "ours:/projects/b5dh/.../step12000.pt"   # optional: the spec string the RELEASED read ran under (Isambard path); used by --verify to find <ref>/<slug>/bench/... (+TAG appended if tag: true)
     weights: {metric_vda_s: <sha256>}                # optional: sha256 of bench_joint-resolved base weights (hash-checked, recorded in MANIFEST)

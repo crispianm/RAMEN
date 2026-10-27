@@ -59,13 +59,13 @@ host_paths:
     - efficiency_primary.txt                                           # tab:latency_eff condition file (4090-only, conditional)
 
 models:
-  ramen:                                     # RELEASED: checkpoints_release/ramen.pt (Apache-2.0). Depth path = seed-46 step 12000 (f5c7c8f9), display head = S3000 restorer. Load with models.load_ramen; score with l15d:
+  ramen:                                     # RELEASED: checkpoints_release/ramen.pt (Apache-2.0). Depth path = seed-46 step 12000 (f5c7c8f9), display head = B1500 (fine-tuned 1500 steps from S3000, restorer only). Load with models.load_ramen; score with l15d:
     label: "RAMEN"
     spec: "l15d:{ckpt}"
     tag: false
     ckpt:
       path: checkpoints_release/ramen.pt
-      sha256: 898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd
+      sha256: 334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47
       download_url: TODO(user)
   ramen_l:                                   # RELEASED: checkpoints_release/ramen_l.pt (CC-BY-NC-4.0, inherited from VDA-Large). Pack v3; load with models.load_ramen
     label: "RAMEN-L"
@@ -73,7 +73,7 @@ models:
     tag: false
     ckpt:
       path: checkpoints_release/ramen_l.pt
-      sha256: 9484ef5bf41a3ba6a5ad58dc56320c8c94baaf54c9bf0bbbb69a65a564c039b2
+      sha256: cad96e2c1c5219ac6a9fccb30ba6b327f95656b00a8ad804265ec795e3f2e8bc
       download_url: TODO(user)
   earlier_s45:
     label: "Earlier checkpoint (seed 45, 12k)"

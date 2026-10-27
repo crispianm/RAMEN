@@ -75,7 +75,7 @@ uv run torchrun --standalone --nproc_per_node=4 train.py --config configs/experi
 
 (`..._n47` and `..._n48` for the other seeds; per-frame DAv2-S / DA-AC baselines: `dn01_c3rep_pf_dav2a_n46.yaml`, `dn01_c3rep_pf_daacm_n46.yaml`.) The paper runs used 4 GPUs, batch 1 and `training.grad_accum: 4`; on one GPU use `python train.py --config ...` and set `training.grad_accum: 16`. Under Slurm, `train.py` requires `VAL01_EXPECTED_COMMIT=$(git rev-parse HEAD)` and a clean tree; see `jobs/example_slurm.sh`.
 
-The earlier seed-45 checkpoint (a continuation: steps 0-6,000 `configs/experiments/dn01_v3_synreal_r50_B.yaml`, steps 6,000-12,000 `configs/experiments/dn01_v3_bfix_C3_B.yaml`) is an earlier checkpoint, not RAMEN, and is not released (no download); its config id is `earlier_s45`. `ramen.pt` uses the seed-46 depth path with the S3000 display head.
+The earlier seed-45 checkpoint (a continuation: steps 0-6,000 `configs/experiments/dn01_v3_synreal_r50_B.yaml`, steps 6,000-12,000 `configs/experiments/dn01_v3_bfix_C3_B.yaml`) is an earlier checkpoint, not RAMEN, and is not released (no download); its config id is `earlier_s45`. `ramen.pt` uses the seed-46 depth path with a display head fine-tuned for 1500 steps from S3000 (restorer only; rebalanced data plus an edge loss); the display head was adopted by the authors.
 
 ## Evaluation (paper tables and figures)
 

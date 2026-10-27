@@ -4,7 +4,7 @@
 Layout (paper-teaser layout, paper_cvpr2027/figures/make_figures.py::fig_teaser):
   row 1: Degraded input | Released Metric-VDA-S depth | C3 + TAG depth | Change: released | Change: C3 + TAG
   row 2: (blank)        | y-t slice: released        | y-t slice: C3 + TAG | (blank) | (blank)
-Clip rgbd_bonn_balloon_tracking (DEV), static low-light blur cell st_llb3 (one still repeated, fresh noise per frame), RAMEN (ramen.pt, 898c50da) with TAG agf0.2t0.06.
+Clip rgbd_bonn_balloon_tracking (DEV), static low-light blur cell st_llb3 (one still repeated, fresh noise per frame), RAMEN (ramen.pt, 334623ec) with TAG agf0.2t0.06.
 
   python3 -B render_cover.py --out /mnt/DATA/DegradedDepth/qualitative/13_status_cover                       # real run (4090), after the paper renders
   python3 -B render_cover.py --smoke --device cpu --max-frames 10 --out <scratch>                             # CPU plumbing smoke (NOT a figure)

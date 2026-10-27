@@ -9,8 +9,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PINS = {
-    "ramen": ("898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd", "checkpoints_release/ramen.pt"),
-    "ramen_l": ("9484ef5bf41a3ba6a5ad58dc56320c8c94baaf54c9bf0bbbb69a65a564c039b2", "checkpoints_release/ramen_l.pt"),
+    "ramen": ("334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47", "checkpoints_release/ramen.pt"),
+    "ramen_l": ("cad96e2c1c5219ac6a9fccb30ba6b327f95656b00a8ad804265ec795e3f2e8bc", "checkpoints_release/ramen_l.pt"),
 }
 
 

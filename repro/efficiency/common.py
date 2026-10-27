@@ -23,7 +23,7 @@ DEFAULT_CACHE = SCRATCH / "effic_input_cache"
 DEFAULT_OUT = SCRATCH / "effic_runs"
 
 RAMEN_CKPT = Path(os.environ.get("RAMEN_CKPT", str(REPO_ROOT / "checkpoints_release" / "ramen.pt")))
-RAMEN_CKPT_SHA = "898c50da69841b5c6710a026ffd42e570fba08a349f7485ee7e35747a22f46dd"
+RAMEN_CKPT_SHA = "334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47"
 # RAMEN_DISPLAY: False = time the depth path only (spec ours:<ramen.pt>, which needs a scorer whose ours: loader ignores the display head, i.e. the pinned
 # eval clone); True = depth + display head (spec l15d:<ramen.pt>, needs this repo's bench_joint). One switch, nothing else changed.
 RAMEN_DISPLAY = os.environ.get("RAMEN_DISPLAY", "0") == "1"
