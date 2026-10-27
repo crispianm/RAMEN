@@ -15,15 +15,23 @@ SCORER_CLONE = Path(os.environ.get("EFF_SCORER_CLONE", HOME / ".cache" / "ramen_
 SCORER_COMMIT = "368b5c53b37ebd22f5d44ce0c9d514122efc88da"
 VDA_REPO = Path("/mnt/DATA/DegradedDepth/competition/Video-Depth-Anything")
 VDA_COMMIT = "4f5ae23172ba60fd7bc11ef671cca678842c7072"
-FOCUSMAMBA_VENV = Path("/home/wg19671/FocusMamba/.venv")
+FOCUSMAMBA_VENV = Path(os.environ.get("EFF_FOCUSMAMBA_VENV", "FocusMamba/.venv"))
 FOCUSMAMBA_FREEZE_SHA = "8475f8800b8e8a31f2c06eb8d522b0c2c4a61df5c30e5f360f2f90026074ff82"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRATCH = Path("/mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro")
 DEFAULT_CACHE = SCRATCH / "effic_input_cache"
 DEFAULT_OUT = SCRATCH / "effic_runs"
 
-RAMEN_CKPT = Path("/mnt/DATA/DegradedDepth/checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt")
-RAMEN_CKPT_SHA = "c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9"
+RAMEN_CKPT = Path(os.environ.get("RAMEN_CKPT", str(REPO_ROOT / "checkpoints_release" / "ramen.pt")))
+RAMEN_CKPT_SHA = "334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47"
+# RAMEN_DISPLAY: False = time the depth path only (spec ours:<ramen.pt>, which needs a scorer whose ours: loader ignores the display head, i.e. the pinned
+# eval clone); True = depth + display head (spec l15d:<ramen.pt>, needs this repo's bench_joint). One switch, nothing else changed.
+RAMEN_DISPLAY = os.environ.get("RAMEN_DISPLAY", "0") == "1"
+
+
+def ramen_spec(display: bool | None = None) -> str:
+    display = RAMEN_DISPLAY if display is None else display
+    return f"{'l15d' if display else 'ours'}:{RAMEN_CKPT}"
 
 # DEV set of (b): dataset -> expected number of DEV clips (a count mismatch is a FAIL, never silently accepted)
 DEV_DATASETS = {"kitti": 7, "bonn": 13, "scannetpp": 31}

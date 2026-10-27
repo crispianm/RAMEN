@@ -1,5 +1,5 @@
 """Stub-only tests of the bridge scheduling/compare (no GPU, no scorer, no model). Run:
-  /home/wg19671/FocusMamba/.venv/bin/python -B -m pytest repro/efficiency/test_bridge.py --basetemp /mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro/pt_bridge -p no:cacheprovider
+  python -B -m pytest repro/efficiency/test_bridge.py --basetemp <tmpdir> -p no:cacheprovider
 """
 from __future__ import annotations
 

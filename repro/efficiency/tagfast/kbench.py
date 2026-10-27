@@ -1,6 +1,7 @@
+import os
 import sys, subprocess, json, numpy as np, torch
 sys.dont_write_bytecode = True
-sys.path.insert(0, "/mnt/DATA/DegradedDepth/RAMEN/.claude/worktrees/paper-repro")
+sys.path.insert(0, os.environ.get("RAMEN_SCORER_WORKTREE", "."))
 from evaluation.depth_probe import depth_agf, depth_agf_torch
 from repro.tag_fast import agf_v2, agf_v3, Agf3Stream
 procs = subprocess.check_output(["nvidia-smi","--query-compute-apps=pid,process_name,used_memory","--format=csv,noheader,nounits"], text=True).strip().splitlines()

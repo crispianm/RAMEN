@@ -29,7 +29,7 @@ sys.path.insert(0, str(EFF))
 
 SCRATCH = Path("/mnt/DATA/DegradedDepth/claude_outputs/scratch/paper_repro")
 DEFAULT_OUT = SCRATCH / "latency_ladder"
-GPU_LOCK = Path("/home/wg19671/.claude/jobs/a0d391cb/tmp/GPU_LOCK")
+GPU_LOCK = Path(os.environ.get("RAMEN_GPU_LOCK", REPO_ROOT / "GPU_LOCK"))
 DEPTH_DIR = SCRATCH / "fasttag_b/run/depth"
 MIN_HARNESS_COMMIT = "c524643"
 
@@ -322,7 +322,7 @@ class Session:
             return dict(fwd=lambda x: (net(bj._norm(x)[None])[0], None), metric=metric, window=32, weights={key: bj.PATHS[key]})
         try:
             bj.load_ours = load_ours; bj.DEPTH_MODELS["metric_vda_s"] = lambda d: vda_released(d, True)
-            ramen = bj.build_pipeline(f"ours:{self.common.RAMEN_CKPT}", "cuda")
+            ramen = bj.build_pipeline(self.common.ramen_spec(), "cuda")
             mvda = bj.build_pipeline("metric_vda_s", "cuda")
         finally:
             bj.load_ours, bj.DEPTH_MODELS["metric_vda_s"] = o_load, o_dm
@@ -400,7 +400,7 @@ class Session:
     def harness_check(self):
         """Original bench_joint.cmd_latency in a subprocess BEFORE this process touches CUDA (its own idle check would otherwise see us)."""
         outs = {}
-        for key, spec in (("ramen_raw", f"ours:{self.common.RAMEN_CKPT}"), ("metric_vda_s", "metric_vda_s")):
+        for key, spec in (("ramen_raw", self.common.ramen_spec()), ("metric_vda_s", "metric_vda_s")):
             d = self.out / "harness_check" / key
             cmd = [sys.executable, "-I", str(HERE / "harness_orig.py"), "latency", "--model", spec, "--out", str(d), "--size", str(SIZE), "--warmup", str(self.a.warmup), "--iters", str(self.a.iters)]
             subprocess.run(cmd, check=True, capture_output=True, text=True)

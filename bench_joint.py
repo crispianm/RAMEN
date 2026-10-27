@@ -668,6 +668,8 @@ def load_ours(ckpt: str, device: str):
     _vda_path()                                  # a cfg with vda_repo unset falls back to a crispwork path
     from models import build_model, trainable_modules
     ck = torch.load(ckpt, map_location="cpu", weights_only=False)
+    if "rgb_restorer" in ck or "depth_restorer" in ck:   # composed RAMEN / RAMEN-L: ours: would silently drop the display head
+        raise ValueError(f"{ckpt} is a composed checkpoint (display head); score it with l15d:<path>, not ours:")
     cfg = ck["cfg"]
     if cfg.get("model", {}).get("shared_temporal"):   # trainable_ema carries all of temp2 (BN buffers incl.); the
         cfg = {**cfg, "model": {**cfg["model"], "st_temp2_init": None}}   # init path is a training-host path
@@ -949,7 +951,7 @@ def split_spec(spec: str) -> tuple[list[str], str, list[str]]:
     post-restorers run on its restored output and leave depth untouched (DN-01 T0:
     ``ours:<ckpt>+wiener_oracle`` = oracle Wiener on the joint model's restored frames)."""
     parts = spec.split("+")
-    i = next(i for i, s in enumerate(parts) if s.startswith(("ours:", "ours_up:", FT_VDA) + PERFRAME_FT) or s in DEPTH_MODELS)
+    i = next(i for i, s in enumerate(parts) if s.startswith(("ours:", "ours_up:", "l15d:", FT_VDA) + PERFRAME_FT) or s in DEPTH_MODELS)
     return parts[:i], parts[i], parts[i + 1:]
 
 
@@ -971,6 +973,9 @@ def build_pipeline(spec: str, device: str) -> dict:
     chain, dep, post = split_spec(spec)
     if dep.startswith("ours_up:"):               # DN-01 F1-UP: released upstream VDA-S + the checkpoint's motion modules, through infer_video_depth
         p = _vda_upstream(device, "vits", dep[len("ours_up:"):])
+    elif dep.startswith("l15d:"):                # L15 stage 3 (new path only): DECOUPLED packed checkpoint (depth <- the original restorer, restored RGB <- rgb_restorer)
+        from evaluation.l15_spec import ours_l15
+        p = ours_l15(device, dep)
     elif dep.startswith(FT_VDA):
         p = _vda_ft(device, dep[len(FT_VDA):])
     elif dep.startswith(PERFRAME_FT):
@@ -1291,7 +1296,7 @@ def ckpt_info(spec: str) -> dict:
 
 
 def _slug(spec: str) -> str:
-    return spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("/", "_").replace(".pt", "")
+    return spec.replace("ours_up:", "oursup-").replace("ours:", "ours-").replace("l15d:", "l15d-").replace("/", "_").replace(".pt", "")
 
 
 CORE_FINITE = ("abs_rel_aligned", "delta1_aligned", "fit_scale", "tae")          # must be finite on every clip of every model; + the metric-only ones below

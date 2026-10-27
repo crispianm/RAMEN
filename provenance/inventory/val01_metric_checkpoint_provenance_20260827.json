@@ -10,7 +10,7 @@
   "local_copies": [
     {
       "host": "crispwork",
-      "path": "/home/wg19671/repos/Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
+      "path": "Video-Depth-Anything/checkpoints/metric_video_depth_anything_vits.pth",
       "sha256": "3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33",
       "matches_huggingface_x_linked_etag": true
     },

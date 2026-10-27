@@ -374,7 +374,7 @@ def tag_backend(cfg: dict, iid: str, override: str | None = None) -> str:
     return override or cfg["items"][iid].get("tag_backend") or cfg.get("tag_backend") or "reference"
 
 
-DEFAULT_SMOKE = {"models": ["ramen_s45", "ramen_s45_tag", "metric_vda_s", "ft_n46"], "datasets": ["kitti", "bonn", "scannetpp"],
+DEFAULT_SMOKE = {"models": ["earlier_s45", "earlier_s45_tag", "metric_vda_s", "ft_n46"], "datasets": ["kitti", "bonn", "scannetpp"],
                  "cells": ["llvar", "st_llvar", "b0s0"], "arms_per_item": 1, "qual_min": 3.0, "overhead_s": 90.0}
 
 

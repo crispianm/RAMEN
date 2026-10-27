@@ -14,7 +14,20 @@ import torch
 
 
 
-def load_d3_checkpoint(model, ckpt, use_ema: bool = True) -> None:
+def load_ramen(path, device: str = "cpu"):
+    """Load a composed RAMEN / RAMEN-L file (ramen.pt, ramen_l.pt; pack v2/v3) -> eval-mode net with depth path AND display head (``load_packed``, strict)."""
+    ck = torch.load(path, map_location="cpu", weights_only=False) if isinstance(path, (str, bytes)) or hasattr(path, "__fspath__") else path
+    if "rgb_restorer" not in ck and "depth_restorer" not in ck:
+        raise ValueError(f"{path} is not a composed RAMEN checkpoint (no rgb_restorer / depth_restorer section)")
+    m = dict(ck["cfg"]["model"])
+    m["st_temp2_init"] = None                       # trainable_ema carries all of temp2; the init path is a training-host path
+    m["st_decoupled_restorer"] = True
+    net = build_model({**ck["cfg"], "model": m})
+    net.load_packed(ck)
+    return net.to(device).eval()
+
+
+def load_d3_checkpoint(model, ckpt, use_ema: bool = True, depth_only: bool = False) -> None:
     """Load a RAMEN training checkpoint into ``model`` (in place).
 
     Handles every checkpoint format the trainer emits:
@@ -24,9 +37,16 @@ def load_d3_checkpoint(model, ckpt, use_ema: bool = True) -> None:
 
     ``ckpt`` may be a path or an already-loaded dict. ``use_ema`` prefers the EMA
     weights (cleaner) when present.
+
+    A composed checkpoint (RAMEN / RAMEN-L: has ``rgb_restorer`` / ``depth_restorer``) carries a display head
+    this function would silently drop, so it RAISES unless ``depth_only=True`` (depth path only, display
+    head ignored on purpose). Use :func:`load_ramen` for the full model.
     """
     if isinstance(ckpt, (str, bytes)):
         ckpt = torch.load(ckpt, map_location="cpu", weights_only=False)
+    if not depth_only and ("rgb_restorer" in ckpt or "depth_restorer" in ckpt):
+        raise ValueError("composed checkpoint (rgb_restorer/depth_restorer present): load_d3_checkpoint would silently drop the "
+                         "display head. Use models.load_ramen(path), or pass depth_only=True for the depth path only.")
 
     def pick(primary, fallback):
         return ckpt[primary] if (use_ema and primary in ckpt) else ckpt[fallback]
@@ -121,7 +141,11 @@ def build_model(cfg: dict):
                                      depth_inject=bool(m.get("st_depth_inject", False)),
                                      unfreeze_head=(m.get("freeze_depth_head", True) is False),   # METRICFIX: an EXPLICIT freeze_depth_head: false trains the DPT head too (absent / true = the old frozen head)
                                      depth_input=str(m.get("st_depth_input", "raw")),                    # DN-01 design (c): default off
-                                     stage2_width=m.get("st_stage2_width"))
+                                     stage2_width=m.get("st_stage2_width"),
+                                     decoupled_restorer=bool(m.get("st_decoupled_restorer", False)),
+                                     detach_depth_restorer=bool(m.get("st_detach_depth_restorer", False)),
+                                     depth_grad_scale=float(m.get("st_depth_grad_scale", 1.0)), stage2_aux=bool(m.get("st_stage2_aux", False)),
+                                     rgb_stage2_width=m.get("st_rgb_stage2_width"))
         return net
     if arch == "dav2":    # protocol v3 WP22: per-frame DA-V2-S, frozen encoder + trainable DPT head, metric head 'metres' (a) or 'sigmoid' (b)
         from .dav2_net import DAV2Net
@@ -135,4 +159,4 @@ def build_model(cfg: dict):
     raise ValueError(f"Unknown model.arch={arch!r}: this release supports 'vda', 'dav2' and 'daac'")
 
 
-__all__ = ["build_model", "load_d3_checkpoint", "trainable_modules"]
+__all__ = ["build_model", "load_d3_checkpoint", "load_ramen", "trainable_modules"]

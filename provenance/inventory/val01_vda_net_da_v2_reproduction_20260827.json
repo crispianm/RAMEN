@@ -4,7 +4,7 @@
   "purpose": "Required check per Fable/Opus's 2026-08-27 ruling: a freshly-built VDA-S initialised from DA-V2-S (encoder strict-load + head remap, temporal layers left at their own zero-init) must reproduce DA-V2-S's per-frame output exactly at step 0, since the temporal branch's zero-initialised proj_out makes its residual contribution exactly 0.",
   "host": "crispwork",
   "device": "cuda (RTX 4090)",
-  "env": "/home/wg19671/.venvs/focusmamba",
+  "env": ".venvs/focusmamba",
   "checkpoints": {
     "video_depth_anything_vits_sha256_reference_only": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
     "depth_anything_v2_vits": {

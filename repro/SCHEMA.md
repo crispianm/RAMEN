@@ -11,14 +11,14 @@ host_paths:                                          # optional: where data/ckpt
   DATA_ROOT: /mnt/DATA/DegradedDepth                 # (override by env var of the same name)
 
 models:                                              # registry; items refer to ids
-  ramen_s45:
+  earlier_s45:
     label: "RAMEN (seed 45)"
     spec: "ours:{ckpt}"                              # bench_joint --model spec. "{ckpt}" is replaced by ckpt.path. Pure-name specs (metric_vda_s, dav2_s, daac, metric_vda_l,
                                                      #   fastdvdnet_blind+metric_vda_s, pocketdvdnet+metric_vda_s) need no ckpt
     tag: false                                       # true -> spec + "+agf0.2t0.06"
     ckpt:                                            # optional for pure-name specs; REQUIRED when spec has {ckpt}
       path: checkpoints_v3/.../step12000.pt          # relative to DATA_ROOT unless absolute
-      sha256: c9decd90...                            # full 64 hex (a >=8 hex prefix is accepted with a WARNING)
+      sha256: 334623ec...                            # full 64 hex (a >=8 hex prefix is accepted with a WARNING)
       download: "https://..."                        # URL or "huggingface:org/repo/file"
     reference_spec: "ours:/projects/b5dh/.../step12000.pt"   # optional: the spec string the RELEASED read ran under (Isambard path); used by --verify to find <ref>/<slug>/bench/... (+TAG appended if tag: true)
     weights: {metric_vda_s: <sha256>}                # optional: sha256 of bench_joint-resolved base weights (hash-checked, recorded in MANIFEST)
@@ -39,7 +39,7 @@ items:
     kind: bench                                      # bench | night | fnoise | latency | qualitative
     title: "..."
     paper_ref: "tab:static"
-    models: [ramen_s45, ramen_s45_tag, ...]          # ids from models; row order = table order
+    models: [earlier_s45, earlier_s45_tag, ...]          # ids from models; row order = table order
     datasets: [kitti, bonn, scannetpp]
     cells: [st_llvar]                                # bench_joint cells: llvar/llvarf (dynamic), st_llvar/st_llb3 (static), b0s0 (clean), real (night), fnoise
     split: all                                       # dev | test | all.  test/all needs `--allow-test` AND env RAMEN_AUDITOR_TOKEN (or a file named by it); rows labelled "exposed exploratory"
@@ -90,7 +90,7 @@ items:
     arms: {full: {coupling: 1.0, stage2: 1.0}, coup0: {coupling: 0.0, stage2: 1.0}}
   tab:fid:
     seed_mean: [{name: "RAMEN (3-seed mean)", members: [ramen_n46, ramen_n47, ramen_n48]}]   # extra rows per (dataset, cell): unweighted mean of members (+ seed_range min/max); they also enter mean_over rows
-    reference: {default: results_v3/syn_s12, by_model: {ramen_s45: results_v3/bfix_s12}}      # per-model released dirs (str still accepted); --verify with no value uses these
+    reference: {default: results_v3/syn_s12, by_model: {earlier_s45: results_v3/bfix_s12}}      # per-model released dirs (str still accepted); --verify with no value uses these
 ```
 
 A unit shared by items planned for different hosts becomes host `any`. `--host auto` (default) detects the GPU and skips units planned for the other host (no GPU detected: runs all).

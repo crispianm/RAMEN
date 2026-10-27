@@ -45,7 +45,7 @@ def build(bj, patches, leg: dict, device: str):
         if flags:
             orig = bj.load_ours
             bj.load_ours = lambda ckpt, dev: (lambda n: (patches.apply(n, flags, True), n)[1])(orig(ckpt, dev))
-        p = bj.build_pipeline(f"ours:{C.RAMEN_CKPT}", device)
+        p = bj.build_pipeline(C.ramen_spec(), device)
     else:
         if flags:
             def vda_released(dev, metric):          # line-for-line bench_joint._vda_released (checked by the Auditor in latency_copy.py) + patches.apply

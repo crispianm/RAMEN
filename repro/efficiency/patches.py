@@ -84,7 +84,7 @@ def toggle_record(flags, prec: str) -> dict:
             "dense_group_conv": "dense_group" in f,
             "compiled": [x for x in ("c_enc", "c_head", "c_rest") if x in f] or False,
             "refine_hook": "hookoff" not in f, "input_staging": "fp16_before_pad" if "fp16build" in f else "fp32",
-            "torch": torch.__version__, "venv": "/home/wg19671/FocusMamba/.venv (unmodified; runtime patches only)"}
+            "torch": torch.__version__, "venv": "FocusMamba .venv (unmodified; runtime patches only)"}
 
 
 # ---- E2a ---------------------------------------------------------------------------------------------------------------

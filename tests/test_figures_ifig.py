@@ -35,7 +35,7 @@ def test_figure_items_models_are_ft_n46_and_ramen_n46_only():
     assert CFG["items"]["fig:flicker_curve"]["models"] == CFG["items"]["fig:qual"]["models"]
     for f in ("fig:teaser", "fig:qual", "fig:flicker_curve"):
         ms = set(CFG["items"][f]["models"])
-        assert not (ms & {"metric_vda_s", "metric_vda_s_tag", "ramen_s45", "ramen_s45_tag"}), f
+        assert not (ms & {"metric_vda_s", "metric_vda_s_tag", "earlier_s45", "earlier_s45_tag"}), f
         assert CFG["items"][f]["kind"] == "qualitative" and CFG["items"][f]["host"] == "gh200"
     assert C.validate(CFG) == []
 

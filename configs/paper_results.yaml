@@ -51,14 +51,32 @@ host_paths:
     results_v3/syn_s12: /projects/b5dh/RAMEN_v3_results/syn_s12
     results_v3/c3rep_s12: /projects/b5dh/RAMEN_v3_results/c3rep_s12
   gh200_local_only:                                   # verify references / inputs that stay on the local host (4090 workstation); not on Isambard
+    - checkpoints_release/ramen.pt                                     # released RAMEN (not mapped to an Isambard path)
+    - checkpoints_release/ramen_l.pt                                   # released RAMEN-L
     - claude_outputs/scratch/paper_repro/latency_ladder/session_2      # tab:latency verify reference (4090-only item)
     - qualitative/12b_ramen_figures                                    # fig:teaser / fig:qual verify reference (released figures)
     - claude_outputs/reports/P1_READ_20261012/P1_TABLE.md              # tab:p1 by-hand verify reference (released 4090 read; compare with --verify on the local host)
     - efficiency_primary.txt                                           # tab:latency_eff condition file (4090-only, conditional)
 
 models:
-  ramen_s45:
-    label: "RAMEN (seed 45, 12k)"
+  ramen:                                     # RELEASED: checkpoints_release/ramen.pt (Apache-2.0). Depth path = seed-46 step 12000 (f5c7c8f9), display head = B1500 (fine-tuned 1500 steps from S3000, restorer only). Load with models.load_ramen; score with l15d:
+    label: "RAMEN"
+    spec: "l15d:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_release/ramen.pt
+      sha256: 334623ec4fe0415896efa66a48278d4e6051dddaf571620c1d83bec11a313f47
+      download_url: TODO(user)
+  ramen_l:                                   # RELEASED: checkpoints_release/ramen_l.pt (CC-BY-NC-4.0, inherited from VDA-Large). Pack v3; load with models.load_ramen
+    label: "RAMEN-L"
+    spec: "l15d:{ckpt}"
+    tag: false
+    ckpt:
+      path: checkpoints_release/ramen_l.pt
+      sha256: cad96e2c1c5219ac6a9fccb30ba6b327f95656b00a8ad804265ec795e3f2e8bc
+      download_url: TODO(user)
+  earlier_s45:
+    label: "Earlier checkpoint (seed 45, 12k)"
     spec: "ours:{ckpt}"
     tag: false
     ckpt:
@@ -66,8 +84,8 @@ models:
       sha256: c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9    # sha256sum (local) == results_v3/bfix_s12/*/RUN_MANIFEST.json ckpt_sha256
       download_url: TODO(user)
     weights: {metric_vda_s: 3c28432b4e1f0d7bb31cad5151b6313b49457db5aa58d82e85bfb0f8b1311b33}   # base weights, syn_s12 bench JSON weights field
-  ramen_s45_tag:
-    label: "RAMEN (seed 45) + TAG"
+  earlier_s45_tag:
+    label: "Earlier checkpoint (seed 45) + TAG"
     spec: "ours:{ckpt}"
     tag: true
     ckpt: {path: checkpoints_v3/eval_20261009/RAMEN_train_dn01_v3_bfix_C3_B/runs/dn01_v3_bfix_C3_B/step12000.pt, sha256: c9decd90a4b4c2746ca1a389d84680a15a4a9f1572cb2ddb5ba9a73ee19edac9, download_url: TODO(user)}
@@ -359,7 +377,7 @@ items:
   # ---------------- main tables, FT-ONLY comparison (commit I, Addendum 38/38a; Auditor AUD-FTONLY-S0) ----------------
   # Rows: RAMEN n46-48 vs seed-matched Metric-VDA-S FT n46-48, raw and +TAG, each as a per-seed row AND as an UNWEIGHTED 3-seed mean row (seed_mean). Released Metric-VDA-S / VDA-L / DAv2-S / DA-AC / DepthCrafter are
   # REMOVED from every comparison item (their model ids stay registered only for items that are not comparisons: tab:p1, tab:latency, fig:*, init statements). No unit in these items is new: they share the
-  # J1 (tab:rep) / J5 (tab:rep_night) units; kitti_minus_0047 is derived from kitti per-clip exactly as in J2/J3. The seed-45 rows (ramen_s45) are gone from the main tables.
+  # J1 (tab:rep) / J5 (tab:rep_night) units; kitti_minus_0047 is derived from kitti per-clip exactly as in J2/J3. The seed-45 rows (earlier_s45) are gone from the main tables.
   # The superseded released-VDA forms of tab:dynamic/static/dynamic_night/static_diag/clean (J2/J3/J4/J8) stay valid only as released archives; their configs are in the commit paper-repro-H (a1493364).
   tab:dynamic:
     kind: bench
@@ -416,9 +434,9 @@ items:
     kind: bench
     host: gh200                              # Addendum 30: all numbers from the GH200
     previous_host: "4090"                    # informational (planner delta vs freeze draft v1)
-    title: "Clean-frame check (b0s0), development clips: RAMEN (seed 45) next to Metric-VDA-S FT (seed 46), DESCRIPTIVE"
+    title: "Clean-frame check (b0s0), development clips: earlier checkpoint (seed 45) next to Metric-VDA-S FT (seed 46), DESCRIPTIVE"
     paper_ref: "tab:clean"
-    models: [ramen_s45, ramen_s45_tag, ft_n46]                  # released Metric-VDA-S REMOVED (Add.38a); RAMEN row = seed 45 (caption says so); ft_n46 labelled "Metric-VDA-S FT (seed 46)"
+    models: [earlier_s45, earlier_s45_tag, ft_n46]                  # released Metric-VDA-S REMOVED (Add.38a); earlier-checkpoint row = seed 45 (caption says so); ft_n46 labelled "Metric-VDA-S FT (seed 46)"
     datasets: [kitti, bonn, scannetpp]                          # DEV: KITTI 7 / Bonn 13 / ScanNet++ 31 clips
     cells: [b0s0]                            # bench_joint CELLS[0] = blur 0 x AWGN 0 (no degradation, no draws)
     split: dev
@@ -429,7 +447,7 @@ items:
     reference: null                          # no released clean read exists: regenerate-only, no --verify
     # NO `reading:` block. The pre-declared non-inferiority verdict (Auditor R1 ruling 4) was against the RELEASED Metric-VDA-S; the FT n46 clean values were already known (J8) when the reference
     # was changed to ft_n46, so a verdict against FT would not be pre-declared. Auditor AUD-FTONLY-S0 item 4 (option 1): the table is DESCRIPTIVE, no verdict column and no verdict sentence.
-    label: "development clips (seen during development); GH200; regenerate-only; DESCRIPTIVE: no verdict, no pass/fail sentence (the comparator was chosen after its values were known). RAMEN = seed 45; comparator row 'Metric-VDA-S FT (seed 46)' (a different seed)"
+    label: "development clips (seen during development); GH200; regenerate-only; DESCRIPTIVE: no verdict, no pass/fail sentence (the comparator was chosen after its values were known). earlier checkpoint = seed 45; comparator row 'Metric-VDA-S FT (seed 46)' (a different seed)"
   tab:static_diag:
     kind: bench
     host: gh200                              # = the host of tab:static, so each st_llvar unit is scored ONCE on ONE host (units shared with tab:static)
@@ -764,7 +782,7 @@ items:
     previous_host: "4090"
     title: "P1 coupling ablation (eval-time override), single checkpoint"
     paper_ref: "tab:p1"
-    models: [ramen_s45, ramen_s45_tag]
+    models: [earlier_s45, earlier_s45_tag]
     verify_class: cross_host                 # Auditor Addendum B: regenerated on the GH200, verified vs P1_READ_20261012 (a 4090 read) with the cross-host R3 tolerances
     override_script: bench_overrides         # vendored repro/vendored/bench_overrides.py (commit 0c6d07b), unchanged; one unit per arm
     arms: {full: {coupling: 1.0, stage2: 1.0}, coup0: {coupling: 0.0, stage2: 1.0}, st2off: {coupling: 1.0, stage2: 0.0}}
@@ -787,7 +805,7 @@ items:
     host: "4090"
     title: "Latency, RTX 4090, 518x518, 32-frame window, fp16, median of 30 timed passes after 5 warm-up (single-session ladder harness, stack S0)"
     paper_ref: "tab:latency"
-    models: [ramen_s45, metric_vda_s]        # checkpoint pins (the ladder asserts the RAMEN sha itself); the rows below are the released session_2 S0 rows
+    models: [earlier_s45, metric_vda_s]        # checkpoint pins (the ladder asserts the RAMEN sha itself); the rows below are the released session_2 S0 rows
     harness:                                 # repro/efficiency/latency/run_ladder.py (committed ladder, harness copy >= c524643) via ladder_samples.py, which only adds the per-pass samples
       runner: ladder
       stack: S0                              # the pinned/accuracy-path stack
@@ -818,7 +836,7 @@ items:
     condition:                               # PRE-DECLARED: included iff this file exists (the Auditor's release of the PRIMARY); independent of any output of this run
       file: efficiency_primary.txt           # under DATA_ROOT, or the path in $RAMEN_EFFICIENCY_PRIMARY. First non-comment word = the released PRIMARY ladder stack (X, S1, S2, S3 or S4)
       note: "efficiency PRIMARY not released by the Auditor yet"
-    models: [ramen_s45, metric_vda_s]
+    models: [earlier_s45, metric_vda_s]
     harness:
       runner: ladder
       stack_from_file: true
