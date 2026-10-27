@@ -1,9 +1,8 @@
 # repro/qualitative (vendored, not run here: GPU)
-Sources: render_c3_figures.py, CLIP_SELECTION.json, CLIP_RULE.md, figures_config.json <- claude_outputs/session_evidence/c3_figures_package_20261012; render_cover.py, cover_config.json <- livestatus_cover_package_20261012;
+Sources: render_c3_figures.py, CLIP_SELECTION.json, CLIP_RULE.md, figures_config.json <- claude_outputs/session_evidence/c3_figures_package_20261012;
 perframe_core.py <- supervisor_page_20261013/scratch; render_supervisor.py <- supervisor_page_20261013.
 Diffs vs source (all others byte-identical):
 - render_c3_figures.py: panel label strings lines 163,199 "C3" -> "RAMEN" (only code diff; sha 40321cfb... -> 9dd21969...).
-- render_cover.py: +1 line `CFG["figures_package"] = str(HERE)` (import path). cover_config.json: figures_render_script_sha256_prefix updated to the vendored script's.
 - render_supervisor.py: ROOT = $RAMEN_QUAL_OUT or script dir; figures_config/CLIP_SELECTION/sys.path now resolve to this folder (4 path lines).
 Entry points in __init__.py: render_fig_teaser, render_fig_qual, render_fig_flicker_curve (cfg_entry, out_dir) -> PNG/JSON + GIF + H.264 MP4. figures_config.json eval_clone still points to a clean 368b5c53 clone (scripts assert clean tree).
 
